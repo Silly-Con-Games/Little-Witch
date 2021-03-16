@@ -24,4 +24,9 @@ public class PlayerController : MonoBehaviour
         if (Input.GetKey(KeyCode.S))
             gameObject.transform.position += new Vector3(0, 0, -10 * delta);
     }
+
+    void HitEnemy(IDamagable damagable)
+    {
+
+    }
 }
