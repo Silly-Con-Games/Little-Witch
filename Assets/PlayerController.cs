@@ -25,7 +25,7 @@ public class PlayerController : MonoBehaviour
             gameObject.transform.position += new Vector3(0, 0, -10 * delta);
     }
 
-    void HitEnemy(IDamagable damagable)
+    void HitEnemy(IDamagableObject damagable)
     {
 
     }

@@ -8,7 +8,7 @@ public class Bullet : MonoBehaviour
 
     private void OnCollisionEnter(Collision collision)
     {
-        var damagable = collision.gameObject.GetComponent<IDamagable>();
+        var damagable = collision.gameObject.GetComponent<IDamagableObject>();
         if (damagable?.GetType() == target)
         {
             damagable.DealDamage(damage);
