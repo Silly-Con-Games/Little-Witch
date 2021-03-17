@@ -4,6 +4,7 @@ public class PlayerController : MonoBehaviour, IDamagableObject
 {
     public GameObject bulletPrefab;
     public float speed = 3;
+    public float health = 20;
 
     // Update is called once per frame
     void Update()
@@ -44,13 +45,10 @@ public class PlayerController : MonoBehaviour, IDamagableObject
         bulletInstanceTrans.rotation = transform.rotation;
     }
 
-    public void ReceiveDamage(float amount)
+    public void ReceiveDamage(float amount) 
     {
-        throw new System.NotImplementedException();
+        if ((health -= amount) <= 0) Destroy(gameObject);
     }
 
-    EType IDamagableObject.GetType()
-    {
-        throw new System.NotImplementedException();
-    }
+    EType IDamagableObject.GetType() => EType.Player;
 }
