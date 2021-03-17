@@ -1,7 +1,6 @@
 public interface IDamagableObject 
 {
-    // Returns true if damage dealt was fatal
-    void DealDamage(float amount);
+    void ReceiveDamage(float amount);
 
     EType GetType();
 }

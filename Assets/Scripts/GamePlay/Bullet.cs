@@ -4,15 +4,32 @@ public class Bullet : MonoBehaviour
 {
     public EType target = EType.Unknown;
     public float damage = 0f;
-    
+    public float speed = 0f;
+    public float lifetime = 5;
+
+    private void Update()
+    {
+        float delta = Time.deltaTime;
+        transform.position += transform.forward * delta * speed;
+
+        lifetime -= delta;
+        if(lifetime < 0)
+            Destroy(gameObject);
+    }
 
     private void OnCollisionEnter(Collision collision)
     {
-        var damagable = collision.gameObject.GetComponent<IDamagableObject>();
-        if (damagable?.GetType() == target)
+        var other = collision.gameObject;
+        var damagable = other.GetComponent<IDamagableObject>();
+        if(damagable == null)
         {
-            damagable.DealDamage(damage);
             Destroy(gameObject);
-        }
+        }            
+        else if (damagable.GetType() == target)
+        {
+            Debug.Log("Bullet hit target!");
+            damagable.ReceiveDamage(damage);
+            Destroy(gameObject);
+        }        
     }
 }
