@@ -8,7 +8,7 @@ Material:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_Name: Cold
-  m_Shader: {fileID: -6465566751694194690, guid: c9a9c9331354eb64fa090d6a5037b9fa, type: 3}
+  m_Shader: {fileID: -6465566751694194690, guid: 24a8bb402e1de9c4e9291fdb5aeae329, type: 3}
   m_ShaderKeywords: MAIN_LIGHT_CALCULATE_SHADOWS _MAIN_LIGHT_SHADOWS_CASCADE _SHADOWS_SOFT
   m_LightmapFlags: 2
   m_EnableInstancingVariants: 0
@@ -91,6 +91,10 @@ Material:
         m_Texture: {fileID: 0}
         m_Scale: {x: 1, y: 1}
         m_Offset: {x: 0, y: 0}
+    - _Texture2DAsset_d7e3804d7ddb4902a88f6cb7ea4f46b0_Out_0:
+        m_Texture: {fileID: 2800000, guid: 85e991ff5f51b3f4ab9c7ec0ed169c44, type: 3}
+        m_Scale: {x: 1, y: 1}
+        m_Offset: {x: 0, y: 0}
     - unity_Lightmaps:
         m_Texture: {fileID: 0}
         m_Scale: {x: 1, y: 1}
@@ -131,7 +135,7 @@ Material:
     - _UVSec: 0
     - _ZWrite: 1
     m_Colors:
-    - Color_c1ed1a8e4bc64693892e64428becd3f7: {r: 1, g: 1, b: 1, a: 1}
+    - Color_c1ed1a8e4bc64693892e64428becd3f7: {r: 0, g: 0, b: 0, a: 1}
     - Color_fbf991c427d54adfa06ba6969f9c864e: {r: 1, g: 1, b: 1, a: 1}
     - _BASE_COLOR: {r: 1, g: 1, b: 1, a: 1}
     - _Color: {r: 1, g: 1, b: 1, a: 1}

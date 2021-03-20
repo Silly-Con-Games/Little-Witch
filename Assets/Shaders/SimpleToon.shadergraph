@@ -844,7 +844,7 @@
     "m_Group": {
         "m_Id": ""
     },
-    "m_Name": "CalculateLightingRamp",
+    "m_Name": "CalculateLightingRampSimple",
     "m_DrawState": {
         "m_Expanded": true,
         "m_Position": {
@@ -1497,7 +1497,7 @@
     "m_Type": "UnityEditor.ShaderGraph.Vector1MaterialSlot",
     "m_ObjectId": "bbe32642cf5a4102988d59993cc0ef76",
     "m_Id": 0,
-    "m_DisplayName": "SpecularSmoothness",
+    "m_DisplayName": "Smoothness",
     "m_SlotType": 1,
     "m_Hidden": false,
     "m_ShaderOutputName": "Out",
@@ -1641,7 +1641,7 @@
     "m_Guid": {
         "m_GuidSerialized": "a8aa7dc0-4851-4ba9-8012-b3356db38f24"
     },
-    "m_Name": "SpecularSmoothness",
+    "m_Name": "Smoothness",
     "m_DefaultReferenceName": "Vector1_cd5a1a9872ce47909cea6291fb5ebedc",
     "m_OverrideReferenceName": "",
     "m_GeneratePropertyBlock": true,
@@ -1675,33 +1675,33 @@
     "m_Value": {
         "serializedVersion": "2",
         "key0": {
-            "r": 0.3962264060974121,
-            "g": 0.3962264060974121,
-            "b": 0.3962264060974121,
+            "r": 0.7452830076217651,
+            "g": 0.7452830076217651,
+            "b": 0.7452830076217651,
             "a": 1.0
         },
         "key1": {
-            "r": 0.6254275441169739,
-            "g": 0.6254275441169739,
-            "b": 0.6254275441169739,
-            "a": 1.0
-        },
-        "key2": {
-            "r": 0.6415094137191773,
-            "g": 0.6415094137191773,
-            "b": 0.6415094137191773,
-            "a": 0.0
-        },
-        "key3": {
-            "r": 0.9787038564682007,
-            "g": 0.9787038564682007,
-            "b": 0.9787038564682007,
-            "a": 0.0
-        },
-        "key4": {
             "r": 1.0,
             "g": 1.0,
             "b": 1.0,
+            "a": 1.0
+        },
+        "key2": {
+            "r": 1.0,
+            "g": 1.0,
+            "b": 1.0,
+            "a": 0.0
+        },
+        "key3": {
+            "r": 0.0,
+            "g": 0.0,
+            "b": 0.0,
+            "a": 0.0
+        },
+        "key4": {
+            "r": 0.0,
+            "g": 0.0,
+            "b": 0.0,
             "a": 0.0
         },
         "key5": {
@@ -1722,11 +1722,11 @@
             "b": 0.0,
             "a": 0.0
         },
-        "ctime0": 3277,
-        "ctime1": 4241,
-        "ctime2": 26792,
-        "ctime3": 27756,
-        "ctime4": 46260,
+        "ctime0": 27563,
+        "ctime1": 28913,
+        "ctime2": 46260,
+        "ctime3": 0,
+        "ctime4": 0,
         "ctime5": 0,
         "ctime6": 0,
         "ctime7": 0,
@@ -1739,7 +1739,7 @@
         "atime6": 0,
         "atime7": 0,
         "m_Mode": 0,
-        "m_NumColorKeys": 5,
+        "m_NumColorKeys": 3,
         "m_NumAlphaKeys": 2
     }
 }
