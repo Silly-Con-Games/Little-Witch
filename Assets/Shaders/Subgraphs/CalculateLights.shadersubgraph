@@ -465,8 +465,8 @@
         "m_Expanded": false,
         "m_Position": {
             "serializedVersion": "2",
-            "x": 635.0,
-            "y": -121.99999237060547,
+            "x": 935.0,
+            "y": -396.0,
             "width": 91.0,
             "height": 101.00000762939453
         }
@@ -605,10 +605,10 @@
         "m_Expanded": true,
         "m_Position": {
             "serializedVersion": "2",
-            "x": -185.0,
-            "y": -324.5,
-            "width": 218.99998474121095,
-            "height": 302.0
+            "x": -208.99996948242188,
+            "y": -396.0,
+            "width": 258.0,
+            "height": 350.0
         }
     },
     "m_Slots": [
@@ -631,8 +631,8 @@
     },
     "m_SourceType": 1,
     "m_FunctionName": "GetMyLight",
-    "m_FunctionSource": "1335055de03b59a429047d4c8524bef7",
-    "m_FunctionBody": "#ifdef SHADERGRAPH_PREVIEW\r\n\tDirection = half3(0.5,0.5,0);\r\n\tColor = 1;\r\n#else\r\n\tLight light = GetMainLight();\r\n\tDirection = light.direction;\r\n\tColor = light.color;\r\n#endif"
+    "m_FunctionSource": "51e8e9bd6f6cb8245b14ee7c73765728",
+    "m_FunctionBody": "#ifdef SHADERGRAPH_PREVIEW\r\n\tDirection = half3(0.5, 0.5, 0);\r\n\tColor = 1;\n#else\n\tLight light = GetMainLight();\r\n\tColor = light.color;\r\n\tDirection = light.direction;\n#endif"
 }
 
 {
