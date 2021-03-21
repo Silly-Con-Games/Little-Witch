@@ -6,7 +6,6 @@ public class Bullet : MonoBehaviour
     public float damage = 0f;
     public float speed = 0f;
     public float lifetime = 5;
-
     private void Update()
     {
         float delta = Time.deltaTime;
@@ -16,8 +15,8 @@ public class Bullet : MonoBehaviour
         if(lifetime < 0)
             Destroy(gameObject);
     }
-
-    private void OnCollisionEnter(Collision collision)
+    
+    private void OnTriggerEnter(Collider collision)
     {
         var other = collision.gameObject;
         var damagable = other.GetComponent<IDamagableObject>();
