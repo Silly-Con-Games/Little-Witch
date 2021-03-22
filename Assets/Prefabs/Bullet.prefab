@@ -92,7 +92,7 @@ SphereCollider:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1052265020511648158}
   m_Material: {fileID: 0}
-  m_IsTrigger: 0
+  m_IsTrigger: 1
   m_Enabled: 1
   serializedVersion: 2
   m_Radius: 0.5
@@ -125,7 +125,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 135991339919a964ab01966a6f630dcc, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  setBulletPrefab: {fileID: 1052265020511648158}
   target: 0
   damage: 3.1415927
   speed: 10

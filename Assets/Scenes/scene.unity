@@ -38,7 +38,7 @@ RenderSettings:
   m_ReflectionIntensity: 1
   m_CustomReflection: {fileID: 0}
   m_Sun: {fileID: 0}
-  m_IndirectSpecularColor: {r: 0, g: 0.99999905, b: 0.99999905, a: 1}
+  m_IndirectSpecularColor: {r: 0.18028352, g: 0.22571376, b: 0.30692244, a: 1}
   m_UseRadianceAmbientProbe: 0
 --- !u!157 &3
 LightmapSettings:
@@ -8366,7 +8366,7 @@ BoxCollider:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 253196201}
   m_Material: {fileID: 0}
-  m_IsTrigger: 1
+  m_IsTrigger: 0
   m_Enabled: 1
   serializedVersion: 2
   m_Size: {x: 1, y: 1, z: 1}
@@ -17876,7 +17876,7 @@ BoxCollider:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 574266705}
   m_Material: {fileID: 0}
-  m_IsTrigger: 1
+  m_IsTrigger: 0
   m_Enabled: 1
   serializedVersion: 2
   m_Size: {x: 1, y: 1, z: 1}
@@ -19322,7 +19322,7 @@ PrefabInstance:
     m_Modifications:
     - target: {fileID: 5920664896626252348, guid: 54e5358682c2aee468a889c86a1b2be6, type: 3}
       propertyPath: m_IsTrigger
-      value: 1
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 5979136018547495800, guid: 54e5358682c2aee468a889c86a1b2be6, type: 3}
       propertyPath: m_Mass
@@ -38935,7 +38935,7 @@ BoxCollider:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1194625199}
   m_Material: {fileID: 0}
-  m_IsTrigger: 1
+  m_IsTrigger: 0
   m_Enabled: 1
   serializedVersion: 2
   m_Size: {x: 1, y: 1, z: 1}
@@ -41177,7 +41177,7 @@ PrefabInstance:
     m_Modifications:
     - target: {fileID: 5920664896626252348, guid: 54e5358682c2aee468a889c86a1b2be6, type: 3}
       propertyPath: m_IsTrigger
-      value: 1
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 5979136018547495800, guid: 54e5358682c2aee468a889c86a1b2be6, type: 3}
       propertyPath: m_Mass
@@ -41402,7 +41402,7 @@ BoxCollider:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1270940296}
   m_Material: {fileID: 0}
-  m_IsTrigger: 1
+  m_IsTrigger: 0
   m_Enabled: 1
   serializedVersion: 2
   m_Size: {x: 1, y: 1, z: 1}
@@ -48029,7 +48029,7 @@ BoxCollider:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1536048537}
   m_Material: {fileID: 0}
-  m_IsTrigger: 1
+  m_IsTrigger: 0
   m_Enabled: 1
   serializedVersion: 2
   m_Size: {x: 1, y: 1, z: 1}
@@ -59190,7 +59190,7 @@ BoxCollider:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1888216210}
   m_Material: {fileID: 0}
-  m_IsTrigger: 1
+  m_IsTrigger: 0
   m_Enabled: 1
   serializedVersion: 2
   m_Size: {x: 1, y: 1, z: 1}
@@ -67495,13 +67495,19 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 6295430965828045208, guid: b1fc13f3af7f08b4383542ef08e46ae3, type: 3}
       propertyPath: m_IsTrigger
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 6295430965828045209, guid: b1fc13f3af7f08b4383542ef08e46ae3, type: 3}
+      propertyPath: jumpHeight
       value: 1
       objectReference: {fileID: 0}
     - target: {fileID: 6295430965828045210, guid: b1fc13f3af7f08b4383542ef08e46ae3, type: 3}
       propertyPath: m_Name
       value: Witch
       objectReference: {fileID: 0}
-    m_RemovedComponents: []
+    m_RemovedComponents:
+    - {fileID: 6295430965828045208, guid: b1fc13f3af7f08b4383542ef08e46ae3, type: 3}
+    - {fileID: 6295430965828045211, guid: b1fc13f3af7f08b4383542ef08e46ae3, type: 3}
   m_SourcePrefab: {fileID: 100100000, guid: b1fc13f3af7f08b4383542ef08e46ae3, type: 3}
 --- !u!1001 &8703040088541162152
 PrefabInstance:

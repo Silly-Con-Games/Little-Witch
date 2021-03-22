@@ -15,11 +15,11 @@ D:/Study/Computer games development/Little-Witch
 -logFile
 Logs/AssetImportWorker0.log
 -srvPort
-63394
+51061
 Successfully changed project path to: D:/Study/Computer games development/Little-Witch
 D:/Study/Computer games development/Little-Witch
 Using Asset Import Pipeline V2.
-Refreshing native plugins compatible for Editor in 35.48 ms, found 0 plugins.
+Refreshing native plugins compatible for Editor in 44.63 ms, found 0 plugins.
 Preloading 0 native plugins for Editor in 0.00 ms.
 Initialize engine version: 2020.3.0f1 (c7b5465681fb)
 [Subsystems] Discovering subsystems at path C:/Program Files/Unity/Hub/Editor/2020.3.0f1/Editor/Data/Resources/UnitySubsystems
@@ -36,127 +36,165 @@ Initialize mono
 Mono path[0] = 'C:/Program Files/Unity/Hub/Editor/2020.3.0f1/Editor/Data/Managed'
 Mono path[1] = 'C:/Program Files/Unity/Hub/Editor/2020.3.0f1/Editor/Data/MonoBleedingEdge/lib/mono/unityjit'
 Mono config path = 'C:/Program Files/Unity/Hub/Editor/2020.3.0f1/Editor/Data/MonoBleedingEdge/etc'
-Using monoOptions --debugger-agent=transport=dt_socket,embedding=1,server=y,suspend=n,address=127.0.0.1:56112
+Using monoOptions --debugger-agent=transport=dt_socket,embedding=1,server=y,suspend=n,address=127.0.0.1:56036
 Begin MonoManager ReloadAssembly
 Registering precompiled unity dll's ...
 Register platform support module: C:/Program Files/Unity/Hub/Editor/2020.3.0f1/Editor/Data/PlaybackEngines/WebGLSupport/UnityEditor.WebGL.Extensions.dll
 Register platform support module: C:/Program Files/Unity/Hub/Editor/2020.3.0f1/Editor/Data/PlaybackEngines/WindowsStandaloneSupport/UnityEditor.WindowsStandalone.Extensions.dll
-Registered in 0.001924 seconds.
+Registered in 0.002251 seconds.
 Native extension for WindowsStandalone target not found
 Native extension for WebGL target not found
-Refreshing native plugins compatible for Editor in 36.67 ms, found 0 plugins.
+Refreshing native plugins compatible for Editor in 45.98 ms, found 0 plugins.
 Preloading 0 native plugins for Editor in 0.00 ms.
 Invoked RoslynAnalysisRunner static constructor.
 RoslynAnalysisRunner will not be running.
 RoslynAnalysisRunner has terminated.
 Mono: successfully reloaded assembly
-- Completed reload, in  1.532 seconds
+- Completed reload, in  1.853 seconds
 Platform modules already initialized, skipping
 Registering precompiled user dll's ...
-Registered in 0.000895 seconds.
+Registered in 0.001118 seconds.
 Begin MonoManager ReloadAssembly
 Native extension for WindowsStandalone target not found
 Native extension for WebGL target not found
-Refreshing native plugins compatible for Editor in 37.75 ms, found 0 plugins.
+Refreshing native plugins compatible for Editor in 44.20 ms, found 0 plugins.
 Preloading 0 native plugins for Editor in 0.00 ms.
 Invoked RoslynAnalysisRunner static constructor.
 RoslynAnalysisRunner will not be running.
 RoslynAnalysisRunner has terminated.
 Mono: successfully reloaded assembly
-- Completed reload, in  0.767 seconds
+- Completed reload, in  0.905 seconds
 Platform modules already initialized, skipping
 ========================================================================
 Worker process is ready to serve import requests
 Shader 'Universal Render Pipeline/Particles/Lit': fallback shader 'Universal Render Pipeline/Particles/SimpleLit' not found
-Launched and connected shader compiler UnityShaderCompiler.exe after 0.03 seconds
-Refreshing native plugins compatible for Editor in 0.40 ms, found 0 plugins.
+Launched and connected shader compiler UnityShaderCompiler.exe after 0.05 seconds
+Refreshing native plugins compatible for Editor in 0.60 ms, found 0 plugins.
 Preloading 0 native plugins for Editor in 0.00 ms.
 Unloading 2570 Unused Serialized files (Serialized files now loaded: 0)
 System memory in use before: 118.3 MB.
 System memory in use after: 118.5 MB.
 
 Unloading 11 unused Assets to reduce memory usage. Loaded Objects now: 3016.
-Total: 2.063300 ms (FindLiveObjects: 0.292800 ms CreateObjectMapping: 0.086500 ms MarkObjects: 1.620300 ms  DeleteObjects: 0.063000 ms)
+Total: 2.413200 ms (FindLiveObjects: 0.574800 ms CreateObjectMapping: 0.060400 ms MarkObjects: 1.709200 ms  DeleteObjects: 0.067700 ms)
 
 ========================================================================
 Received Import Request.
-  path: Assets/Prefabs/HexTop_Pasture.prefab
-  artifactKey: Guid(c4c6503ae38da0747b887201515f2b38) Importer(815301076,1909f56bfc062723c751e8b465ee728b)
-Start importing Assets/Prefabs/HexTop_Pasture.prefab using Guid(c4c6503ae38da0747b887201515f2b38) Importer(815301076,1909f56bfc062723c751e8b465ee728b)  -> (artifact id: 'b0dd8fd11e6695d7b7c70775cb643234') in 0.181335 seconds
-  Import took 0.184848 seconds .
+  path: Assets/Hexlands_LowPolyStyle/Prefabs/HexTile_Iron.prefab
+  artifactKey: Guid(393103ee2798fb34e9ea8dbd780cc4bc) Importer(815301076,1909f56bfc062723c751e8b465ee728b)
+Start importing Assets/Hexlands_LowPolyStyle/Prefabs/HexTile_Iron.prefab using Guid(393103ee2798fb34e9ea8dbd780cc4bc) Importer(815301076,1909f56bfc062723c751e8b465ee728b)  -> (artifact id: '66b7c48337794c19505fa96403799e5e') in 0.321786 seconds
+  Import took 0.326355 seconds .
+
+========================================================================
+Received Import Request.
+  Time since last request: 0.000766 seconds.
+  path: Assets/Hexlands_LowPolyStyle/Prefabs/HexTile_Stone.prefab
+  artifactKey: Guid(408ff2acb0a41b24dbed2426e39d1530) Importer(815301076,1909f56bfc062723c751e8b465ee728b)
+Start importing Assets/Hexlands_LowPolyStyle/Prefabs/HexTile_Stone.prefab using Guid(408ff2acb0a41b24dbed2426e39d1530) Importer(815301076,1909f56bfc062723c751e8b465ee728b)  -> (artifact id: '61cd9076e55327c1dba0c59a0c996221') in 0.057724 seconds
+  Import took 0.073813 seconds .
+
+========================================================================
+Received Import Request.
+  Time since last request: 0.000178 seconds.
+  path: Assets/Hexlands_LowPolyStyle/Prefabs/HexTile_Desert.prefab
+  artifactKey: Guid(acb86a1738de1364cad1d7ac4f60f2ed) Importer(815301076,1909f56bfc062723c751e8b465ee728b)
+Start importing Assets/Hexlands_LowPolyStyle/Prefabs/HexTile_Desert.prefab using Guid(acb86a1738de1364cad1d7ac4f60f2ed) Importer(815301076,1909f56bfc062723c751e8b465ee728b)  -> (artifact id: '090ac1ecdc34147cd754acf6e5ad13ba') in 0.065105 seconds
+  Import took 0.079653 seconds .
+
+========================================================================
+Received Import Request.
+  Time since last request: 0.000155 seconds.
+  path: Assets/Hexlands_LowPolyStyle/Prefabs/HexTile_Diamond.prefab
+  artifactKey: Guid(3b1bf2bdbb915ea458933b1fe51224fc) Importer(815301076,1909f56bfc062723c751e8b465ee728b)
+Start importing Assets/Hexlands_LowPolyStyle/Prefabs/HexTile_Diamond.prefab using Guid(3b1bf2bdbb915ea458933b1fe51224fc) Importer(815301076,1909f56bfc062723c751e8b465ee728b)  -> (artifact id: '7423dded0c5f42b35d4b7b22e15307c7') in 0.040459 seconds
+  Import took 0.044062 seconds .
+
+========================================================================
+Received Import Request.
+  Time since last request: 0.000140 seconds.
+  path: Assets/Hexlands_LowPolyStyle/Prefabs/HexTile_Coal.prefab
+  artifactKey: Guid(f7ff2900d66e7bc4fa8b3214486aa170) Importer(815301076,1909f56bfc062723c751e8b465ee728b)
+Start importing Assets/Hexlands_LowPolyStyle/Prefabs/HexTile_Coal.prefab using Guid(f7ff2900d66e7bc4fa8b3214486aa170) Importer(815301076,1909f56bfc062723c751e8b465ee728b)  -> (artifact id: 'f478b947056d72a80520ed1554e11a9b') in 0.065316 seconds
+  Import took 0.074600 seconds .
+
+========================================================================
+Received Import Request.
+  Time since last request: 0.000183 seconds.
+  path: Assets/Hexlands_LowPolyStyle/Prefabs/HexTile_Wasteland.prefab
+  artifactKey: Guid(2fb98c264fc22154ca2c06b5921a1717) Importer(815301076,1909f56bfc062723c751e8b465ee728b)
+Start importing Assets/Hexlands_LowPolyStyle/Prefabs/HexTile_Wasteland.prefab using Guid(2fb98c264fc22154ca2c06b5921a1717) Importer(815301076,1909f56bfc062723c751e8b465ee728b)  -> (artifact id: 'e63137da643028111ea496557baf396a') in 0.081401 seconds
+  Import took 0.085517 seconds .
+
+========================================================================
+Received Import Request.
+  Time since last request: 0.000191 seconds.
+  path: Assets/Hexlands_LowPolyStyle/Prefabs/HexTile_Clay.prefab
+  artifactKey: Guid(d4c13e0a31c558d44a8f388a79193a00) Importer(815301076,1909f56bfc062723c751e8b465ee728b)
+Start importing Assets/Hexlands_LowPolyStyle/Prefabs/HexTile_Clay.prefab using Guid(d4c13e0a31c558d44a8f388a79193a00) Importer(815301076,1909f56bfc062723c751e8b465ee728b)  -> (artifact id: '31110daecf0172206d8692f63835e491') in 0.090861 seconds
+  Import took 0.095221 seconds .
+
+========================================================================
+Received Import Request.
+  Time since last request: 0.000170 seconds.
+  path: Assets/Hexlands_LowPolyStyle/Prefabs/HexTile_Lake.prefab
+  artifactKey: Guid(dc899da57486f4c4fa53c3bb800568d6) Importer(815301076,1909f56bfc062723c751e8b465ee728b)
+Start importing Assets/Hexlands_LowPolyStyle/Prefabs/HexTile_Lake.prefab using Guid(dc899da57486f4c4fa53c3bb800568d6) Importer(815301076,1909f56bfc062723c751e8b465ee728b)  -> (artifact id: 'c50a6a4bd43395f4319bea1a0a81afdd') in 0.051041 seconds
+  Import took 0.055145 seconds .
+
+========================================================================
+Received Import Request.
+  Time since last request: 0.000174 seconds.
+  path: Assets/Hexlands_LowPolyStyle/Prefabs/HexTile_Pasture.prefab
+  artifactKey: Guid(dcf682d7e73d63e4db2f3cea8bdac239) Importer(815301076,1909f56bfc062723c751e8b465ee728b)
+Start importing Assets/Hexlands_LowPolyStyle/Prefabs/HexTile_Pasture.prefab using Guid(dcf682d7e73d63e4db2f3cea8bdac239) Importer(815301076,1909f56bfc062723c751e8b465ee728b)  -> (artifact id: '1c8d70e4a8af6b5b90bd1ba540a6895d') in 0.042058 seconds
+  Import took 0.056382 seconds .
+
+========================================================================
+Received Import Request.
+  Time since last request: 0.000185 seconds.
+  path: Assets/Hexlands_LowPolyStyle/Prefabs/HexTile_Water.prefab
+  artifactKey: Guid(f5738bfb06b8b664f8165c74ec50881a) Importer(815301076,1909f56bfc062723c751e8b465ee728b)
+Start importing Assets/Hexlands_LowPolyStyle/Prefabs/HexTile_Water.prefab using Guid(f5738bfb06b8b664f8165c74ec50881a) Importer(815301076,1909f56bfc062723c751e8b465ee728b)  -> (artifact id: 'aaab76273d0c9a2aa2d05eb24b4be500') in 0.069550 seconds
+  Import took 0.085431 seconds .
+
+========================================================================
+Received Import Request.
+  Time since last request: 0.000214 seconds.
+  path: Assets/Hexlands_LowPolyStyle/Prefabs/HexTile_Gold.prefab
+  artifactKey: Guid(3c21bb32e8e806e4fa9258820dfebadf) Importer(815301076,1909f56bfc062723c751e8b465ee728b)
+Start importing Assets/Hexlands_LowPolyStyle/Prefabs/HexTile_Gold.prefab using Guid(3c21bb32e8e806e4fa9258820dfebadf) Importer(815301076,1909f56bfc062723c751e8b465ee728b)  -> (artifact id: '8282a71b07d52cfb55280204671a3eae') in 0.057714 seconds
+  Import took 0.061955 seconds .
+
+========================================================================
+Received Import Request.
+  Time since last request: 0.000189 seconds.
+  path: Assets/Hexlands_LowPolyStyle/Prefabs/HexTile_River.prefab
+  artifactKey: Guid(db872996fbfe6514f8d44df93b2d8380) Importer(815301076,1909f56bfc062723c751e8b465ee728b)
+Start importing Assets/Hexlands_LowPolyStyle/Prefabs/HexTile_River.prefab using Guid(db872996fbfe6514f8d44df93b2d8380) Importer(815301076,1909f56bfc062723c751e8b465ee728b)  -> (artifact id: '34cdc80226b05df47ab9ce24fdd1de15') in 0.057903 seconds
+  Import took 0.072040 seconds .
 
 ========================================================================
 Received Prepare
 Registering precompiled user dll's ...
-Registered in 0.000722 seconds.
+Registered in 0.001197 seconds.
 Begin MonoManager ReloadAssembly
 Native extension for WindowsStandalone target not found
 Native extension for WebGL target not found
-Refreshing native plugins compatible for Editor in 0.39 ms, found 0 plugins.
+Refreshing native plugins compatible for Editor in 0.43 ms, found 0 plugins.
 Preloading 0 native plugins for Editor in 0.00 ms.
 Invoked RoslynAnalysisRunner static constructor.
 RoslynAnalysisRunner will not be running.
 RoslynAnalysisRunner has terminated.
 Mono: successfully reloaded assembly
-- Completed reload, in  0.721 seconds
-Platform modules already initialized, skipping
-Shader 'Universal Render Pipeline/Particles/Lit': fallback shader 'Universal Render Pipeline/Particles/SimpleLit' not found
-Refreshing native plugins compatible for Editor in 0.42 ms, found 0 plugins.
-Preloading 0 native plugins for Editor in 0.00 ms.
-Unloading 2459 Unused Serialized files (Serialized files now loaded: 0)
-System memory in use before: 117.7 MB.
-System memory in use after: 117.9 MB.
-
-Unloading 6 unused Assets to reduce memory usage. Loaded Objects now: 3064.
-Total: 1.990400 ms (FindLiveObjects: 0.235800 ms CreateObjectMapping: 0.060100 ms MarkObjects: 1.676200 ms  DeleteObjects: 0.017300 ms)
-
-========================================================================
-Received Import Request.
-  Time since last request: 14887.314179 seconds.
-  path: Assets/Prefabs/HexTop_Pasture.prefab
-  artifactKey: Guid(c4c6503ae38da0747b887201515f2b38) Importer(815301076,1909f56bfc062723c751e8b465ee728b)
-Start importing Assets/Prefabs/HexTop_Pasture.prefab using Guid(c4c6503ae38da0747b887201515f2b38) Importer(815301076,1909f56bfc062723c751e8b465ee728b)  -> (artifact id: 'bd401240a2ef6e9ab043f83ec5c55b48') in 0.126857 seconds
-  Import took 0.130875 seconds .
-
-========================================================================
-Received Import Request.
-  Time since last request: 17.727759 seconds.
-  path: Assets/Prefabs/HexTop_Pasture.prefab
-  artifactKey: Guid(c4c6503ae38da0747b887201515f2b38) Importer(815301076,1909f56bfc062723c751e8b465ee728b)
-Start importing Assets/Prefabs/HexTop_Pasture.prefab using Guid(c4c6503ae38da0747b887201515f2b38) Importer(815301076,1909f56bfc062723c751e8b465ee728b)  -> (artifact id: '013c25bcec41a6512781c5ad3f15ee97') in 0.007698 seconds
-  Import took 0.020480 seconds .
-
-========================================================================
-Received Import Request.
-  Time since last request: 12.864027 seconds.
-  path: Assets/Prefabs/HexTop_Pasture.prefab
-  artifactKey: Guid(c4c6503ae38da0747b887201515f2b38) Importer(815301076,1909f56bfc062723c751e8b465ee728b)
-Start importing Assets/Prefabs/HexTop_Pasture.prefab using Guid(c4c6503ae38da0747b887201515f2b38) Importer(815301076,1909f56bfc062723c751e8b465ee728b)  -> (artifact id: 'bc0858cf4d46cf28e5221c0f13b15e37') in 0.007220 seconds
-  Import took 0.010710 seconds .
-
-========================================================================
-Received Prepare
-Registering precompiled user dll's ...
-Registered in 0.001010 seconds.
-Begin MonoManager ReloadAssembly
-Native extension for WindowsStandalone target not found
-Native extension for WebGL target not found
-Refreshing native plugins compatible for Editor in 0.39 ms, found 0 plugins.
-Preloading 0 native plugins for Editor in 0.00 ms.
-Invoked RoslynAnalysisRunner static constructor.
-RoslynAnalysisRunner will not be running.
-RoslynAnalysisRunner has terminated.
-Mono: successfully reloaded assembly
-- Completed reload, in  0.762 seconds
+- Completed reload, in  0.852 seconds
 Platform modules already initialized, skipping
 Shader 'Universal Render Pipeline/Particles/Lit': fallback shader 'Universal Render Pipeline/Particles/SimpleLit' not found
 Refreshing native plugins compatible for Editor in 0.43 ms, found 0 plugins.
 Preloading 0 native plugins for Editor in 0.00 ms.
 Unloading 2459 Unused Serialized files (Serialized files now loaded: 0)
 System memory in use before: 117.8 MB.
-System memory in use after: 118.1 MB.
+System memory in use after: 118.0 MB.
 
-Unloading 6 unused Assets to reduce memory usage. Loaded Objects now: 3103.
-Total: 2.094200 ms (FindLiveObjects: 0.281500 ms CreateObjectMapping: 0.056100 ms MarkObjects: 1.739300 ms  DeleteObjects: 0.016200 ms)
+Unloading 6 unused Assets to reduce memory usage. Loaded Objects now: 3064.
+Total: 1.850600 ms (FindLiveObjects: 0.288900 ms CreateObjectMapping: 0.059200 ms MarkObjects: 1.486100 ms  DeleteObjects: 0.015400 ms)
 
-AssetImportWorkerClient::OnTransportError - code=2 error=End of file
