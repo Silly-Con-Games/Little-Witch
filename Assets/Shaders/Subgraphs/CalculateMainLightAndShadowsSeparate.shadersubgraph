@@ -167,6 +167,20 @@
                 "m_Node": {
                     "m_Id": "ba5ee378dcd9478dbcbc1214725edad0"
                 },
+                "m_SlotId": 1
+            },
+            "m_InputSlot": {
+                "m_Node": {
+                    "m_Id": "e9856a09cf614652b6bbb6a827dd6f97"
+                },
+                "m_SlotId": 5
+            }
+        },
+        {
+            "m_OutputSlot": {
+                "m_Node": {
+                    "m_Id": "ba5ee378dcd9478dbcbc1214725edad0"
+                },
                 "m_SlotId": 2
             },
             "m_InputSlot": {
@@ -748,6 +762,29 @@
 {
     "m_SGVersion": 0,
     "m_Type": "UnityEditor.ShaderGraph.Vector3MaterialSlot",
+    "m_ObjectId": "7bc45dffb4684a3189d6feaf15ff12af",
+    "m_Id": 5,
+    "m_DisplayName": "LightDirection",
+    "m_SlotType": 0,
+    "m_Hidden": false,
+    "m_ShaderOutputName": "LightDirection",
+    "m_StageCapability": 3,
+    "m_Value": {
+        "x": 0.0,
+        "y": 0.0,
+        "z": 0.0
+    },
+    "m_DefaultValue": {
+        "x": 0.0,
+        "y": 0.0,
+        "z": 0.0
+    },
+    "m_Labels": []
+}
+
+{
+    "m_SGVersion": 0,
+    "m_Type": "UnityEditor.ShaderGraph.Vector3MaterialSlot",
     "m_ObjectId": "8016313c7b6c4b0caa3baa0249abee5b",
     "m_Id": 3,
     "m_DisplayName": "Color",
@@ -1296,6 +1333,9 @@
         },
         {
             "m_Id": "69aa26cd15cd4934b4ab4352c7613721"
+        },
+        {
+            "m_Id": "7bc45dffb4684a3189d6feaf15ff12af"
         }
     ],
     "synonyms": [],
