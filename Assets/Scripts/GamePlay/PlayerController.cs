@@ -73,7 +73,7 @@ public class PlayerController : MonoBehaviour, IDamagable
         {
             upVelocity = 0;
             if (Input.GetKey(KeyCode.Space))
-                upVelocity += Mathf.Sqrt(jumpHeight * -3f * gravity);           
+                upVelocity += Mathf.Sqrt(jumpHeight * -3f * gravity);
         }
         else
             upVelocity += gravity * delta;
@@ -99,7 +99,7 @@ public class PlayerController : MonoBehaviour, IDamagable
         bulletInstanceTrans.rotation = transform.rotation;
     }
 
-    public void ReceiveDamage(float amount) 
+    public void ReceiveDamage(float amount)
     {
         if ((health -= amount) <= 0) Destroy(gameObject);
     }
