@@ -25,8 +25,8 @@ public abstract class EnemyAI : MonoBehaviour, IDamagableObject
     State state;
     private SecondaryState secondaryState;
 
-    [SerializeField]
-    private float stunTime;
+    //[SerializeField]
+    //private float stunTime;
     
     private float stunDeltaTime;
     
@@ -84,7 +84,7 @@ public abstract class EnemyAI : MonoBehaviour, IDamagableObject
         attackTime = -1f;
         chasingTime = 3f;
 
-        stunTime = 3;
+        //stunTime = 3;
         stunDeltaTime = -1;
         
         chasingDeltaTime = -1f;
@@ -154,6 +154,7 @@ public abstract class EnemyAI : MonoBehaviour, IDamagableObject
             agent.isStopped = true;
         }
     }
+
     private void Chase()
     {
         if (!IsPlayerInRange(maxRangeToPlayer))
@@ -236,7 +237,7 @@ public abstract class EnemyAI : MonoBehaviour, IDamagableObject
         if ((healthPoints -= amount) <= 0) Destroy(gameObject);
     }
 
-    public EType GetType()
+    public new EType GetType()
     {
         return EType.Enemy;
     }

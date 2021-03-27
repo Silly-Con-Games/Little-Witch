@@ -5,8 +5,7 @@ public class PlayerController : MonoBehaviour, IDamagableObject
     public GameObject bulletPrefab;
     public float speed = 3;
     public float health = 20;
-
-    // Update is called once per frame
+	
     void Update()
     {
         Vector3 velocity = Vector3.zero;
