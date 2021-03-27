@@ -37957,6 +37957,58 @@ Transform:
   m_CorrespondingSourceObject: {fileID: 116529282015228155, guid: c4c6503ae38da0747b887201515f2b38, type: 3}
   m_PrefabInstance: {fileID: 1152406028}
   m_PrefabAsset: {fileID: 0}
+--- !u!1 &1154194069
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 1154194071}
+  - component: {fileID: 1154194070}
+  m_Layer: 0
+  m_Name: GlobalConfig
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!114 &1154194070
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1154194069}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 7b5458f442cd3f44ab3a83e9aee0280e, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  DefaultConfigFileName: defaultConfig.json
+  loadFileName: 
+  saveFileName: 
+  globalConfig:
+    witchConfig:
+      movementSpeed: 100
+      secondaryAbility:
+        attackSpeed: 10
+        damage: 17
+--- !u!4 &1154194071
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1154194069}
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: -9.410683, y: 12.21942, z: 10.406182}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_Children: []
+  m_Father: {fileID: 0}
+  m_RootOrder: 30
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1001 &1167053893
 PrefabInstance:
   m_ObjectHideFlags: 0

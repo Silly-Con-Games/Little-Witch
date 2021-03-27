@@ -1,0 +1,9 @@
+{
+    "witchConfig": {
+        "movementSpeed": 100.0,
+        "secondaryAbility": {
+            "attackSpeed": 10.0,
+            "damage": 17.0
+        }
+    }
+}
