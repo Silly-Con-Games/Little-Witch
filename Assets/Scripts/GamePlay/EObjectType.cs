@@ -1,4 +1,4 @@
-public enum EType {
+public enum EObjectType {
     Enemy,
     Player,
     Unknown = default

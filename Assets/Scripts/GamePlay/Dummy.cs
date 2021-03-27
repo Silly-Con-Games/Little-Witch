@@ -2,9 +2,9 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-public class Dummy : MonoBehaviour, IDamagableObject
+public class Dummy : MonoBehaviour, IDamagable, IRootable
 {
-    public EType Type = EType.Enemy;
+    public EObjectType Type = EObjectType.Enemy;
     public float Health = 10;
     public void ReceiveDamage(float amount)
     {
@@ -17,6 +17,10 @@ public class Dummy : MonoBehaviour, IDamagableObject
         };
     }
 
-    EType IDamagableObject.GetType() => Type;
+    public void ReceiveRoot(float duration)
+    {
+        Debug.Log($"I cannot move for {duration} seconds - {gameObject.name}");
+    }
 
+    EObjectType IObjectType.GetObjectType() => Type;
 }

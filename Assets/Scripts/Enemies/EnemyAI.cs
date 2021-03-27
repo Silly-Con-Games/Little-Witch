@@ -5,7 +5,7 @@ using UnityEngine;
 using UnityEngine.AI;
 using Random = UnityEngine.Random;
 
-public abstract class EnemyAI : MonoBehaviour, IDamagableObject
+public abstract class EnemyAI : MonoBehaviour, IDamagable
 {
     enum State
     {
@@ -236,8 +236,8 @@ public abstract class EnemyAI : MonoBehaviour, IDamagableObject
         if ((healthPoints -= amount) <= 0) Destroy(gameObject);
     }
 
-    public EType GetType()
+    public EObjectType GetObjectType()
     {
-        return EType.Enemy;
+        return EObjectType.Enemy;
     }
 }

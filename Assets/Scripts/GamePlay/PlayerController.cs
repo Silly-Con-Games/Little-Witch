@@ -1,7 +1,7 @@
 using System;
 using UnityEngine;
 
-public class PlayerController : MonoBehaviour, IDamagableObject
+public class PlayerController : MonoBehaviour, IDamagable
 {
     public CharacterController characterController;
     public GameObject bulletPrefab;
@@ -104,5 +104,5 @@ public class PlayerController : MonoBehaviour, IDamagableObject
         if ((health -= amount) <= 0) Destroy(gameObject);
     }
 
-    EType IDamagableObject.GetType() => EType.Player;
+    public EObjectType GetObjectType() => EObjectType.Player;
 }

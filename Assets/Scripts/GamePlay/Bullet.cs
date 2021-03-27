@@ -2,7 +2,7 @@ using UnityEngine;
 
 public class Bullet : MonoBehaviour
 {
-    public EType target = EType.Unknown;
+    public EObjectType target = EObjectType.Unknown;
     public float damage = 0f;
     public float speed = 0f;
     public float lifetime = 5;
@@ -19,12 +19,12 @@ public class Bullet : MonoBehaviour
     private void OnTriggerEnter(Collider collision)
     {
         var other = collision.gameObject;
-        var damagable = other.GetComponent<IDamagableObject>();
+        var damagable = other.GetComponent<IDamagable>();
         if(damagable == null)
         {
             Destroy(gameObject);
         }            
-        else if (damagable.GetType() == target)
+        else if (damagable.GetObjectType() == target)
         {
             Debug.Log("Bullet hit target!");
             damagable.ReceiveDamage(damage);
