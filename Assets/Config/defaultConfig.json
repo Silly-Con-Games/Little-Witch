@@ -1,9 +1,12 @@
 {
     "witchConfig": {
-        "movementSpeed": 100.0,
+        "health": 20.0,
+        "movementSpeed": 3.0,
         "secondaryAbility": {
-            "attackSpeed": 10.0,
-            "damage": 17.0
+            "attacksPerSecond": 10.0,
+            "damage": 17.0,
+            "projectileSpeed": 20.0,
+            "maxRange": 15.0
         }
     }
 }
