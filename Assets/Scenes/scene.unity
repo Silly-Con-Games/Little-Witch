@@ -37446,7 +37446,8 @@ MonoBehaviour:
   target: 0
   damage: 0
   speed: 0
-  lifetime: 5
+  maxDistance: 0
+  origin: {x: 0, y: 0, z: 0}
 --- !u!135 &1140753839
 SphereCollider:
   m_ObjectHideFlags: 0
@@ -37991,10 +37992,14 @@ MonoBehaviour:
   saveFileName: 
   globalConfig:
     witchConfig:
-      movementSpeed: 100
+      health: 20
+      movementSpeed: 10
+      jumpHeight: 0
       secondaryAbility:
-        attackSpeed: 10
-        damage: 17
+        attacksPerSecond: 20
+        damage: 1
+        projectileSpeed: 20
+        maxRange: 12.5
 --- !u!4 &1154194071
 Transform:
   m_ObjectHideFlags: 0

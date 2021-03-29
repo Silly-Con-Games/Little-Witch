@@ -94,7 +94,6 @@ public class PlayerController : MonoBehaviour, IDamagable
             upVelocity += gravity * delta;
 
         velocity.y = upVelocity;
-        Debug.Log("Velocity is" + velocity);
 
         if (velocity.magnitude > 0)
             characterController.Move(velocity * delta);
@@ -129,9 +128,9 @@ public class PlayerController : MonoBehaviour, IDamagable
             if (timeTillReady <= 0 && Input.GetKey(KeyCode.Mouse0))
             {
                 timeTillReady += cooldown;
-                if (hit)
-                    ShootPrecise(ref mouseToWorld);
-                else
+                //if (hit)
+                //    ShootPrecise(ref mouseToWorld);
+                //else
                     Shoot();
             }
                 
