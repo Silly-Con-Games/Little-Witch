@@ -15,11 +15,11 @@ D:/UnityProjects/Little-Witch
 -logFile
 Logs/AssetImportWorker0.log
 -srvPort
-52084
+63738
 Successfully changed project path to: D:/UnityProjects/Little-Witch
 D:/UnityProjects/Little-Witch
 Using Asset Import Pipeline V2.
-Refreshing native plugins compatible for Editor in 50.51 ms, found 0 plugins.
+Refreshing native plugins compatible for Editor in 56.59 ms, found 0 plugins.
 Preloading 0 native plugins for Editor in 0.00 ms.
 Initialize engine version: 2020.3.0f1 (c7b5465681fb)
 [Subsystems] Discovering subsystems at path C:/Program Files/Unity/Hub/Editor/2020.3.0f1/Editor/Data/Resources/UnitySubsystems
@@ -35,142 +35,118 @@ Initialize mono
 Mono path[0] = 'C:/Program Files/Unity/Hub/Editor/2020.3.0f1/Editor/Data/Managed'
 Mono path[1] = 'C:/Program Files/Unity/Hub/Editor/2020.3.0f1/Editor/Data/MonoBleedingEdge/lib/mono/unityjit'
 Mono config path = 'C:/Program Files/Unity/Hub/Editor/2020.3.0f1/Editor/Data/MonoBleedingEdge/etc'
-Using monoOptions --debugger-agent=transport=dt_socket,embedding=1,server=y,suspend=n,address=127.0.0.1:56852
+Using monoOptions --debugger-agent=transport=dt_socket,embedding=1,server=y,suspend=n,address=127.0.0.1:56548
 Begin MonoManager ReloadAssembly
 Registering precompiled unity dll's ...
 Register platform support module: C:/Program Files/Unity/Hub/Editor/2020.3.0f1/Editor/Data/PlaybackEngines/WebGLSupport/UnityEditor.WebGL.Extensions.dll
 Register platform support module: C:/Program Files/Unity/Hub/Editor/2020.3.0f1/Editor/Data/PlaybackEngines/WindowsStandaloneSupport/UnityEditor.WindowsStandalone.Extensions.dll
-Registered in 0.003144 seconds.
+Registered in 0.003232 seconds.
 Native extension for WindowsStandalone target not found
 Native extension for WebGL target not found
-Refreshing native plugins compatible for Editor in 61.66 ms, found 0 plugins.
+Refreshing native plugins compatible for Editor in 53.12 ms, found 0 plugins.
 Preloading 0 native plugins for Editor in 0.00 ms.
 Invoked RoslynAnalysisRunner static constructor.
 RoslynAnalysisRunner will not be running.
 RoslynAnalysisRunner has terminated.
 Mono: successfully reloaded assembly
-- Completed reload, in  1.495 seconds
+- Completed reload, in  1.535 seconds
 Platform modules already initialized, skipping
 Registering precompiled user dll's ...
-Registered in 0.001183 seconds.
+Registered in 0.001130 seconds.
 Begin MonoManager ReloadAssembly
 Native extension for WindowsStandalone target not found
 Native extension for WebGL target not found
-Refreshing native plugins compatible for Editor in 55.05 ms, found 0 plugins.
+Refreshing native plugins compatible for Editor in 56.50 ms, found 0 plugins.
 Preloading 0 native plugins for Editor in 0.00 ms.
 Invoked RoslynAnalysisRunner static constructor.
 RoslynAnalysisRunner will not be running.
 RoslynAnalysisRunner has terminated.
 Mono: successfully reloaded assembly
-- Completed reload, in  1.103 seconds
+- Completed reload, in  1.164 seconds
 Platform modules already initialized, skipping
 ========================================================================
 Worker process is ready to serve import requests
 Shader 'Universal Render Pipeline/Particles/Lit': fallback shader 'Universal Render Pipeline/Particles/SimpleLit' not found
 Shader 'Universal Render Pipeline/Particles/Lit': fallback shader 'Universal Render Pipeline/Particles/SimpleLit' not found
 Launched and connected shader compiler UnityShaderCompiler.exe after 0.05 seconds
-Refreshing native plugins compatible for Editor in 0.48 ms, found 0 plugins.
+Refreshing native plugins compatible for Editor in 0.52 ms, found 0 plugins.
 Preloading 0 native plugins for Editor in 0.00 ms.
 Unloading 2946 Unused Serialized files (Serialized files now loaded: 0)
 System memory in use before: 136.9 MB.
-System memory in use after: 134.8 MB.
+System memory in use after: 134.9 MB.
 
 Unloading 40 unused Assets to reduce memory usage. Loaded Objects now: 3374.
-Total: 3.874500 ms (FindLiveObjects: 0.484500 ms CreateObjectMapping: 0.081100 ms MarkObjects: 2.043500 ms  DeleteObjects: 1.263900 ms)
+Total: 3.966400 ms (FindLiveObjects: 0.401700 ms CreateObjectMapping: 0.081600 ms MarkObjects: 2.202900 ms  DeleteObjects: 1.278600 ms)
 
 ========================================================================
 Received Import Request.
-  path: Assets/Settings/ForwardRenderer 1.asset
-  artifactKey: Guid(a496c17e70247a7439b4a0fd71c91d40) Importer(815301076,1909f56bfc062723c751e8b465ee728b)
-Start importing Assets/Settings/ForwardRenderer 1.asset using Guid(a496c17e70247a7439b4a0fd71c91d40) Importer(815301076,1909f56bfc062723c751e8b465ee728b)  -> (artifact id: '28718b9234cae3f5982bd1f528ed1279') in 0.040909 seconds
-  Import took 0.066054 seconds .
+  path: Assets/VisualEffects/FireVFX.vfx
+  artifactKey: Guid(c83ba87e06c28064f8894641f12ddd4d) Importer(815301076,1909f56bfc062723c751e8b465ee728b)
+Start importing Assets/VisualEffects/FireVFX.vfx using Guid(c83ba87e06c28064f8894641f12ddd4d) Importer(815301076,1909f56bfc062723c751e8b465ee728b)  -> (artifact id: '607c9ff55c2f9bc583565d258da82f7f') in 0.612780 seconds
+  Import took 0.617740 seconds .
 
 ========================================================================
 Received Import Request.
-  Time since last request: 0.000647 seconds.
-  path: Assets/Settings/UniversalRP-HighQuality.asset
-  artifactKey: Guid(19ba41d7c0026c3459d37c2fe90c55a0) Importer(815301076,1909f56bfc062723c751e8b465ee728b)
-Start importing Assets/Settings/UniversalRP-HighQuality.asset using Guid(19ba41d7c0026c3459d37c2fe90c55a0) Importer(815301076,1909f56bfc062723c751e8b465ee728b)  -> (artifact id: '9fcd4a15f0db0578cf255b4966ba4c8f') in 0.007319 seconds
-  Import took 0.036103 seconds .
+  Time since last request: 10.074958 seconds.
+  path: Assets/VisualEffects/FireVFX.vfx
+  artifactKey: Guid(c83ba87e06c28064f8894641f12ddd4d) Importer(815301076,1909f56bfc062723c751e8b465ee728b)
+Start importing Assets/VisualEffects/FireVFX.vfx using Guid(c83ba87e06c28064f8894641f12ddd4d) Importer(815301076,1909f56bfc062723c751e8b465ee728b)  -> (artifact id: '0196a5f32aea6f5208f7377b5e4cea7c') in 0.003481 seconds
+  Import took 0.008097 seconds .
 
 ========================================================================
 Received Import Request.
-  Time since last request: 12.085580 seconds.
-  path: Assets/Settings/DisappearForwardRenderer.asset
-  artifactKey: Guid(a496c17e70247a7439b4a0fd71c91d40) Importer(815301076,1909f56bfc062723c751e8b465ee728b)
-Start importing Assets/Settings/DisappearForwardRenderer.asset using Guid(a496c17e70247a7439b4a0fd71c91d40) Importer(815301076,1909f56bfc062723c751e8b465ee728b)  -> (artifact id: 'ba19890e5054a177fdc4a6d37f3ed69e') in 0.008672 seconds
-  Import took 0.018864 seconds .
+  Time since last request: 0.005754 seconds.
+  path: Assets/VisualEffects/FireVFX.vfx
+  artifactKey: Guid(c83ba87e06c28064f8894641f12ddd4d) Importer(815301076,1909f56bfc062723c751e8b465ee728b)
+Start importing Assets/VisualEffects/FireVFX.vfx using Guid(c83ba87e06c28064f8894641f12ddd4d) Importer(815301076,1909f56bfc062723c751e8b465ee728b)  -> (artifact id: '0196a5f32aea6f5208f7377b5e4cea7c') in 0.003497 seconds
+  Import took 0.008095 seconds .
 
 ========================================================================
 Received Import Request.
-  Time since last request: 0.000678 seconds.
-  path: Assets/Settings/DisappearForwardRenderer.asset
-  artifactKey: Guid(a496c17e70247a7439b4a0fd71c91d40) Importer(815301076,1909f56bfc062723c751e8b465ee728b)
-Start importing Assets/Settings/DisappearForwardRenderer.asset using Guid(a496c17e70247a7439b4a0fd71c91d40) Importer(815301076,1909f56bfc062723c751e8b465ee728b)  -> (artifact id: 'ba19890e5054a177fdc4a6d37f3ed69e') in 0.004670 seconds
-  Import took 0.009140 seconds .
+  Time since last request: 17.004237 seconds.
+  path: Assets/VisualEffects/FireVFX.vfx
+  artifactKey: Guid(c83ba87e06c28064f8894641f12ddd4d) Importer(815301076,1909f56bfc062723c751e8b465ee728b)
+Start importing Assets/VisualEffects/FireVFX.vfx using Guid(c83ba87e06c28064f8894641f12ddd4d) Importer(815301076,1909f56bfc062723c751e8b465ee728b)  -> (artifact id: 'a9d715163d653699c578af1ad8c64a92') in 0.003548 seconds
+  Import took 0.020788 seconds .
 
 ========================================================================
 Received Import Request.
-  Time since last request: 1759.495356 seconds.
-  path: Assets/Settings/New Shader Graph.shadergraph
-  artifactKey: Guid(826231f3d4501c549b127ae170098e5e) Importer(815301076,1909f56bfc062723c751e8b465ee728b)
-Start importing Assets/Settings/New Shader Graph.shadergraph using Guid(826231f3d4501c549b127ae170098e5e) Importer(815301076,1909f56bfc062723c751e8b465ee728b)  -> (artifact id: '1291aedf3f75425e36471974a9cae634') in 0.011337 seconds
-  Import took 0.024688 seconds .
+  Time since last request: 114.017172 seconds.
+  path: Assets/Rendering
+  artifactKey: Guid(0735c275001a2c84dafdb30deced5d8d) Importer(815301076,1909f56bfc062723c751e8b465ee728b)
+Start importing Assets/Rendering using Guid(0735c275001a2c84dafdb30deced5d8d) Importer(815301076,1909f56bfc062723c751e8b465ee728b)  -> (artifact id: '953cdaa41cf659390619b0c4a422c2c1') in 0.021888 seconds
+  Import took 0.040082 seconds .
 
 ========================================================================
 Received Import Request.
-  Time since last request: 3.385282 seconds.
-  path: Assets/Settings/New Shader Graph.shadergraph
-  artifactKey: Guid(826231f3d4501c549b127ae170098e5e) Importer(815301076,1909f56bfc062723c751e8b465ee728b)
-Start importing Assets/Settings/New Shader Graph.shadergraph using Guid(826231f3d4501c549b127ae170098e5e) Importer(815301076,1909f56bfc062723c751e8b465ee728b)  -> (artifact id: '1291aedf3f75425e36471974a9cae634') in 0.004261 seconds
-  Import took 0.009233 seconds .
+  Time since last request: 43.167641 seconds.
+  path: Assets/Materials/CharMat.mat
+  artifactKey: Guid(74803b28999cb864a854e249461bb0ea) Importer(815301076,1909f56bfc062723c751e8b465ee728b)
+Start importing Assets/Materials/CharMat.mat using Guid(74803b28999cb864a854e249461bb0ea) Importer(815301076,1909f56bfc062723c751e8b465ee728b)  -> (artifact id: '681915f83f5fb79d248ba7e9b15efa78') in 0.234496 seconds
+  Import took 0.239299 seconds .
 
 ========================================================================
 Received Import Request.
-  Time since last request: 24.447658 seconds.
-  path: Assets/Settings/New Shader Graph 1.shadergraph
-  artifactKey: Guid(f3f8e1fcf8c2f2e4d8dbc6d0747417aa) Importer(815301076,1909f56bfc062723c751e8b465ee728b)
-Start importing Assets/Settings/New Shader Graph 1.shadergraph using Guid(f3f8e1fcf8c2f2e4d8dbc6d0747417aa) Importer(815301076,1909f56bfc062723c751e8b465ee728b)  -> (artifact id: '5fd3a549839295065d494f1e34999a84') in 0.007407 seconds
-  Import took 0.037823 seconds .
+  Time since last request: 17.345806 seconds.
+  path: Assets/Materials/Biomes
+  artifactKey: Guid(6126dfe3e91902d4fa86f2e2bb7cab53) Importer(815301076,1909f56bfc062723c751e8b465ee728b)
+Start importing Assets/Materials/Biomes using Guid(6126dfe3e91902d4fa86f2e2bb7cab53) Importer(815301076,1909f56bfc062723c751e8b465ee728b)  -> (artifact id: '4f7f0bdb9c4e024323ac326255d4fb62') in 0.005935 seconds
+  Import took 0.010456 seconds .
 
 ========================================================================
 Received Import Request.
-  Time since last request: 0.135329 seconds.
-  path: Assets/Settings/New Shader Graph 1.shadergraph
-  artifactKey: Guid(f3f8e1fcf8c2f2e4d8dbc6d0747417aa) Importer(815301076,1909f56bfc062723c751e8b465ee728b)
-Start importing Assets/Settings/New Shader Graph 1.shadergraph using Guid(f3f8e1fcf8c2f2e4d8dbc6d0747417aa) Importer(815301076,1909f56bfc062723c751e8b465ee728b)  -> (artifact id: '5fd3a549839295065d494f1e34999a84') in 0.004238 seconds
-  Import took 0.009677 seconds .
+  Time since last request: 5.988656 seconds.
+  path: Assets/Materials/Biomes/GrassMat.mat
+  artifactKey: Guid(83f5f5ed47935434cbb9003fec02895e) Importer(815301076,1909f56bfc062723c751e8b465ee728b)
+Start importing Assets/Materials/Biomes/GrassMat.mat using Guid(83f5f5ed47935434cbb9003fec02895e) Importer(815301076,1909f56bfc062723c751e8b465ee728b)  -> (artifact id: '14b264471629a999cc61a724dfc4d816') in 0.047302 seconds
+  Import took 0.052167 seconds .
 
 ========================================================================
 Received Import Request.
-  Time since last request: 33.854346 seconds.
-  path: Assets/Settings/DisappearForwardRenderer.asset
-  artifactKey: Guid(a496c17e70247a7439b4a0fd71c91d40) Importer(815301076,1909f56bfc062723c751e8b465ee728b)
-Start importing Assets/Settings/DisappearForwardRenderer.asset using Guid(a496c17e70247a7439b4a0fd71c91d40) Importer(815301076,1909f56bfc062723c751e8b465ee728b)  -> (artifact id: 'b1c0f5633dc3c7524998d6430e25f9b0') in 0.017486 seconds
-  Import took 0.026520 seconds .
-
-========================================================================
-Received Import Request.
-  Time since last request: 0.000194 seconds.
-  path: Assets/Settings/UniversalRP-HighQuality.asset
-  artifactKey: Guid(19ba41d7c0026c3459d37c2fe90c55a0) Importer(815301076,1909f56bfc062723c751e8b465ee728b)
-Start importing Assets/Settings/UniversalRP-HighQuality.asset using Guid(19ba41d7c0026c3459d37c2fe90c55a0) Importer(815301076,1909f56bfc062723c751e8b465ee728b)  -> (artifact id: '7574c97b6af05f4711628d9f533a895e') in 0.009788 seconds
-  Import took 0.021626 seconds .
-
-========================================================================
-Received Import Request.
-  Time since last request: 148.988512 seconds.
-  path: Assets/Settings/brickwork_normal-map.jpg
-  artifactKey: Guid(054f71b9f5752c34b95a861398687893) Importer(815301076,1909f56bfc062723c751e8b465ee728b)
-Start importing Assets/Settings/brickwork_normal-map.jpg using Guid(054f71b9f5752c34b95a861398687893) Importer(815301076,1909f56bfc062723c751e8b465ee728b)  -> (artifact id: 'eec9bb4701d8b4110632a25ba98f4a42') in 0.053055 seconds
-  Import took 0.057711 seconds .
-
-========================================================================
-Received Import Request.
-  Time since last request: 72.046092 seconds.
-  path: Assets/Scripts/SimpleCameraController.cs
-  artifactKey: Guid(be76e5f14cfee674cb30b491fb72b09b) Importer(815301076,1909f56bfc062723c751e8b465ee728b)
-Start importing Assets/Scripts/SimpleCameraController.cs using Guid(be76e5f14cfee674cb30b491fb72b09b) Importer(815301076,1909f56bfc062723c751e8b465ee728b)  -> (artifact id: '7c2dee7d6836e3b03ef1e0893a05e267') in 0.016385 seconds
-  Import took 0.043263 seconds .
+  Time since last request: 0.001361 seconds.
+  path: Assets/Materials/Biomes/GrassMat.mat
+  artifactKey: Guid(83f5f5ed47935434cbb9003fec02895e) Importer(815301076,1909f56bfc062723c751e8b465ee728b)
+Start importing Assets/Materials/Biomes/GrassMat.mat using Guid(83f5f5ed47935434cbb9003fec02895e) Importer(815301076,1909f56bfc062723c751e8b465ee728b)  -> (artifact id: '14b264471629a999cc61a724dfc4d816') in 0.008828 seconds
+  Import took 0.013413 seconds .
 
 AssetImportWorkerClient::OnTransportError - code=2 error=End of file
