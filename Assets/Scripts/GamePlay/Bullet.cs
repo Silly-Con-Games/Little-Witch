@@ -5,14 +5,14 @@ public class Bullet : MonoBehaviour
     public EObjectType target = EObjectType.Unknown;
     public float damage = 0f;
     public float speed = 0f;
-    public float lifetime = 5;
+    public float maxDistance = 0;
+    public Vector3 origin;
     private void Update()
     {
         float delta = Time.deltaTime;
         transform.position += transform.forward * delta * speed;
 
-        lifetime -= delta;
-        if(lifetime < 0)
+        if(maxDistance > 0 && Vector3.Distance(origin, transform.position) >= maxDistance)
             Destroy(gameObject);
     }
     

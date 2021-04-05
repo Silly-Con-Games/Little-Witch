@@ -6,6 +6,7 @@ public class Dummy : MonoBehaviour, IDamagable, IRootable
 {
     public EObjectType Type = EObjectType.Enemy;
     public float Health = 10;
+
     public void ReceiveDamage(float amount)
     {
         Debug.Log($"I'm hit ({amount}) - {gameObject.name}");
@@ -14,7 +15,7 @@ public class Dummy : MonoBehaviour, IDamagable, IRootable
         {
             Debug.Log($"I died :( - {gameObject.name}");
             Destroy(gameObject);
-        };
+        }
     }
 
     public void ReceiveRoot(float duration)

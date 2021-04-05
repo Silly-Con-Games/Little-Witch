@@ -1,0 +1,28 @@
+{
+    "witchConfig": {
+        "health": 5.0,
+        "movementSpeed": 5.0,
+        "jumpHeight": 1.0,
+        "meeleeAbility": {
+            "cooldown": 0.30000001192092898,
+            "damage": 0.5
+        },
+        "chargeAbility": {
+            "damageMin": 0.5,
+            "damageMax": 1.0,
+            "distanceMin": 3.0,
+            "distanceMax": 6.0,
+            "explosionRadiusMin": 2.0,
+            "explosionRadiusMax": 4.0,
+            "explosionSpeedMin": 10.0,
+            "explosionSpeedMax": 15.0,
+            "spawnRadiusMin": 0.20000000298023225,
+            "spawnRadiusMax": 1.0,
+            "speedMin": 8.0,
+            "speedMax": 14.0,
+            "chargeTimeMax": 1.5,
+            "cooldown": 1.0,
+            "witchSlow": 0.30000001192092898
+        }
+    }
+}

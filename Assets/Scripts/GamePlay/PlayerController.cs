@@ -1,32 +1,66 @@
-using System;
 using UnityEngine;
+using Config;
+using UnityEngine.InputSystem;
 
 public class PlayerController : MonoBehaviour, IDamagable
 {
+    [Tooltip("If false its relative to camera")]
+    public bool movementRelativeToWitch = false;
     public CharacterController characterController;
-    public GameObject bulletPrefab;
-    public float speed = 3;
-    public float health = 20;
 
-    public float jumpHeight = 1.0f;
-
-    private const float gravity = -9.81f;
-    private float upVelocity = 0;
+    public ChargeAbility chargeAbility;
+    public MeleeAbility meeleeAbility;
 
     private Camera mainCamera;
     private Transform cameraTrans;
+
+    private Health health;
+
+    const float gravity = -9.81f;
+    float upVelocity = 0;
+    Vector2 inputVelocity;
+
+    float speed = 3;
+    float speedModifier = 1;
+    float jumpHeight = 1.0f;
+    bool wantsJump;
 
     private void Start()
     {
         mainCamera = Camera.main;
         cameraTrans = mainCamera.transform;
+        GlobalConfigManager.onConfigChanged.AddListener(ApplyConfig);
+        ApplyConfig();
     }
-    // Update is called once per frame
+
+    private void OnDestroy()
+    {
+        GlobalConfigManager.onConfigChanged.RemoveListener(ApplyConfig);
+    }
+
     void Update()
     {
         MoveUpdate();
 
-        Ray ray = mainCamera.ScreenPointToRay(Input.mousePosition);
+        if(chargeAbility.IsCharging)
+            chargeAbility.UpdateAnimation();
+    }
+
+    void ApplyConfig()
+    {
+        var witchConfig = GlobalConfigManager.GetWitchConfig();
+
+        speed = witchConfig.movementSpeed;
+        jumpHeight = witchConfig.jumpHeight;
+        health = new Health(witchConfig.health);
+        meeleeAbility.conf = witchConfig.meeleeAbility;
+        chargeAbility.conf = witchConfig.chargeAbility;
+    }
+
+    void MoveUpdate()
+    {
+        // Direction
+        Ray ray = mainCamera.ScreenPointToRay(Pointer.current.position.ReadValue());
 
         RaycastHit hit;
         bool didHit = false;
@@ -35,74 +69,87 @@ public class PlayerController : MonoBehaviour, IDamagable
             var targetPosition = hit.point;
             targetPosition.y = transform.position.y;
             transform.LookAt(targetPosition);
+
         }
 
-
-        if (Input.GetKeyDown(KeyCode.Mouse0))
-            if (didHit)
-                ShootPrecise(hit);
-            else
-                Shoot();
-    }
-
-
-
-    void MoveUpdate()
-    {
+        // Movement
         Vector3 forwardV = cameraTrans.forward;
         forwardV.y = 0;
         forwardV.Normalize();
         Vector3 rightV = cameraTrans.right;
-        Vector3 velocity = Vector3.zero;
+
+        Vector3 velocity;
+        if(!movementRelativeToWitch)
+            velocity = inputVelocity.y * forwardV + inputVelocity.x * rightV ; 
+        else
+            velocity = inputVelocity.y * transform.forward + inputVelocity.x * transform.right ; // relative to witch rotation
+
         float delta = Time.deltaTime;
 
-        if (Input.GetKey(KeyCode.D))
-            velocity += rightV;
-        if (Input.GetKey(KeyCode.A))
-            velocity -= rightV;
-
-        if (Input.GetKey(KeyCode.W))
-            velocity += forwardV;
-        if (Input.GetKey(KeyCode.S))
-            velocity -= forwardV;
-
         velocity.Normalize();
-        velocity *= speed;
+        velocity *= speed * speedModifier;
 
         if (characterController.isGrounded)
         {
             upVelocity = 0;
-            if (Input.GetKey(KeyCode.Space))
-                upVelocity += Mathf.Sqrt(jumpHeight * -3f * gravity);           
+            if (wantsJump)
+                upVelocity += Mathf.Sqrt(jumpHeight * -3f * gravity);
         }
         else
             upVelocity += gravity * delta;
-
+        wantsJump = false;
         velocity.y = upVelocity;
-        Debug.Log("Velocity is" + velocity);
 
         if (velocity.magnitude > 0)
             characterController.Move(velocity * delta);
     }
 
-    private void ShootPrecise(RaycastHit hit)
-    {
-        var bulletInstanceTrans = Instantiate(bulletPrefab).transform;
-        bulletInstanceTrans.position = transform.position;
-        bulletInstanceTrans.rotation = Quaternion.LookRotation( hit.point - transform.position );
+    public void OnMove(InputValue value)
+    {        
+        inputVelocity = value.Get<Vector2>();
     }
 
-    void Shoot()
+    public void OnJump(InputValue value)
     {
-        var bulletInstanceTrans = Instantiate(bulletPrefab).transform;
-        bulletInstanceTrans.position = transform.position;
-        bulletInstanceTrans.rotation = transform.rotation;
+        if(value.isPressed)
+            wantsJump = true;
     }
 
-    public void ReceiveDamage(float amount) 
+    public void OnMeleeAbility(InputValue value)
     {
-        if ((health -= amount) <= 0) Destroy(gameObject);
+        if(meeleeAbility.IsReady)
+            meeleeAbility.Attack();
+    }
+
+    public void OnChargeAbility(InputValue value)
+    {
+        if (value.isPressed && chargeAbility.IsReady())
+            chargeAbility.StartCharge();
+        else if (!value.isPressed && chargeAbility.IsCharging)
+            chargeAbility.FireCharged();
+    }
+
+    public void ReceiveDamage(float amount)
+    {
+        health.TakeDamage(amount);
+        if (health.IsDepleted) Destroy(gameObject);
     }
 
     public EObjectType GetObjectType() => EObjectType.Player;
+
+    public void SetSpeedModifier(float val)
+    {
+        speedModifier = val;
+    }
+
+    private class Health
+    {
+        private float maxHealth = 0;
+        private float health = 0;
+        public Health(float maxHealth) => health = this.maxHealth = maxHealth;
+        public bool IsDepleted => health <= 0;
+        public void ResetHealth() => health = maxHealth;
+        public void TakeDamage(float amount) => health = Mathf.Max(0, health - amount);
+        public void Heal(float amount) => health = Mathf.Min(maxHealth, health + amount);
+    }
 }

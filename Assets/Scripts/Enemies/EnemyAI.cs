@@ -21,54 +21,54 @@ public abstract class EnemyAI : MonoBehaviour, IDamagable
         Slow,
         None
     }
-    
+
     State state;
     private SecondaryState secondaryState;
 
-    [SerializeField]
-    private float stunTime;
-    
+    //[SerializeField]
+    //private float stunTime;
+
     private float stunDeltaTime;
-    
+
     [SerializeField]
     private float idleTime;
-    
+
     [SerializeField]
     private float attackTime;
-    
+
     [SerializeField]
     private float chasingTime;
 
     private float chasingDeltaTime;
-    
+
     private NavMeshAgent agent;
 
     private Vector3 startingPosition;
 
     [SerializeField]
     protected PlayerController playerController;
-    
+
     [SerializeField]
     private float moveRangeMin;
-    
+
     [SerializeField]
     private float moveRangeMax;
 
     [SerializeField]
     private float maxRangeToPlayer;
-    
+
     [SerializeField]
     private float attackRange;
 
     [SerializeField]
     private float speed;
-    
+
     [SerializeField]
     private float attackSpeed;
 
     [SerializeField]
     private float healthPoints;
-    
+
     void Start()
     {
         if (!playerController)
@@ -79,16 +79,16 @@ public abstract class EnemyAI : MonoBehaviour, IDamagable
         moveRangeMin = 4f;
         moveRangeMax = 4f;
         maxRangeToPlayer = 8f;
-        
+
         idleTime = -1f;
         attackTime = -1f;
         chasingTime = 3f;
 
-        stunTime = 3;
+        //stunTime = 3;
         stunDeltaTime = -1;
-        
+
         chasingDeltaTime = -1f;
-        
+
         agent = GetComponent<NavMeshAgent>();
         agent.autoBraking = false;
         speed = 2;
@@ -98,10 +98,9 @@ public abstract class EnemyAI : MonoBehaviour, IDamagable
         healthPoints = 20;
 
         secondaryState = SecondaryState.None;
-        
+
         state = State.Roam;
         Vector3 dest = GetRoamPosition();
-        Debug.Log(dest);
         agent.destination = dest;
     }
 
@@ -112,7 +111,7 @@ public abstract class EnemyAI : MonoBehaviour, IDamagable
             case SecondaryState.Stun:
                 if (stunDeltaTime > 0f)
                 {
-                    
+
                 }
 
                 break;
@@ -134,7 +133,7 @@ public abstract class EnemyAI : MonoBehaviour, IDamagable
             case State.Idle:
                 Idle();
                 break;
-            default: 
+            default:
                 break;
         }
 
@@ -147,13 +146,14 @@ public abstract class EnemyAI : MonoBehaviour, IDamagable
             state = State.Chase;
             return;
         }
-        
+
         if (!agent.pathPending && agent.remainingDistance < 0.5f)
         {
             state = State.Idle;
             agent.isStopped = true;
         }
     }
+
     private void Chase()
     {
         if (!IsPlayerInRange(maxRangeToPlayer))
