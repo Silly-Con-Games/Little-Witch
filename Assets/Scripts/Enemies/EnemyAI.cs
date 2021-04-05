@@ -101,7 +101,6 @@ public abstract class EnemyAI : MonoBehaviour, IDamagable
 
         state = State.Roam;
         Vector3 dest = GetRoamPosition();
-        Debug.Log(dest);
         agent.destination = dest;
     }
 
