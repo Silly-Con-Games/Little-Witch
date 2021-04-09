@@ -14,6 +14,8 @@ public class PlayerController : MonoBehaviour, IDamagable
     private Camera mainCamera;
     private Transform cameraTrans;
 
+    private Animator animator;
+
     private Health health;
 
     const float gravity = -9.81f;
@@ -29,6 +31,7 @@ public class PlayerController : MonoBehaviour, IDamagable
     {
         mainCamera = Camera.main;
         cameraTrans = mainCamera.transform;
+        animator = GetComponent<Animator>();
         GlobalConfigManager.onConfigChanged.AddListener(ApplyConfig);
         ApplyConfig();
     }
@@ -99,6 +102,12 @@ public class PlayerController : MonoBehaviour, IDamagable
             upVelocity += gravity * delta;
         wantsJump = false;
         velocity.y = upVelocity;
+
+        float velocityX = Vector3.Dot(velocity.normalized, transform.forward);
+        float velocityZ = Vector3.Dot(velocity.normalized, transform.right);
+
+        animator.SetFloat("VelocityX", velocityX, .1f, Time.deltaTime);
+        animator.SetFloat("VelocityZ", velocityZ, .1f, Time.deltaTime);
 
         if (velocity.magnitude > 0)
             characterController.Move(velocity * delta);
