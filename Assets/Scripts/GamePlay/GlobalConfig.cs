@@ -25,5 +25,26 @@ namespace Config
         public float projectileSpeed;
         public float maxRange;
     }
+
+    [Serializable]
+    public struct EnemyRangedConfig
+    {
+    }
+
+    [Serializable]
+    public struct EnemyMeleeConfig
+    {
+    }
+
+    [Serializable]
+    public struct EnemyBomberConfig
+    {
+    }
+
+    [Serializable]
+    public struct EnemyEnvDestroyerConfig
+    {
+    }
+
 }
 

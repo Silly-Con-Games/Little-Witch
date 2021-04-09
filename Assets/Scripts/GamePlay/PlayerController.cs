@@ -174,6 +174,7 @@ public class PlayerController : MonoBehaviour, IDamagable
 
     public void ReceiveDamage(float amount)
     {
+        Debug.Log("Taking damage: "+ amount);
         health.TakeDmg(amount);
         if (health.IsDepleted) Destroy(gameObject);
     }
