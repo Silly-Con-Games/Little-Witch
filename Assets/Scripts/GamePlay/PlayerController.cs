@@ -1,23 +1,29 @@
-using System;
 using UnityEngine;
 using Config;
+using UnityEngine.InputSystem;
 
 public class PlayerController : MonoBehaviour, IDamagable
 {
+    [Tooltip("If false its relative to camera")]
+    public bool movementRelativeToWitch = false;
     public CharacterController characterController;
-    public GameObject bulletPrefab;
 
-    float speed = 3;
-    float jumpHeight = 1.0f;
-
-    private const float gravity = -9.81f;
-    private float upVelocity = 0;
+    public ChargeAbility chargeAbility;
+    public MeleeAbility meeleeAbility;
 
     private Camera mainCamera;
     private Transform cameraTrans;
 
-    private SecondaryAbility secondaryAbility;
     private Health health;
+
+    const float gravity = -9.81f;
+    float upVelocity = 0;
+    Vector2 inputVelocity;
+
+    float speed = 3;
+    float speedModifier = 1;
+    float jumpHeight = 1.0f;
+    bool wantsJump;
 
     private void Start()
     {
@@ -32,24 +38,12 @@ public class PlayerController : MonoBehaviour, IDamagable
         GlobalConfigManager.onConfigChanged.RemoveListener(ApplyConfig);
     }
 
-
-    // Update is called once per frame
     void Update()
     {
         MoveUpdate();
 
-        Ray ray = mainCamera.ScreenPointToRay(Input.mousePosition);
-
-        RaycastHit hit;
-        bool didHit = false;
-        if (didHit = Physics.Raycast(ray, out hit, 1000))
-        {
-            var targetPosition = hit.point;
-            targetPosition.y = transform.position.y;
-            transform.LookAt(targetPosition);
-        }
-
-        secondaryAbility.Update(ref hit, didHit);
+        if(chargeAbility.IsCharging)
+            chargeAbility.UpdateAnimation();
     }
 
     void ApplyConfig()
@@ -59,125 +53,103 @@ public class PlayerController : MonoBehaviour, IDamagable
         speed = witchConfig.movementSpeed;
         jumpHeight = witchConfig.jumpHeight;
         health = new Health(witchConfig.health);
-        secondaryAbility = new SecondaryAbility(ref witchConfig.secondaryAbility, bulletPrefab, transform);
+        meeleeAbility.conf = witchConfig.meeleeAbility;
+        chargeAbility.conf = witchConfig.chargeAbility;
     }
 
     void MoveUpdate()
     {
+        // Direction
+        Ray ray = mainCamera.ScreenPointToRay(Pointer.current.position.ReadValue());
+
+        RaycastHit hit;
+        bool didHit = false;
+        if (didHit = Physics.Raycast(ray, out hit, 1000))
+        {
+            var targetPosition = hit.point;
+            targetPosition.y = transform.position.y;
+            transform.LookAt(targetPosition);
+
+        }
+
+        // Movement
         Vector3 forwardV = cameraTrans.forward;
         forwardV.y = 0;
         forwardV.Normalize();
         Vector3 rightV = cameraTrans.right;
-        Vector3 velocity = Vector3.zero;
+
+        Vector3 velocity;
+        if(!movementRelativeToWitch)
+            velocity = inputVelocity.y * forwardV + inputVelocity.x * rightV ; 
+        else
+            velocity = inputVelocity.y * transform.forward + inputVelocity.x * transform.right ; // relative to witch rotation
+
         float delta = Time.deltaTime;
 
-        if (Input.GetKey(KeyCode.D))
-            velocity += rightV;
-        if (Input.GetKey(KeyCode.A))
-            velocity -= rightV;
-
-        if (Input.GetKey(KeyCode.W))
-            velocity += forwardV;
-        if (Input.GetKey(KeyCode.S))
-            velocity -= forwardV;
-
         velocity.Normalize();
-        velocity *= speed;
+        velocity *= speed * speedModifier;
 
         if (characterController.isGrounded)
         {
             upVelocity = 0;
-            if (Input.GetKey(KeyCode.Space))
+            if (wantsJump)
                 upVelocity += Mathf.Sqrt(jumpHeight * -3f * gravity);
         }
         else
             upVelocity += gravity * delta;
-
+        wantsJump = false;
         velocity.y = upVelocity;
 
         if (velocity.magnitude > 0)
             characterController.Move(velocity * delta);
     }
 
-    private class SecondaryAbility
+    public void OnMove(InputValue value)
+    {        
+        inputVelocity = value.Get<Vector2>();
+    }
+
+    public void OnJump(InputValue value)
     {
-        private float damage;
-        private float cooldown;
-        private float timeTillReady = 0;
-        private float projectileSpeed;
-        private float maxDistance;
-        private GameObject projectile;
-        private Transform shootFrom;
+        if(value.isPressed)
+            wantsJump = true;
+    }
 
-        public SecondaryAbility(ref SecondaryAbConfig conf, GameObject projectile, Transform shootFrom)
-        {
-            this.projectile = projectile;
-            this.shootFrom = shootFrom;
+    public void OnMeleeAbility(InputValue value)
+    {
+        if(meeleeAbility.IsReady)
+            meeleeAbility.Attack();
+    }
 
-            damage = conf.damage;
-            cooldown = 1 / conf.attacksPerSecond;
-            projectileSpeed = conf.projectileSpeed;
-            maxDistance = conf.maxRange;
-        }
+    public void OnChargeAbility(InputValue value)
+    {
+        if (value.isPressed && chargeAbility.IsReady())
+            chargeAbility.StartCharge();
+        else if (!value.isPressed && chargeAbility.IsCharging)
+            chargeAbility.FireCharged();
+    }
 
-        public void Update(ref RaycastHit mouseToWorld, bool hit)
-        {
-            if (timeTillReady > 0)
-                timeTillReady -= Time.deltaTime;
+    public void ReceiveDamage(float amount)
+    {
+        health.TakeDamage(amount);
+        if (health.IsDepleted) Destroy(gameObject);
+    }
 
-            if (timeTillReady <= 0 && Input.GetKey(KeyCode.Mouse0))
-            {
-                timeTillReady += cooldown;
-                //if (hit)
-                //    ShootPrecise(ref mouseToWorld);
-                //else
-                    Shoot();
-            }
-                
-        }
-        void ShootPrecise(ref RaycastHit hit)
-        {
-            var proj = CreateProjectileInstance().transform;
-            proj.rotation = Quaternion.LookRotation(hit.point - shootFrom.position);
-        }
+    public EObjectType GetObjectType() => EObjectType.Player;
 
-        void Shoot()
-        {
-            var proj = CreateProjectileInstance().transform;
-            proj.rotation = shootFrom.rotation;
-        }
-
-        private GameObject CreateProjectileInstance()
-        {
-            var projectileInstance = Instantiate(projectile);
-            projectileInstance.transform.position = shootFrom.position;
-            var bull = projectileInstance.GetComponent<Bullet>();
-            bull.damage = damage;
-            bull.target = EObjectType.Enemy;
-            bull.speed = projectileSpeed;
-            bull.maxDistance = maxDistance;
-            bull.origin = shootFrom.position;
-            return projectileInstance;
-        }
+    public void SetSpeedModifier(float val)
+    {
+        speedModifier = val;
     }
 
     private class Health
     {
         private float maxHealth = 0;
         private float health = 0;
-        public Health(float maxHealth) => health = this.maxHealth = maxHealth;        
+        public Health(float maxHealth) => health = this.maxHealth = maxHealth;
         public bool IsDepleted => health <= 0;
         public void ResetHealth() => health = maxHealth;
-        public void TakeDmg(float amount) => health = Mathf.Max(0, health - amount);
+        public void TakeDamage(float amount) => health = Mathf.Max(0, health - amount);
         public void Heal(float amount) => health = Mathf.Min(maxHealth, health + amount);
     }
-
-    public void ReceiveDamage(float amount)
-    {
-        Debug.Log("Taking damage: "+ amount);
-        health.TakeDmg(amount);
-        if (health.IsDepleted) Destroy(gameObject);
-    }
-
-    public EObjectType GetObjectType() => EObjectType.Player;
 }

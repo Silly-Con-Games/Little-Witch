@@ -31,9 +31,7 @@ public class EnemiesSpawn : MonoBehaviour
     
     void Start()
     {
-        TEST_DELTA = 5f;
         spawnDelay = 5f; 
-        Spawn(EnemyType.EnvDestroyer, 3);
     }
 
     // spawns @number enemies of @enemyType type
@@ -60,30 +58,43 @@ public class EnemiesSpawn : MonoBehaviour
     private void SpawnSingleEnemy(EnemyType enemyType)
     {
         GameObject enemy = null;
-
+        
         switch (enemyType)
         {
-            case EnemyType.Ranged: 
-                enemy = Instantiate(rangedPrefab);
+            case EnemyType.Ranged:
+                enemy = Instantiate(
+                    rangedPrefab,
+                    EnemiesUtils.GetRoamPosition(transform.position, 0f, spawnRange),
+                    transform.rotation
+                );
+                enemy.GetComponent<EnemyRanged>().InitEnemy();
                 break;
-            case EnemyType.Melee: 
-                enemy = Instantiate(meleePrefab);
+            case EnemyType.Melee:
+                enemy = Instantiate(
+                    meleePrefab,
+                    EnemiesUtils.GetRoamPosition(transform.position, 0f, spawnRange),
+                    transform.rotation
+                );
+                enemy.GetComponent<EnemyMelee>().InitEnemy();
                 break;
-            case EnemyType.Bomber: 
-                enemy = Instantiate(bomberPrefab);
+            case EnemyType.Bomber:
+                enemy = Instantiate(
+                    bomberPrefab,
+                    EnemiesUtils.GetRoamPosition(transform.position, 0f, spawnRange),
+                    transform.rotation
+                );
+                enemy.GetComponent<EnemyBomber>().InitEnemy();
                 break;
-            case EnemyType.EnvDestroyer: 
-                enemy = Instantiate(envDestroyerPrefab);
+            case EnemyType.EnvDestroyer:
+                enemy = Instantiate(
+                    envDestroyerPrefab,
+                    EnemiesUtils.GetRoamPosition(transform.position, 0f, spawnRange),
+                    transform.rotation
+                );
+                enemy.GetComponent<EnemyEnvDestroyer>().InitEnemy();
                 break;
         }
         
-        enemy.transform.position = EnemiesUtils.GetRoamPosition(transform.position, 0f, spawnRange);
-        
-        /*
-        set up enemy target primary and secondary
-        if (enemy)
-            enemy.GetComponentInChildren<EnemyAI>().target = EObjectType.Player;
-        */
     }
 
 

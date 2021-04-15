@@ -94,7 +94,7 @@ GameObject:
   - component: {fileID: 5384379442950274121}
   - component: {fileID: 5384379442950274120}
   - component: {fileID: 5384379442950274119}
-  m_Layer: 0
+  m_Layer: 8
   m_Name: EnemyMelee
   m_TagString: Untagged
   m_Icon: {fileID: 0}

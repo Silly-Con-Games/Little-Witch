@@ -1,0 +1,54 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!21 &2100000
+Material:
+  serializedVersion: 6
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_Name: SandMat
+  m_Shader: {fileID: -6465566751694194690, guid: b5c2ba27e459ec047ae1f4417f554880, type: 3}
+  m_ShaderKeywords: MAIN_LIGHT_CALCULATE_SHADOWS _MAIN_LIGHT_SHADOWS_CASCADE _SHADOWS_SOFT
+  m_LightmapFlags: 4
+  m_EnableInstancingVariants: 0
+  m_DoubleSidedGI: 0
+  m_CustomRenderQueue: -1
+  stringTagMap: {}
+  disabledShaderPasses: []
+  m_SavedProperties:
+    serializedVersion: 3
+    m_TexEnvs:
+    - Texture2D_29dd14c08efa43cc8f180d11244419c1:
+        m_Texture: {fileID: 0}
+        m_Scale: {x: 1, y: 1}
+        m_Offset: {x: 0, y: 0}
+    - Texture2D_a79b476bdc0f428990ee6c5d896bf698:
+        m_Texture: {fileID: 0}
+        m_Scale: {x: 1, y: 1}
+        m_Offset: {x: 0, y: 0}
+    - unity_Lightmaps:
+        m_Texture: {fileID: 0}
+        m_Scale: {x: 1, y: 1}
+        m_Offset: {x: 0, y: 0}
+    - unity_LightmapsInd:
+        m_Texture: {fileID: 0}
+        m_Scale: {x: 1, y: 1}
+        m_Offset: {x: 0, y: 0}
+    - unity_ShadowMasks:
+        m_Texture: {fileID: 0}
+        m_Scale: {x: 1, y: 1}
+        m_Offset: {x: 0, y: 0}
+    m_Floats:
+    - BOOLEAN_1CFF860C7625425B8349E1993C622566: 1
+    - Boolean_9bf8a44e62ce4692a880c81cd6f86e25: 0
+    - Vector1_1b30bae435794c3a9628dee0c713045c: 1
+    - Vector1_20b349ad06aa40d08226274187966796: 0.42
+    - Vector1_91e1361a9ee348d18cb79bf6c730ea25: 0.1
+    - Vector1_cd5a1a9872ce47909cea6291fb5ebedc: 0.5
+    m_Colors:
+    - Color_6213b2a62945441991d47497badb0e5d: {r: 0, g: 0, b: 0, a: 1}
+    - Color_7060eabfe14e4de3852778f0b94dc983: {r: 0.8396226, g: 0.7736782, b: 0.3207992, a: 1}
+    - Color_c1ed1a8e4bc64693892e64428becd3f7: {r: 0, g: 0, b: 0, a: 1}
+    - Color_fbf991c427d54adfa06ba6969f9c864e: {r: 0.34667495, g: 0.5566038, b: 0.20216268, a: 1}
+  m_BuildTextureStacks: []

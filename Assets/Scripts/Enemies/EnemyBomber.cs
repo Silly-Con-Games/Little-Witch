@@ -8,11 +8,13 @@ public class EnemyBomber : EnemyAI
     [SerializeField]
     private GameObject bombPrefab;
 
-    void Start()
+    public override void InitEnemy()
     {
-        InitEnemy();
-        roamPosition = playerController.transform;
-        state = State.Roam;
+        base.InitEnemy();
+        if (playerController)
+            roamPosition = playerController.transform;
+        else
+            roamPosition = transform;
         agent.isStopped = false;
         agent.SetDestination(EnemiesUtils.GetRoamPosition(roamPosition.position, moveRangeMin, moveRangeMax));
     }
@@ -37,8 +39,12 @@ public class EnemyBomber : EnemyAI
         {
             state = State.Roam;
             agent.isStopped = false;
+            if (roamPosition == null)
+            {
+                roamPosition = transform;
+            }
             agent.SetDestination(EnemiesUtils.GetRoamPosition(roamPosition.position, moveRangeMin, moveRangeMax));
-            idleTime = Random.Range(1f, 3f);
+            idleTime = Random.Range(5f, 8f);
             Attack();
         }
     }

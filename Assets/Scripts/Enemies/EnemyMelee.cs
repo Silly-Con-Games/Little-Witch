@@ -5,17 +5,12 @@ using UnityEngine;
 public class EnemyMelee : EnemyAI
 {
 
-    void Awake()
-    {
-        InitEnemy();
-    }
-
-    protected override void InitEnemy()
+    public override void InitEnemy()
     {
         base.InitEnemy();
-        this.roamPosition = null;
+        roamPosition = null;
     }
-
+    
     protected override void Idle()
     {
         if (IsPlayerInRange(maxRangeToPlayer))
@@ -72,8 +67,17 @@ public class EnemyMelee : EnemyAI
             }
             else
             {
+                if (playerController)
+                {
+                    agent.SetDestination(playerController.transform.position);
+                }
+                else
+                {
+                    state = State.Roam;
+                    roamPosition = transform;
+                    agent.SetDestination(EnemiesUtils.GetRoamPosition(roamPosition.position, moveRangeMin, moveRangeMax));
+                }
                 agent.isStopped = false;
-                agent.SetDestination(playerController.transform.position);
             }
             return;
         }

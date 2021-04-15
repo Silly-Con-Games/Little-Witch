@@ -22,8 +22,8 @@ public abstract class EnemyAI : MonoBehaviour, IDamagable
         None
     }
 
-    protected State state;
-    protected SecondaryState secondaryState;
+    public State state { get; set; }
+    public SecondaryState secondaryState { get; set; }
 
     //[SerializeField]
     //private float stunTime;
@@ -75,7 +75,7 @@ public abstract class EnemyAI : MonoBehaviour, IDamagable
     [SerializeField]
     protected float rootDefault;
 
-    protected virtual void InitEnemy()
+    public virtual void InitEnemy()
     {
         if (!playerController)
         {
@@ -107,7 +107,12 @@ public abstract class EnemyAI : MonoBehaviour, IDamagable
         secondaryState = SecondaryState.None;
 
         state = State.Roam;
-        agent.destination = EnemiesUtils.GetRoamPosition(roamPosition.position, moveRangeMin, moveRangeMax);
+    }
+
+    public virtual void InitEnemy(Transform roamPosition)
+    {
+        InitEnemy();
+        this.roamPosition = roamPosition;
     }
 
     void Update()
@@ -127,6 +132,8 @@ public abstract class EnemyAI : MonoBehaviour, IDamagable
                 break;
             case State.Idle:
                 Idle();
+                break;
+            default:
                 break;
         }
     }
@@ -206,7 +213,5 @@ public abstract class EnemyAI : MonoBehaviour, IDamagable
     {
         this.roamPosition = transform;
     }
-    
-    
     
 }

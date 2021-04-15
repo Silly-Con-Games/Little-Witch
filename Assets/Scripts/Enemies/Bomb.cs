@@ -34,14 +34,18 @@ public class Bomb : MonoBehaviour
         }
         particle.Play();
 
-        float distance = Vector3.Distance(this.transform.position, playerController.transform.position);
-
-        if (distance <= 5f)
+        if (playerController)
         {
-            playerController.ReceiveDamage(40 * ( 1 - distance/5f));
+            float distance = Vector3.Distance(this.transform.position, playerController.transform.position);
+
+            if (distance <= 5f)
+            {
+                playerController.ReceiveDamage(40 * (1 - distance / 5f));
+            }
         }
         
-        duration = 2f;
+        
+        duration = 1f;
         while (duration >= 0f)
         {
             duration -= Time.deltaTime;

@@ -14,16 +14,35 @@ namespace Config
         public float health;
         public float movementSpeed;
         public float jumpHeight;
-        public SecondaryAbConfig secondaryAbility;
+        public MeleeAbilityConfig meeleeAbility;
+        public ChargeAbilityConfig chargeAbility;
     }
 
     [Serializable]
-    public struct SecondaryAbConfig
+    public struct MeleeAbilityConfig
     {
-        public float attacksPerSecond;
+        public float cooldown;
         public float damage;
-        public float projectileSpeed;
-        public float maxRange;
+    }
+
+    [Serializable]
+    public struct ChargeAbilityConfig
+    {
+        public float damageMin;
+        public float damageMax;
+        public float distanceMin;
+        public float distanceMax;
+        public float explosionRadiusMin;
+        public float explosionRadiusMax;
+        public float explosionSpeedMin;
+        public float explosionSpeedMax;
+        public float spawnRadiusMin;
+        public float spawnRadiusMax;
+        public float speedMin;
+        public float speedMax;
+        public float chargeTimeMax;
+        public float cooldown;
+        public float witchSlow;
     }
 
     [Serializable]

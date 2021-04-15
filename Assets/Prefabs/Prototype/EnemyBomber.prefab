@@ -13,7 +13,7 @@ GameObject:
   - component: {fileID: 1632079588551944201}
   - component: {fileID: 1632079588551944200}
   - component: {fileID: 1632079588551944203}
-  m_Layer: 0
+  m_Layer: 8
   m_Name: EnemyBomber
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -60,6 +60,7 @@ MonoBehaviour:
   healthPoints: 0
   slowDefault: 0
   rootDefault: 0
+  bombPrefab: {fileID: 1774625962153373825, guid: 8e490d70f483423499d4472ab55aad75, type: 3}
 --- !u!195 &1632079588551944201
 NavMeshAgent:
   m_ObjectHideFlags: 0

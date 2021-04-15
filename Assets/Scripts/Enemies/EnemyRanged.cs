@@ -6,16 +6,11 @@ public class EnemyRanged : EnemyAI
 {
 
     public GameObject bulletPrefab;
-
-    void Awake()
-    {
-        InitEnemy();
-    }
     
-    protected override void InitEnemy()
+    public override void InitEnemy()
     {
         base.InitEnemy();
-        this.roamPosition = null;
+        roamPosition = null;
     }
 
     protected override void Attack()
@@ -65,8 +60,7 @@ public class EnemyRanged : EnemyAI
         }
     }
     protected override void Chase()
-    {
-
+    { 
         if (!IsPlayerInRange(maxRangeToPlayer))
         {
             if (chasingDeltaTime > 0 && playerController)
@@ -83,8 +77,17 @@ public class EnemyRanged : EnemyAI
             }
             else
             {
+                if (playerController)
+                {
+                    agent.SetDestination(playerController.transform.position);
+                }
+                else
+                {
+                    state = State.Roam;
+                    roamPosition = transform;
+                    agent.SetDestination(EnemiesUtils.GetRoamPosition(roamPosition.position, moveRangeMin, moveRangeMax));
+                }
                 agent.isStopped = false;
-                agent.SetDestination(playerController.transform.position);
             }
             return;
         }

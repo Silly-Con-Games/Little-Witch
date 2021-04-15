@@ -94,7 +94,7 @@ GameObject:
   - component: {fileID: 1642520030457959130}
   - component: {fileID: 1642520030457959131}
   - component: {fileID: 1642520030457959124}
-  m_Layer: 0
+  m_Layer: 8
   m_Name: EnemyEnvDestroyer
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -145,6 +145,8 @@ MonoBehaviour:
   meleePrefab: {fileID: 5384379442950274118, guid: 58384ed62a1f90d499b5af62efeed90c, type: 3}
   enemiesMeleeMax: 2
   enemiesRangedMax: 2
+  mapController: {fileID: 0}
+  idleTimeMillis: 0
 --- !u!195 &1642520030457959130
 NavMeshAgent:
   m_ObjectHideFlags: 0
@@ -157,7 +159,7 @@ NavMeshAgent:
   m_Radius: 0.42
   m_Speed: 3.5
   m_Acceleration: 500
-  avoidancePriority: 50
+  avoidancePriority: 49
   m_AngularSpeed: 1200
   m_StoppingDistance: 0
   m_AutoTraverseOffMeshLink: 1
