@@ -94,7 +94,7 @@ GameObject:
   - component: {fileID: 2909162330852038182}
   - component: {fileID: 2909162330852038185}
   - component: {fileID: 2909162330852038183}
-  m_Layer: 0
+  m_Layer: 8
   m_Name: EnemyRanged
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -128,7 +128,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 4404d6fc855905846bb869e76e3543b3, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  stunTime: 0
   idleTime: 0
   attackTime: 0
   chasingTime: 0
@@ -140,6 +139,8 @@ MonoBehaviour:
   speed: 2
   attackSpeed: 1
   healthPoints: 20
+  slowDefault: 0
+  rootDefault: 0
   bulletPrefab: {fileID: 1052265020511648158, guid: 855c5f2f5e7f5ff47b0781ab05fb4a49, type: 3}
 --- !u!195 &2909162330852038182
 NavMeshAgent:
@@ -177,7 +178,7 @@ Rigidbody:
   m_UseGravity: 1
   m_IsKinematic: 0
   m_Interpolate: 0
-  m_Constraints: 112
+  m_Constraints: 126
   m_CollisionDetection: 1
 --- !u!136 &2909162330852038183
 CapsuleCollider:

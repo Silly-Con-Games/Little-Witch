@@ -44,5 +44,26 @@ namespace Config
         public float cooldown;
         public float witchSlow;
     }
+
+    [Serializable]
+    public struct EnemyRangedConfig
+    {
+    }
+
+    [Serializable]
+    public struct EnemyMeleeConfig
+    {
+    }
+
+    [Serializable]
+    public struct EnemyBomberConfig
+    {
+    }
+
+    [Serializable]
+    public struct EnemyEnvDestroyerConfig
+    {
+    }
+
 }
 

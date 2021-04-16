@@ -94,7 +94,7 @@ GameObject:
   - component: {fileID: 5384379442950274121}
   - component: {fileID: 5384379442950274120}
   - component: {fileID: 5384379442950274119}
-  m_Layer: 0
+  m_Layer: 8
   m_Name: EnemyMelee
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -128,7 +128,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 5408c8973debd3a49ada95d6fecd954e, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  stunTime: 0
   idleTime: 0
   attackTime: 0
   chasingTime: 0
@@ -140,6 +139,8 @@ MonoBehaviour:
   speed: 2
   attackSpeed: 1.5
   healthPoints: 0
+  slowDefault: 0
+  rootDefault: 0
 --- !u!195 &5384379442950274121
 NavMeshAgent:
   m_ObjectHideFlags: 0
@@ -176,7 +177,7 @@ Rigidbody:
   m_UseGravity: 1
   m_IsKinematic: 0
   m_Interpolate: 0
-  m_Constraints: 112
+  m_Constraints: 126
   m_CollisionDetection: 1
 --- !u!136 &5384379442950274119
 CapsuleCollider:

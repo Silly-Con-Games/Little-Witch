@@ -7,75 +7,81 @@ using Random = UnityEngine.Random;
 
 public abstract class EnemyAI : MonoBehaviour, IDamagable
 {
-    enum State
+    public enum State
     {
         Roam,
         Chase,
-        Idle
+        Idle,
+        Attack
     }
 
-    enum SecondaryState
+    public enum SecondaryState
     {
         Stun,
         Root,
-        Slow,
         None
     }
 
-    State state;
-    private SecondaryState secondaryState;
+    public State state { get; set; }
+    public SecondaryState secondaryState { get; set; }
 
     //[SerializeField]
     //private float stunTime;
 
-    private float stunDeltaTime;
+    protected float stunDeltaTime;
 
     [SerializeField]
-    private float idleTime;
+    protected float idleTime;
 
     [SerializeField]
-    private float attackTime;
+    protected float attackTime;
 
     [SerializeField]
-    private float chasingTime;
+    protected float chasingTime;
 
-    private float chasingDeltaTime;
+    protected float chasingDeltaTime;
 
-    private NavMeshAgent agent;
+    protected NavMeshAgent agent;
 
-    private Vector3 startingPosition;
+    protected Transform roamPosition;
 
     [SerializeField]
     protected PlayerController playerController;
 
     [SerializeField]
-    private float moveRangeMin;
+    protected float moveRangeMin;
 
     [SerializeField]
-    private float moveRangeMax;
+    protected float moveRangeMax;
 
     [SerializeField]
-    private float maxRangeToPlayer;
+    protected float maxRangeToPlayer;
 
     [SerializeField]
-    private float attackRange;
+    protected float attackRange;
 
     [SerializeField]
-    private float speed;
+    protected float speed;
 
     [SerializeField]
-    private float attackSpeed;
+    protected float attackSpeed;
 
     [SerializeField]
-    private float healthPoints;
+    protected float healthPoints;
 
-    void Start()
+    [SerializeField]
+    protected float slowDefault;
+
+    [SerializeField]
+    protected float rootDefault;
+
+    public virtual void InitEnemy()
     {
         if (!playerController)
         {
             playerController = FindObjectOfType<PlayerController>();
         }
-        startingPosition = transform.position;
+        roamPosition = this.transform;
         moveRangeMin = 4f;
         moveRangeMax = 4f;
         maxRangeToPlayer = 8f;
@@ -83,10 +89,11 @@ public abstract class EnemyAI : MonoBehaviour, IDamagable
         idleTime = -1f;
         attackTime = -1f;
         chasingTime = 3f;
+        slowDefault = 3f;
+        rootDefault = 3f;
 
         //stunTime = 3;
         stunDeltaTime = -1;
-
         chasingDeltaTime = -1f;
 
         agent = GetComponent<NavMeshAgent>();
@@ -100,28 +107,21 @@ public abstract class EnemyAI : MonoBehaviour, IDamagable
         secondaryState = SecondaryState.None;
 
         state = State.Roam;
-        Vector3 dest = GetRoamPosition();
-        agent.destination = dest;
+    }
+
+    public virtual void InitEnemy(Transform roamPosition)
+    {
+        InitEnemy();
+        this.roamPosition = roamPosition;
     }
 
     void Update()
     {
-        switch (secondaryState)
+        if (secondaryState == SecondaryState.Stun)
         {
-            case SecondaryState.Stun:
-                if (stunDeltaTime > 0f)
-                {
-
-                }
-
-                break;
-            case SecondaryState.Root:
-                break;
-            case SecondaryState.Slow:
-                break;
-            default: break;
+            return;
         }
-
+        
         switch (state)
         {
             case State.Roam:
@@ -136,85 +136,58 @@ public abstract class EnemyAI : MonoBehaviour, IDamagable
             default:
                 break;
         }
-
     }
 
-    private void Roam()
+    protected abstract void Roam();
+    protected abstract void Chase();
+    protected abstract void Idle();
+    protected abstract void Attack();
+
+    public virtual void Stun(float stunDuration)
     {
-        if (IsPlayerInRange(maxRangeToPlayer))
+        if (!(secondaryState == SecondaryState.Stun))
         {
-            state = State.Chase;
-            return;
-        }
-
-        if (!agent.pathPending && agent.remainingDistance < 0.5f)
-        {
-            state = State.Idle;
-            agent.isStopped = true;
+            secondaryState = SecondaryState.Stun;
+            StartCoroutine(RootCoroutine(stunDuration));
         }
     }
 
-    private void Chase()
+    public virtual void Root(float rootDuration)
     {
-        if (!IsPlayerInRange(maxRangeToPlayer))
-        {
-            if (chasingDeltaTime > 0 && playerController)
-            {
-                agent.SetDestination(playerController.transform.position);
-                chasingDeltaTime -= Time.deltaTime;
-                return;
-            }
-            state = State.Roam;
-            agent.isStopped = false;
-            agent.SetDestination(GetRoamPosition());
-            return;
-        }
-        else
-        {
-            attackTime -= Time.deltaTime;
-            if (!IsPlayerInRange(attackRange))
-            {
-                agent.isStopped = false;
-                agent.SetDestination(playerController.transform.position);
-            }
-            else
-            {
-                transform.LookAt(playerController.transform.position);
-                if (attackTime < 0)
-                {
-                    Attack();
-                    attackTime = attackSpeed;
-                }
-                agent.isStopped = true;
-            }
-        }
+        secondaryState = SecondaryState.Root;
+        StartCoroutine(RootCoroutine(rootDuration));
     }
 
-    private void Idle()
+    protected IEnumerator RootCoroutine(float rootDuration)
     {
-        if (IsPlayerInRange(maxRangeToPlayer))
+        agent.speed = 0;
+        while (rootDuration >= 0)
         {
-            state = State.Chase;
-            idleTime = Random.Range(1f, 3f);
-            return;
+            rootDuration -= Time.deltaTime;
+            yield return null;
         }
-        idleTime -= Time.deltaTime;
-        if (idleTime <= 0)
-        {
-            state = State.Roam;
-            agent.isStopped = false;
-            agent.SetDestination(GetRoamPosition());
-            idleTime = Random.Range(1f, 3f);
-        }
+        agent.speed = speed;
+        secondaryState = SecondaryState.None;
     }
 
-    public abstract void Attack();
+    public virtual void Slow(float slowDuration)
+    {
+        StartCoroutine(SlowCoroutine(slowDuration));
+    }
 
-    public abstract bool Stun();
-    public abstract bool Slow();
-    public abstract bool Root();
+    protected IEnumerator SlowCoroutine(float slowDuration)
+    {
+        agent.speed = speed / 2f;
+        while (slowDuration >= 0)
+        {
+            slowDuration -= Time.deltaTime;
+            yield return null;
+        }
 
-    private bool IsPlayerInRange(float range)
+        agent.speed = speed;
+    }
+
+    protected bool IsPlayerInRange(float range)
     {
         if (!playerController)
         {
@@ -223,12 +196,7 @@ public abstract class EnemyAI : MonoBehaviour, IDamagable
         return Vector3.Distance(playerController.transform.position, transform.position) < range;
     }
 
-    private Vector3 GetRoamPosition()
-    {
-        return startingPosition + RandomUtils.GetRandomDirection() * Random.Range(moveRangeMin, moveRangeMax);
-    }
-
-    public void ReceiveDamage(float amount)
+    public virtual void ReceiveDamage(float amount)
     {
         agent.isStopped = false;
         state = State.Chase;
@@ -240,4 +208,10 @@ public abstract class EnemyAI : MonoBehaviour, IDamagable
     {
         return EObjectType.Enemy;
     }
+
+    public void SetRoamObjectTransform(Transform transform)
+    {
+        this.roamPosition = transform;
+    }
+    
 }
