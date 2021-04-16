@@ -15,11 +15,11 @@ D:/UnityProjects/Little-Witch
 -logFile
 Logs/AssetImportWorker0.log
 -srvPort
-64881
+56435
 Successfully changed project path to: D:/UnityProjects/Little-Witch
 D:/UnityProjects/Little-Witch
 Using Asset Import Pipeline V2.
-Refreshing native plugins compatible for Editor in 61.59 ms, found 0 plugins.
+Refreshing native plugins compatible for Editor in 60.63 ms, found 0 plugins.
 Preloading 0 native plugins for Editor in 0.00 ms.
 Initialize engine version: 2020.3.0f1 (c7b5465681fb)
 [Subsystems] Discovering subsystems at path C:/Program Files/Unity/Hub/Editor/2020.3.0f1/Editor/Data/Resources/UnitySubsystems
@@ -35,80 +35,398 @@ Initialize mono
 Mono path[0] = 'C:/Program Files/Unity/Hub/Editor/2020.3.0f1/Editor/Data/Managed'
 Mono path[1] = 'C:/Program Files/Unity/Hub/Editor/2020.3.0f1/Editor/Data/MonoBleedingEdge/lib/mono/unityjit'
 Mono config path = 'C:/Program Files/Unity/Hub/Editor/2020.3.0f1/Editor/Data/MonoBleedingEdge/etc'
-Using monoOptions --debugger-agent=transport=dt_socket,embedding=1,server=y,suspend=n,address=127.0.0.1:56864
+Using monoOptions --debugger-agent=transport=dt_socket,embedding=1,server=y,suspend=n,address=127.0.0.1:56544
 Begin MonoManager ReloadAssembly
 Registering precompiled unity dll's ...
 Register platform support module: C:/Program Files/Unity/Hub/Editor/2020.3.0f1/Editor/Data/PlaybackEngines/WebGLSupport/UnityEditor.WebGL.Extensions.dll
 Register platform support module: C:/Program Files/Unity/Hub/Editor/2020.3.0f1/Editor/Data/PlaybackEngines/WindowsStandaloneSupport/UnityEditor.WindowsStandalone.Extensions.dll
-Registered in 0.003153 seconds.
+Registered in 0.003146 seconds.
 Native extension for WindowsStandalone target not found
 Native extension for WebGL target not found
-Refreshing native plugins compatible for Editor in 85.13 ms, found 0 plugins.
+Refreshing native plugins compatible for Editor in 59.32 ms, found 0 plugins.
 Preloading 0 native plugins for Editor in 0.00 ms.
 Invoked RoslynAnalysisRunner static constructor.
 RoslynAnalysisRunner will not be running.
 RoslynAnalysisRunner has terminated.
 Mono: successfully reloaded assembly
-- Completed reload, in  1.503 seconds
+- Completed reload, in  1.440 seconds
 Platform modules already initialized, skipping
 Registering precompiled user dll's ...
-Registered in 0.001165 seconds.
+Registered in 0.001224 seconds.
 Begin MonoManager ReloadAssembly
 Native extension for WindowsStandalone target not found
 Native extension for WebGL target not found
-Refreshing native plugins compatible for Editor in 64.89 ms, found 0 plugins.
+Refreshing native plugins compatible for Editor in 62.74 ms, found 0 plugins.
 Preloading 0 native plugins for Editor in 0.00 ms.
 Invoked RoslynAnalysisRunner static constructor.
 RoslynAnalysisRunner will not be running.
 RoslynAnalysisRunner has terminated.
 Mono: successfully reloaded assembly
-- Completed reload, in  1.215 seconds
+- Completed reload, in  1.170 seconds
 Platform modules already initialized, skipping
 ========================================================================
 Worker process is ready to serve import requests
 Shader 'Universal Render Pipeline/Particles/Lit': fallback shader 'Universal Render Pipeline/Particles/SimpleLit' not found
 Shader 'Universal Render Pipeline/Particles/Lit': fallback shader 'Universal Render Pipeline/Particles/SimpleLit' not found
 Launched and connected shader compiler UnityShaderCompiler.exe after 0.05 seconds
-Refreshing native plugins compatible for Editor in 0.58 ms, found 0 plugins.
+Refreshing native plugins compatible for Editor in 0.55 ms, found 0 plugins.
 Preloading 0 native plugins for Editor in 0.00 ms.
 Unloading 3429 Unused Serialized files (Serialized files now loaded: 0)
-System memory in use before: 156.1 MB.
-System memory in use after: 154.1 MB.
+System memory in use before: 156.2 MB.
+System memory in use after: 154.2 MB.
 
 Unloading 43 unused Assets to reduce memory usage. Loaded Objects now: 3859.
-Total: 6.175500 ms (FindLiveObjects: 0.421200 ms CreateObjectMapping: 0.097500 ms MarkObjects: 3.994200 ms  DeleteObjects: 1.660600 ms)
+Total: 3.937100 ms (FindLiveObjects: 0.348200 ms CreateObjectMapping: 0.088200 ms MarkObjects: 2.234900 ms  DeleteObjects: 1.264600 ms)
 
 ========================================================================
 Received Import Request.
-  path: Assets/Settings/ForwardRenderer.asset
-  artifactKey: Guid(4a8e21d5c33334b11b34a596161b9360) Importer(815301076,1909f56bfc062723c751e8b465ee728b)
-Start importing Assets/Settings/ForwardRenderer.asset using Guid(4a8e21d5c33334b11b34a596161b9360) Importer(815301076,1909f56bfc062723c751e8b465ee728b)  -> (artifact id: '4ea85ecb35e578440175067014fb792e') in 0.035591 seconds
-  Import took 0.041548 seconds .
+  path: Assets/3DModels/Enemies/SpiderSucker.fbx
+  artifactKey: Guid(97b8a45dbe24a6b41956ca24d5536aa7) Importer(815301076,1909f56bfc062723c751e8b465ee728b)
+Start importing Assets/3DModels/Enemies/SpiderSucker.fbx using Guid(97b8a45dbe24a6b41956ca24d5536aa7) Importer(815301076,1909f56bfc062723c751e8b465ee728b)  -> (artifact id: '64640d0b5e2e0b997a2459d1a7b4a07d') in 0.610174 seconds
+  Import took 0.640907 seconds .
 
 ========================================================================
-Received Prepare
-Registering precompiled user dll's ...
-Registered in 0.001367 seconds.
-Begin MonoManager ReloadAssembly
-Native extension for WindowsStandalone target not found
-Native extension for WebGL target not found
-Refreshing native plugins compatible for Editor in 0.59 ms, found 0 plugins.
-Preloading 0 native plugins for Editor in 0.00 ms.
-Invoked RoslynAnalysisRunner static constructor.
-RoslynAnalysisRunner will not be running.
-RoslynAnalysisRunner has terminated.
-Mono: successfully reloaded assembly
-- Completed reload, in  1.071 seconds
-Platform modules already initialized, skipping
-Shader 'Universal Render Pipeline/Particles/Lit': fallback shader 'Universal Render Pipeline/Particles/SimpleLit' not found
-Shader 'Universal Render Pipeline/Particles/Lit': fallback shader 'Universal Render Pipeline/Particles/SimpleLit' not found
-Refreshing native plugins compatible for Editor in 0.54 ms, found 0 plugins.
-Preloading 0 native plugins for Editor in 0.00 ms.
-Unloading 3333 Unused Serialized files (Serialized files now loaded: 0)
-System memory in use before: 151.6 MB.
-System memory in use after: 149.6 MB.
+Received Import Request.
+  Time since last request: 4.268736 seconds.
+  path: Assets/3DModels/Enemies/SpiderSucker.fbx
+  artifactKey: Guid(97b8a45dbe24a6b41956ca24d5536aa7) Importer(815301076,1909f56bfc062723c751e8b465ee728b)
+Start importing Assets/3DModels/Enemies/SpiderSucker.fbx using Guid(97b8a45dbe24a6b41956ca24d5536aa7) Importer(815301076,1909f56bfc062723c751e8b465ee728b)  -> (artifact id: '7f708f75eb95a95fed171e27f6a400a6') in 0.016191 seconds
+  Import took 0.043471 seconds .
 
-Unloading 36 unused Assets to reduce memory usage. Loaded Objects now: 3862.
-Total: 4.087500 ms (FindLiveObjects: 0.358100 ms CreateObjectMapping: 0.086700 ms MarkObjects: 2.296300 ms  DeleteObjects: 1.345100 ms)
+========================================================================
+Received Import Request.
+  Time since last request: 25.959049 seconds.
+  path: Assets/3DModels/Enemies/SpiderSucker.fbx
+  artifactKey: Guid(97b8a45dbe24a6b41956ca24d5536aa7) Importer(815301076,1909f56bfc062723c751e8b465ee728b)
+Start importing Assets/3DModels/Enemies/SpiderSucker.fbx using Guid(97b8a45dbe24a6b41956ca24d5536aa7) Importer(815301076,1909f56bfc062723c751e8b465ee728b)  -> (artifact id: '1ebe2521a7f8aa4c78fe3b69796b26e6') in 0.033041 seconds
+  Import took 0.072603 seconds .
+
+========================================================================
+Received Import Request.
+  Time since last request: 140.826147 seconds.
+  path: Assets/3DModels/Enemies/blade_launcher_enemy.fbx
+  artifactKey: Guid(8cfe9be91223f92408bd9a47875701f5) Importer(815301076,1909f56bfc062723c751e8b465ee728b)
+Start importing Assets/3DModels/Enemies/blade_launcher_enemy.fbx using Guid(8cfe9be91223f92408bd9a47875701f5) Importer(815301076,1909f56bfc062723c751e8b465ee728b)  -> (artifact id: 'a1bb672a31cc24eb8f512d31e8f8ffb4') in 0.024168 seconds
+  Import took 0.039382 seconds .
+
+========================================================================
+Received Import Request.
+  Time since last request: 0.000199 seconds.
+  path: Assets/3DModels/Enemies/blade_launcher_enemy_projectile.fbx
+  artifactKey: Guid(c2ce389c5596d714d97013d283483b69) Importer(815301076,1909f56bfc062723c751e8b465ee728b)
+Start importing Assets/3DModels/Enemies/blade_launcher_enemy_projectile.fbx using Guid(c2ce389c5596d714d97013d283483b69) Importer(815301076,1909f56bfc062723c751e8b465ee728b)  -> (artifact id: 'd72f1d4d84f5437d4240a0b6c873c4d8') in 0.016443 seconds
+  Import took 0.033467 seconds .
+
+========================================================================
+Received Import Request.
+  Time since last request: 0.000174 seconds.
+  path: Assets/3DModels/Enemies/cutter_enemy.fbx
+  artifactKey: Guid(b4442a0f4f0151742917925544d14724) Importer(815301076,1909f56bfc062723c751e8b465ee728b)
+Start importing Assets/3DModels/Enemies/cutter_enemy.fbx using Guid(b4442a0f4f0151742917925544d14724) Importer(815301076,1909f56bfc062723c751e8b465ee728b)  -> (artifact id: 'e4a0ffbb437e0ccd858010252aae7f5b') in 0.032343 seconds
+  Import took 0.064106 seconds .
+
+========================================================================
+Received Import Request.
+  Time since last request: 0.000213 seconds.
+  path: Assets/3DModels/Enemies/blade_launcher_enemy_projectile.fbx
+  artifactKey: Guid(c2ce389c5596d714d97013d283483b69) Importer(815301076,1909f56bfc062723c751e8b465ee728b)
+Start importing Assets/3DModels/Enemies/blade_launcher_enemy_projectile.fbx using Guid(c2ce389c5596d714d97013d283483b69) Importer(815301076,1909f56bfc062723c751e8b465ee728b)  -> (artifact id: 'd72f1d4d84f5437d4240a0b6c873c4d8') in 0.010696 seconds
+  Import took 0.018701 seconds .
+
+========================================================================
+Received Import Request.
+  Time since last request: 16.525793 seconds.
+  path: Assets/3DModels/Enemies/blade_launcher_enemy.fbx
+  artifactKey: Guid(8cfe9be91223f92408bd9a47875701f5) Importer(815301076,1909f56bfc062723c751e8b465ee728b)
+Start importing Assets/3DModels/Enemies/blade_launcher_enemy.fbx using Guid(8cfe9be91223f92408bd9a47875701f5) Importer(815301076,1909f56bfc062723c751e8b465ee728b)  -> (artifact id: 'de2c79d7f35a2261c4fe27d18e37dfaa') in 0.016581 seconds
+  Import took 0.046166 seconds .
+
+========================================================================
+Received Import Request.
+  Time since last request: 0.000180 seconds.
+  path: Assets/3DModels/Enemies/blade_launcher_enemy_projectile.fbx
+  artifactKey: Guid(c2ce389c5596d714d97013d283483b69) Importer(815301076,1909f56bfc062723c751e8b465ee728b)
+Start importing Assets/3DModels/Enemies/blade_launcher_enemy_projectile.fbx using Guid(c2ce389c5596d714d97013d283483b69) Importer(815301076,1909f56bfc062723c751e8b465ee728b)  -> (artifact id: '9c45c85d8b25f3e2ffe09e466eff51df') in 0.015113 seconds
+  Import took 0.029337 seconds .
+
+========================================================================
+Received Import Request.
+  Time since last request: 0.000196 seconds.
+  path: Assets/3DModels/Enemies/cutter_enemy.fbx
+  artifactKey: Guid(b4442a0f4f0151742917925544d14724) Importer(815301076,1909f56bfc062723c751e8b465ee728b)
+Start importing Assets/3DModels/Enemies/cutter_enemy.fbx using Guid(b4442a0f4f0151742917925544d14724) Importer(815301076,1909f56bfc062723c751e8b465ee728b)  -> (artifact id: '442fac9be356ecb2efec1771d3c0db5c') in 0.013490 seconds
+  Import took 0.026977 seconds .
+
+========================================================================
+Received Import Request.
+  Time since last request: 12.704731 seconds.
+  path: Assets/3DModels/Enemies/blade_launcher_enemy.fbx
+  artifactKey: Guid(8cfe9be91223f92408bd9a47875701f5) Importer(815301076,1909f56bfc062723c751e8b465ee728b)
+Start importing Assets/3DModels/Enemies/blade_launcher_enemy.fbx using Guid(8cfe9be91223f92408bd9a47875701f5) Importer(815301076,1909f56bfc062723c751e8b465ee728b)  -> (artifact id: 'd0273ebede84e74608e40cc76d4e6c26') in 0.017060 seconds
+  Import took 0.041539 seconds .
+
+========================================================================
+Received Import Request.
+  Time since last request: 21.787162 seconds.
+  path: Assets/Materials/Black.mat
+  artifactKey: Guid(ce37e49445deead46aeb750d67ddade5) Importer(815301076,1909f56bfc062723c751e8b465ee728b)
+Start importing Assets/Materials/Black.mat using Guid(ce37e49445deead46aeb750d67ddade5) Importer(815301076,1909f56bfc062723c751e8b465ee728b)  -> (artifact id: '59ed336150ad981dbde746cb59d678e9') in 0.060704 seconds
+  Import took 0.091536 seconds .
+
+========================================================================
+Received Import Request.
+  Time since last request: 0.000190 seconds.
+  path: Assets/Materials/White.mat
+  artifactKey: Guid(f8b030bd59829cf4387cc9175a892e94) Importer(815301076,1909f56bfc062723c751e8b465ee728b)
+Start importing Assets/Materials/White.mat using Guid(f8b030bd59829cf4387cc9175a892e94) Importer(815301076,1909f56bfc062723c751e8b465ee728b)  -> (artifact id: 'b4f054042e8dde19d144ecac1e5e0f45') in 0.045977 seconds
+  Import took 0.058434 seconds .
+
+========================================================================
+Received Import Request.
+  Time since last request: 0.000173 seconds.
+  path: Assets/Materials/Black.mat
+  artifactKey: Guid(ce37e49445deead46aeb750d67ddade5) Importer(815301076,1909f56bfc062723c751e8b465ee728b)
+Start importing Assets/Materials/Black.mat using Guid(ce37e49445deead46aeb750d67ddade5) Importer(815301076,1909f56bfc062723c751e8b465ee728b)  -> (artifact id: '59ed336150ad981dbde746cb59d678e9') in 0.006686 seconds
+  Import took 0.011319 seconds .
+
+========================================================================
+Received Import Request.
+  Time since last request: 0.000208 seconds.
+  path: Assets/Materials/Fire.mat
+  artifactKey: Guid(abdc3512ac1cf04429260e735e8fb40c) Importer(815301076,1909f56bfc062723c751e8b465ee728b)
+Start importing Assets/Materials/Fire.mat using Guid(abdc3512ac1cf04429260e735e8fb40c) Importer(815301076,1909f56bfc062723c751e8b465ee728b)  -> (artifact id: 'adbcb05217099371e07267e6517c2872') in 0.116208 seconds
+  Import took 0.146730 seconds .
+
+========================================================================
+Received Import Request.
+  Time since last request: 0.000201 seconds.
+  path: Assets/Materials/XRayMat.mat
+  artifactKey: Guid(8894f6d15106b3e42a6c8f38d66f22dc) Importer(815301076,1909f56bfc062723c751e8b465ee728b)
+Start importing Assets/Materials/XRayMat.mat using Guid(8894f6d15106b3e42a6c8f38d66f22dc) Importer(815301076,1909f56bfc062723c751e8b465ee728b)  -> (artifact id: '1854f8049017be94d5950d720497c0cd') in 0.036187 seconds
+  Import took 0.090050 seconds .
+
+========================================================================
+Received Import Request.
+  Time since last request: 28.853957 seconds.
+  path: Assets/3DModels/Enemies/blade_launcher_enemy.fbx
+  artifactKey: Guid(8cfe9be91223f92408bd9a47875701f5) Importer(815301076,1909f56bfc062723c751e8b465ee728b)
+Start importing Assets/3DModels/Enemies/blade_launcher_enemy.fbx using Guid(8cfe9be91223f92408bd9a47875701f5) Importer(815301076,1909f56bfc062723c751e8b465ee728b)  -> (artifact id: '0fbd7f6525a251faf203bc197db06ef8') in 0.014059 seconds
+  Import took 0.023104 seconds .
+
+========================================================================
+Received Import Request.
+  Time since last request: 0.008998 seconds.
+  path: Assets/3DModels/Enemies/blade_launcher_enemy.fbx
+  artifactKey: Guid(8cfe9be91223f92408bd9a47875701f5) Importer(815301076,1909f56bfc062723c751e8b465ee728b)
+Start importing Assets/3DModels/Enemies/blade_launcher_enemy.fbx using Guid(8cfe9be91223f92408bd9a47875701f5) Importer(815301076,1909f56bfc062723c751e8b465ee728b)  -> (artifact id: '0fbd7f6525a251faf203bc197db06ef8') in 0.013693 seconds
+  Import took 0.019163 seconds .
+
+========================================================================
+Received Import Request.
+  Time since last request: 7.576721 seconds.
+  path: Assets/3DModels/Enemies/blade_launcher_enemy.fbx
+  artifactKey: Guid(8cfe9be91223f92408bd9a47875701f5) Importer(815301076,1909f56bfc062723c751e8b465ee728b)
+Start importing Assets/3DModels/Enemies/blade_launcher_enemy.fbx using Guid(8cfe9be91223f92408bd9a47875701f5) Importer(815301076,1909f56bfc062723c751e8b465ee728b)  -> (artifact id: '959e74b9d57fe00870a34911996b6ec3') in 0.015797 seconds
+  Import took 0.037765 seconds .
+
+========================================================================
+Received Import Request.
+  Time since last request: 13.313398 seconds.
+  path: Assets/3DModels/Enemies/cutter_enemy.fbx
+  artifactKey: Guid(b4442a0f4f0151742917925544d14724) Importer(815301076,1909f56bfc062723c751e8b465ee728b)
+Start importing Assets/3DModels/Enemies/cutter_enemy.fbx using Guid(b4442a0f4f0151742917925544d14724) Importer(815301076,1909f56bfc062723c751e8b465ee728b)  -> (artifact id: '1539d4a89788595e10a376f20b7a17a7') in 0.010468 seconds
+  Import took 0.020121 seconds .
+
+========================================================================
+Received Import Request.
+  Time since last request: 3.706898 seconds.
+  path: Assets/3DModels/Enemies/blade_launcher_enemy_projectile.fbx
+  artifactKey: Guid(c2ce389c5596d714d97013d283483b69) Importer(815301076,1909f56bfc062723c751e8b465ee728b)
+Start importing Assets/3DModels/Enemies/blade_launcher_enemy_projectile.fbx using Guid(c2ce389c5596d714d97013d283483b69) Importer(815301076,1909f56bfc062723c751e8b465ee728b)  -> (artifact id: 'e092eecd791e6cf44bd8e007f21f5793') in 0.013815 seconds
+  Import took 0.030536 seconds .
+
+========================================================================
+Received Import Request.
+  Time since last request: 54.873285 seconds.
+  path: Assets/3DModels/Environment/bush.fbx
+  artifactKey: Guid(bdc4c035caaef3b4ebe2d5b3f2b68eb6) Importer(815301076,1909f56bfc062723c751e8b465ee728b)
+Start importing Assets/3DModels/Environment/bush.fbx using Guid(bdc4c035caaef3b4ebe2d5b3f2b68eb6) Importer(815301076,1909f56bfc062723c751e8b465ee728b)  -> (artifact id: 'fc9ad45ba7e19c4a1d469da0e97fdff0') in 0.101168 seconds
+  Import took 0.130280 seconds .
+
+========================================================================
+Received Import Request.
+  Time since last request: 0.000188 seconds.
+  path: Assets/3DModels/Environment/jungle_tree.fbx
+  artifactKey: Guid(d959387740021f14b8b6692b10e06034) Importer(815301076,1909f56bfc062723c751e8b465ee728b)
+Start importing Assets/3DModels/Environment/jungle_tree.fbx using Guid(d959387740021f14b8b6692b10e06034) Importer(815301076,1909f56bfc062723c751e8b465ee728b)  -> (artifact id: '4989f82e47dadd6a565f6d6f891debc7') in 0.032644 seconds
+  Import took 0.076107 seconds .
+
+========================================================================
+Received Import Request.
+  Time since last request: 0.000189 seconds.
+  path: Assets/3DModels/Environment/jungle_plant.fbx
+  artifactKey: Guid(0b29c28b6073d0d45a1d1693fe36fa91) Importer(815301076,1909f56bfc062723c751e8b465ee728b)
+Start importing Assets/3DModels/Environment/jungle_plant.fbx using Guid(0b29c28b6073d0d45a1d1693fe36fa91) Importer(815301076,1909f56bfc062723c751e8b465ee728b)  -> (artifact id: '6799b8c0bf112a96e33eed28e01fe590') in 0.015737 seconds
+  Import took 0.050457 seconds .
+
+========================================================================
+Received Import Request.
+  Time since last request: 0.000187 seconds.
+  path: Assets/3DModels/Environment/bush_leaves.fbx
+  artifactKey: Guid(5b8d484cc0c00a340999302523931d7d) Importer(815301076,1909f56bfc062723c751e8b465ee728b)
+Start importing Assets/3DModels/Environment/bush_leaves.fbx using Guid(5b8d484cc0c00a340999302523931d7d) Importer(815301076,1909f56bfc062723c751e8b465ee728b)  -> (artifact id: '3c0a083ddb897ccbe27f9c2f77cb0564') in 0.050925 seconds
+  Import took 0.073643 seconds .
+
+========================================================================
+Received Import Request.
+  Time since last request: 0.000192 seconds.
+  path: Assets/3DModels/Environment/tree.fbx
+  artifactKey: Guid(dcafaef927935e44f9fcd19c56ff15e0) Importer(815301076,1909f56bfc062723c751e8b465ee728b)
+Start importing Assets/3DModels/Environment/tree.fbx using Guid(dcafaef927935e44f9fcd19c56ff15e0) Importer(815301076,1909f56bfc062723c751e8b465ee728b)  -> (artifact id: 'f345b23f55220cfc5a5f640008e758bc') in 0.063171 seconds
+  Import took 0.086056 seconds .
+
+========================================================================
+Received Import Request.
+  Time since last request: 23.409987 seconds.
+  path: Assets/3DModels/Enemies/blade_launcher_enemy.fbx
+  artifactKey: Guid(8cfe9be91223f92408bd9a47875701f5) Importer(815301076,1909f56bfc062723c751e8b465ee728b)
+Start importing Assets/3DModels/Enemies/blade_launcher_enemy.fbx using Guid(8cfe9be91223f92408bd9a47875701f5) Importer(815301076,1909f56bfc062723c751e8b465ee728b)  -> (artifact id: '5a5873873ff4497b84a4440b9358878c') in 0.013525 seconds
+  Import took 0.018697 seconds .
+
+========================================================================
+Received Import Request.
+  Time since last request: 10.783263 seconds.
+  path: Assets/3DModels/Enemies/blade_launcher_enemy.fbx
+  artifactKey: Guid(8cfe9be91223f92408bd9a47875701f5) Importer(815301076,1909f56bfc062723c751e8b465ee728b)
+Start importing Assets/3DModels/Enemies/blade_launcher_enemy.fbx using Guid(8cfe9be91223f92408bd9a47875701f5) Importer(815301076,1909f56bfc062723c751e8b465ee728b)  -> (artifact id: 'daf173072b9c2b4ff46f44f13c92e5f9') in 0.018932 seconds
+  Import took 0.029598 seconds .
+
+========================================================================
+Received Import Request.
+  Time since last request: 0.000483 seconds.
+  path: Assets/3DModels/Enemies/blade_launcher_enemy.fbx
+  artifactKey: Guid(8cfe9be91223f92408bd9a47875701f5) Importer(815301076,1909f56bfc062723c751e8b465ee728b)
+Start importing Assets/3DModels/Enemies/blade_launcher_enemy.fbx using Guid(8cfe9be91223f92408bd9a47875701f5) Importer(815301076,1909f56bfc062723c751e8b465ee728b)  -> (artifact id: 'daf173072b9c2b4ff46f44f13c92e5f9') in 0.016543 seconds
+  Import took 0.021765 seconds .
+
+========================================================================
+Received Import Request.
+  Time since last request: 42.012479 seconds.
+  path: Assets/3DModels/Enemies/SpiderSucker.fbx
+  artifactKey: Guid(97b8a45dbe24a6b41956ca24d5536aa7) Importer(815301076,1909f56bfc062723c751e8b465ee728b)
+Start importing Assets/3DModels/Enemies/SpiderSucker.fbx using Guid(97b8a45dbe24a6b41956ca24d5536aa7) Importer(815301076,1909f56bfc062723c751e8b465ee728b)  -> (artifact id: '5c013a220454818bce9e99e6e8579f35') in 0.015219 seconds
+  Import took 0.029582 seconds .
+
+========================================================================
+Received Import Request.
+  Time since last request: 0.000229 seconds.
+  path: Assets/3DModels/Enemies/blade_launcher_enemy_projectile.fbx
+  artifactKey: Guid(c2ce389c5596d714d97013d283483b69) Importer(815301076,1909f56bfc062723c751e8b465ee728b)
+Start importing Assets/3DModels/Enemies/blade_launcher_enemy_projectile.fbx using Guid(c2ce389c5596d714d97013d283483b69) Importer(815301076,1909f56bfc062723c751e8b465ee728b)  -> (artifact id: '98a5362e588315db5f5053e0f37d5bd1') in 0.010828 seconds
+  Import took 0.025087 seconds .
+
+========================================================================
+Received Import Request.
+  Time since last request: 0.000184 seconds.
+  path: Assets/3DModels/Enemies/blade_launcher_enemy.fbx
+  artifactKey: Guid(8cfe9be91223f92408bd9a47875701f5) Importer(815301076,1909f56bfc062723c751e8b465ee728b)
+Start importing Assets/3DModels/Enemies/blade_launcher_enemy.fbx using Guid(8cfe9be91223f92408bd9a47875701f5) Importer(815301076,1909f56bfc062723c751e8b465ee728b)  -> (artifact id: '4d1701065410c13d44ce0312d0a23db0') in 0.014847 seconds
+  Import took 0.022383 seconds .
+
+========================================================================
+Received Import Request.
+  Time since last request: 0.000163 seconds.
+  path: Assets/3DModels/Enemies/cutter_enemy.fbx
+  artifactKey: Guid(b4442a0f4f0151742917925544d14724) Importer(815301076,1909f56bfc062723c751e8b465ee728b)
+Start importing Assets/3DModels/Enemies/cutter_enemy.fbx using Guid(b4442a0f4f0151742917925544d14724) Importer(815301076,1909f56bfc062723c751e8b465ee728b)  -> (artifact id: '0e57092c0ef4b091cec7ef5e176f63f7') in 0.009961 seconds
+  Import took 0.018357 seconds .
+
+========================================================================
+Received Import Request.
+  Time since last request: 36.405312 seconds.
+  path: Assets/3DModels/Enemies/SpiderSucker.fbx
+  artifactKey: Guid(97b8a45dbe24a6b41956ca24d5536aa7) Importer(815301076,1909f56bfc062723c751e8b465ee728b)
+Start importing Assets/3DModels/Enemies/SpiderSucker.fbx using Guid(97b8a45dbe24a6b41956ca24d5536aa7) Importer(815301076,1909f56bfc062723c751e8b465ee728b)  -> (artifact id: 'f0d0c808a8f696db4d18ca6b8f42de2c') in 0.035851 seconds
+  Import took 0.063592 seconds .
+
+========================================================================
+Received Import Request.
+  Time since last request: 6.818419 seconds.
+  path: Assets/3DModels/Enemies/SpiderSucker.fbx
+  artifactKey: Guid(97b8a45dbe24a6b41956ca24d5536aa7) Importer(815301076,1909f56bfc062723c751e8b465ee728b)
+Start importing Assets/3DModels/Enemies/SpiderSucker.fbx using Guid(97b8a45dbe24a6b41956ca24d5536aa7) Importer(815301076,1909f56bfc062723c751e8b465ee728b)  -> (artifact id: '71d213a87bf70d9394758d6f4830338d') in 0.011108 seconds
+  Import took 0.025476 seconds .
+
+========================================================================
+Received Import Request.
+  Time since last request: 0.002759 seconds.
+  path: Assets/3DModels/Enemies/SpiderSucker.fbx
+  artifactKey: Guid(97b8a45dbe24a6b41956ca24d5536aa7) Importer(815301076,1909f56bfc062723c751e8b465ee728b)
+Start importing Assets/3DModels/Enemies/SpiderSucker.fbx using Guid(97b8a45dbe24a6b41956ca24d5536aa7) Importer(815301076,1909f56bfc062723c751e8b465ee728b)  -> (artifact id: '71d213a87bf70d9394758d6f4830338d') in 0.010194 seconds
+  Import took 0.015031 seconds .
+
+========================================================================
+Received Import Request.
+  Time since last request: 7.521617 seconds.
+  path: Assets/3DModels/Enemies/blade_launcher_enemy.fbx
+  artifactKey: Guid(8cfe9be91223f92408bd9a47875701f5) Importer(815301076,1909f56bfc062723c751e8b465ee728b)
+Start importing Assets/3DModels/Enemies/blade_launcher_enemy.fbx using Guid(8cfe9be91223f92408bd9a47875701f5) Importer(815301076,1909f56bfc062723c751e8b465ee728b)  -> (artifact id: '27c9bd4f92f8a7ea98b6a7b17121569d') in 0.013808 seconds
+  Import took 0.048378 seconds .
+
+========================================================================
+Received Import Request.
+  Time since last request: 5.203870 seconds.
+  path: Assets/3DModels/Enemies/cutter_enemy.fbx
+  artifactKey: Guid(b4442a0f4f0151742917925544d14724) Importer(815301076,1909f56bfc062723c751e8b465ee728b)
+Start importing Assets/3DModels/Enemies/cutter_enemy.fbx using Guid(b4442a0f4f0151742917925544d14724) Importer(815301076,1909f56bfc062723c751e8b465ee728b)  -> (artifact id: '0ae175ba1d3b714e4d458a601a3a0411') in 0.026268 seconds
+  Import took 0.053956 seconds .
+
+========================================================================
+Received Import Request.
+  Time since last request: 4.187460 seconds.
+  path: Assets/3DModels/Enemies/cutter_enemy.fbx
+  artifactKey: Guid(b4442a0f4f0151742917925544d14724) Importer(815301076,1909f56bfc062723c751e8b465ee728b)
+Start importing Assets/3DModels/Enemies/cutter_enemy.fbx using Guid(b4442a0f4f0151742917925544d14724) Importer(815301076,1909f56bfc062723c751e8b465ee728b)  -> (artifact id: '70ed44b29d7dc3efe008fb94d27725a8') in 0.010167 seconds
+  Import took 0.039101 seconds .
+
+========================================================================
+Received Import Request.
+  Time since last request: 0.007022 seconds.
+  path: Assets/3DModels/Enemies/cutter_enemy.fbx
+  artifactKey: Guid(b4442a0f4f0151742917925544d14724) Importer(815301076,1909f56bfc062723c751e8b465ee728b)
+Start importing Assets/3DModels/Enemies/cutter_enemy.fbx using Guid(b4442a0f4f0151742917925544d14724) Importer(815301076,1909f56bfc062723c751e8b465ee728b)  -> (artifact id: '70ed44b29d7dc3efe008fb94d27725a8') in 0.009809 seconds
+  Import took 0.014722 seconds .
+
+========================================================================
+Received Import Request.
+  Time since last request: 39.904330 seconds.
+  path: Assets/3DModels/Enemies/blade_launcher_enemy_projectile.fbx
+  artifactKey: Guid(c2ce389c5596d714d97013d283483b69) Importer(815301076,1909f56bfc062723c751e8b465ee728b)
+Start importing Assets/3DModels/Enemies/blade_launcher_enemy_projectile.fbx using Guid(c2ce389c5596d714d97013d283483b69) Importer(815301076,1909f56bfc062723c751e8b465ee728b)  -> (artifact id: '26106be17d6ac6e89ca6eff480ad970b') in 0.013951 seconds
+  Import took 0.026992 seconds .
+
+========================================================================
+Received Import Request.
+  Time since last request: 35.130537 seconds.
+  path: Assets/3DModels/Enemies/blade_launcher_enemy.fbx
+  artifactKey: Guid(8cfe9be91223f92408bd9a47875701f5) Importer(815301076,1909f56bfc062723c751e8b465ee728b)
+Start importing Assets/3DModels/Enemies/blade_launcher_enemy.fbx using Guid(8cfe9be91223f92408bd9a47875701f5) Importer(815301076,1909f56bfc062723c751e8b465ee728b)  -> (artifact id: 'f44c09b08d43afc2951a638c27f6349f') in 0.014113 seconds
+  Import took 0.019441 seconds .
+
+========================================================================
+Received Import Request.
+  Time since last request: 3.568247 seconds.
+  path: Assets/3DModels/Enemies/blade_launcher_enemy.fbx
+  artifactKey: Guid(8cfe9be91223f92408bd9a47875701f5) Importer(815301076,1909f56bfc062723c751e8b465ee728b)
+Start importing Assets/3DModels/Enemies/blade_launcher_enemy.fbx using Guid(8cfe9be91223f92408bd9a47875701f5) Importer(815301076,1909f56bfc062723c751e8b465ee728b)  -> (artifact id: '718181aa8098bdd3209945d0bed3c808') in 0.014873 seconds
+  Import took 0.023597 seconds .
+
+========================================================================
+Received Import Request.
+  Time since last request: 8.209250 seconds.
+  path: Assets/3DModels/Enemies/blade_launcher_enemy.fbx
+  artifactKey: Guid(8cfe9be91223f92408bd9a47875701f5) Importer(815301076,1909f56bfc062723c751e8b465ee728b)
+Start importing Assets/3DModels/Enemies/blade_launcher_enemy.fbx using Guid(8cfe9be91223f92408bd9a47875701f5) Importer(815301076,1909f56bfc062723c751e8b465ee728b)  -> (artifact id: '55e23e3fd51e6e985ec6fefc5877d4fa') in 0.014345 seconds
+  Import took 0.028158 seconds .
 
 AssetImportWorkerClient::OnTransportError - code=2 error=End of file
