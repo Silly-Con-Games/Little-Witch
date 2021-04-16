@@ -407,7 +407,6 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   swing: {fileID: 5730330900586231945}
   Damage: 0
-  Trigger: {fileID: 7588440595334002624}
 --- !u!65 &7588440595334002624
 BoxCollider:
   m_ObjectHideFlags: 0
@@ -434,15 +433,15 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: -8679921383154817045, guid: 35e7e83f7d843e842b3e945060ea76fe, type: 3}
       propertyPath: m_LocalScale.x
-      value: 20
+      value: 80
       objectReference: {fileID: 0}
     - target: {fileID: -8679921383154817045, guid: 35e7e83f7d843e842b3e945060ea76fe, type: 3}
       propertyPath: m_LocalScale.y
-      value: 20
+      value: 80
       objectReference: {fileID: 0}
     - target: {fileID: -8679921383154817045, guid: 35e7e83f7d843e842b3e945060ea76fe, type: 3}
       propertyPath: m_LocalScale.z
-      value: 20
+      value: 80
       objectReference: {fileID: 0}
     - target: {fileID: -8679921383154817045, guid: 35e7e83f7d843e842b3e945060ea76fe, type: 3}
       propertyPath: m_LocalPosition.x
@@ -488,6 +487,10 @@ PrefabInstance:
       propertyPath: m_Materials.Array.data[0]
       value: 
       objectReference: {fileID: 2100000, guid: c7f2d0672c72350428891c7ea5ddb6ac, type: 2}
+    - target: {fileID: -5754084199372789682, guid: 35e7e83f7d843e842b3e945060ea76fe, type: 3}
+      propertyPath: m_Mesh
+      value: 
+      objectReference: {fileID: 4711208715938537054, guid: 7f1845b83e7865641a0893a2fdcb0aa6, type: 3}
     - target: {fileID: 919132149155446097, guid: 35e7e83f7d843e842b3e945060ea76fe, type: 3}
       propertyPath: m_Name
       value: witchwithoutstaff

@@ -14,4 +14,5 @@ EditorBuildSettings:
   - enabled: 1
     path: Assets/Scenes/charlie.unity
     guid: e00daf405c43e4f418a45b837499a58b
-  m_configObjects: {}
+  m_configObjects:
+    com.unity.input.settings: {fileID: 11400000, guid: 3261e123c8174c84483a81ff8c5baf32, type: 2}
