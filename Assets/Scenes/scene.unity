@@ -32894,17 +32894,6 @@ Transform:
   m_CorrespondingSourceObject: {fileID: 116529282015228155, guid: c4c6503ae38da0747b887201515f2b38, type: 3}
   m_PrefabInstance: {fileID: 1012873585}
   m_PrefabAsset: {fileID: 0}
---- !u!114 &1012904691 stripped
-MonoBehaviour:
-  m_CorrespondingSourceObject: {fileID: 6295430965828045209, guid: b1fc13f3af7f08b4383542ef08e46ae3, type: 3}
-  m_PrefabInstance: {fileID: 6295430964325521438}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 0}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 0fb91ef6c12cbe54d866244277570d2d, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
 --- !u!1001 &1014305386
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -67661,14 +67650,6 @@ PrefabInstance:
       propertyPath: jumpHeight
       value: 1
       objectReference: {fileID: 0}
-    - target: {fileID: 6295430965828045209, guid: b1fc13f3af7f08b4383542ef08e46ae3, type: 3}
-      propertyPath: chargeAbility.parent
-      value: 
-      objectReference: {fileID: 1012904691}
-    - target: {fileID: 6295430965828045209, guid: b1fc13f3af7f08b4383542ef08e46ae3, type: 3}
-      propertyPath: chargeAbility.projectilePrefab
-      value: 
-      objectReference: {fileID: 4440998494240233621, guid: 1ef484b1f5006d84e9fd598dc9da34bd, type: 3}
     - target: {fileID: 6295430965828045210, guid: b1fc13f3af7f08b4383542ef08e46ae3, type: 3}
       propertyPath: m_Name
       value: Witch

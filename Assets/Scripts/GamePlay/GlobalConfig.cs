@@ -44,5 +44,12 @@ namespace Config
         public float cooldown;
         public float witchSlow;
     }
+
+    [Serializable]
+    public struct BiomeAbiliyConfig
+    {
+        public float cooldown;
+        public float damage;
+    }
 }
 

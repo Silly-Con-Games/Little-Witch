@@ -407,7 +407,6 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   swing: {fileID: 5730330900586231945}
   Damage: 0
-  Trigger: {fileID: 7588440595334002624}
 --- !u!65 &7588440595334002624
 BoxCollider:
   m_ObjectHideFlags: 0
