@@ -19,7 +19,7 @@ public class EnemyRanged : EnemyAI
         bullet.GetComponentInChildren<Bullet>().target = EObjectType.Player;
         var bulletInstanceTrans = bullet.transform;
         bulletInstanceTrans.position = transform.position;
-        bulletInstanceTrans.rotation = transform.rotation;
+        bulletInstanceTrans.eulerAngles = new Vector3(transform.eulerAngles.x, transform.eulerAngles.y, transform.eulerAngles.z);
     }
 
     protected override void Idle()
