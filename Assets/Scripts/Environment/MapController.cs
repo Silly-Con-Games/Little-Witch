@@ -53,4 +53,36 @@ public class MapController : MonoBehaviour
         aliveTilesCnt--;
         tile.Die(false);
     }
+
+    public BiomeType BiomeTypeInPosition(Vector3 position)
+    {
+        if (Physics.Raycast(position, Vector3.down, out RaycastHit hit, 2f))
+        {
+            Tile tile = hit.transform.parent.gameObject.GetComponent<Tile>();
+            if(tile != null)
+            {
+                return ExtractBiomeTypeFromTile(tile);
+            }
+        }
+
+        return BiomeType.unknown;
+    }
+
+    private BiomeType ExtractBiomeTypeFromTile(Tile tile)
+    {
+        if (tile.isDead)
+            return BiomeType.dead;
+
+        switch (tile.tileType)
+        {
+            case TileType.FOREST:
+                return BiomeType.forest;
+            case TileType.PLAIN:
+                return BiomeType.meadow;
+            case TileType.WATER:
+                return BiomeType.water;
+            default:
+                return BiomeType.unknown;
+        }
+    }
 }
