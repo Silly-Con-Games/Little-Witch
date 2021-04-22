@@ -14,7 +14,7 @@ public class ChargeAbility
     public ChargeAbilityConfig conf;
 
     private float startedChargeTime = 0.0f;
-    private float lastFireTime = -20;
+    private float lastFireTime = float.NegativeInfinity;
 
     public bool IsCharging { get; internal set; }
 

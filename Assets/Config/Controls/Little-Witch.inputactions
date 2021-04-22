@@ -38,7 +38,7 @@
                     "interactions": "Tap"
                 },
                 {
-                    "name": "PrimaryAbility",
+                    "name": "MainAbility",
                     "type": "Button",
                     "id": "425c05d0-17ae-4684-8ac6-fd78f30c5e5a",
                     "expectedControlType": "Button",
@@ -260,7 +260,7 @@
                     "interactions": "",
                     "processors": "",
                     "groups": "Keyboard&Mouse",
-                    "action": "PrimaryAbility",
+                    "action": "MainAbility",
                     "isComposite": false,
                     "isPartOfComposite": false
                 },

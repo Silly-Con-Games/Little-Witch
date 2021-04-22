@@ -8,7 +8,7 @@ public class MeleeAbility
     public SwordAttack swing;
     public MeleeAbilityConfig conf;
 
-    private float timeSinceLastAttack = -20;
+    private float timeSinceLastAttack = float.NegativeInfinity;
 
     public bool IsReady => Time.time - timeSinceLastAttack > conf.cooldown;
 

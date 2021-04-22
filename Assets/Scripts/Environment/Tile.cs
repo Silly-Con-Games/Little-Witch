@@ -194,7 +194,8 @@ public class Tile : MonoBehaviour {
 public enum TileType {
 	FOREST,
 	PLAIN,
-	SAND
+	SAND,
+	WATER
 }
 
 public enum TileState {
