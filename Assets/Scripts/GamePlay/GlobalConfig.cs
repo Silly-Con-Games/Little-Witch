@@ -46,6 +46,12 @@ namespace Config
     }
 
     [Serializable]
+    public struct MainAbilityConfig
+    {
+        public float cooldown;
+    }
+
+    [Serializable]
     public struct EnemyRangedConfig
     {
     }
