@@ -133,6 +133,9 @@ public abstract class EnemyAI : MonoBehaviour, IDamagable
             case State.Idle:
                 Idle();
                 break;
+            case State.Attack:
+                Attack();
+                break;
             default:
                 break;
         }
