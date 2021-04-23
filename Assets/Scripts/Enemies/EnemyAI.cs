@@ -5,7 +5,7 @@ using UnityEngine;
 using UnityEngine.AI;
 using Random = UnityEngine.Random;
 
-public abstract class EnemyAI : MonoBehaviour, IDamagable
+public abstract class EnemyAI : MonoBehaviour, IDamagable, IRootable, IStunnable, ISlowable
 {
     public enum State
     {
@@ -205,11 +205,27 @@ public abstract class EnemyAI : MonoBehaviour, IDamagable
         state = State.Chase;
         chasingDeltaTime = chasingTime;
         if ((healthPoints -= amount) <= 0) Destroy(gameObject);
+        Stun(5);
     }
 
     public EObjectType GetObjectType()
     {
         return EObjectType.Enemy;
+    }
+
+    public void RecieveSlow(float duration)
+    {
+        Slow(duration );
+    }
+
+    public void RecieveStun(float duration)
+    {
+        Stun(duration);
+    }
+
+    public void ReceiveRoot(float duration)
+    {
+        Root(duration);
     }
 
     public void SetRoamObjectTransform(Transform transform)
