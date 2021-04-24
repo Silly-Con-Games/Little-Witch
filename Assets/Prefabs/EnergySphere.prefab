@@ -12,7 +12,8 @@ GameObject:
   - component: {fileID: 3473807671122988932}
   - component: {fileID: 3473807671122988955}
   - component: {fileID: 8381392242877515668}
-  m_Layer: 0
+  - component: {fileID: 4926629092220618555}
+  m_Layer: 10
   m_Name: EnergySphere
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -94,3 +95,16 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 1525c2cf4cc585d49b057512566553ff, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+--- !u!135 &4926629092220618555
+SphereCollider:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 3473807671122988953}
+  m_Material: {fileID: 0}
+  m_IsTrigger: 1
+  m_Enabled: 1
+  serializedVersion: 2
+  m_Radius: 5
+  m_Center: {x: 0, y: 0, z: 0}

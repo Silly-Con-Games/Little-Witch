@@ -134,7 +134,7 @@ public class EnemyEnvDestroyer : EnemyAI
     protected override void Attack()
     {
         RaycastHit hit;
-        if (Physics.Raycast(transform.position, Vector3.down, out hit, 2f))
+        if (Physics.Raycast(transform.position, Vector3.down, out hit, 2f, 7))
         {
             Tile tile = hit.transform.parent.gameObject.GetComponent<Tile>();
             if (!tile || tile.tileState == TileState.DEAD || tile.tileState == TileState.DYING)
