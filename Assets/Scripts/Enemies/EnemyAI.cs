@@ -75,6 +75,9 @@ public abstract class EnemyAI : MonoBehaviour, IDamagable, IRootable, IStunnable
     [SerializeField]
     protected float rootDefault;
 
+    [SerializeField]
+    private GameObject energyPrefab;
+
     public virtual void InitEnemy()
     {
         if (!playerController)
@@ -102,7 +105,7 @@ public abstract class EnemyAI : MonoBehaviour, IDamagable, IRootable, IStunnable
         agent.speed = speed;
 
         attackSpeed = 1f;
-        healthPoints = 20;
+        healthPoints = 10;
 
         secondaryState = SecondaryState.None;
 
@@ -204,7 +207,8 @@ public abstract class EnemyAI : MonoBehaviour, IDamagable, IRootable, IStunnable
         agent.isStopped = false;
         state = State.Chase;
         chasingDeltaTime = chasingTime;
-        if ((healthPoints -= amount) <= 0) Destroy(gameObject);
+        Debug.Log(healthPoints);
+        if ((healthPoints -= amount) <= 0) Die();
         Stun(5);
     }
 
@@ -231,6 +235,13 @@ public abstract class EnemyAI : MonoBehaviour, IDamagable, IRootable, IStunnable
     public void SetRoamObjectTransform(Transform transform)
     {
         this.roamPosition = transform;
+    }
+
+    protected void Die()
+    {
+        GameObject energy = Instantiate(energyPrefab);
+        energy.transform.position = new Vector3(this.transform.position.x, 0.5f, this.transform.position.z);
+        Destroy(gameObject);
     }
     
 }

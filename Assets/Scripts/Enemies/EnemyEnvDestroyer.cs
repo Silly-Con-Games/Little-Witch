@@ -137,7 +137,7 @@ public class EnemyEnvDestroyer : EnemyAI
         if (Physics.Raycast(transform.position, Vector3.down, out hit, 2f))
         {
             Tile tile = hit.transform.parent.gameObject.GetComponent<Tile>();
-            if (!tile || tile.isDead)
+            if (!tile || tile.tileState == TileState.DEAD || tile.tileState == TileState.DYING)
                 return;
             
             mapController.AttackTile(tile);
@@ -157,7 +157,7 @@ public class EnemyEnvDestroyer : EnemyAI
             {
                 enemiesRanged[i].SetRoamObjectTransform(null);
             }
-            Destroy(gameObject);
+            Die();
         }
     }
 
