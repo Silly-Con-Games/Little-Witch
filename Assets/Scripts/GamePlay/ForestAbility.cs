@@ -1,11 +1,12 @@
-using System;
-using System.Collections;
-using System.Collections.Generic;
 using UnityEngine;
+using System;
 
 [Serializable]
-public class ForestAbility 
+public class ForestAbility : MainAbility
 {
-    public Transform origin;
-    private float lastFireTime = -20;
+    public override void CastAbility()
+    {
+        base.CastAbility();
+        Debug.Log("Casted forest ability!");
+    }
 }

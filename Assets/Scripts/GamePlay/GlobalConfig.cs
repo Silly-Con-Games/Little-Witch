@@ -46,10 +46,30 @@ namespace Config
     }
 
     [Serializable]
-    public struct BiomeAbiliyConfig
+    public struct MainAbilityConfig
     {
         public float cooldown;
-        public float damage;
     }
+
+    [Serializable]
+    public struct EnemyRangedConfig
+    {
+    }
+
+    [Serializable]
+    public struct EnemyMeleeConfig
+    {
+    }
+
+    [Serializable]
+    public struct EnemyBomberConfig
+    {
+    }
+
+    [Serializable]
+    public struct EnemyEnvDestroyerConfig
+    {
+    }
+
 }
 

@@ -10,7 +10,9 @@ public class Tile : MonoBehaviour {
 	public TileType tileType;
 	public TileState tileState;
 
-	public MeshRenderer mesh;
+    public MapInfo mapInfo { get; set; }
+
+    public MeshRenderer mesh;
 	public TileColors colors;
 
 	public TreeController tree;
@@ -32,12 +34,16 @@ public class Tile : MonoBehaviour {
 		directions[4] = new Vector3(-1, 0, 0);
 		directions[5] = new Vector3(-1, 0, -2);
 
+        mapInfo = new MapInfo();
+        
 		neighbours = new Tile[6];
 		RaycastHit hit;
 		Vector3 bitLower = new Vector3(0, -0.2f, 0);
 		for (int i = 0; i < directions.Length; i++) {
-			if (Physics.Raycast(transform.position + bitLower, directions[i], out hit, 2f, LayerMask.GetMask("Tile"))) {
-				neighbours[i] = hit.transform.parent.gameObject.GetComponent<Tile>();
+			if (Physics.Raycast(transform.position + bitLower, directions[i], out hit, 2f, 7)) {
+				Tile tile = hit.transform.parent.gameObject.GetComponent<Tile>();
+                if (tile)
+				    neighbours[i] = hit.transform.parent.gameObject.GetComponent<Tile>();
 			}
 		}
 	}
@@ -188,7 +194,8 @@ public class Tile : MonoBehaviour {
 public enum TileType {
 	FOREST,
 	PLAIN,
-	SAND
+	SAND,
+	WATER
 }
 
 public enum TileState {
