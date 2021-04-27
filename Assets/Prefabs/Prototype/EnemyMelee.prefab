@@ -60,6 +60,7 @@ MonoBehaviour:
   healthPoints: 0
   slowDefault: 0
   rootDefault: 0
+  energyPrefab: {fileID: 3473807671122988953, guid: 6a2afd42537f2054f8ecf02e2c7764f8, type: 3}
 --- !u!195 &5384379442950274121
 NavMeshAgent:
   m_ObjectHideFlags: 0

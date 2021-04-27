@@ -34,8 +34,13 @@ public class PlayerController : MonoBehaviour, IDamagable
     float jumpHeight = 1.0f;
     bool wantsJump;
 
+    public int energyMax { get; set; }
+    public int energy { get; set; }
+
     private void Start()
     {
+        energyMax = 5;
+        energy = 0;
         mainCamera = Camera.main;
         cameraTrans = mainCamera.transform;
         animator = GetComponent<Animator>();
@@ -200,6 +205,11 @@ public class PlayerController : MonoBehaviour, IDamagable
     public void SetSpeedModifier(float val)
     {
         speedModifier = val;
+    }
+
+    public void AddEnergy(int number)
+    {
+        energy = energy + number >= energyMax ? energyMax : energy + number;
     }
 
     private class Health

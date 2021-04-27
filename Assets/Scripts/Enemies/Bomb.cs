@@ -10,6 +10,8 @@ public class Bomb : MonoBehaviour
     
     [SerializeField]
     private PlayerController playerController;
+
+    private bool bombActivated;
     
     // Start is called before the first frame update
     void Start()
@@ -22,7 +24,17 @@ public class Bomb : MonoBehaviour
         {
             playerController = FindObjectOfType<PlayerController>();
         }
-        StartCoroutine(BombCoroutine(5f));
+
+        bombActivated = false;
+    }
+
+    void OnTriggerEnter(Collider collision)
+    {
+        if (!bombActivated)
+        {
+            bombActivated = true;
+            StartCoroutine(BombCoroutine(5f));
+        }
     }
 
     public IEnumerator BombCoroutine(float duration)

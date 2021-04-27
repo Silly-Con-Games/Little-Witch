@@ -95,7 +95,7 @@ GameObject:
   - component: {fileID: 1642520030457959131}
   - component: {fileID: 1642520030457959124}
   m_Layer: 8
-  m_Name: EnemyEnvDestroyer
+  m_Name: EnEDSpider
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -141,6 +141,7 @@ MonoBehaviour:
   healthPoints: 50
   slowDefault: 3
   rootDefault: 3
+  energyPrefab: {fileID: 3473807671122988953, guid: 6a2afd42537f2054f8ecf02e2c7764f8, type: 3}
   rangedPrefab: {fileID: 2909162330852038180, guid: 8e1072016e682fa4a9e7fb2cf75d86ed, type: 3}
   meleePrefab: {fileID: 5384379442950274118, guid: 58384ed62a1f90d499b5af62efeed90c, type: 3}
   enemiesMeleeMax: 2

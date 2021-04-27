@@ -141,6 +141,7 @@ MonoBehaviour:
   healthPoints: 20
   slowDefault: 0
   rootDefault: 0
+  energyPrefab: {fileID: 3473807671122988953, guid: 6a2afd42537f2054f8ecf02e2c7764f8, type: 3}
   bulletPrefab: {fileID: 1052265020511648158, guid: 855c5f2f5e7f5ff47b0781ab05fb4a49, type: 3}
 --- !u!195 &2909162330852038182
 NavMeshAgent:

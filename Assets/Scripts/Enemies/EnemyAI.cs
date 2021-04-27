@@ -3,10 +3,9 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.AI;
-using UnityEngine.Assertions;
 using Random = UnityEngine.Random;
 
-public abstract class EnemyAI : MonoBehaviour, IDamagable
+public abstract class EnemyAI : MonoBehaviour, IDamagable, IRootable, IStunnable, ISlowable
 {
     public enum State
     {
@@ -76,7 +75,8 @@ public abstract class EnemyAI : MonoBehaviour, IDamagable
     [SerializeField]
     protected float rootDefault;
 
-    protected Animator animator = null;
+    [SerializeField]
+    private GameObject energyPrefab;
 
     public virtual void InitEnemy()
     {
@@ -105,17 +105,11 @@ public abstract class EnemyAI : MonoBehaviour, IDamagable
         agent.speed = speed;
 
         attackSpeed = 1f;
-        healthPoints = 20;
+        healthPoints = 10;
 
         secondaryState = SecondaryState.None;
 
         state = State.Roam;
-
-        if (!animator)
-        {
-            animator = GetComponentInChildren<Animator>();
-            Assert.IsNotNull(animator);
-        }
     }
 
     public virtual void InitEnemy(Transform roamPosition)
@@ -210,12 +204,12 @@ public abstract class EnemyAI : MonoBehaviour, IDamagable
 
     public virtual void ReceiveDamage(float amount)
     {
-        animator.SetTrigger("GetHit");
-
         agent.isStopped = false;
         state = State.Chase;
         chasingDeltaTime = chasingTime;
-        if ((healthPoints -= amount) <= 0) Destroy(gameObject);
+        Debug.Log(healthPoints);
+        if ((healthPoints -= amount) <= 0) Die();
+        Stun(5);
     }
 
     public EObjectType GetObjectType()
@@ -223,9 +217,31 @@ public abstract class EnemyAI : MonoBehaviour, IDamagable
         return EObjectType.Enemy;
     }
 
+    public void RecieveSlow(float duration)
+    {
+        Slow(duration );
+    }
+
+    public void RecieveStun(float duration)
+    {
+        Stun(duration);
+    }
+
+    public void ReceiveRoot(float duration)
+    {
+        Root(duration);
+    }
+
     public void SetRoamObjectTransform(Transform transform)
     {
         this.roamPosition = transform;
+    }
+
+    protected void Die()
+    {
+        GameObject energy = Instantiate(energyPrefab);
+        energy.transform.position = new Vector3(this.transform.position.x, 0.5f, this.transform.position.z);
+        Destroy(gameObject);
     }
     
 }
