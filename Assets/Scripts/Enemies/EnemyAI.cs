@@ -3,6 +3,7 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.AI;
+using UnityEngine.Assertions;
 using Random = UnityEngine.Random;
 
 public abstract class EnemyAI : MonoBehaviour, IDamagable
@@ -75,6 +76,8 @@ public abstract class EnemyAI : MonoBehaviour, IDamagable
     [SerializeField]
     protected float rootDefault;
 
+    protected Animator animator = null;
+
     public virtual void InitEnemy()
     {
         if (!playerController)
@@ -107,6 +110,12 @@ public abstract class EnemyAI : MonoBehaviour, IDamagable
         secondaryState = SecondaryState.None;
 
         state = State.Roam;
+
+        if (!animator)
+        {
+            animator = GetComponentInChildren<Animator>();
+            Assert.IsNotNull(animator);
+        }
     }
 
     public virtual void InitEnemy(Transform roamPosition)
@@ -201,6 +210,8 @@ public abstract class EnemyAI : MonoBehaviour, IDamagable
 
     public virtual void ReceiveDamage(float amount)
     {
+        animator.SetTrigger("GetHit");
+
         agent.isStopped = false;
         state = State.Chase;
         chasingDeltaTime = chasingTime;
