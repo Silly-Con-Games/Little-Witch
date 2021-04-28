@@ -146,6 +146,8 @@ public class EnemyEnvDestroyer : EnemyAI
 
     public override void ReceiveDamage(float amount)
     {
+        animator.SetTrigger("GetHit");
+
         if ((healthPoints -= amount) <= 0)
         {
             for (int i = 0; i < enemiesMelee.Count; i++)
