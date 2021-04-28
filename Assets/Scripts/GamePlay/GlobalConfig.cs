@@ -16,6 +16,7 @@ namespace Config
         public float jumpHeight;
         public MeleeAbilityConfig meeleeAbility;
         public ChargeAbilityConfig chargeAbility;
+        public ForestAbilityConfig forestAbility;
     }
 
     [Serializable]
@@ -50,6 +51,21 @@ namespace Config
     {
         public float cooldown;
     }
+
+    [Serializable]
+    public struct ForestAbilityConfig 
+    {
+        public MainAbilityConfig baseConfig;
+        public float rootPathDamage;
+        public float rootBurstDamage;
+        public float maxRange;
+        public float rootPathSpeed;
+        public float rootDuration;
+        public float rootBurstRadius;
+        public int rootBurstDensity;
+    }
+
+
 
     [Serializable]
     public struct EnemyRangedConfig

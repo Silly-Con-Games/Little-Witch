@@ -6,8 +6,15 @@ using Config;
 public abstract class MainAbility
 {
     protected float lastUsedTime = float.NegativeInfinity;
-    [SerializeField]
+
     protected MainAbilityConfig mainAbilityConfig;
+
+    protected PlayerController playerController;
+
+    public void Init(PlayerController parent)
+    {
+        playerController = parent;
+    }
 
     public virtual void CastAbility()
     {

@@ -192,14 +192,8 @@ MonoBehaviour:
       cooldown: 0
       damage: 0
   forestAbility:
-    mainAbilityConfig:
-      cooldown: 0
-  meadowAbility:
-    mainAbilityConfig:
-      cooldown: 0
-  waterAbility:
-    mainAbilityConfig:
-      cooldown: 0
+    rootPathPrefab: {fileID: 1010815318834259687, guid: db235b2c73331114fa8de52306785352, type: 3}
+    rootCirclePrefab: {fileID: 5760741254045953524, guid: 7c7d4c30b18d4f8429101e84fb74ef6f, type: 3}
 --- !u!143 &811825519810356235
 CharacterController:
   m_ObjectHideFlags: 0

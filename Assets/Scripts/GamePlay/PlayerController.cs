@@ -34,6 +34,7 @@ public class PlayerController : MonoBehaviour, IDamagable
     float jumpHeight = 1.0f;
     bool wantsJump;
 
+    public  Vector3 mouseWorldPosition { get; internal set; }
     public int energyMax { get; set; }
     public int energy { get; set; }
 
@@ -45,8 +46,14 @@ public class PlayerController : MonoBehaviour, IDamagable
         cameraTrans = mainCamera.transform;
         animator = GetComponent<Animator>();
         GlobalConfigManager.onConfigChanged.AddListener(ApplyConfig);
+
+        forestAbility.Init(this);
+        meadowAbility.Init(this);
+        waterAbility.Init(this);
+
         if (!mapController)
             mapController = FindObjectOfType<MapController>();
+
         ApplyConfig();
     }
 
@@ -74,6 +81,7 @@ public class PlayerController : MonoBehaviour, IDamagable
         health = new Health(witchConfig.health);
         meeleeAbility.conf = witchConfig.meeleeAbility;
         chargeAbility.conf = witchConfig.chargeAbility;
+        forestAbility.conf = witchConfig.forestAbility;
     }
 
     void MoveUpdate()
@@ -85,7 +93,7 @@ public class PlayerController : MonoBehaviour, IDamagable
         bool didHit = false;
         if (didHit = Physics.Raycast(ray, out hit, 1000))
         {
-            var targetPosition = hit.point;
+            var targetPosition = mouseWorldPosition = hit.point;
             targetPosition.y = transform.position.y;
             transform.LookAt(targetPosition);
 
