@@ -78,6 +78,7 @@ public abstract class EnemyAI : MonoBehaviour, IDamagable, IRootable, IStunnable
     [SerializeField]
     private GameObject energyPrefab;
 
+    protected Animator animator = null;
     public virtual void InitEnemy()
     {
         if (!playerController)
@@ -110,6 +111,11 @@ public abstract class EnemyAI : MonoBehaviour, IDamagable, IRootable, IStunnable
         secondaryState = SecondaryState.None;
 
         state = State.Roam;
+
+        if (!animator)
+        {
+            animator = GetComponentInChildren<Animator>();
+        }
     }
 
     public virtual void InitEnemy(Transform roamPosition)
@@ -204,6 +210,8 @@ public abstract class EnemyAI : MonoBehaviour, IDamagable, IRootable, IStunnable
 
     public virtual void ReceiveDamage(float amount)
     {
+        animator.SetTrigger("GetHit");
+
         agent.isStopped = false;
         state = State.Chase;
         chasingDeltaTime = chasingTime;

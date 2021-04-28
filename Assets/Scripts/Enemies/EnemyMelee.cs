@@ -105,6 +105,8 @@ public class EnemyMelee : EnemyAI
         if (playerController)
         {
             Debug.Log("Attacking");
+            animator.SetTrigger("Attack");
+
             playerController.ReceiveDamage(3);
         }
     }
