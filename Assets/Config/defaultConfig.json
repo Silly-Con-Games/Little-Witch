@@ -24,7 +24,7 @@
             "speedMax": 14.0,
             "chargeTimeMax": 1.5,
             "cooldown": 1.0,
-            "witchSlow": 0.30000001192092898,
+            "witchSlowMSMultiplier": 0.0,
             "energyCost": 1.0
         },
         "forestAbility": {
@@ -38,6 +38,18 @@
             "rootDuration": 5.0,
             "rootBurstRadius": 1.5,
             "rootBurstDensity": 40
+        },
+        "waterAbility": {
+            "baseConfig": {
+                "cooldown": 0.0
+            },
+            "healPerSec": 1.0
+        },
+        "meadowAbility": {
+            "baseConfig": {
+                "cooldown": 0.0
+            },
+            "MSMultiplier": 2.0
         }
     },
     "respawnTime": 2.0

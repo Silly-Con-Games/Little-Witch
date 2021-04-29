@@ -20,6 +20,9 @@ namespace Config
         public MeleeAbilityConfig meeleeAbility;
         public ChargeAbilityConfig chargeAbility;
         public ForestAbilityConfig forestAbility;
+        public WaterAbilityConfig waterAbility;
+        public MeadowAbilityConfig meadowAbility;
+
     }
 
     [Serializable]
@@ -46,7 +49,7 @@ namespace Config
         public float speedMax;
         public float chargeTimeMax;
         public float cooldown;
-        public float witchSlow;
+        public float witchSlowMSMultiplier;
         public float energyCost;
     }
 
@@ -69,7 +72,19 @@ namespace Config
         public int rootBurstDensity;
     }
 
+    [Serializable]
+    public struct WaterAbilityConfig
+    {
+        public MainAbilityConfig baseConfig;
+        public float healPerSec;
+    }
 
+    [Serializable]
+    public struct MeadowAbilityConfig
+    {
+        public MainAbilityConfig baseConfig;
+        public float MSMultiplier;
+    }
 
     [Serializable]
     public struct EnemyRangedConfig

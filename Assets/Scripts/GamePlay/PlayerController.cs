@@ -3,6 +3,7 @@ using Config;
 using UnityEngine.InputSystem;
 using UnityEngine.Events;
 using System;
+using System.Collections.Generic;
 
 public class PlayerController : MonoBehaviour, IDamagable
 {
@@ -20,7 +21,8 @@ public class PlayerController : MonoBehaviour, IDamagable
     public ForestAbility forestAbility;
     public MeadowAbility meadowAbility;
     public WaterAbility waterAbility;
-    
+
+    public HashSet<UnityAction> passiveEffects { get; internal set; }
 
     private Camera mainCamera;
     private Transform cameraTrans;
@@ -48,7 +50,10 @@ public class PlayerController : MonoBehaviour, IDamagable
         mainCamera = Camera.main;
         cameraTrans = mainCamera.transform;
         animator = GetComponent<Animator>();
+
         GlobalConfigManager.onConfigChanged.AddListener(ApplyConfig);
+
+        passiveEffects = new HashSet<UnityAction>();
 
         forestAbility.Init(this);
         meadowAbility.Init(this);
@@ -73,10 +78,14 @@ public class PlayerController : MonoBehaviour, IDamagable
     {
         MoveUpdate();
 
-        if(chargeAbility.IsCharging)
+        CheckCurrentBiome();
+
+        if (chargeAbility.IsCharging)
             chargeAbility.UpdateAnimation();
 
-        CheckCurrentBiome();
+        foreach(var passive in passiveEffects)
+            passive();
+
     }
 
     void ApplyConfig()
@@ -97,6 +106,8 @@ public class PlayerController : MonoBehaviour, IDamagable
         meeleeAbility.conf = witchConfig.meeleeAbility;
         chargeAbility.conf = witchConfig.chargeAbility;
         forestAbility.conf = witchConfig.forestAbility;
+        waterAbility.conf = witchConfig.waterAbility;
+        meadowAbility.conf = witchConfig.meadowAbility;
     }
 
     void MoveUpdate()
@@ -157,7 +168,18 @@ public class PlayerController : MonoBehaviour, IDamagable
         BiomeType newType = mapController.BiomeTypeInPosition(transform.position);
         if(newType != standingOnBiomeType)
         {
+            switch (standingOnBiomeType)
+            {
+                case BiomeType.meadow: // Remove meadow passive effect
+                    meadowAbility.SteppedFromMeadow();
+                    break;
+                case BiomeType.water: // Remove water passive effect
+                    waterAbility.SteppedFromWater();
+                    break;
+            }
+
             standingOnBiomeType = newType;
+
             switch (standingOnBiomeType)
             {
                 case BiomeType.forest:
@@ -165,9 +187,11 @@ public class PlayerController : MonoBehaviour, IDamagable
                     break;
                 case BiomeType.meadow:
                     currentMainAbility = meadowAbility;
+                    meadowAbility.SteppedOnMeadow();
                     break;
                 case BiomeType.water:
                     currentMainAbility = waterAbility;
+                    waterAbility.SteppedOnWater();
                     break;
                 default:
                     currentMainAbility = null;
@@ -227,8 +251,8 @@ public class PlayerController : MonoBehaviour, IDamagable
 
     public EObjectType GetObjectType() => EObjectType.Player;
 
-    public void SetSpeedModifier(float val)
+    public void ScaleSpeedModifier(float val)
     {
-        speedModifier = val;
+        speedModifier *= val;
     }
 }

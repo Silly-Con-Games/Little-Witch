@@ -42,7 +42,7 @@ public class ChargeAbility
         {
             IsCharging = true;
             startedChargeTime = Time.time;
-            parent.SetSpeedModifier(conf.witchSlow);
+            parent.ScaleSpeedModifier(conf.witchSlowMSMultiplier);
             parent.energy.UseEnergy(conf.energyCost);
 
             abilityAnimationTransform.localScale = new Vector3(conf.spawnRadiusMin, conf.spawnRadiusMin, conf.spawnRadiusMin);
@@ -57,7 +57,7 @@ public class ChargeAbility
         lastFireTime = Time.time;
         IsCharging = false;
         abilityAnimationTransform.localScale = Vector3.zero;
-        parent.SetSpeedModifier(1.0f);
+        parent.ScaleSpeedModifier(1 / conf.witchSlowMSMultiplier);
 
         float chargePercent = GetChargedTime()/ conf.chargeTimeMax;
 
