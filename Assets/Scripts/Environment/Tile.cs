@@ -52,7 +52,7 @@ public class Tile : MonoBehaviour {
 	void Update() {
 		if (change) {
 			change = false;
-
+#if UNITY_EDITOR
 			if (isDead && tileState != TileState.DEAD) {
 				Die(!EditorApplication.isPlayingOrWillChangePlaymode);
 			}
@@ -60,6 +60,7 @@ public class Tile : MonoBehaviour {
 				isDead = false;
 				Morph(!EditorApplication.isPlayingOrWillChangePlaymode, wantedType);
 			}
+#endif
 		}
 	}
 
