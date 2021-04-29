@@ -1,25 +1,44 @@
 
 using UnityEngine;
 using UnityEngine.Assertions;
+using UnityEngine.Events;
 
 public class EnergyTracker 
 {
-    private float maxEnergy = 0;
+    public float MaxEnergy { get; internal set; }
     public float Energy { get; internal set; }
+
+    public UnityEvent<float> onChanged;
+
     public EnergyTracker(float maxEnergy, float initialEnergy = 0) 
     {
         Energy = initialEnergy; 
-        this.maxEnergy = maxEnergy;     
+        MaxEnergy = maxEnergy;
+        onChanged = new UnityEvent<float>();
     }
 
     public bool HasEnough(float amount) => amount <= Energy;
 
-    public bool CanFitMore => Energy < maxEnergy;
+    public bool CanFitMore => Energy < MaxEnergy;
+
     public void UseEnergy(float amount) 
     {
+        Assert.IsFalse(amount < 0);
+
         Energy -= amount;
-        Assert.IsTrue(Energy < 0, "Oi oi not enough energy for that, what are you doin");
+
+        Assert.IsFalse(Energy < 0);
+
+        onChanged.Invoke(Energy);
     }
-    public void AddEnergy(float amount) => Energy = Mathf.Min(maxEnergy, Energy + amount);
+
+    public void AddEnergy(float amount)
+    {
+        Assert.IsFalse(amount < 0);
+
+        Energy = Mathf.Min(MaxEnergy, Energy + amount);
+
+        onChanged.Invoke(Energy);
+    }
 
 }

@@ -22,7 +22,7 @@ public class HUDController : MonoBehaviour
         energybar.value = startingEnergy;
     }
 
-    public void ChangeHealth(float amount) => healthbar.value += amount;
+    public void SetHealth(float newHealth) => healthbar.value = newHealth;
 
-    public void ChangeEnergy(float amount) => energybar.value += amount;
+    public void SetEnergy(float newEnergy) => energybar.value = newEnergy;
 }

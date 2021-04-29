@@ -31,7 +31,7 @@ public class ChargeAbility
 
     public bool IsReady()
     {
-        if (IsCharging)
+        if (IsCharging || !parent.energy.HasEnough(conf.energyCost))
             return false;
         else
             return Time.time - lastFireTime > conf.cooldown;
@@ -43,6 +43,7 @@ public class ChargeAbility
             IsCharging = true;
             startedChargeTime = Time.time;
             parent.SetSpeedModifier(conf.witchSlow);
+            parent.energy.UseEnergy(conf.energyCost);
 
             abilityAnimationTransform.localScale = new Vector3(conf.spawnRadiusMin, conf.spawnRadiusMin, conf.spawnRadiusMin);
         }            

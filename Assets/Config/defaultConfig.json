@@ -1,13 +1,13 @@
 {
     "witchConfig": {
-        "health": 999.0,
+        "health": 20.0,
         "energyMax": 5.0,
         "energyInitial": 0.0,
         "movementSpeed": 5.0,
         "jumpHeight": 1.0,
         "meeleeAbility": {
             "cooldown": 0.30000001192092898,
-            "damage": 0.5
+            "damage": 2.0
         },
         "chargeAbility": {
             "damageMin": 10.0,
@@ -24,7 +24,8 @@
             "speedMax": 14.0,
             "chargeTimeMax": 1.5,
             "cooldown": 1.0,
-            "witchSlow": 0.30000001192092898
+            "witchSlow": 0.30000001192092898,
+            "energyCost": 1.0
         },
         "forestAbility": {
             "baseConfig": {

@@ -12,6 +12,10 @@ public class GameController : MonoBehaviour
 
     public Transform spawnPoint;
 
+    public HUDController hud;
+
+    public MapController mapController;
+
     private PlayerController currentWitch;
     private GlobalConfig conf;
     // Start is called before the first frame update
@@ -33,6 +37,8 @@ public class GameController : MonoBehaviour
         currentWitch.transform.position = spawnPoint.position;
         currentWitch.transform.rotation = spawnPoint.rotation;
         currentWitch.onDeathEvent.AddListener(OnWitchDeath);
+        currentWitch.mapController = mapController;
+        currentWitch.hudController = hud;
 
         cmCamera.LookAt = currentWitch.transform;
         cmCamera.Follow = currentWitch.transform;

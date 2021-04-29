@@ -10,6 +10,7 @@ public class PlayerController : MonoBehaviour, IDamagable
     public bool movementRelativeToWitch = false;
     public CharacterController characterController;
     public MapController mapController;
+    public HUDController hudController;
 
     public UnityEvent onDeathEvent;
 
@@ -56,6 +57,9 @@ public class PlayerController : MonoBehaviour, IDamagable
         if (!mapController)
             mapController = FindObjectOfType<MapController>();
 
+        if (!hudController)
+            hudController = FindObjectOfType<HUDController>();
+
         ApplyConfig();
     }
 
@@ -81,8 +85,15 @@ public class PlayerController : MonoBehaviour, IDamagable
 
         speed = witchConfig.movementSpeed;
         jumpHeight = witchConfig.jumpHeight;
+
         health = new HealthTracker(witchConfig.health);
+        hudController.SetUpHealth(health.Health, health.MaxHealth);
+        health.onChanged.AddListener(hudController.SetHealth);
+
         energy = new EnergyTracker(witchConfig.energyMax, witchConfig.energyInitial);
+        hudController.SetUpEnergy(energy.Energy, energy.MaxEnergy);
+        energy.onChanged.AddListener(hudController.SetEnergy);
+
         meeleeAbility.conf = witchConfig.meeleeAbility;
         chargeAbility.conf = witchConfig.chargeAbility;
         forestAbility.conf = witchConfig.forestAbility;

@@ -1,13 +1,43 @@
 
 using UnityEngine;
+using UnityEngine.Assertions;
+using UnityEngine.Events;
 
 public class HealthTracker
 {
-    private float maxHealth = 0;
+    public float MaxHealth { get; internal set; }
+
+    public UnityEvent<float> onChanged;
+
     public float Health { get; internal set; }
-    public HealthTracker(float maxHealth) => Health = this.maxHealth = maxHealth;
+
+    public HealthTracker(float maxHealth)
+    { 
+        Health = this.MaxHealth = maxHealth;
+        onChanged = new UnityEvent<float>();
+    }
+
     public bool IsDepleted => Health <= 0;
-    public void ResetHealth() => Health = maxHealth;
-    public void TakeDamage(float amount) => Health = Mathf.Max(0, Health - amount);
-    public void Heal(float amount) => Health = Mathf.Min(maxHealth, Health + amount);
+
+    public void ResetHealth() 
+    {
+        Health = MaxHealth;
+        onChanged.Invoke(Health);
+    }
+
+    public void TakeDamage(float amount) 
+    {
+        Assert.IsFalse(amount < 0);
+
+        Health = Mathf.Max(0, Health - amount);
+        onChanged.Invoke(Health);
+
+    }
+    public void Heal(float amount) 
+    {
+        Assert.IsFalse(amount < 0);
+
+        Health = Mathf.Min(MaxHealth, Health + amount);
+        onChanged.Invoke(Health);
+    }
 }

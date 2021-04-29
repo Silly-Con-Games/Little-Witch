@@ -47,6 +47,7 @@ namespace Config
         public float chargeTimeMax;
         public float cooldown;
         public float witchSlow;
+        public float energyCost;
     }
 
     [Serializable]
