@@ -13,6 +13,8 @@ namespace Config
     public struct WitchConfig
     {
         public float health;
+        public float energyMax;
+        public float energyInitial;
         public float movementSpeed;
         public float jumpHeight;
         public MeleeAbilityConfig meeleeAbility;

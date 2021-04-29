@@ -8,6 +8,7 @@ public class Energy : MonoBehaviour
     private float lifeTimeInSec;
     private PlayerController playerController;
     private float speed;
+    private float energyAmount = 1;
         
     void Start()
     {
@@ -21,7 +22,7 @@ public class Energy : MonoBehaviour
         playerController = collision.gameObject.GetComponent<PlayerController>();
         if (playerController != null)
         {
-            if (playerController.energy < playerController.energyMax)
+            if (playerController.energy.CanFitMore)
             {
                 StartCoroutine(FollowPlayerCoroutine());
             }
@@ -32,7 +33,7 @@ public class Energy : MonoBehaviour
     {
         while (playerController && Vector3.Distance(transform.position, playerController.transform.position) >= 0.5f)
         {
-            if (playerController.energy >= playerController.energyMax)
+            if (!playerController.energy.CanFitMore)
             {
                 yield break;
             }
@@ -43,8 +44,7 @@ public class Energy : MonoBehaviour
                 );
                 yield return null;
         }
-        playerController.AddEnergy(1);
-        Debug.Log("Energy count: " + playerController.energy);
+        playerController.energy.AddEnergy(energyAmount);
         Destroy(gameObject);
     }
 

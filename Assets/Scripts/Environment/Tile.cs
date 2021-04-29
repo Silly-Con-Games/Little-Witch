@@ -41,7 +41,7 @@ public class Tile : MonoBehaviour {
 		Vector3 bitLower = new Vector3(0, -0.2f, 0);
 		for (int i = 0; i < directions.Length; i++) {
 			if (Physics.Raycast(transform.position + bitLower, directions[i], out hit, 2f, 7)) {
-				Tile tile = hit.transform.parent.gameObject.GetComponent<Tile>();
+				Tile tile = hit.transform.parent?.gameObject.GetComponent<Tile>();
                 if (tile)
 				    neighbours[i] = hit.transform.parent.gameObject.GetComponent<Tile>();
 			}

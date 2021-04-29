@@ -12,7 +12,7 @@ GameObject:
   - component: {fileID: 9096014887863288463}
   - component: {fileID: 3004173815358299401}
   m_Layer: 0
-  m_Name: Sphere
+  m_Name: ChargeAttackSphere
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -126,7 +126,7 @@ GameObject:
   - component: {fileID: 4461358339646151885}
   - component: {fileID: 5730330900586231945}
   - component: {fileID: 280153317992718564}
-  m_Layer: 0
+  m_Layer: 6
   m_Name: Witch
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -208,13 +208,13 @@ CharacterController:
   m_IsTrigger: 0
   m_Enabled: 1
   serializedVersion: 2
-  m_Height: 1.1
+  m_Height: 1.4
   m_Radius: 0.5
   m_SlopeLimit: 45
   m_StepOffset: 0.3
   m_SkinWidth: 0.05
   m_MinMoveDistance: 0.001
-  m_Center: {x: 0, y: 0, z: 0}
+  m_Center: {x: 0, y: -0.45, z: 0}
 --- !u!114 &4461358339646151885
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -346,7 +346,7 @@ GameObject:
   m_Component:
   - component: {fileID: 8983862635740022840}
   m_Layer: 0
-  m_Name: SphereParent
+  m_Name: ChargeAttackParent
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -464,19 +464,19 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: -8679921383154817045, guid: 35e7e83f7d843e842b3e945060ea76fe, type: 3}
       propertyPath: m_LocalRotation.w
-      value: 0
+      value: 0.7071068
       objectReference: {fileID: 0}
     - target: {fileID: -8679921383154817045, guid: 35e7e83f7d843e842b3e945060ea76fe, type: 3}
       propertyPath: m_LocalRotation.x
-      value: 0
+      value: -0.7071068
       objectReference: {fileID: 0}
     - target: {fileID: -8679921383154817045, guid: 35e7e83f7d843e842b3e945060ea76fe, type: 3}
       propertyPath: m_LocalRotation.y
-      value: 0.7071068
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: -8679921383154817045, guid: 35e7e83f7d843e842b3e945060ea76fe, type: 3}
       propertyPath: m_LocalRotation.z
-      value: 0.7071068
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: -8679921383154817045, guid: 35e7e83f7d843e842b3e945060ea76fe, type: 3}
       propertyPath: m_LocalEulerAnglesHint.x
@@ -484,7 +484,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: -8679921383154817045, guid: 35e7e83f7d843e842b3e945060ea76fe, type: 3}
       propertyPath: m_LocalEulerAnglesHint.y
-      value: 180
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: -8679921383154817045, guid: 35e7e83f7d843e842b3e945060ea76fe, type: 3}
       propertyPath: m_LocalEulerAnglesHint.z

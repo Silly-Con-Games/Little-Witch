@@ -54,25 +54,19 @@ public class MapController : MonoBehaviour
         tile.Die(false);
     }
 
+
     public BiomeType BiomeTypeInPosition(Vector3 position)
     {
-        if (Physics.Raycast(position, Vector3.down, out RaycastHit hit, 2f, 7))
+        if (Physics.Raycast(position, new Vector3(0,-1, 0.01f), out RaycastHit hit, 10f, LayerMask.GetMask("Tile"))) 
         {
-            if (hit.transform == null
-                || hit.transform.parent == null
-                || hit.transform.parent.gameObject == null
-                || hit.transform.parent.gameObject.GetComponent<Tile>() == null)
-            {
-                hit.transform.parent.gameObject.GetComponent<Tile>();
-            }
-            Tile tile = hit.transform.parent.gameObject.GetComponent<Tile>();
+            Tile tile = hit.transform.parent?.gameObject.GetComponent<Tile>();
             if(tile != null)
             {
                 return ExtractBiomeTypeFromTile(tile);
             }
         }
 
-        return BiomeType.unknown;
+      return BiomeType.unknown;
     }
 
     private BiomeType ExtractBiomeTypeFromTile(Tile tile)

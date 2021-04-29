@@ -8,10 +8,9 @@ public class Bomb : MonoBehaviour
     [SerializeField]
     private ParticleSystem particle;
     
-    [SerializeField]
     private PlayerController playerController;
 
-    private bool bombActivated;
+    private Collider bombCollider;
     
     // Start is called before the first frame update
     void Start()
@@ -20,21 +19,14 @@ public class Bomb : MonoBehaviour
         {
             particle.GetComponentInChildren<ParticleSystem>();
         }
-        if (!playerController)
-        {
-            playerController = FindObjectOfType<PlayerController>();
-        }
-
-        bombActivated = false;
+        bombCollider = gameObject.GetComponent<Collider>();
     }
 
     void OnTriggerEnter(Collider collision)
     {
-        if (!bombActivated)
-        {
-            bombActivated = true;
-            StartCoroutine(BombCoroutine(5f));
-        }
+        playerController = collision.gameObject.GetComponent<PlayerController>();
+        bombCollider.enabled = false;        
+        StartCoroutine(BombCoroutine(5f));
     }
 
     public IEnumerator BombCoroutine(float duration)

@@ -2,6 +2,7 @@ using UnityEngine;
 using Config;
 using UnityEngine.InputSystem;
 using UnityEngine.Events;
+using System;
 
 public class PlayerController : MonoBehaviour, IDamagable
 {
@@ -24,7 +25,8 @@ public class PlayerController : MonoBehaviour, IDamagable
     private Transform cameraTrans;
     private Animator animator;
 
-    private Health health;
+    public HealthTracker health { get; internal set; }
+    public EnergyTracker energy { get; internal set; }
 
     private MainAbility currentMainAbility;
     private BiomeType standingOnBiomeType = BiomeType.unknown;
@@ -39,13 +41,9 @@ public class PlayerController : MonoBehaviour, IDamagable
     bool wantsJump;
 
     public  Vector3 mouseWorldPosition { get; internal set; }
-    public int energyMax { get; set; }
-    public int energy { get; set; }
 
     private void Start()
     {
-        energyMax = 5;
-        energy = 0;
         mainCamera = Camera.main;
         cameraTrans = mainCamera.transform;
         animator = GetComponent<Animator>();
@@ -83,7 +81,8 @@ public class PlayerController : MonoBehaviour, IDamagable
 
         speed = witchConfig.movementSpeed;
         jumpHeight = witchConfig.jumpHeight;
-        health = new Health(witchConfig.health);
+        health = new HealthTracker(witchConfig.health);
+        energy = new EnergyTracker(witchConfig.energyMax, witchConfig.energyInitial);
         meeleeAbility.conf = witchConfig.meeleeAbility;
         chargeAbility.conf = witchConfig.chargeAbility;
         forestAbility.conf = witchConfig.forestAbility;
@@ -218,21 +217,5 @@ public class PlayerController : MonoBehaviour, IDamagable
     public void SetSpeedModifier(float val)
     {
         speedModifier = val;
-    }
-
-    public void AddEnergy(int number)
-    {
-        energy = energy + number >= energyMax ? energyMax : energy + number;
-    }
-
-    private class Health
-    {
-        private float maxHealth = 0;
-        private float health = 0;
-        public Health(float maxHealth) => health = this.maxHealth = maxHealth;
-        public bool IsDepleted => health <= 0;
-        public void ResetHealth() => health = maxHealth;
-        public void TakeDamage(float amount) => health = Mathf.Max(0, health - amount);
-        public void Heal(float amount) => health = Mathf.Min(maxHealth, health + amount);
     }
 }

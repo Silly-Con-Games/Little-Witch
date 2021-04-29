@@ -1,6 +1,8 @@
 {
     "witchConfig": {
         "health": 999.0,
+        "energyMax": 5.0,
+        "energyInitial": 0.0,
         "movementSpeed": 5.0,
         "jumpHeight": 1.0,
         "meeleeAbility": {
@@ -36,5 +38,6 @@
             "rootBurstRadius": 1.5,
             "rootBurstDensity": 40
         }
-    }
+    },
+    "respawnTime": 2.0
 }
