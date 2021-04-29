@@ -6,6 +6,7 @@ namespace Config
     public struct GlobalConfig
     {
         public WitchConfig witchConfig;
+        public float respawnTime;
     }
 
     [Serializable]

@@ -165,6 +165,9 @@ MonoBehaviour:
   movementRelativeToWitch: 0
   characterController: {fileID: 811825519810356235}
   mapController: {fileID: 0}
+  onDeathEvent:
+    m_PersistentCalls:
+      m_Calls: []
   chargeAbility:
     abilityAnimationTransform: {fileID: 8983862635740022840}
     origin: {fileID: 8983862635740022840}

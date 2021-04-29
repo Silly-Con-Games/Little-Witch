@@ -1,6 +1,7 @@
 using UnityEngine;
 using Config;
 using UnityEngine.InputSystem;
+using UnityEngine.Events;
 
 public class PlayerController : MonoBehaviour, IDamagable
 {
@@ -9,6 +10,8 @@ public class PlayerController : MonoBehaviour, IDamagable
     public CharacterController characterController;
     public MapController mapController;
 
+    public UnityEvent onDeathEvent;
+
     public ChargeAbility chargeAbility;
     public MeleeAbility meeleeAbility;
 
@@ -16,6 +19,7 @@ public class PlayerController : MonoBehaviour, IDamagable
     public MeadowAbility meadowAbility;
     public WaterAbility waterAbility;
     
+
     private Camera mainCamera;
     private Transform cameraTrans;
     private Animator animator;
@@ -60,6 +64,7 @@ public class PlayerController : MonoBehaviour, IDamagable
     private void OnDestroy()
     {
         GlobalConfigManager.onConfigChanged.RemoveListener(ApplyConfig);
+        onDeathEvent.Invoke();
     }
 
     void Update()
