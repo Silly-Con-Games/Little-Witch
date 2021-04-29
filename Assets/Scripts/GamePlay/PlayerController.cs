@@ -219,6 +219,8 @@ public class PlayerController : MonoBehaviour, IDamagable
 
     public void ReceiveDamage(float amount)
     {
+        animator.SetTrigger("GetHit");
+
         health.TakeDamage(amount);
         if (health.IsDepleted) Destroy(gameObject);
     }
