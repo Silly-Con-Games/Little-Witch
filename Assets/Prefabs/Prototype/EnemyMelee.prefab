@@ -12,7 +12,7 @@ GameObject:
   - component: {fileID: 5384379442950274122}
   - component: {fileID: 5384379442950274121}
   - component: {fileID: 5384379442950274120}
-  - component: {fileID: 5384379442950274119}
+  - component: {fileID: 7542388952360018821}
   m_Layer: 8
   m_Name: EnemyMelee
   m_TagString: Untagged
@@ -47,9 +47,9 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 5408c8973debd3a49ada95d6fecd954e, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  idleTime: 0
-  attackTime: 0
-  chasingTime: 0
+  idleDuration: 0
+  attackCooldown: 0
+  chasingDuration: 0
   playerController: {fileID: 0}
   moveRangeMin: 5
   moveRangeMax: 6
@@ -61,6 +61,10 @@ MonoBehaviour:
   slowDefault: 0
   rootDefault: 0
   energyPrefab: {fileID: 3473807671122988953, guid: 6a2afd42537f2054f8ecf02e2c7764f8, type: 3}
+  dashDelay: 0
+  dashDuration: 0
+  dashSpeedModifier: 0
+  dashRange: 0
 --- !u!195 &5384379442950274121
 NavMeshAgent:
   m_ObjectHideFlags: 0
@@ -99,8 +103,8 @@ Rigidbody:
   m_Interpolate: 0
   m_Constraints: 126
   m_CollisionDetection: 1
---- !u!136 &5384379442950274119
-CapsuleCollider:
+--- !u!65 &7542388952360018821
+BoxCollider:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
   m_PrefabInstance: {fileID: 0}
@@ -109,10 +113,9 @@ CapsuleCollider:
   m_Material: {fileID: 0}
   m_IsTrigger: 0
   m_Enabled: 1
-  m_Radius: 0.5
-  m_Height: 1.0868005
-  m_Direction: 1
-  m_Center: {x: 0, y: 0.3394975, z: 0}
+  serializedVersion: 2
+  m_Size: {x: 1.2437248, y: 1.1569829, z: 0.60625243}
+  m_Center: {x: 0.02218151, y: 0.44160807, z: -0.045677245}
 --- !u!95 &6243193629588970408
 Animator:
   serializedVersion: 3

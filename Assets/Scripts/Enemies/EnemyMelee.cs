@@ -17,7 +17,10 @@ public class EnemyMelee : EnemyAI
 
     [SerializeField]
     private float dashSpeedModifier;
-    
+
+    [SerializeField]
+    protected float dashRange;
+
     private bool attacking;
 
     private Vector3 playerPos;
@@ -27,8 +30,10 @@ public class EnemyMelee : EnemyAI
     {
         dashDelay = 1f;
         dashDuration = 2f;
+        dashRange = 3f;
         attacking = false;
         dashSpeedModifier = 3f;
+
         base.InitEnemy();
         roamPosition = null;
     }
@@ -38,16 +43,16 @@ public class EnemyMelee : EnemyAI
         if (IsPlayerInRange(maxRangeToPlayer))
         {
             state = State.Chase;
-            idleTime = Random.Range(1f, 3f);
+            idleDuration = Random.Range(1f, 3f);
             return;
         }
-        idleTime -= Time.deltaTime;
-        if (idleTime <= 0)
+        idleDuration -= Time.deltaTime;
+        if (idleDuration <= 0)
         {
             state = State.Roam;
             agent.isStopped = false;
             ;
-            idleTime = Random.Range(1f, 3f);
+            idleDuration = Random.Range(1f, 3f);
         }
     }
 
@@ -118,12 +123,12 @@ public class EnemyMelee : EnemyAI
 
     protected override void Attack()
     {
-        attackTime -= Time.deltaTime;
-        if (!attacking && playerController && attackTime < 0)
+        attackCooldown -= Time.deltaTime;
+        if (!attacking && playerController && attackCooldown < 0)
         {
             agent.isStopped = true;
             attacking = true;
-            attackTime = attackSpeed;
+            attackCooldown = attackSpeed;
             dashDelta = dashDelay;
             dashDurationDelta = dashDuration;
             lastPos = transform.position;
@@ -158,8 +163,11 @@ public class EnemyMelee : EnemyAI
         attacking = false;
         state = State.Chase;
         agent.speed = speed;
-        agent.isStopped = false;
-        agent.SetDestination(playerController.transform.position);
+        if (playerController)
+        {
+            agent.isStopped = false;
+            agent.SetDestination(playerController.transform.position);
+        }
     }
 
 }

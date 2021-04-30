@@ -113,7 +113,7 @@ GameObject:
   - component: {fileID: 2909162330852038181}
   - component: {fileID: 2909162330852038182}
   - component: {fileID: 2909162330852038185}
-  - component: {fileID: 2909162330852038183}
+  - component: {fileID: 8984137834706575576}
   m_Layer: 8
   m_Name: EnemyRanged
   m_TagString: Untagged
@@ -148,9 +148,9 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 4404d6fc855905846bb869e76e3543b3, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  idleTime: 0
-  attackTime: 0
-  chasingTime: 0
+  idleDuration: 0
+  attackCooldown: 0
+  chasingDuration: 0
   playerController: {fileID: 0}
   moveRangeMin: 3
   moveRangeMax: 3
@@ -201,8 +201,8 @@ Rigidbody:
   m_Interpolate: 0
   m_Constraints: 126
   m_CollisionDetection: 1
---- !u!136 &2909162330852038183
-CapsuleCollider:
+--- !u!65 &8984137834706575576
+BoxCollider:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
   m_PrefabInstance: {fileID: 0}
@@ -211,7 +211,6 @@ CapsuleCollider:
   m_Material: {fileID: 0}
   m_IsTrigger: 0
   m_Enabled: 1
-  m_Radius: 0.5
-  m_Height: 1.7328185
-  m_Direction: 1
-  m_Center: {x: 0, y: 0.5189784, z: 0}
+  serializedVersion: 2
+  m_Size: {x: 0.6291053, y: 0.61580336, z: 0.7448869}
+  m_Center: {x: 0.0012408495, y: 0.4603389, z: 0.035796404}
