@@ -4,9 +4,31 @@ using UnityEngine;
 
 public class EnemyMelee : EnemyAI
 {
+    
+    [SerializeField]
+    private float dashDelay;
 
+    private float dashDelta;
+    
+    [SerializeField]
+    private float dashDuration;
+
+    private float dashDurationDelta;
+
+    [SerializeField]
+    private float dashSpeedModifier;
+    
+    private bool attacking;
+
+    private Vector3 playerPos;
+    private Vector3 lastPos;
+    
     public override void InitEnemy()
     {
+        dashDelay = 1f;
+        dashDuration = 2f;
+        attacking = false;
+        dashSpeedModifier = 3f;
         base.InitEnemy();
         roamPosition = null;
     }
@@ -82,33 +104,62 @@ public class EnemyMelee : EnemyAI
             return;
         }
      
-        if (!IsPlayerInRange(attackRange))
+        if (!IsPlayerInRange(dashRange))
         {
-            attackTime -= Time.deltaTime;
             agent.isStopped = false;
             agent.SetDestination(playerController.transform.position);
         }
         else
         {
             transform.LookAt(playerController.transform.position);
-            if (attackTime < 0)
-            {
-                Attack();
-                attackTime = attackSpeed;
-            }
-            agent.isStopped = true;
+            state = State.Attack;
         }
     }
 
     protected override void Attack()
     {
-        if (playerController)
+        attackTime -= Time.deltaTime;
+        if (!attacking && playerController && attackTime < 0)
         {
-            Debug.Log("Attacking");
-            animator.SetTrigger("Attack");
-
-            playerController.ReceiveDamage(3);
+            agent.isStopped = true;
+            attacking = true;
+            attackTime = attackSpeed;
+            dashDelta = dashDelay;
+            dashDurationDelta = dashDuration;
+            lastPos = transform.position;
+            playerPos = playerController.transform.position;
+            StartCoroutine(AttackCoroutine());
         }
     }
-    
+
+    private IEnumerator AttackCoroutine()
+    {
+        while (dashDelta >= 0)
+        {
+            dashDelta -= Time.deltaTime;
+            yield return null;
+        }
+
+        agent.speed = agent.speed * dashSpeedModifier;
+        agent.isStopped = false;
+        while (playerController && dashDurationDelta >= 0 && !IsCloseToAttack())
+        {
+            agent.SetDestination(playerController.transform.position);
+            dashDurationDelta -= Time.deltaTime;
+            yield return null;
+        }
+
+        if (IsCloseToAttack())
+        {
+            animator.SetTrigger("Attack");
+            playerController.ReceiveDamage(3);
+        }
+
+        attacking = false;
+        state = State.Chase;
+        agent.speed = speed;
+        agent.isStopped = false;
+        agent.SetDestination(playerController.transform.position);
+    }
+
 }

@@ -92,7 +92,7 @@ public class EnemyRanged : EnemyAI
             return;
         }
 
-        if (!IsPlayerInRange(attackRange))
+        if (!IsPlayerInRange(dashRange))
         {
             agent.isStopped = false;
             agent.SetDestination(playerController.transform.position);

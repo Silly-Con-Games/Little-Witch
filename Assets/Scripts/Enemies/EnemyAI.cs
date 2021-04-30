@@ -58,6 +58,9 @@ public abstract class EnemyAI : MonoBehaviour, IDamagable, IRootable, IStunnable
     protected float maxRangeToPlayer;
 
     [SerializeField]
+    protected float dashRange;
+
+    [SerializeField]
     protected float attackRange;
 
     [SerializeField]
@@ -88,6 +91,8 @@ public abstract class EnemyAI : MonoBehaviour, IDamagable, IRootable, IStunnable
         roamPosition = this.transform;
         moveRangeMin = 4f;
         moveRangeMax = 4f;
+        dashRange = 3f;
+        attackRange = 1f;
         maxRangeToPlayer = 8f;
 
         idleTime = -1f;
@@ -218,6 +223,15 @@ public abstract class EnemyAI : MonoBehaviour, IDamagable, IRootable, IStunnable
         Debug.Log(healthPoints);
         if ((healthPoints -= amount) <= 0) Die();
         Stun(5);
+    }
+
+    public virtual bool IsCloseToAttack()
+    {
+        if (!playerController)
+        {
+            return false;
+        }
+        return Vector3.Distance(transform.position, playerController.transform.position) <= attackRange;
     }
 
     public EObjectType GetObjectType()

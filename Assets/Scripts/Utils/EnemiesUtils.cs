@@ -8,7 +8,5 @@ public class EnemiesUtils
     {
         return startingPosition + RandomUtils.GetRandomDirection() * Random.Range(moveRangeMin, moveRangeMax);
     }
-    
-    
 
 }
