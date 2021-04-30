@@ -5,6 +5,7 @@ using Config;
 [Serializable]
 public class MeadowAbility : MainAbility
 {
+    public MAGrass grassPrefab;
     public MeadowAbilityConfig conf { get => internalConf; set { internalConf = value; mainAbilityConfig = value.baseConfig; } }
 
     private MeadowAbilityConfig internalConf;
