@@ -31,13 +31,13 @@ public abstract class EnemyAI : MonoBehaviour, IDamagable, IRootable, IStunnable
     protected float stunDeltaTime;
 
     [SerializeField]
-    protected float idleTime;
+    protected float idleDuration;
 
     [SerializeField]
-    protected float attackTime;
+    protected float attackCooldown;
 
     [SerializeField]
-    protected float chasingTime;
+    protected float chasingDuration;
 
     protected float chasingDeltaTime;
 
@@ -88,11 +88,12 @@ public abstract class EnemyAI : MonoBehaviour, IDamagable, IRootable, IStunnable
         roamPosition = this.transform;
         moveRangeMin = 4f;
         moveRangeMax = 4f;
+        attackRange = 1.5f;
         maxRangeToPlayer = 8f;
 
-        idleTime = -1f;
-        attackTime = -1f;
-        chasingTime = 3f;
+        idleDuration = -1f;
+        attackCooldown = -1f;
+        chasingDuration = 3f;
         slowDefault = 3f;
         rootDefault = 3f;
 
@@ -214,10 +215,19 @@ public abstract class EnemyAI : MonoBehaviour, IDamagable, IRootable, IStunnable
 
         agent.isStopped = false;
         state = State.Chase;
-        chasingDeltaTime = chasingTime;
+        chasingDeltaTime = chasingDuration;
         Debug.Log(healthPoints);
         if ((healthPoints -= amount) <= 0) Die();
         Stun(5);
+    }
+
+    public virtual bool IsCloseToAttack()
+    {
+        if (!playerController)
+        {
+            return false;
+        }
+        return Vector3.Distance(transform.position, playerController.transform.position) <= attackRange;
     }
 
     public EObjectType GetObjectType()

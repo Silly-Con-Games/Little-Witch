@@ -32,9 +32,6 @@ public class EnemyEnvDestroyer : EnemyAI
     private float distanceTmp;
     private Tile tileTmp;
 
-    [SerializeField]
-    private int idleTimeMillis;
-
     public override void InitEnemy()
     {
         base.InitEnemy();
@@ -46,7 +43,7 @@ public class EnemyEnvDestroyer : EnemyAI
         if (!mapController)
             mapController = FindObjectOfType<MapController>();
         coroutineRunning = false;
-        idleTimeMillis = 3000;
+        idleDuration = 3;
 
         enemiesMelee = new List<EnemyMelee>();
         enemiesRanged = new List<EnemyRanged>();
@@ -120,7 +117,7 @@ public class EnemyEnvDestroyer : EnemyAI
             }
         }
 
-        await Task.Delay(idleTimeMillis);
+        await Task.Delay(Mathf.CeilToInt(idleDuration * 1000f));
 
         if (agent)
         {

@@ -7,6 +7,7 @@ public class EnemyBomber : EnemyAI
 
     [SerializeField]
     private GameObject bombPrefab;
+    private float idleDeltaTime;
 
     public override void InitEnemy()
     {
@@ -25,6 +26,7 @@ public class EnemyBomber : EnemyAI
         {
             agent.isStopped = true;
             state = State.Idle;
+            idleDeltaTime = idleDuration;
         }
     }
 
@@ -34,8 +36,8 @@ public class EnemyBomber : EnemyAI
     
     protected override void Idle()
     {
-        idleTime -= Time.deltaTime;
-        if (idleTime <= 0)
+        idleDeltaTime -= Time.deltaTime;
+        if (idleDeltaTime <= 0)
         {
             state = State.Roam;
             agent.isStopped = false;
@@ -44,7 +46,6 @@ public class EnemyBomber : EnemyAI
                 roamPosition = transform;
             }
             agent.SetDestination(EnemiesUtils.GetRoamPosition(roamPosition.position, moveRangeMin, moveRangeMax));
-            idleTime = Random.Range(5f, 8f);
             Attack();
         }
     }
