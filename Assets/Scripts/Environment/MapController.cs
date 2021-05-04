@@ -4,8 +4,6 @@ using UnityEngine;
 
 public class MapController : MonoBehaviour
 {
-
-    [SerializeField]
     private Tile initTile;
     
     public List<Tile> tiles { get; set; }
@@ -15,6 +13,7 @@ public class MapController : MonoBehaviour
     // Start is called before the first frame update
     void Start()
     {
+		initTile = FindObjectOfType<Tile>();	
 
         aliveTilesCnt = 0;
         Queue<Tile> tilesQueue = new Queue<Tile>();
@@ -27,7 +26,7 @@ public class MapController : MonoBehaviour
         {
             tile = tilesQueue.Dequeue();
             tile.mapInfo.index = tiles.Count;
-            if (tile.tileState == TileState.ALIVE || tile.tileState == TileState.CHANGING)
+            if (tile.GetBiomeType() != BiomeType.DEAD)
             {
                 tiles.Add(tile);
                 aliveTilesCnt++;
@@ -36,12 +35,12 @@ public class MapController : MonoBehaviour
             {
                 tiles.Add(null);
             }
-            for (int i = 0; i < tile.neighbours.Length; i++)
+            for (int i = 0; i < tile.GetNeighbours().Length; i++)
             {
-                if (tile.neighbours[i] && !(tile.neighbours[i].mapInfo.visited))
+                if (tile.GetNeighbour(i) && !(tile.GetNeighbour(i).mapInfo.visited))
                 {
-                    tile.neighbours[i].mapInfo.visited = true;
-                    tilesQueue.Enqueue(tile.neighbours[i]);
+                    tile.GetNeighbour(i).mapInfo.visited = true;
+                    tilesQueue.Enqueue(tile.GetNeighbour(i));
                 }
             }
         }
@@ -51,13 +50,14 @@ public class MapController : MonoBehaviour
     {
         tiles[tile.mapInfo.index] = null;
         aliveTilesCnt--;
-        tile.Die(false);
+        tile.Morph(BiomeType.DEAD, false);
     }
 
     public BiomeType BiomeTypeInPosition(Vector3 position)
     {
         if (Physics.Raycast(position, Vector3.down, out RaycastHit hit, 2f, 7))
         {
+<<<<<<< Updated upstream
             if (hit.transform == null
                 || hit.transform.parent == null
                 || hit.transform.parent.gameObject == null
@@ -66,12 +66,16 @@ public class MapController : MonoBehaviour
                 hit.transform.parent.gameObject.GetComponent<Tile>();
             }
             Tile tile = hit.transform.parent.gameObject.GetComponent<Tile>();
+=======
+            Tile tile = hit.transform.gameObject.GetComponent<Tile>();
+>>>>>>> Stashed changes
             if(tile != null)
             {
-                return ExtractBiomeTypeFromTile(tile);
+                return tile.GetBiomeType();
             }
         }
 
+<<<<<<< Updated upstream
         return BiomeType.unknown;
     }
 
@@ -91,5 +95,8 @@ public class MapController : MonoBehaviour
             default:
                 return BiomeType.unknown;
         }
+=======
+		return BiomeType.UNKNOWN;
+>>>>>>> Stashed changes
     }
 }
