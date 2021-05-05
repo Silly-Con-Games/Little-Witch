@@ -162,18 +162,15 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: 0fb91ef6c12cbe54d866244277570d2d, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
+  m_Name:
+  m_EditorClassIdentifier:
   movementRelativeToWitch: 0
   characterController: {fileID: 811825519810356235}
   mapController: {fileID: 0}
-<<<<<<< Updated upstream
-=======
   hudController: {fileID: 0}
   onDeathEvent:
     m_PersistentCalls:
       m_Calls: []
->>>>>>> Stashed changes
   chargeAbility:
     abilityAnimationTransform: {fileID: 8983862635740022840}
     origin: {fileID: 8983862635740022840}
@@ -214,8 +211,8 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: 33fdef312a9f84a41a45a52158f661c1, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
+  m_Name:
+  m_EditorClassIdentifier:
   cooldown: 0.5
 --- !u!143 &811825519810356235
 CharacterController:
@@ -245,8 +242,8 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: 62899f850307741f2a39c98a8b639597, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
+  m_Name:
+  m_EditorClassIdentifier:
   m_Actions: {fileID: -944628639613478452, guid: 8fb83dfaec115ab4496f0f6dc75b6801, type: 3}
   m_NotificationBehavior: 1
   m_UIInputModule: {fileID: 0}
@@ -336,7 +333,7 @@ Animator:
   m_UpdateMode: 0
   m_ApplyRootMotion: 0
   m_LinearVelocityBlending: 0
-  m_WarningMessage: 
+  m_WarningMessage:
   m_HasTransformHierarchy: 1
   m_AllowConstantClipSamplingOptimization: 1
   m_KeepAnimatorControllerStateOnDisable: 0
@@ -525,8 +522,8 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: c207eda1d1673234b8fbde22eda5bb63, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
+  m_Name:
+  m_EditorClassIdentifier:
   swing: {fileID: 5730330900586231945}
   Damage: 0
 --- !u!65 &7588440595334002624
@@ -607,11 +604,11 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: -7511558181221131132, guid: 35e7e83f7d843e842b3e945060ea76fe, type: 3}
       propertyPath: m_Materials.Array.data[0]
-      value: 
+      value:
       objectReference: {fileID: 2100000, guid: c7f2d0672c72350428891c7ea5ddb6ac, type: 2}
     - target: {fileID: -5754084199372789682, guid: 35e7e83f7d843e842b3e945060ea76fe, type: 3}
       propertyPath: m_Mesh
-      value: 
+      value:
       objectReference: {fileID: 4711208715938537054, guid: 7f1845b83e7865641a0893a2fdcb0aa6, type: 3}
     - target: {fileID: 919132149155446097, guid: 35e7e83f7d843e842b3e945060ea76fe, type: 3}
       propertyPath: m_Name

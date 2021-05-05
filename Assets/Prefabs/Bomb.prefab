@@ -94,17 +94,11 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: a1de9ade8f946164285f79b0b12fa396, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
+  m_Name:
+  m_EditorClassIdentifier:
   particle: {fileID: 1774625963926655280}
-<<<<<<< Updated upstream
-  playerController: {fileID: 0}
---- !u!136 &7415598751764210124
-CapsuleCollider:
-=======
 --- !u!135 &7038348604713713940
 SphereCollider:
->>>>>>> Stashed changes
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
   m_PrefabInstance: {fileID: 0}
