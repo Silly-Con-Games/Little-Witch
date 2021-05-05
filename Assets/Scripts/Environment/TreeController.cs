@@ -4,7 +4,7 @@ using UnityEngine;
 
 public class TreeController : TileProp
 {
-    public MeshRenderer normal;
+    /*public MeshRenderer normal;
 	public MeshRenderer arid;
 
 	private bool isArid;
@@ -61,5 +61,5 @@ public class TreeController : TileProp
 		} else {
 			base.Saturate(mesh, originalColors);
 		}
-	}
+	}*/
 }

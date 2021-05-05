@@ -131,10 +131,10 @@ public class EnemyEnvDestroyer : EnemyAI
     protected override void Attack()
     {
         RaycastHit hit;
-        if (Physics.Raycast(transform.position, Vector3.down, out hit, 2f, 7))
+        if (Physics.Raycast(transform.position, Vector3.down, out hit, 2f, LayerMask.GetMask("Tile")))
         {
-            Tile tile = hit.transform.parent.gameObject.GetComponent<Tile>();
-            if (!tile || tile.tileState == TileState.DEAD || tile.tileState == TileState.DYING)
+            Tile tile = hit.transform.gameObject.GetComponent<Tile>();
+            if (!tile || tile.GetBiomeType() == BiomeType.DEAD)
                 return;
             
             mapController.AttackTile(tile);

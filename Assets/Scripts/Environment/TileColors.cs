@@ -6,5 +6,5 @@ using UnityEngine;
 public class TileColors : ScriptableObject {
 	public Gradient forest;
 	public Gradient plain;
-	public Gradient sand;
+	public Color water;
 }
