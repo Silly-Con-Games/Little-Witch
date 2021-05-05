@@ -172,10 +172,10 @@ public class PlayerController : MonoBehaviour, IDamagable
         {
             switch (standingOnBiomeType)
             {
-                case BiomeType.meadow: // Remove meadow passive effect
+                case BiomeType.MEADOW: // Remove meadow passive effect
                     meadowAbility.SteppedFromMeadow();
                     break;
-                case BiomeType.water: // Remove water passive effect
+                case BiomeType.WATER: // Remove water passive effect
                     waterAbility.SteppedFromWater();
                     break;
             }
