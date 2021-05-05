@@ -84,6 +84,11 @@ namespace Config
     {
         public MainAbilityConfig baseConfig;
         public float MSMultiplier;
+        public float speed;
+        public int projectileCnt;
+        public float spellWidth;
+        public float maxRange;
+        public float damage;
     }
 
     [Serializable]

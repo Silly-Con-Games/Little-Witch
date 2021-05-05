@@ -165,6 +165,7 @@ MonoBehaviour:
   movementRelativeToWitch: 0
   characterController: {fileID: 811825519810356235}
   mapController: {fileID: 0}
+  hudController: {fileID: 0}
   onDeathEvent:
     m_PersistentCalls:
       m_Calls: []
@@ -188,7 +189,8 @@ MonoBehaviour:
       speedMax: 0
       chargeTimeMax: 0
       cooldown: 0
-      witchSlow: 0
+      witchSlowMSMultiplier: 0
+      energyCost: 0
   meeleeAbility:
     swing: {fileID: 4503144840109123931}
     conf:
@@ -197,6 +199,9 @@ MonoBehaviour:
   forestAbility:
     rootPathPrefab: {fileID: 1010815318834259687, guid: db235b2c73331114fa8de52306785352, type: 3}
     rootCirclePrefab: {fileID: 5760741254045953524, guid: 7c7d4c30b18d4f8429101e84fb74ef6f, type: 3}
+  meadowAbility:
+    grassPrefab: {fileID: 1875613823421694520, guid: 7216260d442240542bda360cb2e3f38d, type: 3}
+    grassProjectileParent: {fileID: 8775524736377944580, guid: fd8d191fc1757754188f291173d89dd8, type: 3}
 --- !u!143 &811825519810356235
 CharacterController:
   m_ObjectHideFlags: 0
