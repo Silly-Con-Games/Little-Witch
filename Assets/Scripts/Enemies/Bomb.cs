@@ -30,17 +30,11 @@ public class Bomb : MonoBehaviour
 
     void OnTriggerEnter(Collider collision)
     {
-<<<<<<< Updated upstream
         if (!bombActivated)
         {
             bombActivated = true;
             StartCoroutine(BombCoroutine(5f));
         }
-=======
-        playerController = collision.gameObject.GetComponent<PlayerController>();
-        bombCollider.enabled = false;        
-        StartCoroutine(BombCoroutine(.3f));
->>>>>>> Stashed changes
     }
 
     public IEnumerator BombCoroutine(float duration)

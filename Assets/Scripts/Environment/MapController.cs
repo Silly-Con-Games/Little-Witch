@@ -55,48 +55,16 @@ public class MapController : MonoBehaviour
 
     public BiomeType BiomeTypeInPosition(Vector3 position)
     {
-        if (Physics.Raycast(position, Vector3.down, out RaycastHit hit, 2f, 7))
+        if (Physics.Raycast(position, Vector3.down, out RaycastHit hit, 2f, LayerMask.GetMask("Tile")))
         {
-<<<<<<< Updated upstream
-            if (hit.transform == null
-                || hit.transform.parent == null
-                || hit.transform.parent.gameObject == null
-                || hit.transform.parent.gameObject.GetComponent<Tile>() == null)
-            {
-                hit.transform.parent.gameObject.GetComponent<Tile>();
-            }
-            Tile tile = hit.transform.parent.gameObject.GetComponent<Tile>();
-=======
-            Tile tile = hit.transform.gameObject.GetComponent<Tile>();
->>>>>>> Stashed changes
+			Tile tile = hit.transform.gameObject.GetComponent<Tile>();
+
             if(tile != null)
             {
                 return tile.GetBiomeType();
             }
         }
-
-<<<<<<< Updated upstream
-        return BiomeType.unknown;
-    }
-
-    private BiomeType ExtractBiomeTypeFromTile(Tile tile)
-    {
-        if (tile.isDead)
-            return BiomeType.dead;
-
-        switch (tile.tileType)
-        {
-            case TileType.FOREST:
-                return BiomeType.forest;
-            case TileType.PLAIN:
-                return BiomeType.meadow;
-            case TileType.WATER:
-                return BiomeType.water;
-            default:
-                return BiomeType.unknown;
-        }
-=======
-		return BiomeType.UNKNOWN;
->>>>>>> Stashed changes
+		
+        return BiomeType.UNKNOWN;
     }
 }

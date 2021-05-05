@@ -32,33 +32,11 @@ public class Tile : MonoBehaviour {
 		RaycastHit hit;
 		Vector3 bitLower = new Vector3(0, -0.2f, 0);
 		for (int i = 0; i < directions.Length; i++) {
-<<<<<<< Updated upstream
-			if (Physics.Raycast(transform.position + bitLower, directions[i], out hit, 2f, 7)) {
-				Tile tile = hit.transform.parent.gameObject.GetComponent<Tile>();
-                if (tile)
-				    neighbours[i] = hit.transform.parent.gameObject.GetComponent<Tile>();
-			}
-		}
-	}
-	
-	// used only for changes in edit mode
-	void Update() {
-		if (change) {
-			change = false;
-
-			if (isDead && tileState != TileState.DEAD) {
-				Die(!EditorApplication.isPlayingOrWillChangePlaymode);
-			}
-			if ((!isDead && tileState == TileState.DEAD) || wantedType != tileType) {
-				isDead = false;
-				Morph(!EditorApplication.isPlayingOrWillChangePlaymode, wantedType);
-=======
 			if (Physics.Raycast(transform.position + bitLower, directions[i], out hit, 2f, LayerMask.GetMask("Tile"))) {
 				Tile tile = hit.transform.gameObject.GetComponent<Tile>();
                 if (tile) { 
 				    neighbours[i] = hit.transform.gameObject.GetComponent<Tile>();
 				}
->>>>>>> Stashed changes
 			}
 		}
 
