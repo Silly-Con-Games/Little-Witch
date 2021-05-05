@@ -126,6 +126,7 @@ GameObject:
   - component: {fileID: 4461358339646151885}
   - component: {fileID: 5730330900586231945}
   - component: {fileID: 280153317992718564}
+  - component: {fileID: 35013610122597127}
   m_Layer: 6
   m_Name: Witch
   m_TagString: Untagged
@@ -341,6 +342,19 @@ Animation:
   m_PlayAutomatically: 1
   m_AnimatePhysics: 0
   m_CullingType: 0
+--- !u!114 &35013610122597127
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 6295430965828045210}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 541a61fdb7346424f988be0f0fad466b, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  stepLengthSqr: 1.78
 --- !u!1 &8335536170137570959
 GameObject:
   m_ObjectHideFlags: 0
