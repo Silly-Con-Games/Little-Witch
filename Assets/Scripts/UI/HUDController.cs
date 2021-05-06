@@ -93,38 +93,19 @@ public class HUDController : MonoBehaviour
         {
             bar[newI].GetComponent<Animator>().SetBool("Full", false);
         }
-
-    }
-
-    public void StartAbilityCooldown(MainAbility ability)
-    {
-        if (ability is ForestAbility forestAbility)
-            StartCoroutine(ForestCoolDown(forestAbility));
-    }
-
-    private IEnumerator ForestCoolDown(ForestAbility ability)
-    {
-        while (!ability.IsReady)
+        if (newVal == bar[bar.Length - 1].maxValue) // completely full
         {
-            icons[0].fillAmount = ability.ChargedInPercent();
-            yield return new WaitForEndOfFrame();
+            bar[newI].GetComponent<Animator>().SetBool("Full", true);
         }
-        icons[0].GetComponent<Animator>().SetTrigger("Ready");
-        yield return null;
-    }
-
-    public void AbilityNotReady(MainAbility ability)
-    {
-        icons[0].GetComponent<Animator>().SetTrigger("NotReady");
     }
 
     public void UpdateAbilityIcons(BiomeType currentBiome)
     {
         switch (currentBiome)
         {
-            case BiomeType.forest:
-            case BiomeType.meadow:
-            case BiomeType.water:
+            case BiomeType.FOREST:
+            case BiomeType.MEADOW:
+            case BiomeType.WATER:
                 int cur = (int)currentBiome - 1;
                 Debug.Assert(cur >= 0 && cur < icons.Length);
 
@@ -142,4 +123,33 @@ public class HUDController : MonoBehaviour
                 break;
         }
     }
+
+    public void CastAbility(MainAbility ability)
+    {
+        if (ability is ForestAbility)
+        {
+            StartCoroutine(StartAbilityCoolDown(ability, 0));
+        }
+        else if (ability is MeadowAbility)
+        {
+            StartCoroutine(StartAbilityCoolDown(ability, 1));
+        }
+    }
+
+    private IEnumerator StartAbilityCoolDown(MainAbility ability, int idx)
+    {
+        while (!ability.IsReady)
+        {
+            icons[idx].fillAmount = ability.ChargedInPercent();
+            yield return new WaitForEndOfFrame();
+        }
+        icons[idx].GetComponent<Animator>().SetTrigger("Ready");
+        yield return null;
+    }
+
+    public void AbilityNotReady(MainAbility ability)
+    {
+        icons[0].GetComponent<Animator>().SetTrigger("NotReady");
+    }
+
 }

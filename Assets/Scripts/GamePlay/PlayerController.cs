@@ -182,6 +182,8 @@ public class PlayerController : MonoBehaviour, IDamagable
 
             standingOnBiomeType = newType;
 
+            hudController.UpdateAbilityIcons(standingOnBiomeType);
+
             switch (standingOnBiomeType)
             {
                 case BiomeType.FOREST:
@@ -236,11 +238,14 @@ public class PlayerController : MonoBehaviour, IDamagable
         if(currentMainAbility != null && currentMainAbility.IsReady)
         {
             currentMainAbility.CastAbility();
+            hudController.CastAbility(currentMainAbility);
         }
         else
         {
             Debug.Log("Unable to cast ability on " + standingOnBiomeType);
+            if (currentMainAbility != null) hudController.AbilityNotReady(currentMainAbility);
         }
+
     }
 
 	public void OnTransformForest(InputValue value) {
