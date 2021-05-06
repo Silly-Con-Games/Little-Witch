@@ -27,8 +27,6 @@ public class EnemiesSpawn : MonoBehaviour
     
     private Queue<EnemyAI> enemiesQueue;
 
-    private float TEST_DELTA;
-    
     void Start()
     {
         spawnDelay = 5f; 

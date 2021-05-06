@@ -12,7 +12,7 @@ GameObject:
   - component: {fileID: 1632079588551944206}
   - component: {fileID: 1632079588551944201}
   - component: {fileID: 1632079588551944200}
-  - component: {fileID: 1632079588551944203}
+  - component: {fileID: 6927406348372984830}
   m_Layer: 8
   m_Name: EnemyBomber
   m_TagString: Untagged
@@ -47,9 +47,9 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: d7632ff81482b6a44b8b587ff97460fe, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  idleTime: 0
-  attackTime: 0
-  chasingTime: 0
+  idleDuration: 0
+  attackCooldown: 0
+  chasingDuration: 0
   playerController: {fileID: 0}
   moveRangeMin: 0
   moveRangeMax: 0
@@ -57,9 +57,10 @@ MonoBehaviour:
   attackRange: 0
   speed: 0
   attackSpeed: 0
-  healthPoints: 0
+  healthPoints: 10
   slowDefault: 0
   rootDefault: 0
+  energyPrefab: {fileID: 3473807671122988953, guid: 6a2afd42537f2054f8ecf02e2c7764f8, type: 3}
   bombPrefab: {fileID: 1774625962153373825, guid: 8e490d70f483423499d4472ab55aad75, type: 3}
 --- !u!195 &1632079588551944201
 NavMeshAgent:
@@ -97,10 +98,10 @@ Rigidbody:
   m_UseGravity: 1
   m_IsKinematic: 0
   m_Interpolate: 0
-  m_Constraints: 112
+  m_Constraints: 126
   m_CollisionDetection: 1
---- !u!136 &1632079588551944203
-CapsuleCollider:
+--- !u!65 &6927406348372984830
+BoxCollider:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
   m_PrefabInstance: {fileID: 0}
@@ -109,10 +110,9 @@ CapsuleCollider:
   m_Material: {fileID: 0}
   m_IsTrigger: 0
   m_Enabled: 1
-  m_Radius: 0.5
-  m_Height: 1.0868005
-  m_Direction: 1
-  m_Center: {x: 0, y: 0.3394975, z: 0}
+  serializedVersion: 2
+  m_Size: {x: 0.8336767, y: 1.3353351, z: 0.8774843}
+  m_Center: {x: 0.0024228692, y: 0.4465285, z: 0.06125784}
 --- !u!1 &1632079589042063916
 GameObject:
   m_ObjectHideFlags: 0
@@ -124,6 +124,7 @@ GameObject:
   - component: {fileID: 1632079589042063917}
   - component: {fileID: 1632079589042063907}
   - component: {fileID: 1632079589042063906}
+  - component: {fileID: 2200484797389196159}
   m_Layer: 0
   m_Name: EnemyModel
   m_TagString: Untagged
@@ -194,3 +195,22 @@ MeshRenderer:
   m_SortingLayer: 0
   m_SortingOrder: 0
   m_AdditionalVertexStreams: {fileID: 0}
+--- !u!95 &2200484797389196159
+Animator:
+  serializedVersion: 3
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1632079589042063916}
+  m_Enabled: 1
+  m_Avatar: {fileID: 0}
+  m_Controller: {fileID: 22100000, guid: 7f04fd3e1712b9945a7ced84e18732c5, type: 2}
+  m_CullingMode: 0
+  m_UpdateMode: 0
+  m_ApplyRootMotion: 0
+  m_LinearVelocityBlending: 0
+  m_WarningMessage: 
+  m_HasTransformHierarchy: 1
+  m_AllowConstantClipSamplingOptimization: 1
+  m_KeepAnimatorControllerStateOnDisable: 0

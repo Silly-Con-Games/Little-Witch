@@ -1,0 +1,15 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!221 &22100000
+AnimatorOverrideController:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_Name: MeleeEnemyAnimator
+  m_Controller: {fileID: 9100000, guid: 5ddabe27e64772f47998f92ec52bd9a0, type: 2}
+  m_Clips:
+  - m_OriginalClip: {fileID: -623603649343465320, guid: 24b19177466f12142af215991953078a, type: 3}
+    m_OverrideClip: {fileID: -623603649343465320, guid: 24b19177466f12142af215991953078a, type: 3}
+  - m_OriginalClip: {fileID: -623603649343465320, guid: a2508b27d280bcd4180eb97ca282a228, type: 3}
+    m_OverrideClip: {fileID: 7400000, guid: 842073317f7b4ec42864e255922c6c22, type: 2}

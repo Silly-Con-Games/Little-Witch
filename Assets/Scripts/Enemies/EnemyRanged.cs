@@ -1,12 +1,13 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using FMODUnity;
 
 public class EnemyRanged : EnemyAI
 {
 
     public GameObject bulletPrefab;
-    
+
     public override void InitEnemy()
     {
         base.InitEnemy();
@@ -19,24 +20,30 @@ public class EnemyRanged : EnemyAI
         bullet.GetComponentInChildren<Bullet>().target = EObjectType.Player;
         var bulletInstanceTrans = bullet.transform;
         bulletInstanceTrans.position = transform.position;
-        bulletInstanceTrans.rotation = transform.rotation;
-    }
+        bulletInstanceTrans.eulerAngles = new Vector3(transform.eulerAngles.x, transform.eulerAngles.y, transform.eulerAngles.z);
+		
+		FMOD.Studio.EventInstance instance = RuntimeManager.CreateInstance("event:/test/shot");
+		RuntimeManager.AttachInstanceToGameObject(instance, transform, GetComponent<Rigidbody>());
+		instance.setParameterByName("shot_pitch", Random.Range(-1f, 1f));
+		instance.start();
+		instance.release();
+	}
 
     protected override void Idle()
     {
         if (IsPlayerInRange(maxRangeToPlayer))
         {
             state = State.Chase;
-            idleTime = Random.Range(1f, 3f);
+            idleDuration = Random.Range(1f, 3f);
             return;
         }
-        idleTime -= Time.deltaTime;
-        if (idleTime <= 0)
+        idleDuration -= Time.deltaTime;
+        if (idleDuration <= 0)
         {
             state = State.Roam;
             agent.isStopped = false;
             agent.SetDestination(EnemiesUtils.GetRoamPosition(roamPosition.position, moveRangeMin, moveRangeMax));
-            idleTime = Random.Range(1f, 3f);
+            idleDuration = Random.Range(1f, 3f);
         }
     }
 
@@ -99,12 +106,12 @@ public class EnemyRanged : EnemyAI
         }
         else
         {
-            attackTime -= Time.deltaTime;
+            attackCooldown -= Time.deltaTime;
             transform.LookAt(playerController.transform.position);
-            if (attackTime < 0)
+            if (attackCooldown < 0)
             {
                 Attack();
-                attackTime = attackSpeed;
+                attackCooldown = attackSpeed;
             }
             agent.isStopped = true;
         }

@@ -8,8 +8,15 @@ public class Bomb : MonoBehaviour
     [SerializeField]
     private ParticleSystem particle;
     
-    [SerializeField]
     private PlayerController playerController;
+
+    private Collider bombCollider;
+
+    private float explosionDelay;
+    private float damageRange;
+    private float baseDamage;
+    private float disappearingDuration;
+    
     
     // Start is called before the first frame update
     void Start()
@@ -18,11 +25,18 @@ public class Bomb : MonoBehaviour
         {
             particle.GetComponentInChildren<ParticleSystem>();
         }
-        if (!playerController)
-        {
-            playerController = FindObjectOfType<PlayerController>();
-        }
-        StartCoroutine(BombCoroutine(5f));
+        bombCollider = gameObject.GetComponent<Collider>();
+        explosionDelay = 5f;
+        damageRange = 5f;
+        baseDamage = 40;
+        disappearingDuration = 1f;
+    }
+
+    void OnTriggerEnter(Collider collision)
+    {
+        playerController = collision.gameObject.GetComponent<PlayerController>();
+        bombCollider.enabled = false;        
+        StartCoroutine(BombCoroutine(explosionDelay));
     }
 
     public IEnumerator BombCoroutine(float duration)
@@ -38,14 +52,14 @@ public class Bomb : MonoBehaviour
         {
             float distance = Vector3.Distance(this.transform.position, playerController.transform.position);
 
-            if (distance <= 5f)
+            if (distance <= damageRange)
             {
-                playerController.ReceiveDamage(40 * (1 - distance / 5f));
+                playerController.ReceiveDamage(baseDamage * (1f - distance / damageRange));
             }
         }
         
         
-        duration = 1f;
+        duration = disappearingDuration;
         while (duration >= 0f)
         {
             duration -= Time.deltaTime;

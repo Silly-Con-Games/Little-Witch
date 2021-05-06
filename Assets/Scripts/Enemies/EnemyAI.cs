@@ -5,7 +5,7 @@ using UnityEngine;
 using UnityEngine.AI;
 using Random = UnityEngine.Random;
 
-public abstract class EnemyAI : MonoBehaviour, IDamagable
+public abstract class EnemyAI : MonoBehaviour, IDamagable, IRootable, IStunnable, ISlowable
 {
     public enum State
     {
@@ -31,13 +31,13 @@ public abstract class EnemyAI : MonoBehaviour, IDamagable
     protected float stunDeltaTime;
 
     [SerializeField]
-    protected float idleTime;
+    protected float idleDuration;
 
     [SerializeField]
-    protected float attackTime;
+    protected float attackCooldown;
 
     [SerializeField]
-    protected float chasingTime;
+    protected float chasingDuration;
 
     protected float chasingDeltaTime;
 
@@ -75,6 +75,10 @@ public abstract class EnemyAI : MonoBehaviour, IDamagable
     [SerializeField]
     protected float rootDefault;
 
+    [SerializeField]
+    private GameObject energyPrefab;
+
+    protected Animator animator = null;
     public virtual void InitEnemy()
     {
         if (!playerController)
@@ -84,11 +88,12 @@ public abstract class EnemyAI : MonoBehaviour, IDamagable
         roamPosition = this.transform;
         moveRangeMin = 4f;
         moveRangeMax = 4f;
+        attackRange = 1.5f;
         maxRangeToPlayer = 8f;
 
-        idleTime = -1f;
-        attackTime = -1f;
-        chasingTime = 3f;
+        idleDuration = -1f;
+        attackCooldown = -1f;
+        chasingDuration = 3f;
         slowDefault = 3f;
         rootDefault = 3f;
 
@@ -102,11 +107,16 @@ public abstract class EnemyAI : MonoBehaviour, IDamagable
         agent.speed = speed;
 
         attackSpeed = 1f;
-        healthPoints = 20;
+        healthPoints = 10;
 
         secondaryState = SecondaryState.None;
 
         state = State.Roam;
+
+        if (!animator)
+        {
+            animator = GetComponentInChildren<Animator>();
+        }
     }
 
     public virtual void InitEnemy(Transform roamPosition)
@@ -132,6 +142,9 @@ public abstract class EnemyAI : MonoBehaviour, IDamagable
                 break;
             case State.Idle:
                 Idle();
+                break;
+            case State.Attack:
+                Attack();
                 break;
             default:
                 break;
@@ -198,10 +211,23 @@ public abstract class EnemyAI : MonoBehaviour, IDamagable
 
     public virtual void ReceiveDamage(float amount)
     {
+        animator.SetTrigger("GetHit");
+
         agent.isStopped = false;
         state = State.Chase;
-        chasingDeltaTime = chasingTime;
-        if ((healthPoints -= amount) <= 0) Destroy(gameObject);
+        chasingDeltaTime = chasingDuration;
+        Debug.Log(healthPoints);
+        if ((healthPoints -= amount) <= 0) Die();
+        Stun(5);
+    }
+
+    public virtual bool IsCloseToAttack()
+    {
+        if (!playerController)
+        {
+            return false;
+        }
+        return Vector3.Distance(transform.position, playerController.transform.position) <= attackRange;
     }
 
     public EObjectType GetObjectType()
@@ -209,9 +235,31 @@ public abstract class EnemyAI : MonoBehaviour, IDamagable
         return EObjectType.Enemy;
     }
 
+    public void RecieveSlow(float duration)
+    {
+        Slow(duration );
+    }
+
+    public void RecieveStun(float duration)
+    {
+        Stun(duration);
+    }
+
+    public void ReceiveRoot(float duration)
+    {
+        Root(duration);
+    }
+
     public void SetRoamObjectTransform(Transform transform)
     {
         this.roamPosition = transform;
+    }
+
+    protected void Die()
+    {
+        GameObject energy = Instantiate(energyPrefab);
+        energy.transform.position = new Vector3(this.transform.position.x, 0.5f, this.transform.position.z);
+        Destroy(gameObject);
     }
     
 }

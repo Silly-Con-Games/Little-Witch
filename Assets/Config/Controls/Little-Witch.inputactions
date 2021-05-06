@@ -38,7 +38,7 @@
                     "interactions": "Tap"
                 },
                 {
-                    "name": "PrimaryAbility",
+                    "name": "MainAbility",
                     "type": "Button",
                     "id": "425c05d0-17ae-4684-8ac6-fd78f30c5e5a",
                     "expectedControlType": "Button",
@@ -49,6 +49,38 @@
                     "name": "Jump",
                     "type": "Button",
                     "id": "dca0f09b-4f7b-4b21-806e-a7d499eb940b",
+                    "expectedControlType": "Button",
+                    "processors": "",
+                    "interactions": ""
+                },
+                {
+                    "name": "TransformForest",
+                    "type": "Button",
+                    "id": "0a51a983-869a-4576-a1c0-afd4188b8f7b",
+                    "expectedControlType": "Button",
+                    "processors": "",
+                    "interactions": ""
+                },
+                {
+                    "name": "TransformMeadow",
+                    "type": "Button",
+                    "id": "bc37dffa-3972-4b33-919e-e2b923eacdc6",
+                    "expectedControlType": "Button",
+                    "processors": "",
+                    "interactions": ""
+                },
+                {
+                    "name": "TransformWater",
+                    "type": "Button",
+                    "id": "731d385a-8df7-4dc3-9711-f9abf4a896af",
+                    "expectedControlType": "Button",
+                    "processors": "",
+                    "interactions": ""
+                },
+                {
+                    "name": "TransformDead",
+                    "type": "Button",
+                    "id": "abf42eaf-5e3f-4783-8869-dea855373275",
                     "expectedControlType": "Button",
                     "processors": "",
                     "interactions": ""
@@ -260,7 +292,7 @@
                     "interactions": "",
                     "processors": "",
                     "groups": "Keyboard&Mouse",
-                    "action": "PrimaryAbility",
+                    "action": "MainAbility",
                     "isComposite": false,
                     "isPartOfComposite": false
                 },
@@ -278,11 +310,55 @@
                 {
                     "name": "",
                     "id": "4f5bc7a9-f6a5-49a3-91e9-adbc42e546b9",
-                    "path": "<Keyboard>/space",
+                    "path": "<Keyboard>/j",
                     "interactions": "",
                     "processors": "",
                     "groups": "Keyboard&Mouse",
                     "action": "Jump",
+                    "isComposite": false,
+                    "isPartOfComposite": false
+                },
+                {
+                    "name": "",
+                    "id": "e816ab4f-094c-45d7-8c88-06837fbab630",
+                    "path": "<Keyboard>/1",
+                    "interactions": "",
+                    "processors": "",
+                    "groups": "Keyboard&Mouse",
+                    "action": "TransformForest",
+                    "isComposite": false,
+                    "isPartOfComposite": false
+                },
+                {
+                    "name": "",
+                    "id": "c3668220-d2d9-4eb0-8189-f79677d143ff",
+                    "path": "<Keyboard>/2",
+                    "interactions": "",
+                    "processors": "",
+                    "groups": "Keyboard&Mouse",
+                    "action": "TransformMeadow",
+                    "isComposite": false,
+                    "isPartOfComposite": false
+                },
+                {
+                    "name": "",
+                    "id": "5be042f1-4388-49b8-98e7-0dd837e71d36",
+                    "path": "<Keyboard>/3",
+                    "interactions": "",
+                    "processors": "",
+                    "groups": "Keyboard&Mouse",
+                    "action": "TransformWater",
+                    "isComposite": false,
+                    "isPartOfComposite": false
+                },
+                {
+                    "name": "",
+                    "id": "587056c2-2662-4d3e-a182-7d038cc36e7c",
+                    "path": "<Keyboard>/4",
+                    "interactions": "",
+                    "processors": "",
+                    "groups": "",
+                    "action": "TransformDead",
                     "isComposite": false,
                     "isPartOfComposite": false
                 }

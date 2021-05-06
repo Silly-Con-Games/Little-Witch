@@ -81,6 +81,8 @@ Material:
         m_Offset: {x: 0, y: 0}
     m_Floats:
     - Vector1_20b349ad06aa40d08226274187966796: 0.5
+    - Vector1_4172bdaef1b940c891e223c87bebbecd: 0.5
+    - Vector1_aacc35676c434811bb0dd783154902fe: 11.3
     - _AlphaClip: 0
     - _Blend: 0
     - _BumpScale: 1
@@ -95,11 +97,13 @@ Material:
     - _GlossMapScale: 0
     - _Glossiness: 0
     - _GlossyReflections: 0
+    - _IsWater: 0
     - _Metallic: 0
     - _OcclusionStrength: 1
     - _Parallax: 0.005
     - _QueueOffset: 0
     - _ReceiveShadows: 1
+    - _Saturation: 1
     - _Smoothness: 0.5
     - _SmoothnessTextureChannel: 0
     - _SpecularHighlights: 1
@@ -108,6 +112,8 @@ Material:
     - _WorkflowMode: 1
     - _ZWrite: 1
     m_Colors:
+    - Color_7e2a5e6da403449a9ce39c601ac3c193: {r: 0.8690605, g: 2.670157, b: 2.414528, a: 0}
+    - Color_e701b4733d0b4f3690c25ee8038a917f: {r: 0.043137237, g: 0.33333328, b: 0.4823529, a: 0}
     - _BaseColor: {r: 0, g: 0.6226415, b: 0.03726805, a: 1}
     - _Color: {r: 0.044499815, g: 0.3773585, b: 0.051810194, a: 1}
     - _EmissionColor: {r: 0, g: 0, b: 0, a: 1}

@@ -32,9 +32,6 @@ public class EnemyEnvDestroyer : EnemyAI
     private float distanceTmp;
     private Tile tileTmp;
 
-    [SerializeField]
-    private int idleTimeMillis;
-
     public override void InitEnemy()
     {
         base.InitEnemy();
@@ -46,7 +43,7 @@ public class EnemyEnvDestroyer : EnemyAI
         if (!mapController)
             mapController = FindObjectOfType<MapController>();
         coroutineRunning = false;
-        idleTimeMillis = 3000;
+        idleDuration = 3;
 
         enemiesMelee = new List<EnemyMelee>();
         enemiesRanged = new List<EnemyRanged>();
@@ -120,7 +117,7 @@ public class EnemyEnvDestroyer : EnemyAI
             }
         }
 
-        await Task.Delay(idleTimeMillis);
+        await Task.Delay(Mathf.CeilToInt(idleDuration * 1000f));
 
         if (agent)
         {
@@ -134,10 +131,10 @@ public class EnemyEnvDestroyer : EnemyAI
     protected override void Attack()
     {
         RaycastHit hit;
-        if (Physics.Raycast(transform.position, Vector3.down, out hit, 2f))
+        if (Physics.Raycast(transform.position, Vector3.down, out hit, 2f, LayerMask.GetMask("Tile")))
         {
-            Tile tile = hit.transform.parent.gameObject.GetComponent<Tile>();
-            if (!tile || tile.isDead)
+            Tile tile = hit.transform.gameObject.GetComponent<Tile>();
+            if (!tile || tile.GetBiomeType() == BiomeType.DEAD)
                 return;
             
             mapController.AttackTile(tile);
@@ -146,6 +143,8 @@ public class EnemyEnvDestroyer : EnemyAI
 
     public override void ReceiveDamage(float amount)
     {
+        animator.SetTrigger("GetHit");
+
         if ((healthPoints -= amount) <= 0)
         {
             for (int i = 0; i < enemiesMelee.Count; i++)
@@ -157,7 +156,7 @@ public class EnemyEnvDestroyer : EnemyAI
             {
                 enemiesRanged[i].SetRoamObjectTransform(null);
             }
-            Destroy(gameObject);
+            Die();
         }
     }
 
