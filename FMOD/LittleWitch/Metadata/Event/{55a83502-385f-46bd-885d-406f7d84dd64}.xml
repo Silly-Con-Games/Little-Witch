@@ -5,7 +5,7 @@
 			<value>generic_hit</value>
 		</property>
 		<property name="outputFormat">
-			<value>1</value>
+			<value>2</value>
 		</property>
 		<relationship name="folder">
 			<destination>{5528c277-08b0-4fa8-ad63-4f99d0d97bb9}</destination>
@@ -153,6 +153,7 @@
 	<object class="MixerBusEffectChain" id="{f610ca19-5d25-47c2-8350-19f1afde54bb}">
 		<relationship name="effects">
 			<destination>{daf8b30a-7980-4c3a-b5fc-88a17f7eb2fd}</destination>
+			<destination>{78c61827-1d21-4603-9b18-aab0c112a804}</destination>
 		</relationship>
 	</object>
 	<object class="MixerBusPanner" id="{3c4b14f9-4441-40f1-b009-064ebbca2b02}" />
@@ -163,6 +164,14 @@
 		</relationship>
 	</object>
 	<object class="MixerBusFader" id="{daf8b30a-7980-4c3a-b5fc-88a17f7eb2fd}" />
+	<object class="SpatialiserEffect" id="{78c61827-1d21-4603-9b18-aab0c112a804}">
+		<property name="minimumDistance">
+			<value>20</value>
+		</property>
+		<property name="maximumDistance">
+			<value>60</value>
+		</property>
+	</object>
 	<object class="Automator" id="{da2cb5a2-8678-48e1-a28c-5aeb7b603ab4}">
 		<property name="nameOfPropertyBeingAutomated">
 			<value>pitch</value>
