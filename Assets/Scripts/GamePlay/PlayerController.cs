@@ -113,6 +113,52 @@ public class PlayerController : MonoBehaviour, IDamagable
             characterController.Move(velocity * delta);
     }
 
+<<<<<<< Updated upstream
+=======
+    void CheckCurrentBiome()
+    {
+        BiomeType newType = mapController.BiomeTypeInPosition(transform.position);
+        if(newType != standingOnBiomeType)
+        {
+            switch (standingOnBiomeType)
+            {
+                case BiomeType.meadow: // Remove meadow passive effect
+                    meadowAbility.SteppedFromMeadow();
+                    break;
+                case BiomeType.water: // Remove water passive effect
+                    waterAbility.SteppedFromWater();
+                    break;
+            }
+
+            standingOnBiomeType = newType;
+
+            hudController.UpdateAbilityIcons(standingOnBiomeType);
+
+            switch (standingOnBiomeType)
+            {
+                case BiomeType.forest:
+                    currentMainAbility = forestAbility;
+                    break;
+                case BiomeType.meadow:
+                    currentMainAbility = meadowAbility;
+                    meadowAbility.SteppedOnMeadow();
+                    break;
+                case BiomeType.water:
+                    currentMainAbility = waterAbility;
+                    waterAbility.SteppedOnWater();
+                    break;
+                default:
+                    currentMainAbility = null;
+                    break;
+            }
+
+            if (standingOnBiomeType == BiomeType.unknown)
+                Debug.LogWarning("Stepped on unknown biome type at position " + transform.position);
+
+        }
+    }
+
+>>>>>>> Stashed changes
     public void OnMove(InputValue value)
     {        
         inputVelocity = value.Get<Vector2>();
@@ -138,6 +184,23 @@ public class PlayerController : MonoBehaviour, IDamagable
             chargeAbility.FireCharged();
     }
 
+<<<<<<< Updated upstream
+=======
+    public void OnMainAbility(InputValue value)
+    {
+        if(currentMainAbility != null && currentMainAbility.IsReady)
+        {
+            currentMainAbility.CastAbility();
+            hudController.StartAbilityCooldown(currentMainAbility);
+        }
+        else
+        {
+            Debug.Log("Unable to cast ability on " + standingOnBiomeType);
+            if(currentMainAbility != null) hudController.AbilityNotReady(currentMainAbility);
+        }
+    }
+
+>>>>>>> Stashed changes
     public void ReceiveDamage(float amount)
     {
         health.TakeDamage(amount);
