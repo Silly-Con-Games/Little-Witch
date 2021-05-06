@@ -12,16 +12,28 @@ public static class ColorUtils
 	}
 
 	public static void SetColor(MeshRenderer mesh, Color color) {
-		Material tempMaterial = new Material(mesh.sharedMaterial);
-		tempMaterial.SetColor("_Color", color);
-		mesh.sharedMaterial = tempMaterial;
+		Material[] tempMaterials = new Material[mesh.sharedMaterials.Length];
+		for (int i = 0; i < mesh.sharedMaterials.Length; i++) {
+			tempMaterials[i] = new Material(mesh.sharedMaterials[i]);
+			tempMaterials[i].SetColor("_Color", color);
+		}
+		mesh.sharedMaterials = tempMaterials;
 	}
 
-	public static void SetColor(MeshRenderer mesh, Color[] colors) {
+	public static void SetColors(MeshRenderer mesh, Color[] colors) {
 		Material[] tempMaterials = new Material[colors.Length];
 		for (int i = 0; i < colors.Length; i++) {
 			tempMaterials[i] = new Material(mesh.sharedMaterials[i]);
 			tempMaterials[i].SetColor("_Color", colors[i]);
+		}
+		mesh.sharedMaterials = tempMaterials;
+	}
+
+	public static void SetSaturation(MeshRenderer mesh, float value) {
+		Material[] tempMaterials = new Material[mesh.sharedMaterials.Length];
+		for (int i = 0; i < tempMaterials.Length; i++) {
+			tempMaterials[i] = new Material(mesh.sharedMaterials[i]);
+			tempMaterials[i].SetFloat("_Saturation", value);
 		}
 		mesh.sharedMaterials = tempMaterials;
 	}

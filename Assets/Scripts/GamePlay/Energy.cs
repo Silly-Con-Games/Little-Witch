@@ -1,5 +1,6 @@
 using System.Collections;
 using System.Collections.Generic;
+using Config;
 using UnityEngine;
 
 public class Energy : MonoBehaviour
@@ -8,13 +9,22 @@ public class Energy : MonoBehaviour
     private float lifeTimeInSec;
     private PlayerController playerController;
     private float speed;
-    private float energyAmount = 1;
+    private int energyAmount;
         
     void Start()
     {
-        speed = 1f;
-        lifeTimeInSec = 15;
+        GlobalConfigManager.onConfigChanged.AddListener(ApplyConfig);
+        ApplyConfig();
         StartCoroutine(WaitCoroutine());
+    }
+
+    protected virtual void ApplyConfig()
+    {
+        var energyConfig = GlobalConfigManager.GetGlobalConfig().energyConfig;
+        lifeTimeInSec = energyConfig.lifeTimeInSec;
+        speed = energyConfig.speed;
+        energyAmount = energyConfig.energyAmount;
+
     }
 
     void OnTriggerEnter(Collider collision)
@@ -45,6 +55,7 @@ public class Energy : MonoBehaviour
                 yield return null;
         }
         playerController.energy.AddEnergy(energyAmount);
+        GlobalConfigManager.onConfigChanged.RemoveListener(ApplyConfig);
         Destroy(gameObject);
     }
 

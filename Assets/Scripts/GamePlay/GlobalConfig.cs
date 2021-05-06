@@ -7,6 +7,7 @@ namespace Config
     {
         public WitchConfig witchConfig;
         public GlobalEnemyConfig globalEnemyConfig;
+        public EnergyConfig energyConfig;
         public float respawnTime;
     }
 
@@ -85,6 +86,11 @@ namespace Config
     {
         public MainAbilityConfig baseConfig;
         public float MSMultiplier;
+        public float speed;
+        public int projectileCnt;
+        public float spellWidth;
+        public float maxRange;
+        public float damage;
     }
 
     [Serializable]
@@ -163,6 +169,14 @@ namespace Config
         public EnemyBomberConfig enemyBomberConfig;
         public EnemyEnvDestroyerConfig enemyEnvDestroyerConfig;
         public MineConfig mineConfig;
+    }
+
+    [Serializable]
+    public struct EnergyConfig
+    {
+        public float lifeTimeInSec;
+        public float speed;
+        public int energyAmount;
     }
 
 }

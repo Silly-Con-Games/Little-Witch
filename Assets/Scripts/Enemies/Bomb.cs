@@ -44,7 +44,8 @@ public class Bomb : MonoBehaviour
     void OnTriggerEnter(Collider collision)
     {
         playerController = collision.gameObject.GetComponent<PlayerController>();
-        bombCollider.enabled = false;        
+        bombCollider.enabled = false;
+        FMODUnity.RuntimeManager.PlayOneShot("event:/enemies/mine/trigger");
         StartCoroutine(BombCoroutine(explosionDelay));
     }
 
@@ -55,6 +56,7 @@ public class Bomb : MonoBehaviour
             duration -= Time.deltaTime;
             yield return null;
         }
+        FMODUnity.RuntimeManager.PlayOneShot("event:/enemies/mine/explosion");
         particle.Play();
 
         if (playerController)

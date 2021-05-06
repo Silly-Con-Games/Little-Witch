@@ -31,8 +31,9 @@ public class PlayerController : MonoBehaviour, IDamagable
     public HealthTracker health { get; internal set; }
     public EnergyTracker energy { get; internal set; }
 
-    private MainAbility currentMainAbility;
-    private BiomeType standingOnBiomeType = BiomeType.unknown;
+	private TransformEnvironment transformer;
+	private MainAbility currentMainAbility;
+    private BiomeType standingOnBiomeType = BiomeType.UNKNOWN;
 
     const float gravity = -9.81f;
     float upVelocity = 0;
@@ -54,6 +55,7 @@ public class PlayerController : MonoBehaviour, IDamagable
         GlobalConfigManager.onConfigChanged.AddListener(ApplyConfig);
 
         passiveEffects = new HashSet<UnityAction>();
+		transformer = GetComponent<TransformEnvironment>();
 
         forestAbility.Init(this);
         meadowAbility.Init(this);
@@ -133,7 +135,7 @@ public class PlayerController : MonoBehaviour, IDamagable
 
         Vector3 velocity;
         if(!movementRelativeToWitch)
-            velocity = inputVelocity.y * forwardV + inputVelocity.x * rightV ; 
+            velocity = inputVelocity.y * forwardV + inputVelocity.x * rightV ;
         else
             velocity = inputVelocity.y * transform.forward + inputVelocity.x * transform.right ; // relative to witch rotation
 
@@ -170,26 +172,28 @@ public class PlayerController : MonoBehaviour, IDamagable
         {
             switch (standingOnBiomeType)
             {
-                case BiomeType.meadow: // Remove meadow passive effect
+                case BiomeType.MEADOW: // Remove meadow passive effect
                     meadowAbility.SteppedFromMeadow();
                     break;
-                case BiomeType.water: // Remove water passive effect
+                case BiomeType.WATER: // Remove water passive effect
                     waterAbility.SteppedFromWater();
                     break;
             }
 
             standingOnBiomeType = newType;
 
+            hudController.UpdateAbilityIcons(standingOnBiomeType);
+
             switch (standingOnBiomeType)
             {
-                case BiomeType.forest:
+                case BiomeType.FOREST:
                     currentMainAbility = forestAbility;
                     break;
-                case BiomeType.meadow:
+                case BiomeType.MEADOW:
                     currentMainAbility = meadowAbility;
                     meadowAbility.SteppedOnMeadow();
                     break;
-                case BiomeType.water:
+                case BiomeType.WATER:
                     currentMainAbility = waterAbility;
                     waterAbility.SteppedOnWater();
                     break;
@@ -198,14 +202,14 @@ public class PlayerController : MonoBehaviour, IDamagable
                     break;
             }
 
-            if (standingOnBiomeType == BiomeType.unknown)
+            if (standingOnBiomeType == BiomeType.UNKNOWN)
                 Debug.LogWarning("Stepped on unknown biome type at position " + transform.position);
 
         }
     }
 
     public void OnMove(InputValue value)
-    {        
+    {
         inputVelocity = value.Get<Vector2>();
     }
 
@@ -234,14 +238,39 @@ public class PlayerController : MonoBehaviour, IDamagable
         if(currentMainAbility != null && currentMainAbility.IsReady)
         {
             currentMainAbility.CastAbility();
+            hudController.CastAbility(currentMainAbility);
         }
         else
         {
             Debug.Log("Unable to cast ability on " + standingOnBiomeType);
+            if (currentMainAbility != null) hudController.AbilityNotReady(currentMainAbility);
         }
+
     }
 
-    public void ReceiveDamage(float amount)
+	public void OnTransformForest(InputValue value) {
+		Transform(BiomeType.FOREST);
+	}
+
+	public void OnTransformMeadow(InputValue value) {
+		Transform(BiomeType.MEADOW);
+	}
+
+	public void OnTransformWater(InputValue value) {
+		Transform(BiomeType.WATER);
+	}
+
+	public void OnTransformDead(InputValue value) {
+		Transform(BiomeType.DEAD);
+	}
+
+	private void Transform(BiomeType target) {
+		if (transformer.IsReady()) {
+			transformer.Transform(target);
+		}
+	}
+
+	public void ReceiveDamage(float amount)
     {
         animator.SetTrigger("GetHit");
 

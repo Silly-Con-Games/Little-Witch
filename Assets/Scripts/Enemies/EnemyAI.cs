@@ -213,7 +213,7 @@ public abstract class EnemyAI : MonoBehaviour, IDamagable, IRootable, IStunnable
     public virtual void ReceiveDamage(float amount)
     {
         animator.SetTrigger("GetHit");
-
+        FMODUnity.RuntimeManager.PlayOneShot("event:/enemies/hit/generic_hit");
         agent.isStopped = false;
         state = State.Chase;
         chasingDeltaTime = chasingDuration;
