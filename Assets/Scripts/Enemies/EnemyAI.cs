@@ -1,6 +1,7 @@
 using System;
 using System.Collections;
 using System.Collections.Generic;
+using Config;
 using UnityEngine;
 using UnityEngine.AI;
 using Random = UnityEngine.Random;
@@ -33,8 +34,7 @@ public abstract class EnemyAI : MonoBehaviour, IDamagable, IRootable, IStunnable
     [SerializeField]
     protected float idleDuration;
 
-    [SerializeField]
-    protected float attackCooldown;
+    protected float attackCooldownDelta;
 
     [SerializeField]
     protected float chasingDuration;
@@ -64,7 +64,7 @@ public abstract class EnemyAI : MonoBehaviour, IDamagable, IRootable, IStunnable
     protected float speed;
 
     [SerializeField]
-    protected float attackSpeed;
+    protected float attackCooldown;
 
     [SerializeField]
     protected float healthPoints;
@@ -81,43 +81,44 @@ public abstract class EnemyAI : MonoBehaviour, IDamagable, IRootable, IStunnable
     protected Animator animator = null;
     public virtual void InitEnemy()
     {
+        GlobalConfigManager.onConfigChanged.AddListener(ApplyConfig);
         if (!playerController)
         {
             playerController = FindObjectOfType<PlayerController>();
         }
         roamPosition = this.transform;
-        moveRangeMin = 4f;
-        moveRangeMax = 4f;
-        attackRange = 1.5f;
-        maxRangeToPlayer = 8f;
-
-        idleDuration = -1f;
-        attackCooldown = -1f;
-        chasingDuration = 3f;
-        slowDefault = 3f;
-        rootDefault = 3f;
-
-        //stunTime = 3;
-        stunDeltaTime = -1;
-        chasingDeltaTime = -1f;
-
         agent = GetComponent<NavMeshAgent>();
         agent.autoBraking = false;
-        speed = 2;
-        agent.speed = speed;
-
-        attackSpeed = 1f;
-        healthPoints = 10;
-
         secondaryState = SecondaryState.None;
-
         state = State.Roam;
-
         if (!animator)
         {
             animator = GetComponentInChildren<Animator>();
         }
+        ApplyConfig();
     }
+
+    protected virtual void ApplyConfig()
+    {
+        var enemyConfig = GetEnemyBaseConfig();
+        roamPosition = this.transform;
+        moveRangeMin = enemyConfig.moveRangeMin;
+        moveRangeMax = enemyConfig.moveRangeMax;
+        attackRange = enemyConfig.attackRange;
+        maxRangeToPlayer = enemyConfig.maxRangeToPlayer;
+        idleDuration = enemyConfig.idleDuration;
+        chasingDuration = enemyConfig.chasingDuration;
+        slowDefault = enemyConfig.slowDefault;
+        rootDefault = enemyConfig.rootDefault;
+        stunDeltaTime = enemyConfig.rootDefault;
+        chasingDeltaTime = enemyConfig.chasingDuration;
+        speed = enemyConfig.speed;
+        agent.speed = speed;
+        attackCooldown = enemyConfig.attackCooldown;
+        healthPoints = enemyConfig.healthPoints;
+    }
+
+    protected abstract EnemyConfig GetEnemyBaseConfig();
 
     public virtual void InitEnemy(Transform roamPosition)
     {
@@ -259,6 +260,7 @@ public abstract class EnemyAI : MonoBehaviour, IDamagable, IRootable, IStunnable
     {
         GameObject energy = Instantiate(energyPrefab);
         energy.transform.position = new Vector3(this.transform.position.x, 0.5f, this.transform.position.z);
+        GlobalConfigManager.onConfigChanged.RemoveListener(ApplyConfig);
         Destroy(gameObject);
     }
     

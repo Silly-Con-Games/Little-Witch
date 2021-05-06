@@ -73,6 +73,7 @@ namespace Config
 
         public static GlobalConfig GetGlobalConfig()
         {
+            
             return instance.globalConfig;
         }
 

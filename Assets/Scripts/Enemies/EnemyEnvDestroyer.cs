@@ -1,6 +1,7 @@
 using System.Collections;
 using System.Collections.Generic;
 using System.Threading.Tasks;
+using Config;
 using UnityEngine;
 
 public class EnemyEnvDestroyer : EnemyAI
@@ -35,7 +36,6 @@ public class EnemyEnvDestroyer : EnemyAI
     public override void InitEnemy()
     {
         base.InitEnemy();
-
         enemiesMeleeMax = 1;
         enemiesRangedMax = 1;
         moveRangeMax = 8f;
@@ -68,6 +68,19 @@ public class EnemyEnvDestroyer : EnemyAI
             enemiesRanged[i].state = State.Roam;
         }
         state = State.Idle;
+    }
+
+    protected override void ApplyConfig()
+    {
+        base.ApplyConfig();
+        var enemyConfig = GlobalConfigManager.GetGlobalConfig().globalEnemyConfig.enemyEnvDestroyerConfig;
+        enemiesMeleeMax = enemyConfig.enemiesMeleeMax;
+        enemiesRangedMax = enemyConfig.enemiesRangedMax;
+    }
+
+    protected override EnemyConfig GetEnemyBaseConfig()
+    {
+        return GlobalConfigManager.GetGlobalConfig().globalEnemyConfig.enemyEnvDestroyerConfig.baseConfig;
     }
 
     protected override void Roam()

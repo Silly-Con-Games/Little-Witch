@@ -52,5 +52,79 @@
             "MSMultiplier": 2.0
         }
     },
+    "globalEnemyConfig": {
+        "enemyRangedConfig": {
+            "baseConfig": {
+                "idleDuration": 5.0,
+                "chasingDuration": 3.0,
+                "moveRangeMin": 4.0,
+                "moveRangeMax": 4.0,
+                "maxRangeToPlayer": 8.0,
+                "attackRange": 5,
+                "speed": 2.0,
+                "attackCooldown": 1.0,
+                "healthPoints": 15.0,
+                "slowDefault": 3.0,
+                "rootDefault": 3.0
+            }
+        },
+        "enemyMeleeConfig": {
+            "baseConfig": {
+                "idleDuration": 5.0,
+                "chasingDuration": 3.0,
+                "moveRangeMin": 4.0,
+                "moveRangeMax": 4.0,
+                "maxRangeToPlayer": 8.0,
+                "attackRange": 1.5,
+                "speed": 2.0,
+                "attackCooldown": 10.0,
+                "healthPoints": 15.0,
+                "slowDefault": 3.0,
+                "rootDefault": 3.0
+            },
+            "dashDelay": 1.0,
+            "dashDuration": 2.0,
+            "dashSpeedModifier": 3.0,
+            "dashRange": 3.0
+        },
+        "enemyBomberConfig": {
+            "baseConfig": {
+                "idleDuration": 5.0,
+                "chasingDuration": 3.0,
+                "moveRangeMin": 4.0,
+                "moveRangeMax": 4.0,
+                "maxRangeToPlayer": 8.0,
+                "attackRange": 1.5,
+                "speed": 2.0,
+                "attackCooldown": 1.0,
+                "healthPoints": 15.0,
+                "slowDefault": 3.0,
+                "rootDefault": 3.0
+            }
+        },
+        "enemyEnvDestroyerConfig": {
+            "baseConfig": {
+                "idleDuration": 5.0,
+                "chasingDuration": 3.0,
+                "moveRangeMin": 4.0,
+                "moveRangeMax": 4.0,
+                "maxRangeToPlayer": 8.0,
+                "attackRange": 1.5,
+                "speed": 2.0,
+                "attackCooldown": 1.0,
+                "healthPoints": 10.0,
+                "slowDefault": 3.0,
+                "rootDefault": 3.0
+            },
+            "enemiesMeleeMax": 2,
+            "enemiesRangedMax": 2
+        },
+        "mineConfig": {
+            "explosionDelay": 5.0,
+            "damageRange": 5.0,
+            "baseDamage": 20.0,
+            "disappearingDuration": 1.0
+        }
+    },
     "respawnTime": 2.0
 }

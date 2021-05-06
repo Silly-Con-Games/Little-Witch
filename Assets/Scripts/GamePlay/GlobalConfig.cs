@@ -6,6 +6,7 @@ namespace Config
     public struct GlobalConfig
     {
         public WitchConfig witchConfig;
+        public GlobalEnemyConfig globalEnemyConfig;
         public float respawnTime;
     }
 
@@ -90,7 +91,6 @@ namespace Config
     public struct EnemyConfig
     {
         public float idleDuration;
-        public float attackCooldown;
         public float chasingDuration;
         
         // min and max value for the range the enemy can go from roam position
@@ -104,7 +104,7 @@ namespace Config
         // range after reaching which enemy starts attacking player(switches state to ATTACK)
         public float attackRange;
         public float speed;
-        public float attackSpeed;
+        public float attackCooldown;
         public float healthPoints;
         
         // default duration for slow and root effect
@@ -116,7 +116,6 @@ namespace Config
     public struct EnemyRangedConfig
     {
         public EnemyConfig baseConfig;
-        public float attackRange;
     }
 
     [Serializable]
@@ -154,6 +153,16 @@ namespace Config
         public float damageRange;
         public float baseDamage;
         public float disappearingDuration;
+    }
+
+    [Serializable]
+    public struct GlobalEnemyConfig
+    {
+        public EnemyRangedConfig enemyRangedConfig;
+        public EnemyMeleeConfig enemyMeleeConfig;
+        public EnemyBomberConfig enemyBomberConfig;
+        public EnemyEnvDestroyerConfig enemyEnvDestroyerConfig;
+        public MineConfig mineConfig;
     }
 
 }

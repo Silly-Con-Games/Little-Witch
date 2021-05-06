@@ -1,5 +1,6 @@
 using System.Collections;
 using System.Collections.Generic;
+using Config;
 using UnityEngine;
 
 public class EnemyMelee : EnemyAI
@@ -28,16 +29,26 @@ public class EnemyMelee : EnemyAI
     
     public override void InitEnemy()
     {
-        dashDelay = 1f;
-        dashDuration = 2f;
-        dashRange = 3f;
         attacking = false;
-        dashSpeedModifier = 3f;
-
         base.InitEnemy();
         roamPosition = null;
     }
-    
+
+    protected override void ApplyConfig()
+    {
+        base.ApplyConfig();
+        var enemyConfig = GlobalConfigManager.GetGlobalConfig().globalEnemyConfig.enemyMeleeConfig;
+        dashDelay = enemyConfig.dashDelay;
+        dashDuration = enemyConfig.dashDuration;
+        dashRange = enemyConfig.dashRange;
+        dashSpeedModifier = enemyConfig.dashSpeedModifier;
+    }
+
+    protected override EnemyConfig GetEnemyBaseConfig()
+    {
+        return GlobalConfigManager.GetGlobalConfig().globalEnemyConfig.enemyMeleeConfig.baseConfig;
+    }
+
     protected override void Idle()
     {
         if (IsPlayerInRange(maxRangeToPlayer))
@@ -123,12 +134,12 @@ public class EnemyMelee : EnemyAI
 
     protected override void Attack()
     {
-        attackCooldown -= Time.deltaTime;
-        if (!attacking && playerController && attackCooldown < 0)
+        attackCooldownDelta -= Time.deltaTime;
+        if (!attacking && playerController && attackCooldownDelta < 0)
         {
             agent.isStopped = true;
             attacking = true;
-            attackCooldown = attackSpeed;
+            attackCooldownDelta = attackCooldown;
             dashDelta = dashDelay;
             dashDurationDelta = dashDuration;
             lastPos = transform.position;
