@@ -10,10 +10,14 @@ public class MapController : MonoBehaviour
 
     public int aliveTilesCnt { get; set; }
 
+    private int tileMask;
+
     // Start is called before the first frame update
     void Start()
     {
-		initTile = FindObjectOfType<Tile>();
+        tileMask = LayerMask.GetMask("Tile");
+
+        initTile = FindObjectOfType<Tile>();
 
         aliveTilesCnt = 0;
         Queue<Tile> tilesQueue = new Queue<Tile>();
@@ -56,10 +60,9 @@ public class MapController : MonoBehaviour
 
     public BiomeType BiomeTypeInPosition(Vector3 position)
     {
-        if (Physics.Raycast(position, Vector3.down, out RaycastHit hit, 2f, LayerMask.GetMask("Tile")))
+        if (Physics.Raycast(position, Vector3.down, out RaycastHit hit, 2, tileMask))
         {
-			Tile tile = hit.transform.gameObject.GetComponent<Tile>();
-
+			Tile tile = hit.transform.gameObject.GetComponent<Tile>();           
             if(tile != null)
             {
                 return tile.GetBiomeType();

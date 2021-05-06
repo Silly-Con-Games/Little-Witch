@@ -19,6 +19,8 @@ public class Tile : MonoBehaviour {
 
 	public MapInfo mapInfo { get; set; }
 
+	private float morphSpeed = 2;
+
 	void Awake() {
 		Vector3[] directions = new Vector3[6];
 		directions[0] = new Vector3(1, 0, 2);
@@ -43,8 +45,13 @@ public class Tile : MonoBehaviour {
 		mapInfo = new MapInfo();
 	}
 
-	// to detect changes in edit mode
-	[Button("Setup", "Setup", false)] public string input1;
+    private void Start()
+    {
+		type = wantedType;
+	}
+
+    // to detect changes in edit mode
+    [Button("Setup", "Setup", false)] public string input1;
 	public void Setup() {
 		Morph(wantedType, true);
 	}
@@ -120,7 +127,7 @@ public class Tile : MonoBehaviour {
 	}
 
 	IEnumerator DieCoroutine() {
-		for (float progress = 1f; progress >= 0f; progress -= 0.01f) {
+		for (float progress = 1f; progress >= 0f; progress -= morphSpeed * Time.deltaTime) {
 			ColorUtils.SetSaturation(mesh, progress);
 
 			if (progress > 0.5f) {
@@ -142,7 +149,7 @@ public class Tile : MonoBehaviour {
 		Color from = mesh.sharedMaterials[0].color;
 		Color to = GetColor(target);
 
-		for (float progress = 0f; progress < 1f; progress += 0.01f) {
+		for (float progress = 0f; progress < 1f; progress += morphSpeed * Time.deltaTime ) {
 			if (toWater) {
 				SetWater(mesh, Mathf.Lerp(initWater, 1f, progress));
 				SetHeight(Mathf.Lerp(initHieght, -waterDepression, progress));
