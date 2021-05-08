@@ -1,10 +1,16 @@
+using Config;
+using System;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-public class TransformEnvironment : MonoBehaviour
+[Serializable]
+public class TransformAbility
 {
-	public float cooldown;
+	public Transform origin;
+	public PlayerController parent;
+
+	public TransformConfig conf;
 
 	private float lastUsedTime = float.NegativeInfinity;
 
@@ -12,7 +18,7 @@ public class TransformEnvironment : MonoBehaviour
 		lastUsedTime = Time.time;
 
 		RaycastHit hit;
-		if (Physics.Raycast(transform.position, Vector3.down, out hit, 2f, LayerMask.GetMask("Tile"))) {
+		if (Physics.Raycast(origin.position, Vector3.down, out hit, 2f, LayerMask.GetMask("Tile"))) {
 			Tile tile = hit.transform.gameObject.GetComponent<Tile>();
 			tile.Morph(target, false);
 			foreach (Tile ngb in tile.GetNeighbours()) {
@@ -20,11 +26,16 @@ public class TransformEnvironment : MonoBehaviour
 					ngb.Morph(target, false);
 				}
 			}
+
+			parent.energy.UseEnergy(conf.energyCost);
 		}
 	}
 
 	public bool IsReady() {
-		return Time.time - lastUsedTime > cooldown;
+		if (!parent.energy.HasEnough(conf.energyCost))
+			return false;
+		else
+			return Time.time - lastUsedTime > conf.cooldown;
 	}
 	
 }
