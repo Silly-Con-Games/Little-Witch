@@ -238,8 +238,8 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   wave: {fileID: 972670197456993920}
-  chargeTime: 0.4
-  speed: 5
+  chargeTime: 0.2
+  speed: 8
   onCollide: {fileID: 7071725375362203623}
 --- !u!1 &7176180331048245695
 GameObject:

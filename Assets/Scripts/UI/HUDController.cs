@@ -126,13 +126,17 @@ public class HUDController : MonoBehaviour
 
     public void CastAbility(MainAbility ability)
     {
-        if (ability is ForestAbility)
+        switch (ability)
         {
-            StartCoroutine(StartAbilityCoolDown(ability, 0));
-        }
-        else if (ability is MeadowAbility)
-        {
-            StartCoroutine(StartAbilityCoolDown(ability, 1));
+            case ForestAbility a:
+                StartCoroutine(StartAbilityCoolDown(ability, 0));
+                break;
+            case MeadowAbility a:
+                StartCoroutine(StartAbilityCoolDown(ability, 1));
+                break;
+            case WaterAbility a:
+                StartCoroutine(StartAbilityCoolDown(ability, 2));
+                break;
         }
     }
 
@@ -149,7 +153,18 @@ public class HUDController : MonoBehaviour
 
     public void AbilityNotReady(MainAbility ability)
     {
-        icons[0].GetComponent<Animator>().SetTrigger("NotReady");
+        switch (ability)
+        {
+            case ForestAbility a:
+                icons[0].GetComponent<Animator>().SetTrigger("NotReady");
+                break;
+            case MeadowAbility a:
+                icons[1].GetComponent<Animator>().SetTrigger("NotReady");
+                break;
+            case WaterAbility a:
+                icons[2].GetComponent<Animator>().SetTrigger("NotReady");
+                break;
+        }
     }
 
 }

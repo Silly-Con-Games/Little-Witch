@@ -28,8 +28,8 @@
             "energyCost": 1.0
         },
         "transformAbility": {
-            "cooldown": 0.5,
-            "energyCost": 5.0
+            "cooldown": 0.0,
+            "energyCost": 0.0
         },
         "forestAbility": {
             "baseConfig": {
@@ -45,13 +45,16 @@
         },
         "waterAbility": {
             "baseConfig": {
-                "cooldown": 0.0
+                "cooldown": 3.0
             },
+            "chargeTime": 0.20000000298023225,
+            "waveDuration": 0.5,
+            "waveSpeed": 10.0,
             "healPerSec": 1.0
         },
         "meadowAbility": {
             "baseConfig": {
-                "cooldown": 0.0
+                "cooldown": 1.0
             },
             "MSMultiplier": 1.5,
             "speed": 0.800000011920929,

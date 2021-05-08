@@ -15,9 +15,12 @@ public class WaterAbility : MainAbility
     {
         base.CastAbility();
         Debug.Log("Casted water ability!");
-        var inst = GameObject.Instantiate(wavePrefab).transform;
-        inst.position = playerController.transform.position;
-        inst.rotation = playerController.transform.rotation;
+        var inst = GameObject.Instantiate(wavePrefab);
+        var instTrans = inst.transform;
+        instTrans.position = playerController.transform.position;
+        instTrans.rotation = playerController.transform.rotation;
+        inst.Init(ref internalConf);
+
     }
 
     public void PassiveHealEffect()

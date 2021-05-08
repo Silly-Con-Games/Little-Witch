@@ -1,43 +1,53 @@
 using System.Collections;
 using UnityEngine;
 using UnityEngine.VFX;
-
+using Config;
+using System.Collections.Generic;
 
 public class WAWave : MonoBehaviour
 {
     public VisualEffect wave;
-    public float chargeTime = 0.4f;
-    public float speed = 5f;
+    private float chargeTime = 0.2f;
+    private float speed = 10f;
+    private float waveDuration = 0.5f;
     public OnTriggerEnterEvent onCollide;
     private Transform transCollider;
     private Collider vfxCollider;
     private bool shouldMove = false;
     private float start;
-    // Start is called before the first frame update
-    void Start()
+    HashSet<IPushable> hashSet = new HashSet<IPushable>();
+
+    public void Init(ref WaterAbilityConfig conf)
     {
+        hashSet.Clear();
         onCollide.ontriggerenter.AddListener(OnHit);
         transCollider = onCollide.transform;
         vfxCollider = onCollide.GetComponent<Collider>();
+
+        chargeTime = conf.chargeTime;
+        speed = conf.waveSpeed;
+        waveDuration = conf.waveDuration;
+
         wave.SetFloat("ChargeTime", chargeTime);
+        wave.SetFloat("WaveDuration", waveDuration);
         wave.SetFloat("Speed", speed);
         wave.SendEvent("ChargeStart");
         StartCoroutine(SendLateEvent());
-
     }
 
     private IEnumerator SendLateEvent()
     {
+        float halfduration = waveDuration / 2;
         yield return new WaitForSeconds(chargeTime);
         wave.SendEvent("ChargeEnd");
         shouldMove = true;
         StartCoroutine(MoveCollider());
-        yield return new WaitForSeconds(0.5f);
+        yield return new WaitForSeconds(halfduration);
 
         wave.SendEvent("Stop");
-        yield return new WaitForSeconds(0.4f);
+        yield return new WaitForSeconds(halfduration);
         shouldMove = false;
-        yield return new WaitForSeconds(1f);
+        yield return new WaitForSeconds(halfduration);
 
         Destroy(gameObject);
     }
@@ -58,8 +68,9 @@ public class WAWave : MonoBehaviour
     private void OnHit(Collider collider)
     {
         IPushable pushable = collider.gameObject.GetComponent<IPushable>();
-        if(pushable != null)
+        if(pushable != null && !hashSet.Contains(pushable))
         {
+            hashSet.Add(pushable);
             Vector3 force = (collider.transform.position - transform.position).normalized * speed;
             pushable.ReceivePush(force, 0.9f - (Time.time - start));
         }
