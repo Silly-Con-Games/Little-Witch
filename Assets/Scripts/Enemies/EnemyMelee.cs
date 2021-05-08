@@ -158,6 +158,10 @@ public class EnemyMelee : EnemyAI
 
         agent.speed = agent.speed * dashSpeedModifier;
         agent.isStopped = false;
+        if (playerController && dashDurationDelta >= 0 && !IsCloseToAttack())
+        {
+            FMODUnity.RuntimeManager.PlayOneShot("event:/enemies/dash/dash");
+        }
         while (playerController && dashDurationDelta >= 0 && !IsCloseToAttack())
         {
             agent.SetDestination(playerController.transform.position);
