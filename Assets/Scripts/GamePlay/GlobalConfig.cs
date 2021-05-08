@@ -21,6 +21,7 @@ namespace Config
         public float jumpHeight;
         public MeleeAbilityConfig meeleeAbility;
         public ChargeAbilityConfig chargeAbility;
+		public TransformConfig transformAbility;
         public ForestAbilityConfig forestAbility;
         public WaterAbilityConfig waterAbility;
         public MeadowAbilityConfig meadowAbility;
@@ -54,6 +55,13 @@ namespace Config
         public float witchSlowMSMultiplier;
         public float energyCost;
     }
+
+	[Serializable]
+	public struct TransformConfig
+	{ 
+		public float cooldown;
+		public float energyCost;
+	}
 
     [Serializable]
     public struct MainAbilityConfig
