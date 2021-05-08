@@ -1,6 +1,6 @@
 using UnityEngine;
 
-public class Bullet : MonoBehaviour
+public class Bullet : MonoBehaviour , IObjectType
 {
     public EObjectType target = EObjectType.Unknown;
     public float damage = 0f;
@@ -30,5 +30,10 @@ public class Bullet : MonoBehaviour
             damagable.ReceiveDamage(damage);
             Destroy(gameObject);
         }        
+    }
+
+    public EObjectType GetObjectType()
+    {
+        return EObjectType.Projectile;
     }
 }

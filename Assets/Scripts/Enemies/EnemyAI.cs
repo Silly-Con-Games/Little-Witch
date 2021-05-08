@@ -6,7 +6,7 @@ using UnityEngine;
 using UnityEngine.AI;
 using Random = UnityEngine.Random;
 
-public abstract class EnemyAI : MonoBehaviour, IDamagable, IRootable, IStunnable, ISlowable
+public abstract class EnemyAI : MonoBehaviour, IDamagable, IRootable, IStunnable, ISlowable, IPushable
 {
     public enum State
     {
@@ -263,5 +263,20 @@ public abstract class EnemyAI : MonoBehaviour, IDamagable, IRootable, IStunnable
         GlobalConfigManager.onConfigChanged.RemoveListener(ApplyConfig);
         Destroy(gameObject);
     }
-    
+
+    public void ReceivePush(Vector3 force, float duration)
+    {
+        StartCoroutine(PushCoroutine(force, duration));
+    }
+
+    IEnumerator PushCoroutine(Vector3 force, float duration)
+    {
+        float start = Time.time;
+        while (Time.time - start <= duration)
+        {
+            agent.velocity = force;
+            yield return null;
+        }
+        agent.velocity = Vector3.zero;
+    }
 }

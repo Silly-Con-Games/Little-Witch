@@ -208,6 +208,8 @@ MonoBehaviour:
     rootCirclePrefab: {fileID: 5760741254045953524, guid: 7c7d4c30b18d4f8429101e84fb74ef6f, type: 3}
   meadowAbility:
     grassPrefab: {fileID: 1875613823421694520, guid: 7216260d442240542bda360cb2e3f38d, type: 3}
+  waterAbility:
+    wavePrefab: {fileID: 8972801291812609718, guid: 40feebb2275793f4b8ce53b67896aa51, type: 3}
 --- !u!143 &811825519810356235
 CharacterController:
   m_ObjectHideFlags: 0

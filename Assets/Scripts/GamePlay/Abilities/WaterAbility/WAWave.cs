@@ -12,9 +12,11 @@ public class WAWave : MonoBehaviour
     private Transform transCollider;
     private Collider vfxCollider;
     private bool shouldMove = false;
+    private float start;
     // Start is called before the first frame update
     void Start()
     {
+        onCollide.ontriggerenter.AddListener(OnHit);
         transCollider = onCollide.transform;
         vfxCollider = onCollide.GetComponent<Collider>();
         wave.SetFloat("ChargeTime", chargeTime);
@@ -30,15 +32,20 @@ public class WAWave : MonoBehaviour
         wave.SendEvent("ChargeEnd");
         shouldMove = true;
         StartCoroutine(MoveCollider());
-        yield return new WaitForSeconds(1);
+        yield return new WaitForSeconds(0.5f);
 
-        shouldMove = false;
         wave.SendEvent("Stop");
+        yield return new WaitForSeconds(0.4f);
+        shouldMove = false;
+        yield return new WaitForSeconds(1f);
+
+        Destroy(gameObject);
     }
 
     private IEnumerator MoveCollider()
     {
         vfxCollider.enabled = true;
+        start = Time.time;
         while (shouldMove)
         {            
             transCollider.localPosition += Vector3.forward * Time.deltaTime * speed;
@@ -50,6 +57,17 @@ public class WAWave : MonoBehaviour
 
     private void OnHit(Collider collider)
     {
+        IPushable pushable = collider.gameObject.GetComponent<IPushable>();
+        if(pushable != null)
+        {
+            Vector3 force = (collider.transform.position - transform.position).normalized * speed;
+            pushable.ReceivePush(force, 0.9f - (Time.time - start));
+        }
 
+        IObjectType objectType = collider.gameObject.GetComponent<IObjectType>();
+        if(objectType?.GetObjectType() == EObjectType.Projectile)
+        {
+            Destroy(collider.gameObject);
+        }
     }
 }
