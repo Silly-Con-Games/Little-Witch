@@ -1,5 +1,6 @@
 using System.Collections;
 using System.Collections.Generic;
+using Config;
 using UnityEngine;
 
 public class EnemyBomber : EnemyAI
@@ -19,7 +20,12 @@ public class EnemyBomber : EnemyAI
         agent.isStopped = false;
         agent.SetDestination(EnemiesUtils.GetRoamPosition(roamPosition.position, moveRangeMin, moveRangeMax));
     }
-    
+
+    protected override EnemyConfig GetEnemyBaseConfig()
+    {
+        return GlobalConfigManager.GetGlobalConfig().globalEnemyConfig.enemyBomberConfig.baseConfig;
+    }
+
     protected override void Roam()
     {
         if (!agent.pathPending && agent.remainingDistance < 0.5f)

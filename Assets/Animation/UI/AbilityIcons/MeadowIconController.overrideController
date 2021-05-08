@@ -1,0 +1,19 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!221 &22100000
+AnimatorOverrideController:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_Name: MeadowIconController
+  m_Controller: {fileID: 9100000, guid: 0f5b11f9e48be9449a463151cd574cb4, type: 2}
+  m_Clips:
+  - m_OriginalClip: {fileID: 7400000, guid: f08cec46b67b21747a7d1b3b7b14b142, type: 2}
+    m_OverrideClip: {fileID: 7400000, guid: 2970ff7865d1df349b728f926c51d5a1, type: 2}
+  - m_OriginalClip: {fileID: 7400000, guid: 4db7ff8f4f399e64fb400e973e813027, type: 2}
+    m_OverrideClip: {fileID: 7400000, guid: 7f7274353efaf074da88227185d40f35, type: 2}
+  - m_OriginalClip: {fileID: 7400000, guid: 7067e6f1cd71f1141a26b19e8f5b11cf, type: 2}
+    m_OverrideClip: {fileID: 7400000, guid: 7067e6f1cd71f1141a26b19e8f5b11cf, type: 2}
+  - m_OriginalClip: {fileID: 7400000, guid: 920e0388955b85b4d870247dc02e1eda, type: 2}
+    m_OverrideClip: {fileID: 7400000, guid: 920e0388955b85b4d870247dc02e1eda, type: 2}

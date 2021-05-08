@@ -18,6 +18,8 @@ public class PlayerController : MonoBehaviour, IDamagable
     public ChargeAbility chargeAbility;
     public MeleeAbility meeleeAbility;
 
+	public TransformAbility transformAbility;
+
     public ForestAbility forestAbility;
     public MeadowAbility meadowAbility;
     public WaterAbility waterAbility;
@@ -31,7 +33,6 @@ public class PlayerController : MonoBehaviour, IDamagable
     public HealthTracker health { get; internal set; }
     public EnergyTracker energy { get; internal set; }
 
-	private TransformEnvironment transformer;
 	private MainAbility currentMainAbility;
     private BiomeType standingOnBiomeType = BiomeType.UNKNOWN;
 
@@ -55,7 +56,6 @@ public class PlayerController : MonoBehaviour, IDamagable
         GlobalConfigManager.onConfigChanged.AddListener(ApplyConfig);
 
         passiveEffects = new HashSet<UnityAction>();
-		transformer = GetComponent<TransformEnvironment>();
 
         forestAbility.Init(this);
         meadowAbility.Init(this);
@@ -107,6 +107,9 @@ public class PlayerController : MonoBehaviour, IDamagable
 
         meeleeAbility.conf = witchConfig.meeleeAbility;
         chargeAbility.conf = witchConfig.chargeAbility;
+
+		transformAbility.conf = witchConfig.transformAbility;
+
         forestAbility.conf = witchConfig.forestAbility;
         waterAbility.conf = witchConfig.waterAbility;
         meadowAbility.conf = witchConfig.meadowAbility;
@@ -182,6 +185,8 @@ public class PlayerController : MonoBehaviour, IDamagable
 
             standingOnBiomeType = newType;
 
+            hudController.UpdateAbilityIcons(standingOnBiomeType);
+
             switch (standingOnBiomeType)
             {
                 case BiomeType.FOREST:
@@ -236,11 +241,14 @@ public class PlayerController : MonoBehaviour, IDamagable
         if(currentMainAbility != null && currentMainAbility.IsReady)
         {
             currentMainAbility.CastAbility();
+            hudController.CastAbility(currentMainAbility);
         }
         else
         {
             Debug.Log("Unable to cast ability on " + standingOnBiomeType);
+            if (currentMainAbility != null) hudController.AbilityNotReady(currentMainAbility);
         }
+
     }
 
 	public void OnTransformForest(InputValue value) {
@@ -260,8 +268,8 @@ public class PlayerController : MonoBehaviour, IDamagable
 	}
 
 	private void Transform(BiomeType target) {
-		if (transformer.IsReady()) {
-			transformer.Transform(target);
+		if (transformAbility.IsReady()) {
+			transformAbility.Transform(target);
 		}
 	}
 

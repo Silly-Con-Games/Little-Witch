@@ -1,5 +1,6 @@
 using System.Collections;
 using System.Collections.Generic;
+using Config;
 using UnityEngine;
 using FMODUnity;
 
@@ -12,6 +13,12 @@ public class EnemyRanged : EnemyAI
     {
         base.InitEnemy();
         roamPosition = null;
+        attackCooldownDelta = -1f;
+    }
+
+    protected override EnemyConfig GetEnemyBaseConfig()
+    {
+        return GlobalConfigManager.GetGlobalConfig().globalEnemyConfig.enemyRangedConfig.baseConfig;
     }
 
     protected override void Attack()
@@ -106,12 +113,12 @@ public class EnemyRanged : EnemyAI
         }
         else
         {
-            attackCooldown -= Time.deltaTime;
+            attackCooldownDelta -= Time.deltaTime;
             transform.LookAt(playerController.transform.position);
-            if (attackCooldown < 0)
+            if (attackCooldownDelta < 0)
             {
                 Attack();
-                attackCooldown = attackSpeed;
+                attackCooldownDelta = attackCooldown;
             }
             agent.isStopped = true;
         }

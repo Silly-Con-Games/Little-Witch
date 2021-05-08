@@ -1,5 +1,6 @@
 using System.Collections;
 using System.Collections.Generic;
+using Config;
 using UnityEngine;
 
 public class Bomb : MonoBehaviour
@@ -25,17 +26,26 @@ public class Bomb : MonoBehaviour
         {
             particle.GetComponentInChildren<ParticleSystem>();
         }
+        GlobalConfigManager.onConfigChanged.AddListener(ApplyConfig);
         bombCollider = gameObject.GetComponent<Collider>();
-        explosionDelay = 5f;
-        damageRange = 5f;
-        baseDamage = 40;
-        disappearingDuration = 1f;
+        ApplyConfig();
     }
+
+    protected virtual void ApplyConfig()
+    {
+        var enemyConfig = GlobalConfigManager.GetGlobalConfig().globalEnemyConfig.mineConfig;
+        explosionDelay = enemyConfig.explosionDelay;
+        damageRange = enemyConfig.damageRange;
+        baseDamage = enemyConfig.baseDamage;
+        disappearingDuration = enemyConfig.disappearingDuration;
+    }
+
 
     void OnTriggerEnter(Collider collision)
     {
         playerController = collision.gameObject.GetComponent<PlayerController>();
-        bombCollider.enabled = false;        
+        bombCollider.enabled = false;
+        FMODUnity.RuntimeManager.PlayOneShot("event:/enemies/mine/trigger");
         StartCoroutine(BombCoroutine(explosionDelay));
     }
 
@@ -46,6 +56,7 @@ public class Bomb : MonoBehaviour
             duration -= Time.deltaTime;
             yield return null;
         }
+        FMODUnity.RuntimeManager.PlayOneShot("event:/enemies/mine/explosion");
         particle.Play();
 
         if (playerController)
@@ -65,6 +76,7 @@ public class Bomb : MonoBehaviour
             duration -= Time.deltaTime;
             yield return null;
         }
+        GlobalConfigManager.onConfigChanged.RemoveListener(ApplyConfig);
         Destroy(gameObject);
     }
     
