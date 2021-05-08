@@ -149,7 +149,7 @@ public class EnemyEnvDestroyer : EnemyAI
             Tile tile = hit.transform.gameObject.GetComponent<Tile>();
             if (!tile || tile.GetBiomeType() == BiomeType.DEAD)
                 return;
-            
+            FMODUnity.RuntimeManager.PlayOneShot("event:/enemies/sucking/sucking");
             mapController.AttackTile(tile);
         }
     }
