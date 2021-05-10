@@ -32,9 +32,8 @@ public class Tile : MonoBehaviour {
 
 		neighbours = new Tile[6];
 		RaycastHit hit;
-		Vector3 bitLower = new Vector3(0, -0.2f, 0);
 		for (int i = 0; i < directions.Length; i++) {
-			if (Physics.Raycast(transform.position + bitLower, directions[i], out hit, 2f, LayerMask.GetMask("Tile"))) {
+			if (Physics.Raycast(transform.position + Vector3.down, directions[i], out hit, 2f, LayerMask.GetMask("Tile"))) {
 				Tile tile = hit.transform.gameObject.GetComponent<Tile>();
                 if (tile) {
 				    neighbours[i] = hit.transform.gameObject.GetComponent<Tile>();
@@ -160,7 +159,7 @@ public class Tile : MonoBehaviour {
 			ColorUtils.SetColor(mesh, Color.Lerp(from, to, progress));
 
 			if (alsoSaturate) {
-				ColorUtils.SetSaturation(mesh, 1f - progress);
+				ColorUtils.SetSaturation(mesh, progress);
 			}
 
 			if (progress > 0.5f) {
