@@ -51,7 +51,7 @@ public class PlayerController : MonoBehaviour, IDamagable
     {
         mainCamera = Camera.main;
         cameraTrans = mainCamera.transform;
-        animator = GetComponent<Animator>();
+        animator = GetComponentsInChildren<Animator>()[1];
 
         GlobalConfigManager.onConfigChanged.AddListener(ApplyConfig);
 
