@@ -4,6 +4,7 @@ using System.Collections.Generic;
 using Config;
 using UnityEngine;
 using UnityEngine.AI;
+using UnityEngine.UI;
 using Random = UnityEngine.Random;
 
 public abstract class EnemyAI : MonoBehaviour, IDamagable, IRootable, IStunnable, ISlowable
@@ -78,8 +79,10 @@ public abstract class EnemyAI : MonoBehaviour, IDamagable, IRootable, IStunnable
     [SerializeField]
     private GameObject energyPrefab;
 
+    public GameObject indicator { get; set; }
+
     protected Animator animator = null;
-    public virtual void InitEnemy()
+    public virtual void InitEnemy(IndicatorsCreator indicatorsCreator)
     {
         GlobalConfigManager.onConfigChanged.AddListener(ApplyConfig);
         if (!playerController)
@@ -95,6 +98,9 @@ public abstract class EnemyAI : MonoBehaviour, IDamagable, IRootable, IStunnable
         {
             animator = GetComponentInChildren<Animator>();
         }
+
+        this.indicator = indicatorsCreator.CreateIndicator();
+        this.indicator.SetActive(false);
         ApplyConfig();
     }
 
@@ -120,14 +126,15 @@ public abstract class EnemyAI : MonoBehaviour, IDamagable, IRootable, IStunnable
 
     protected abstract EnemyConfig GetEnemyBaseConfig();
 
-    public virtual void InitEnemy(Transform roamPosition)
+    public virtual void InitEnemy(Transform roamPosition, IndicatorsCreator indicatorsCreator)
     {
-        InitEnemy();
+        InitEnemy(indicatorsCreator);
         this.roamPosition = roamPosition;
     }
 
     void Update()
     {
+        UpdateIndicator();
         if (secondaryState == SecondaryState.Stun)
         {
             return;
@@ -150,6 +157,38 @@ public abstract class EnemyAI : MonoBehaviour, IDamagable, IRootable, IStunnable
             default:
                 break;
         }
+    }
+    private void UpdateIndicator()
+    {
+        
+        if (!playerController)
+            return;
+
+        if (!indicator)
+            return;
+        
+        Vector3 pos = Camera.main.WorldToScreenPoint(transform.position);
+        
+        
+        if (pos.x > 0 && pos.x < Screen.width && pos.y > 0 && pos.y < Screen.height)
+        {
+            indicator.SetActive(false);
+        }
+        else
+        {
+            indicator.SetActive(true);
+        }
+        
+        Vector2 posMy = Camera.main.WorldToScreenPoint(transform.position);
+        Vector2 posPlayer = Camera.main.WorldToScreenPoint(playerController.transform.position);
+
+        Vector2 intersection;
+
+        if (LineUtils.GetIntersectWithScreenEdges(posMy, posPlayer, out intersection))
+        {
+            indicator.GetComponent<RectTransform>().position = new Vector3(intersection.x, intersection.y, 0);
+        }
+        
     }
 
     protected abstract void Roam();
@@ -263,5 +302,6 @@ public abstract class EnemyAI : MonoBehaviour, IDamagable, IRootable, IStunnable
         GlobalConfigManager.onConfigChanged.RemoveListener(ApplyConfig);
         Destroy(gameObject);
     }
+
     
 }

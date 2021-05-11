@@ -27,10 +27,10 @@ public class EnemyMelee : EnemyAI
     private Vector3 playerPos;
     private Vector3 lastPos;
     
-    public override void InitEnemy()
+    public override void InitEnemy(IndicatorsCreator indicatorsCreator)
     {
+        base.InitEnemy(indicatorsCreator);
         attacking = false;
-        base.InitEnemy();
         roamPosition = null;
     }
 

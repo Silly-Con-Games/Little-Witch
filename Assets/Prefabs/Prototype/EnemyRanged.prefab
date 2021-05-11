@@ -149,7 +149,6 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   idleDuration: 0
-  attackCooldown: 0
   chasingDuration: 0
   playerController: {fileID: 0}
   moveRangeMin: 3
@@ -157,11 +156,13 @@ MonoBehaviour:
   maxRangeToPlayer: 8
   attackRange: 7
   speed: 2
-  attackSpeed: 1
+  attackCooldown: 0
   healthPoints: 20
   slowDefault: 0
   rootDefault: 0
   energyPrefab: {fileID: 3473807671122988953, guid: 6a2afd42537f2054f8ecf02e2c7764f8, type: 3}
+  indicatorUIPrefab: {fileID: 2186287900091444606, guid: eb2dec6c228c35742bbe5108c98c348b, type: 3}
+  holder: {fileID: 0}
   bulletPrefab: {fileID: 1052265020511648158, guid: 855c5f2f5e7f5ff47b0781ab05fb4a49, type: 3}
 --- !u!195 &2909162330852038182
 NavMeshAgent:
