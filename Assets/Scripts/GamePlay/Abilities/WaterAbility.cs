@@ -6,6 +6,7 @@ using UnityEngine.Assertions;
 [Serializable]
 public class WaterAbility : MainAbility
 {
+    public WAWave wavePrefab;
 
     public WaterAbilityConfig conf { get => internalConf; set { internalConf = value; mainAbilityConfig = value.baseConfig; } }
     WaterAbilityConfig internalConf;
@@ -14,6 +15,12 @@ public class WaterAbility : MainAbility
     {
         base.CastAbility();
         Debug.Log("Casted water ability!");
+        var inst = GameObject.Instantiate(wavePrefab);
+        var instTrans = inst.transform;
+        instTrans.position = playerController.transform.position;
+        instTrans.rotation = playerController.transform.rotation;
+        inst.Init(ref internalConf);
+
     }
 
     public void PassiveHealEffect()

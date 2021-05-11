@@ -243,10 +243,9 @@ public class PlayerController : MonoBehaviour, IDamagable
             currentMainAbility.CastAbility();
             hudController.CastAbility(currentMainAbility);
         }
-        else
+        else if (currentMainAbility != null)
         {
-            Debug.Log("Unable to cast ability on " + standingOnBiomeType);
-            if (currentMainAbility != null) hudController.AbilityNotReady(currentMainAbility);
+            hudController.AbilityNotReady(currentMainAbility);
         }
 
     }

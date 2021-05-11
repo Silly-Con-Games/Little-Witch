@@ -86,6 +86,9 @@ namespace Config
     public struct WaterAbilityConfig
     {
         public MainAbilityConfig baseConfig;
+        public float chargeTime;
+        public float waveDuration;
+        public float waveSpeed;
         public float healPerSec;
     }
 
