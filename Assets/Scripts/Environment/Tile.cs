@@ -43,6 +43,7 @@ public class Tile : MonoBehaviour {
 		}
 
 		mapInfo = new MapInfo();
+		Morph(wantedType, true);
 	}
 
     private void Start()
@@ -56,7 +57,12 @@ public class Tile : MonoBehaviour {
 		Morph(wantedType, true);
 	}
 
-	public bool WantsToBeSet() {
+    public void OnValidate()
+    {
+		Morph(wantedType, true);
+	}
+
+    public bool WantsToBeSet() {
 		return wantedType != type;
 	}
 
