@@ -8,7 +8,7 @@ public class TileProp : MonoBehaviour
 
 	private TilePropVariant current;
 
-	void Start() {
+	void Awake() {
 		foreach (var variant in variants) { 
 			if (variant.gameObject.activeInHierarchy) { 
 				current = variant;

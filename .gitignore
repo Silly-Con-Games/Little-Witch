@@ -8,6 +8,7 @@
 FMOD/LittleWitch/.cache/
 FMOD/LittleWitch/.unsaved/
 FMOD/LittleWitch/.user/
+Assets/Plugins/FMOD/Cache/
 Assets/AssetStoreTools*
 
 # Visual Studio cache directory
