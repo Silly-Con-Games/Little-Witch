@@ -29,9 +29,9 @@
         },
         "transformAbility": {
             "cooldown": 1.0,
-            "energyCost": 0.0,
+            "energyCost": 3.0,
             "radius": 2,
-            "minBiomeSize": 0
+            "minBiomeSize": 2
         },
         "forestAbility": {
             "baseConfig": {
