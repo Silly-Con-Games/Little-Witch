@@ -8,7 +8,7 @@ public class EnemyBomber : EnemyAI
 
     [SerializeField]
     private GameObject bombPrefab;
-    private float idleDeltaTime;
+
 
     public override void InitEnemy(IndicatorsCreator indicatorsCreator)
     {
@@ -54,6 +54,13 @@ public class EnemyBomber : EnemyAI
             agent.SetDestination(EnemiesUtils.GetRoamPosition(roamPosition.position, moveRangeMin, moveRangeMax));
             Attack();
         }
+    }
+
+    public override void ReceiveDamage(float amount)
+    {
+        State tmp = state;
+        base.ReceiveDamage(amount);
+        state = tmp;
     }
 
     protected override void Attack()

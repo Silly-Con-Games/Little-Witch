@@ -31,6 +31,8 @@ public abstract class EnemyAI : MonoBehaviour, IDamagable, IRootable, IStunnable
     [SerializeField]
     protected float idleDuration;
 
+    protected float idleDeltaTime;
+
     protected float attackCooldownDelta;
 
     [SerializeField]
@@ -135,7 +137,7 @@ public abstract class EnemyAI : MonoBehaviour, IDamagable, IRootable, IStunnable
     {
         chasingDeltaTime -= Time.deltaTime;
         attackCooldownDelta -= Time.deltaTime;
-        
+
         UpdateIndicator();
         if (secondaryState == SecondaryState.Stun)
         {
