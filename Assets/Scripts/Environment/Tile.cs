@@ -60,11 +60,13 @@ public class Tile : MonoBehaviour {
     // to detect changes in edit mode
     [Button("Setup", "Setup", false)] public string input1;
 	public void Setup() {
+#if UNITY_EDITOR
 		if (prop == null)
 		{
 			prop = GetComponentInChildren<IProp>();
 		}
 		UnityEditor.EditorApplication.delayCall += () => Morph(wantedType, true);
+#endif
 	}
 
 

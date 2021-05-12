@@ -13,8 +13,11 @@ public class TileMap : MonoBehaviour
     public Tile tilePrefab;
     public bool ShouldRegenerate = false;
     public float noiseScale = 0.5f;
+
+
     public void OnValidate()
     {
+#if UNITY_EDITOR
         if (ShouldRegenerate)
         {
             int newNoise = Random.Range(0, 10000);
@@ -50,5 +53,6 @@ public class TileMap : MonoBehaviour
                     };
                 };
         }
+#endif
     }
 }
