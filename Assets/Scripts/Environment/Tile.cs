@@ -23,7 +23,9 @@ public class Tile : MonoBehaviour {
 
 	private float morphSpeed = 2;
 
-	void Awake() {
+    public bool chosen { get; set; }
+
+    void Awake() {
 		Vector3[] directions = new Vector3[6];
 		directions[0] = new Vector3(1, 0, 2);
 		directions[1] = new Vector3(1, 0, 0);
@@ -47,7 +49,8 @@ public class Tile : MonoBehaviour {
 
 		if(mapController == null)
 			mapController = FindObjectOfType<MapController>();
-	}
+        chosen = false;
+    }
 
     private void Start()
     {

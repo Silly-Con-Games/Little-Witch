@@ -124,7 +124,7 @@ public class EnemyEnvDestroyer : EnemyAI
     {
         for (int i = 0; i < mapController.tiles.Count; i++)
         {
-            if (!mapController.tiles[i] || mapController.tiles[i].GetBiomeType() == BiomeType.DEAD || mapController.tiles[i].wantedType == BiomeType.DEAD)
+            if (!mapController.tiles[i] || mapController.tiles[i].GetBiomeType() == BiomeType.DEAD || mapController.tiles[i].wantedType == BiomeType.DEAD || mapController.tiles[i].chosen)
                 continue;
             distanceTmp = Vector3.Distance(transform.position, mapController.tiles[i].transform.position);
             if (distanceTmp < minDistance)
@@ -134,6 +134,8 @@ public class EnemyEnvDestroyer : EnemyAI
             }
         }
 
+        tileTmp.chosen = true;
+        
         await Task.Delay(Mathf.CeilToInt(idleDuration * 1000f));
 
         if (agent)
