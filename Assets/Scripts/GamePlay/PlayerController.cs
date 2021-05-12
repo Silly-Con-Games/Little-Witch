@@ -106,6 +106,7 @@ public class PlayerController : MonoBehaviour, IDamagable
         energy = new EnergyTracker(witchConfig.energyMax, witchConfig.energyInitial);
         hudController.SetUpEnergy(energy.Energy, energy.MaxEnergy);
         energy.onChanged.AddListener(hudController.SetEnergy);
+        energy.onNotEnough.AddListener(hudController.NotEnoughEnergy);
 
         meeleeAbility.conf = witchConfig.meeleeAbility;
         chargeAbility.conf = witchConfig.chargeAbility;

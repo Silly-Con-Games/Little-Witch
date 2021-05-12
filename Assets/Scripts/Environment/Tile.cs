@@ -12,8 +12,10 @@ public class Tile : MonoBehaviour {
 	public TileColors colors;
 	public float waterDepression;
 
-	public List<TileProp> props;
-	public Grass grass;
+	[Tooltip("Add in scene map controller")]
+	public MapController mapController;
+
+	private IProp prop = null;
 
 	public Tile[] neighbours;
 
@@ -42,6 +44,9 @@ public class Tile : MonoBehaviour {
 		}
 
 		mapInfo = new MapInfo();
+
+		if(mapController == null)
+			mapController = FindObjectOfType<MapController>();
 	}
 
     private void Start()
@@ -52,10 +57,15 @@ public class Tile : MonoBehaviour {
     // to detect changes in edit mode
     [Button("Setup", "Setup", false)] public string input1;
 	public void Setup() {
-		Morph(wantedType, true);
+		if (prop == null)
+		{
+			prop = GetComponentInChildren<IProp>();
+		}
+		UnityEditor.EditorApplication.delayCall += () => Morph(wantedType, true);
 	}
 
-	public bool WantsToBeSet() {
+
+    public bool WantsToBeSet() {
 		return wantedType != type;
 	}
 
@@ -69,23 +79,34 @@ public class Tile : MonoBehaviour {
 			Debug.LogWarning("Tile already has this type!", this);
 			return;
 		}
-
-		//grass.Morph(target, immediate);
-		foreach (var prop in props) {
-			prop.Morph(target, immediate);
-		}
+		prop = GetComponentInChildren<IProp>();
 
 		// die
 		if (target == BiomeType.DEAD) {
+			prop?.Die(immediate);
+
 			if (immediate) {
 				ColorUtils.SetSaturation(mesh, 0f);
 				type = target;
 				return;
 			}
-
 			StartCoroutine(DieCoroutine());
 			return;
 		}
+
+		if (prop != null)
+        {
+			if (type == BiomeType.DEAD && prop.GetBiomeType() == target)
+			{
+				prop.Revive(immediate);
+			}
+            else
+            {
+				prop.Despawn(immediate);
+				prop = null;
+			}
+		}
+		
 
 		// morph - revive
 		if (immediate) {
@@ -98,6 +119,7 @@ public class Tile : MonoBehaviour {
 			}
 			ColorUtils.SetSaturation(mesh, 1f);
 			ColorUtils.SetColor(mesh, GetColor(target));
+			TrySpawnProp(true, target);
 			type = target;
 			return;
 		}
@@ -112,6 +134,20 @@ public class Tile : MonoBehaviour {
 	public Tile GetNeighbour(int index) {
 		return neighbours[index];
 	}
+
+	private void TrySpawnProp(bool immediate, BiomeType biomeType)
+    {
+		if(prop == null)
+        {
+			PropAndProbability propPref = mapController.GetProp(biomeType);
+			if (propPref != null && propPref.chance >= Random.Range(0.0f, 1.0f))
+            {
+				prop = Instantiate(propPref.prop, transform).GetComponent<IProp>();
+				prop.Spawn(immediate);
+            }
+
+		}		
+    }
 
 	public Color GetColor(BiomeType type) {
 		switch (type) {
@@ -152,7 +188,7 @@ public class Tile : MonoBehaviour {
 
 		Color from = mesh.sharedMaterials[0].color;
 		Color to = GetColor(target);
-
+		bool isNotSet = true;
 		type = target;
 		for (float progress = 0f; progress <= 1f; progress += morphSpeed * Time.deltaTime) {
 			if (toWater) {
@@ -168,15 +204,33 @@ public class Tile : MonoBehaviour {
 				ColorUtils.SetSaturation(mesh, progress);
 			}
 
-			if (progress > 0.5f) {
-				type = target;
+			if (isNotSet && progress > 0.5f) {
+				TrySpawnProp(false, target);
+				isNotSet = false;
 			}
 
 			yield return null;
+		}
 
-			if (progress + morphSpeed * Time.deltaTime > 1f) {
-				progress = 1f - morphSpeed * Time.deltaTime * 1.1f;
-			}
+		if(isNotSet)
+			TrySpawnProp(false, target);
+
+		float MaxProgress = 1.0f;
+		if (toWater)
+		{
+			SetWater(mesh, Mathf.Lerp(initWater, 1f, MaxProgress));
+			SetHeight(Mathf.Lerp(initHieght, -waterDepression, MaxProgress));
+		}
+		else
+		{
+			SetWater(mesh, Mathf.Lerp(initWater, 0f, MaxProgress));
+			SetHeight(Mathf.Lerp(initHieght, 0f, MaxProgress));
+		}
+		ColorUtils.SetColor(mesh, Color.Lerp(from, to, MaxProgress));
+
+		if (alsoSaturate)
+		{
+			ColorUtils.SetSaturation(mesh, MaxProgress);
 		}
 	}
 
@@ -190,6 +244,7 @@ public class Tile : MonoBehaviour {
 	}
 
 	private void SetHeight(float height) {
+
 		transform.position = new Vector3(transform.position.x, height, transform.position.z);
 	}
 }

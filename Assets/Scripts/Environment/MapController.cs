@@ -1,10 +1,23 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using System;
+
+[Serializable]
+public class PropAndProbability
+{
+    [Tooltip("Has to implement IProp interface")]
+    public GameObject prop;
+    public float chance;
+}
 
 public class MapController : MonoBehaviour
 {
     private Tile initTile;
+
+    public PropAndProbability meadowProp;
+    public PropAndProbability forestProp;
+    public PropAndProbability waterProp;
 
     public List<Tile> tiles { get; set; }
 
@@ -51,6 +64,21 @@ public class MapController : MonoBehaviour
         }
     }
 
+    public PropAndProbability GetProp(BiomeType type)
+    {
+        switch (type)
+        {
+            case BiomeType.FOREST:
+                return forestProp;
+            case BiomeType.MEADOW:
+                return meadowProp;
+            case BiomeType.WATER:
+                return waterProp;
+            default:
+                return null;
+        }
+    }
+
     public void AttackTile(Tile tile)
     {
         tiles[tile.mapInfo.index] = null;
@@ -66,15 +94,28 @@ public class MapController : MonoBehaviour
 
     public BiomeType BiomeTypeInPosition(Vector3 position)
     {
-        if (Physics.Raycast(position, Vector3.down, out RaycastHit hit, 3f, tileMask))
+        Tile tile = GetTileAtPosition(position);
+        if (tile != null)
         {
-			Tile tile = hit.transform.gameObject.GetComponent<Tile>();           
-            if(tile != null)
-            {
-                return tile.GetBiomeType();
-            }
+            return tile.GetBiomeType();
         }
 
         return BiomeType.UNKNOWN;
+    }
+
+
+    private Tile cachedTile;
+    private Vector3 lastPos = Vector3.positiveInfinity;
+    public Tile GetTileAtPosition(Vector3 position)
+    {
+        if (lastPos != position)
+        {
+            lastPos = position;
+            if (Physics.Raycast(position, Vector3.down, out RaycastHit hit, 3f, tileMask))
+                cachedTile = hit.transform.gameObject.GetComponent<Tile>();
+            else
+                cachedTile = null;
+        }
+        return cachedTile;
     }
 }

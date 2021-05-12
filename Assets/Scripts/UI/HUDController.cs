@@ -68,34 +68,37 @@ public class HUDController : MonoBehaviour
 
     private void SetBar(float oldVal, float newVal, ref Slider[] bar)
     {
-        float step = bar[bar.Length - 1].value / bar.Length;
+        if (oldVal == newVal) return;
+
+        float step = bar[bar.Length - 1].maxValue / bar.Length;
         int oldI = Mathf.Min(Mathf.FloorToInt(oldVal / step), bar.Length - 1);
         int newI = Mathf.Min(Mathf.FloorToInt(newVal / step), bar.Length - 1);
 
-        bar[newI].value = newVal;
-        if (newI < oldI) // decrease across bars
+        // decrease:
+        if (oldVal > newVal)
         {
-            for (int i = oldI; i > newI; i--)
+            for (int i = newI; i <= oldI; i++)
             {
-                bar[i].value = bar[i].minValue;
-                bar[i - 1].GetComponent<Animator>().SetBool("Full", false);
+                bar[i].value = Mathf.Max(newVal, bar[i].minValue);
+                bar[i].GetComponent<Animator>().SetBool("Full", false);
             }
         }
-        else if (newI > oldI) // increase across bars
+        // increase
+        else
         {
-            for (int i = oldI; i < newI; i++)
+            for (int i = oldI; i <= newI; i++)
             {
-                bar[i].value = bar[i].maxValue;
-                bar[i].GetComponent<Animator>().SetBool("Full", true);
+                bar[i].value = Mathf.Min(newVal, bar[i].maxValue);
+                bar[i].GetComponent<Animator>().SetBool("Full", newVal >= bar[i].maxValue);
             }
         }
-        else if (newI == oldI && newVal < oldVal) // decrease within one bar
+    }
+
+    public void NotEnoughEnergy()
+    {
+        for (int i = 0; i < energybar.Length; i++)
         {
-            bar[newI].GetComponent<Animator>().SetBool("Full", false);
-        }
-        if (newVal == bar[bar.Length - 1].maxValue) // completely full
-        {
-            bar[newI].GetComponent<Animator>().SetBool("Full", true);
+            energybar[i].GetComponent<Animator>().SetTrigger("NotEnoughEnergy");
         }
     }
 

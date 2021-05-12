@@ -31,7 +31,7 @@ public class EnemiesSpawn : MonoBehaviour
 
     void Start()
     {
-        spawnDelay = 5f; 
+        spawnDelay = 0.1f;
     }
 
     // spawns @number enemies of @enemyType type
@@ -42,16 +42,10 @@ public class EnemiesSpawn : MonoBehaviour
 
     IEnumerator SpawnEnemiesCoroutine(EnemyType enemyType, int number)
     {
-        while (number > 0)
+        for(int i = 0; i < number; ++i)
         {
-            spawnDelta = spawnDelay;
-            while (spawnDelta >= 0)
-            {
-                spawnDelta -= Time.deltaTime;
-                yield return null;
-            }
+            yield return new WaitForSeconds(spawnDelay);
             SpawnSingleEnemy(enemyType);
-            number--;
         }
     }
 

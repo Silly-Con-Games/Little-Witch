@@ -63,8 +63,8 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   target: 0
-  damage: 3.1415927
-  speed: 10
+  damage: 1
+  speed: 15
   maxDistance: 0
   origin: {x: 0, y: 0, z: 0}
 --- !u!136 &7026407443711381875

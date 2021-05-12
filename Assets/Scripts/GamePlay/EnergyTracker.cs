@@ -9,15 +9,25 @@ public class EnergyTracker
     public float Energy { get; internal set; }
 
     public UnityEvent<float> onChanged;
+    public UnityEvent onNotEnough;
 
     public EnergyTracker(float maxEnergy, float initialEnergy = 0) 
     {
         Energy = initialEnergy; 
         MaxEnergy = maxEnergy;
         onChanged = new UnityEvent<float>();
+        onNotEnough = new UnityEvent();
     }
 
-    public bool HasEnough(float amount) => amount <= Energy;
+    public bool HasEnough(float amount)
+    {
+        if (amount > Energy)
+        {
+            onNotEnough.Invoke();
+            return false;
+        }
+        return true;
+    }
 
     public bool CanFitMore => Energy < MaxEnergy;
 

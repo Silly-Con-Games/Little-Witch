@@ -15,15 +15,24 @@ public class EnemiesController : MonoBehaviour
     void Start()
     {
 
-        for (int i = 0; i < enemiesSpawns.Count; i++)
-        {
-            enemiesSpawns[i].indicatorsCreator = indicatorsCreator;
-        }
-        
-        //enemiesSpawns[0].Spawn(EnemyType.Melee, 2);
-        enemiesSpawns[0].Spawn(EnemyType.Ranged, 3);
-        enemiesSpawns[1].Spawn(EnemyType.Bomber, 2);
-        enemiesSpawns[2].Spawn(EnemyType.EnvDestroyer, 5);
-        enemiesSpawns[3].Spawn(EnemyType.Melee,1);
+        enemiesSpawns[0].indicatorsCreator = indicatorsCreator;
+        StartCoroutine(SpawnCourotine());
+    }
+
+    IEnumerator SpawnCourotine()
+    {
+        enemiesSpawns[0].Spawn(EnemyType.Melee, 3);
+        yield return new WaitForSeconds(15);
+        enemiesSpawns[0].Spawn(EnemyType.Ranged, 2);
+        enemiesSpawns[0].Spawn(EnemyType.Melee, 2);
+        yield return new WaitForSeconds(15);
+        enemiesSpawns[0].Spawn(EnemyType.Ranged, 2);
+        enemiesSpawns[0].Spawn(EnemyType.Melee, 3);
+        enemiesSpawns[0].Spawn(EnemyType.Bomber, 1);
+        yield return new WaitForSeconds(15);
+        //enemiesSpawns[0].Spawn(EnemyType.Ranged, 2);
+        //enemiesSpawns[0].Spawn(EnemyType.Melee, 3);
+        enemiesSpawns[0].Spawn(EnemyType.Bomber, 2);
+        enemiesSpawns[0].Spawn(EnemyType.EnvDestroyer, 2);
     }
 }

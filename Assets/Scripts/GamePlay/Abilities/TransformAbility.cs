@@ -26,10 +26,9 @@ public class TransformAbility
 	public void Transform(BiomeType target) {
 		lastUsedTime = Time.time;
 
-		RaycastHit hit;
-		if (Physics.Raycast(origin.position, Vector3.down, out hit, 2f, LayerMask.GetMask("Tile"))) {
-			// transform circle and find rim tiles
-			Tile tile = hit.transform.gameObject.GetComponent<Tile>();
+		Tile tile = player.mapController.GetTileAtPosition(origin.position);
+		if (tile != null) {
+			// transform circle and find rim tiles			
 			rimTiles.Enqueue(tile);
 			visitedTiles.Add(tile);
 
