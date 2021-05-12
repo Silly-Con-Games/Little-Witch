@@ -52,12 +52,13 @@ public class MapController : MonoBehaviour
             {
                 tiles.Add(null);
             }
-            for (int i = 0; i < tile.GetNeighbours().Length; i++)
+
+            foreach (Tile ngb in tile.GetNeighbours())
             {
-                if (tile.GetNeighbour(i) && !(tile.GetNeighbour(i).mapInfo.visited))
+                if (ngb && !(ngb.mapInfo.visited))
                 {
-                    tile.GetNeighbour(i).mapInfo.visited = true;
-                    tilesQueue.Enqueue(tile.GetNeighbour(i));
+					ngb.mapInfo.visited = true;
+                    tilesQueue.Enqueue(ngb);
                 }
             }
         }
@@ -85,6 +86,11 @@ public class MapController : MonoBehaviour
         tile.Morph(BiomeType.DEAD, false);
     }
 
+	public void ReviveTile(Tile tile) 
+	{ 
+		tiles[tile.mapInfo.index] = tile;
+		aliveTilesCnt++;
+	}
 
     public BiomeType BiomeTypeInPosition(Vector3 position)
     {
@@ -123,7 +129,7 @@ public class MapController : MonoBehaviour
         if (lastPos != position)
         {
             lastPos = position;
-            if (Physics.Raycast(position, Vector3.down, out RaycastHit hit, 2, tileMask))
+            if (Physics.Raycast(position, Vector3.down, out RaycastHit hit, 3f, tileMask))
                 cachedTile = hit.transform.gameObject.GetComponent<Tile>();
             else
                 cachedTile = null;

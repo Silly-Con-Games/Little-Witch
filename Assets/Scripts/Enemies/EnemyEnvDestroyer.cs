@@ -33,9 +33,9 @@ public class EnemyEnvDestroyer : EnemyAI
     private float distanceTmp;
     private Tile tileTmp;
 
-    public override void InitEnemy()
+    public override void InitEnemy(IndicatorsCreator indicatorsCreator)
     {
-        base.InitEnemy();
+        base.InitEnemy(indicatorsCreator);
         enemiesMeleeMax = 1;
         enemiesRangedMax = 1;
         moveRangeMax = 8f;
@@ -54,7 +54,7 @@ public class EnemyEnvDestroyer : EnemyAI
             enemy = Instantiate(meleePrefab);
             enemy.transform.position = EnemiesUtils.GetRoamPosition(transform.position, moveRangeMin, moveRangeMax);
             enemiesMelee.Add(enemy.GetComponent<EnemyMelee>());
-            enemiesMelee[i].InitEnemy(this.transform);
+            enemiesMelee[i].InitEnemy(indicatorsCreator);
             enemiesMelee[i].state = State.Roam;
         }
 
@@ -64,7 +64,7 @@ public class EnemyEnvDestroyer : EnemyAI
             enemy = Instantiate(rangedPrefab);
             enemy.transform.position = EnemiesUtils.GetRoamPosition(transform.position, moveRangeMin, moveRangeMax);
             enemiesRanged.Add(enemy.GetComponent<EnemyRanged>());
-            enemiesRanged[i].InitEnemy(this.transform);
+            enemiesRanged[i].InitEnemy(indicatorsCreator);
             enemiesRanged[i].state = State.Roam;
         }
         state = State.Idle;
@@ -91,6 +91,7 @@ public class EnemyEnvDestroyer : EnemyAI
             agent.isStopped = true;
         }
     }
+    
 
     protected override void Chase(){}
 

@@ -77,6 +77,7 @@ public class Tile : MonoBehaviour {
 
 		if (type == target) {
 			Debug.LogWarning("Tile already has this type!", this);
+			return;
 		}
 		prop = GetComponentInChildren<IProp>();
 
@@ -170,6 +171,10 @@ public class Tile : MonoBehaviour {
 			}
 
 			yield return null;
+
+			if (progress - morphSpeed * Time.deltaTime < 0f) {
+				progress = morphSpeed * Time.deltaTime * 1.1f;
+			}
 		}
 	}
 
@@ -184,7 +189,8 @@ public class Tile : MonoBehaviour {
 		Color from = mesh.sharedMaterials[0].color;
 		Color to = GetColor(target);
 		bool isNotSet = true;
-		for (float progress = 0f; progress < 1f; progress += morphSpeed * Time.deltaTime ) {
+		type = target;
+		for (float progress = 0f; progress <= 1f; progress += morphSpeed * Time.deltaTime) {
 			if (toWater) {
 				SetWater(mesh, Mathf.Lerp(initWater, 1f, progress));
 				SetHeight(Mathf.Lerp(initHieght, -waterDepression, progress));
@@ -205,6 +211,10 @@ public class Tile : MonoBehaviour {
 			}
 
 			yield return null;
+
+			if (progress + morphSpeed * Time.deltaTime > 1f) {
+				progress = 1f - morphSpeed * Time.deltaTime * 1.1f;
+			}
 		}
 	}
 

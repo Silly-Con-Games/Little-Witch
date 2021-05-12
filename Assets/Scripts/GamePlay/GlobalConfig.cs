@@ -61,6 +61,8 @@ namespace Config
 	{ 
 		public float cooldown;
 		public float energyCost;
+		public int radius;
+		public int minBiomeSize;
 	}
 
     [Serializable]

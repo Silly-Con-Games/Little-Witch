@@ -23,6 +23,12 @@ public class EnemiesSpawn : MonoBehaviour
     [SerializeField]
     private GameObject envDestroyerPrefab;
 
+    private float spawnDelta;
+    
+    private Queue<EnemyAI> enemiesQueue;
+
+    public IndicatorsCreator indicatorsCreator { get; set; }
+
     void Start()
     {
         spawnDelay = 0.1f;
@@ -55,7 +61,7 @@ public class EnemiesSpawn : MonoBehaviour
                     EnemiesUtils.GetRoamPosition(transform.position, 0f, spawnRange),
                     transform.rotation
                 );
-                enemy.GetComponent<EnemyRanged>().InitEnemy();
+                enemy.GetComponent<EnemyRanged>().InitEnemy(indicatorsCreator);
                 break;
             case EnemyType.Melee:
                 enemy = Instantiate(
@@ -63,7 +69,7 @@ public class EnemiesSpawn : MonoBehaviour
                     EnemiesUtils.GetRoamPosition(transform.position, 0f, spawnRange),
                     transform.rotation
                 );
-                enemy.GetComponent<EnemyMelee>().InitEnemy();
+                enemy.GetComponent<EnemyMelee>().InitEnemy(indicatorsCreator);
                 break;
             case EnemyType.Bomber:
                 enemy = Instantiate(
@@ -71,7 +77,7 @@ public class EnemiesSpawn : MonoBehaviour
                     EnemiesUtils.GetRoamPosition(transform.position, 0f, spawnRange),
                     transform.rotation
                 );
-                enemy.GetComponent<EnemyBomber>().InitEnemy();
+                enemy.GetComponent<EnemyBomber>().InitEnemy(indicatorsCreator);
                 break;
             case EnemyType.EnvDestroyer:
                 enemy = Instantiate(
@@ -79,10 +85,10 @@ public class EnemiesSpawn : MonoBehaviour
                     EnemiesUtils.GetRoamPosition(transform.position, 0f, spawnRange),
                     transform.rotation
                 );
-                enemy.GetComponent<EnemyEnvDestroyer>().InitEnemy();
+                enemy.GetComponent<EnemyEnvDestroyer>().InitEnemy(indicatorsCreator);
                 break;
         }
-        
+
     }
 
 

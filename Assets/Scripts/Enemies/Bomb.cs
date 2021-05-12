@@ -45,7 +45,7 @@ public class Bomb : MonoBehaviour
     {
         playerController = collision.gameObject.GetComponent<PlayerController>();
         bombCollider.enabled = false;
-        FMODUnity.RuntimeManager.PlayOneShot("event:/enemies/mine/trigger");
+        FMODUnity.RuntimeManager.PlayOneShot("event:/enemies/mine/trigger", transform.position);
         StartCoroutine(BombCoroutine(explosionDelay));
     }
 
@@ -68,7 +68,6 @@ public class Bomb : MonoBehaviour
                 playerController.ReceiveDamage(baseDamage * (1f - distance / damageRange));
             }
         }
-        
         
         duration = disappearingDuration;
         while (duration >= 0f)
