@@ -54,7 +54,7 @@ public class EnemyEnvDestroyer : EnemyAI
             enemy = Instantiate(meleePrefab);
             enemy.transform.position = EnemiesUtils.GetRoamPosition(transform.position, moveRangeMin, moveRangeMax);
             enemiesMelee.Add(enemy.GetComponent<EnemyMelee>());
-            enemiesMelee[i].InitEnemy(indicatorsCreator);
+            enemiesMelee[i].InitEnemy(transform, indicatorsCreator);
             enemiesMelee[i].state = State.Roam;
         }
 
@@ -64,7 +64,7 @@ public class EnemyEnvDestroyer : EnemyAI
             enemy = Instantiate(rangedPrefab);
             enemy.transform.position = EnemiesUtils.GetRoamPosition(transform.position, moveRangeMin, moveRangeMax);
             enemiesRanged.Add(enemy.GetComponent<EnemyRanged>());
-            enemiesRanged[i].InitEnemy(indicatorsCreator);
+            enemiesRanged[i].InitEnemy(transform, indicatorsCreator);
             enemiesRanged[i].state = State.Roam;
         }
         state = State.Idle;

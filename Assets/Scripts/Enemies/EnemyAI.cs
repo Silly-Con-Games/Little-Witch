@@ -1,11 +1,7 @@
-using System;
 using System.Collections;
-using System.Collections.Generic;
 using Config;
 using UnityEngine;
 using UnityEngine.AI;
-using UnityEngine.UI;
-using Random = UnityEngine.Random;
 
 public abstract class EnemyAI : MonoBehaviour, IDamagable, IRootable, IStunnable, ISlowable, IPushable
 {
@@ -76,6 +72,10 @@ public abstract class EnemyAI : MonoBehaviour, IDamagable, IRootable, IStunnable
     [SerializeField]
     protected float rootDefault;
 
+    // TODO: add to config
+    [SerializeField]
+    protected float damage;
+    
     [SerializeField]
     private GameObject energyPrefab;
 
@@ -89,7 +89,7 @@ public abstract class EnemyAI : MonoBehaviour, IDamagable, IRootable, IStunnable
         {
             playerController = FindObjectOfType<PlayerController>();
         }
-        roamPosition = this.transform;
+        roamPosition = null;
         agent = GetComponent<NavMeshAgent>();
         agent.autoBraking = false;
         secondaryState = SecondaryState.None;
@@ -107,7 +107,6 @@ public abstract class EnemyAI : MonoBehaviour, IDamagable, IRootable, IStunnable
     protected virtual void ApplyConfig()
     {
         var enemyConfig = GetEnemyBaseConfig();
-        roamPosition = this.transform;
         moveRangeMin = enemyConfig.moveRangeMin;
         moveRangeMax = enemyConfig.moveRangeMax;
         attackRange = enemyConfig.attackRange;
@@ -132,8 +131,11 @@ public abstract class EnemyAI : MonoBehaviour, IDamagable, IRootable, IStunnable
         this.roamPosition = roamPosition;
     }
 
-    void Update()
+    protected void Update()
     {
+        chasingDeltaTime -= Time.deltaTime;
+        attackCooldownDelta -= Time.deltaTime;
+        
         UpdateIndicator();
         if (secondaryState == SecondaryState.Stun)
         {
@@ -246,7 +248,7 @@ public abstract class EnemyAI : MonoBehaviour, IDamagable, IRootable, IStunnable
         {
             return false;
         }
-        return Vector3.Distance(playerController.transform.position, transform.position) < range;
+        return Vector3.Distance(playerController.transform.position, transform.position) <= range;
     }
 
     public virtual void ReceiveDamage(float amount)
@@ -256,18 +258,8 @@ public abstract class EnemyAI : MonoBehaviour, IDamagable, IRootable, IStunnable
         agent.isStopped = false;
         state = State.Chase;
         chasingDeltaTime = chasingDuration;
-        Debug.Log(healthPoints);
         if ((healthPoints -= amount) <= 0) Die();
         Stun(5);
-    }
-
-    public virtual bool IsCloseToAttack()
-    {
-        if (!playerController)
-        {
-            return false;
-        }
-        return Vector3.Distance(transform.position, playerController.transform.position) <= attackRange;
     }
 
     public EObjectType GetObjectType()
@@ -300,6 +292,7 @@ public abstract class EnemyAI : MonoBehaviour, IDamagable, IRootable, IStunnable
         GameObject energy = Instantiate(energyPrefab);
         energy.transform.position = new Vector3(this.transform.position.x, 0.5f, this.transform.position.z);
         GlobalConfigManager.onConfigChanged.RemoveListener(ApplyConfig);
+        Destroy(indicator);
         Destroy(gameObject);
     }
 
