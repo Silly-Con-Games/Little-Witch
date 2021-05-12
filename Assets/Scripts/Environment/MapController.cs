@@ -103,27 +103,9 @@ public class MapController : MonoBehaviour
         return BiomeType.UNKNOWN;
     }
 
-    public bool Transform(Vector3 atPosition, BiomeType target)
-    {
-        Tile tile = GetTileAtPosition(atPosition);
-
-        if(tile != null)
-        {
-            tile.Morph(target, false);
-            foreach (Tile ngb in tile.GetNeighbours())
-            {
-                if (ngb != null)
-                {
-                    ngb.Morph(target, false);
-                }
-            }
-            return true;
-        }                 
-        return false;
-    }
 
     private Tile cachedTile;
-    private Vector3 lastPos;
+    private Vector3 lastPos = Vector3.positiveInfinity;
     public Tile GetTileAtPosition(Vector3 position)
     {
         if (lastPos != position)

@@ -81,10 +81,10 @@ public class Tile : MonoBehaviour {
 		}
 		prop = GetComponentInChildren<IProp>();
 
-
 		// die
 		if (target == BiomeType.DEAD) {
 			prop?.Die(immediate);
+
 			if (immediate) {
 				ColorUtils.SetSaturation(mesh, 0f);
 				type = target;
@@ -206,15 +206,31 @@ public class Tile : MonoBehaviour {
 
 			if (isNotSet && progress > 0.5f) {
 				TrySpawnProp(false, target);
-				type = target;
 				isNotSet = false;
 			}
 
 			yield return null;
+		}
 
-			if (progress + morphSpeed * Time.deltaTime > 1f) {
-				progress = 1f - morphSpeed * Time.deltaTime * 1.1f;
-			}
+		if(isNotSet)
+			TrySpawnProp(false, target);
+
+		float MaxProgress = 1.0f;
+		if (toWater)
+		{
+			SetWater(mesh, Mathf.Lerp(initWater, 1f, MaxProgress));
+			SetHeight(Mathf.Lerp(initHieght, -waterDepression, MaxProgress));
+		}
+		else
+		{
+			SetWater(mesh, Mathf.Lerp(initWater, 0f, MaxProgress));
+			SetHeight(Mathf.Lerp(initHieght, 0f, MaxProgress));
+		}
+		ColorUtils.SetColor(mesh, Color.Lerp(from, to, MaxProgress));
+
+		if (alsoSaturate)
+		{
+			ColorUtils.SetSaturation(mesh, MaxProgress);
 		}
 	}
 
