@@ -57,6 +57,8 @@ public class PlayerController : MonoBehaviour, IDamagable
 
         passiveEffects = new HashSet<UnityAction>();
 
+		transformAbility.Init(this);
+
         forestAbility.Init(this);
         meadowAbility.Init(this);
         waterAbility.Init(this);
