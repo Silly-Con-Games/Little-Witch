@@ -60,15 +60,46 @@ public class MapController : MonoBehaviour
 
     public BiomeType BiomeTypeInPosition(Vector3 position)
     {
-        if (Physics.Raycast(position, Vector3.down, out RaycastHit hit, 2, tileMask))
+        Tile tile = GetTileAtPosition(position);
+        if (tile != null)
         {
-			Tile tile = hit.transform.gameObject.GetComponent<Tile>();           
-            if(tile != null)
-            {
-                return tile.GetBiomeType();
-            }
+            return tile.GetBiomeType();
         }
 
         return BiomeType.UNKNOWN;
+    }
+
+    public bool Transform(Vector3 atPosition, BiomeType target)
+    {
+        Tile tile = GetTileAtPosition(atPosition);
+
+        if(tile != null)
+        {
+            tile.Morph(target, false);
+            foreach (Tile ngb in tile.GetNeighbours())
+            {
+                if (ngb != null)
+                {
+                    ngb.Morph(target, false);
+                }
+            }
+            return true;
+        }                 
+        return false;
+    }
+
+    private Tile cachedTile;
+    private Vector3 lastPos;
+    public Tile GetTileAtPosition(Vector3 position)
+    {
+        if (lastPos != position)
+        {
+            lastPos = position;
+            if (Physics.Raycast(position, Vector3.down, out RaycastHit hit, 2, tileMask))
+                cachedTile = hit.transform.gameObject.GetComponent<Tile>();
+            else
+                cachedTile = null;
+        }
+        return cachedTile;
     }
 }
