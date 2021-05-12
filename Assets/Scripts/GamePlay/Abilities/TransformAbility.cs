@@ -17,18 +17,8 @@ public class TransformAbility
 	public void Transform(BiomeType target) {
 		lastUsedTime = Time.time;
 
-		RaycastHit hit;
-		if (Physics.Raycast(origin.position, Vector3.down, out hit, 2f, LayerMask.GetMask("Tile"))) {
-			Tile tile = hit.transform.gameObject.GetComponent<Tile>();
-			tile.Morph(target, false);
-			foreach (Tile ngb in tile.GetNeighbours()) {
-				if (ngb != null) {
-					ngb.Morph(target, false);
-				}
-			}
-
+		if(parent.mapController.Transform(origin.position, target))
 			parent.energy.UseEnergy(conf.energyCost);
-		}
 	}
 
 	public bool IsReady() {

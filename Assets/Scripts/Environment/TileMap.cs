@@ -10,7 +10,6 @@ public class TileMap : MonoBehaviour
     public int height;
 
     public Tile tilePrefab;
-    public Tile tileTreePrefab;
 
     public void OnValidate()
     {
@@ -28,7 +27,7 @@ public class TileMap : MonoBehaviour
                 {
                     for (int y = 0; y < height; y++)
                     {
-                        var inst = Random.Range(0.0f, 1.0f) > 0.15f ? Instantiate(tilePrefab, transform).transform : Instantiate(tileTreePrefab, transform).transform;
+                        var inst = Instantiate(tilePrefab, transform).transform;
                         float offset = y % 2 == 0 ? 0.8660254f : 0;
                         inst.position = new Vector3(offset + 0.8660254f * 2 * (x - width / 2), 0, 1.5f * (y - height / 2));
                     }
