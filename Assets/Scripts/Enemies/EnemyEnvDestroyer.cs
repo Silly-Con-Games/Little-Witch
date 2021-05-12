@@ -91,9 +91,12 @@ public class EnemyEnvDestroyer : EnemyAI
             agent.isStopped = true;
         }
     }
-    
 
-    protected override void Chase(){}
+
+    protected override void Chase()
+    {
+        state = State.Roam;
+    }
 
     protected override void Idle()
     {
@@ -121,7 +124,7 @@ public class EnemyEnvDestroyer : EnemyAI
     {
         for (int i = 0; i < mapController.tiles.Count; i++)
         {
-            if (!mapController.tiles[i])
+            if (!mapController.tiles[i] || mapController.tiles[i].GetBiomeType() == BiomeType.DEAD || mapController.tiles[i].wantedType == BiomeType.DEAD)
                 continue;
             distanceTmp = Vector3.Distance(transform.position, mapController.tiles[i].transform.position);
             if (distanceTmp < minDistance)
