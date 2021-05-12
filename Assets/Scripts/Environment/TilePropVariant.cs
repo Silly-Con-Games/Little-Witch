@@ -7,6 +7,8 @@ public class TilePropVariant : MonoBehaviour {
 
 	public Vector3 origScale;
 
+	private float morphSpeed = 2;
+
 	public BiomeType GetBiomeType() { 
 		return type;
 	}
@@ -59,32 +61,53 @@ public class TilePropVariant : MonoBehaviour {
 	IEnumerator SpawnCoroutine() {
 		mesh.gameObject.transform.localScale = Vector3.zero;
 
-		for (float f = 0f; f < 1f; f += 0.01f) {
-			mesh.gameObject.transform.localScale = origScale * f;
+		for (float progress = 0f; progress <= 1f; progress += morphSpeed * Time.deltaTime) {
+			mesh.gameObject.transform.localScale = origScale * progress;
+
 			yield return null;
+
+			if (progress + morphSpeed * Time.deltaTime > 1f) {
+				progress = 1f - morphSpeed * Time.deltaTime * 1.1f;
+			}
 		}
 	}
 
 	IEnumerator DespawnCoroutine() {
 		Vector3 initSize = mesh.gameObject.transform.localScale;
-		for (float f = 1f; f >= 0f; f -= 0.01f) {
-			mesh.gameObject.transform.localScale = initSize * f;
+
+		for (float progress = 1f; progress >= 0f; progress -= morphSpeed * Time.deltaTime) {
+			mesh.gameObject.transform.localScale = initSize * progress;
+
 			yield return null;
+
+			if (progress - morphSpeed * Time.deltaTime < 0f) {
+				progress = morphSpeed * Time.deltaTime * 1.1f;
+			}
 		}
 		gameObject.SetActive(false);
 	}
 
 	IEnumerator DesaturateCoroutine() {
-		for (float progress = 1f; progress >= 0f; progress -= 0.01f) {
+		for (float progress = 1f; progress >= 0f; progress -= morphSpeed * Time.deltaTime) {
 			ColorUtils.SetSaturation(mesh, progress);
+
 			yield return null;
+
+			if (progress - morphSpeed * Time.deltaTime < 0f) {
+				progress = morphSpeed * Time.deltaTime * 1.1f;
+			}
 		}
 	}
 
 	IEnumerator SaturateCoroutine() {
-		for (float progress = 0f; progress < 1f; progress += 0.01f) {
+		for (float progress = 0f; progress <= 1f; progress += morphSpeed * Time.deltaTime) {
 			ColorUtils.SetSaturation(mesh, progress);
+
 			yield return null;
+
+			if (progress + morphSpeed * Time.deltaTime > 1f) {
+				progress = 1f - morphSpeed * Time.deltaTime * 1.1f;
+			}
 		}
 	}
 
