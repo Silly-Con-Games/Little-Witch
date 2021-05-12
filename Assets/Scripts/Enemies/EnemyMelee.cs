@@ -16,6 +16,12 @@ public class EnemyMelee : EnemyAI
 
     private float dashDurationDelta;
 
+    // TODO: Add this field to config
+    [SerializeField]
+    private float dashCooldown;
+    
+    private float dashCooldownDelta;
+
     [SerializeField]
     private float dashSpeedModifier;
 
@@ -26,12 +32,18 @@ public class EnemyMelee : EnemyAI
 
     private Vector3 playerPos;
     private Vector3 lastPos;
-    
+
+    protected void Update()
+    {
+        base.Update();
+        dashDelta -= Time.deltaTime;
+        dashDurationDelta -= Time.deltaTime;
+        dashCooldownDelta -= Time.deltaTime;
+    }
     public override void InitEnemy(IndicatorsCreator indicatorsCreator)
     {
         base.InitEnemy(indicatorsCreator);
         attacking = false;
-        roamPosition = null;
     }
 
     protected override void ApplyConfig()
@@ -42,6 +54,8 @@ public class EnemyMelee : EnemyAI
         dashDuration = enemyConfig.dashDuration;
         dashRange = enemyConfig.dashRange;
         dashSpeedModifier = enemyConfig.dashSpeedModifier;
+        dashCooldown = 5f;
+        dashCooldownDelta = 0f;
     }
 
     protected override EnemyConfig GetEnemyBaseConfig()
@@ -51,20 +65,6 @@ public class EnemyMelee : EnemyAI
 
     protected override void Idle()
     {
-        if (IsPlayerInRange(maxRangeToPlayer))
-        {
-            state = State.Chase;
-            idleDuration = Random.Range(1f, 3f);
-            return;
-        }
-        idleDuration -= Time.deltaTime;
-        if (idleDuration <= 0)
-        {
-            state = State.Roam;
-            agent.isStopped = false;
-            ;
-            idleDuration = Random.Range(1f, 3f);
-        }
     }
 
     protected override void Roam()
@@ -75,12 +75,16 @@ public class EnemyMelee : EnemyAI
             return;
         }
 
-        if (roamPosition == null)
+        if (!roamPosition)
         {
-            state = State.Chase;
-            return;
+            if (playerController)
+            {
+                state = State.Chase;
+                return;
+            }
+            roamPosition = transform;
         }
-        
+
         if (!agent.pathPending && agent.remainingDistance < 0.5f)
         {
             agent.SetDestination(EnemiesUtils.GetRoamPosition(roamPosition.position, moveRangeMin, moveRangeMax));
@@ -88,88 +92,65 @@ public class EnemyMelee : EnemyAI
     }
     protected override void Chase()
     {
-        
-        if (!IsPlayerInRange(maxRangeToPlayer))
+        if (!playerController || (!IsPlayerInRange(maxRangeToPlayer) && chasingDeltaTime <= 0f && roamPosition))
         {
-            if (chasingDeltaTime > 0 && playerController)
+            state = State.Roam;
+        } else if (IsPlayerInRange(dashRange) && dashCooldownDelta < 0)
+        {
+            dashDelta = dashDelay;
+            dashDurationDelta = dashDuration;
+            state = State.Attack;
+        } else
+        {
+            if (IsPlayerInRange(attackRange))
             {
-                agent.SetDestination(playerController.transform.position);
-                chasingDeltaTime -= Time.deltaTime;
+                agent.isStopped = true;
+                if (attackCooldownDelta <= 0f)
+                {
+                    animator.SetTrigger("Attack");
+                    playerController.ReceiveDamage(3);
+                    attackCooldownDelta = attackCooldown;
+                }
                 return;
             }
-            if (roamPosition)
-            {
-                state = State.Roam;
-                agent.isStopped = false;
-                agent.SetDestination(EnemiesUtils.GetRoamPosition(roamPosition.position, moveRangeMin, moveRangeMax));
-            }
-            else
-            {
-                if (playerController)
-                {
-                    agent.SetDestination(playerController.transform.position);
-                }
-                else
-                {
-                    state = State.Roam;
-                    roamPosition = transform;
-                    agent.SetDestination(EnemiesUtils.GetRoamPosition(roamPosition.position, moveRangeMin, moveRangeMax));
-                }
-                agent.isStopped = false;
-            }
-            return;
-        }
-     
-        if (!IsPlayerInRange(dashRange))
-        {
             agent.isStopped = false;
             agent.SetDestination(playerController.transform.position);
         }
-        else
-        {
-            transform.LookAt(playerController.transform.position);
-            state = State.Attack;
-        }
     }
 
+    // in scope of melee enemy attack means dash
     protected override void Attack()
     {
-        attackCooldownDelta -= Time.deltaTime;
-        if (!attacking && playerController && attackCooldownDelta < 0)
+        if (!playerController)
         {
-            agent.isStopped = true;
-            attacking = true;
-            attackCooldownDelta = attackCooldown;
-            dashDelta = dashDelay;
-            dashDurationDelta = dashDuration;
-            lastPos = transform.position;
-            playerPos = playerController.transform.position;
-            StartCoroutine(AttackCoroutine());
+            attacking = false;
+            state = State.Chase;
+            agent.speed = speed;
+            return;
         }
-    }
-
-    private IEnumerator AttackCoroutine()
-    {
+        
+        agent.isStopped = true;
+        // waiting some time before dash
         while (dashDelta >= 0)
         {
-            dashDelta -= Time.deltaTime;
-            yield return null;
+            return;
         }
-
-        agent.speed = agent.speed * dashSpeedModifier;
+        agent.speed = speed * dashSpeedModifier;
         agent.isStopped = false;
-        if (playerController && dashDurationDelta >= 0 && !IsCloseToAttack())
+
+        if (!attacking)
         {
             FMODUnity.RuntimeManager.PlayOneShot("event:/enemies/dash/dash");
-        }
-        while (playerController && dashDurationDelta >= 0 && !IsCloseToAttack())
-        {
-            agent.SetDestination(playerController.transform.position);
-            dashDurationDelta -= Time.deltaTime;
-            yield return null;
+            attacking = true;
         }
 
-        if (IsCloseToAttack())
+        while (dashDurationDelta >= 0 && !IsPlayerInRange(attackRange))
+        {
+            agent.SetDestination(playerController.transform.position);
+            return;
+        }
+
+        if (IsPlayerInRange(attackRange))
         {
             animator.SetTrigger("Attack");
             playerController.ReceiveDamage(1);
@@ -178,11 +159,8 @@ public class EnemyMelee : EnemyAI
         attacking = false;
         state = State.Chase;
         agent.speed = speed;
-        if (playerController)
-        {
-            agent.isStopped = false;
-            agent.SetDestination(playerController.transform.position);
-        }
+        dashCooldownDelta = dashCooldown;
+        attackCooldownDelta = attackCooldown;
     }
 
 }

@@ -12,7 +12,6 @@ public class EnemyRanged : EnemyAI
     public override void InitEnemy(IndicatorsCreator indicatorsCreator)
     {
         base.InitEnemy(indicatorsCreator);
-        roamPosition = null;
         attackCooldownDelta = -1f;
     }
 
