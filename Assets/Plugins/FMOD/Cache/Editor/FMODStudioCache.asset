@@ -20,6 +20,26 @@ MonoBehaviour:
     data1: 0
     data2: 0
   Exists: 0
+--- !u!114 &-8692782807664500293
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: fecb8ef7f94ca804a8ab72049b86782e, type: 3}
+  m_Name: parameter:/generic_hit/shot_pitch
+  m_EditorClassIdentifier: 
+  Name: shot_pitch
+  Min: -1
+  Max: 1
+  Default: 0
+  ID:
+    data1: 0
+    data2: 0
+  Exists: 1
 --- !u!114 &-8097621873850979175
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -311,6 +331,26 @@ MonoBehaviour:
     data1: 0
     data2: 0
   Exists: 0
+--- !u!114 &-5617425270094243548
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: fecb8ef7f94ca804a8ab72049b86782e, type: 3}
+  m_Name: parameter:/shot/shot_pitch
+  m_EditorClassIdentifier: 
+  Name: shot_pitch
+  Min: -1
+  Max: 1
+  Default: 0
+  ID:
+    data1: 0
+    data2: 0
+  Exists: 1
 --- !u!114 &-5495616350905259095
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -671,11 +711,11 @@ MonoBehaviour:
   EditorEvents:
   - {fileID: 2793083445915803610}
   - {fileID: -1247909815167168289}
-  - {fileID: -952398151573646874}
-  - {fileID: 3607928520625607649}
-  - {fileID: 5646573993000979831}
-  - {fileID: -417551083377145715}
-  - {fileID: 4899133616520172426}
+  - {fileID: 4750388704304071016}
+  - {fileID: -5495616350905259095}
+  - {fileID: -8009593813742580167}
+  - {fileID: 1827398069988191101}
+  - {fileID: -844947812983291867}
   EditorParameters: []
   MasterBanks:
   - {fileID: 7994675611940157413}
@@ -868,7 +908,7 @@ MonoBehaviour:
   Is3D: 1
   IsOneShot: 1
   Parameters:
-  - {fileID: 1564958219426023699}
+  - {fileID: -5617425270094243548}
   MinDistance: 20
   MaxDistance: 65
   Length: 850
@@ -975,7 +1015,7 @@ MonoBehaviour:
   Is3D: 1
   IsOneShot: 1
   Parameters:
-  - {fileID: -2477979673010272607}
+  - {fileID: -8692782807664500293}
   MinDistance: 0
   MaxDistance: 0
   Length: 500

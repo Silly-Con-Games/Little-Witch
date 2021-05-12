@@ -11,10 +11,28 @@ public class EnemiesController : MonoBehaviour
     // Start is called before the first frame update
     void Start()
     {
+
         //enemiesSpawns[0].Spawn(EnemyType.Melee, 2);
-        enemiesSpawns[0].Spawn(EnemyType.Ranged, 1);
-        enemiesSpawns[1].Spawn(EnemyType.Bomber, 2);
-        enemiesSpawns[2].Spawn(EnemyType.EnvDestroyer, 5);
-        enemiesSpawns[3].Spawn(EnemyType.Melee,1);
+        StartCoroutine(SpawnCourotine());
+    }
+
+    IEnumerator SpawnCourotine()
+    {
+        enemiesSpawns[0].Spawn(EnemyType.Melee, 3);
+        yield return new WaitForSeconds(15);
+        enemiesSpawns[0].Spawn(EnemyType.Ranged, 2);
+        enemiesSpawns[0].Spawn(EnemyType.Melee, 2);
+        yield return new WaitForSeconds(15);
+        enemiesSpawns[0].Spawn(EnemyType.Ranged, 2);
+        enemiesSpawns[0].Spawn(EnemyType.Melee, 3);
+        enemiesSpawns[0].Spawn(EnemyType.Bomber, 1);
+        yield return new WaitForSeconds(15);
+        //enemiesSpawns[0].Spawn(EnemyType.Ranged, 2);
+        //enemiesSpawns[0].Spawn(EnemyType.Melee, 3);
+        enemiesSpawns[0].Spawn(EnemyType.Bomber, 2);
+        enemiesSpawns[0].Spawn(EnemyType.EnvDestroyer, 2);
+
+
+
     }
 }

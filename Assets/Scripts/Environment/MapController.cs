@@ -1,10 +1,23 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using System;
+
+[Serializable]
+public class PropAndProbability
+{
+    [Tooltip("Has to implement IProp interface")]
+    public GameObject prop;
+    public float chance;
+}
 
 public class MapController : MonoBehaviour
 {
     private Tile initTile;
+
+    public PropAndProbability meadowProp;
+    public PropAndProbability forestProp;
+    public PropAndProbability waterProp;
 
     public List<Tile> tiles { get; set; }
 
@@ -47,6 +60,21 @@ public class MapController : MonoBehaviour
                     tilesQueue.Enqueue(tile.GetNeighbour(i));
                 }
             }
+        }
+    }
+
+    public PropAndProbability GetProp(BiomeType type)
+    {
+        switch (type)
+        {
+            case BiomeType.FOREST:
+                return forestProp;
+            case BiomeType.MEADOW:
+                return meadowProp;
+            case BiomeType.WATER:
+                return waterProp;
+            default:
+                return null;
         }
     }
 

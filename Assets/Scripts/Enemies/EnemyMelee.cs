@@ -172,7 +172,7 @@ public class EnemyMelee : EnemyAI
         if (IsCloseToAttack())
         {
             animator.SetTrigger("Attack");
-            playerController.ReceiveDamage(3);
+            playerController.ReceiveDamage(1);
         }
 
         attacking = false;
