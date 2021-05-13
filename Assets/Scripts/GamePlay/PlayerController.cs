@@ -51,7 +51,7 @@ public class PlayerController : MonoBehaviour, IDamagable
     {
         mainCamera = Camera.main;
         cameraTrans = mainCamera.transform;
-        animator = GetComponentsInChildren<Animator>()[1];
+        animator = GetComponentInChildren<Animator>();
 
         GlobalConfigManager.onConfigChanged.AddListener(ApplyConfig);
 
@@ -277,6 +277,7 @@ public class PlayerController : MonoBehaviour, IDamagable
 
 	public void ReceiveDamage(float amount)
     {
+        animator.ResetTrigger("Swing");
         animator.SetTrigger("GetHit");
 
         health.TakeDamage(amount);
