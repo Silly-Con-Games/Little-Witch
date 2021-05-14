@@ -5,7 +5,7 @@ using UnityEngine;
 public class StaticMeshProp : MonoBehaviour, IProp
 {
     public float MorphSpeed;
-    public Vector3 originalScale;
+    public List<MeshRenderer> variants;
     public MeshRenderer mesh;
     public BiomeType type;
 
@@ -38,11 +38,17 @@ public class StaticMeshProp : MonoBehaviour, IProp
 
     public void Spawn(bool immediate)
     {
+        if(variants.Count > 0)
+        {
+            int index = Random.Range(0,variants.Count);
+            mesh = variants[index];
+            variants[index].gameObject.SetActive(true);
+        }
         ResetColors();
         transform.Rotate(new Vector3(0, Random.Range(0.0f, 360.0f), 0));
         if (immediate)
         {
-            mesh.gameObject.transform.localScale = originalScale;
+            transform.localScale = Vector3.one;
             return;
         }
 
@@ -83,11 +89,11 @@ public class StaticMeshProp : MonoBehaviour, IProp
 
     IEnumerator SpawnCoroutine()
     {
-        mesh.gameObject.transform.localScale = Vector3.zero;
+        transform.localScale = Vector3.zero;
 
         for (float f = 0f; f < 1f; f += MorphSpeed * Time.deltaTime)
         {
-            mesh.gameObject.transform.localScale = originalScale * f;
+           transform.localScale = Vector3.one * f;
             yield return null;
         }
     }
@@ -97,7 +103,7 @@ public class StaticMeshProp : MonoBehaviour, IProp
         Vector3 initSize = mesh.gameObject.transform.localScale;
         for (float f = 1f; f >= 0f; f -= MorphSpeed * Time.deltaTime)
         {
-            mesh.gameObject.transform.localScale = initSize * f;
+            transform.localScale = Vector3.one * f;
             yield return null;
         }
         Destroy(gameObject);
