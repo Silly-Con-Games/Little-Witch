@@ -18,4 +18,22 @@ public class SetBiomeTypes
 			}
         }
     }
+
+    [MenuItem("Utils/Revive selected tiles")]
+    private static void ReviveTiles()
+    {
+        foreach (var tile in Selection.gameObjects)
+        {
+            tile.GetComponent<Tile>()?.Revive();               
+        }
+    }
+
+    [MenuItem("Utils/Kill selected tiles")]
+    private static void KillTiles()
+    {
+        foreach (var tile in Selection.gameObjects)
+        {
+            tile.GetComponent<Tile>()?.Kill();
+        }
+    }
 }

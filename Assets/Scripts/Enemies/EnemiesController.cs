@@ -21,6 +21,8 @@ public class EnemiesController : MonoBehaviour
 
     IEnumerator SpawnCourotine()
     {
+        //enemiesSpawns[0].Spawn(EnemyType.EnvDestroyer, 2);
+
         enemiesSpawns[0].Spawn(EnemyType.Melee, 3);
         yield return new WaitForSeconds(15);
         enemiesSpawns[0].Spawn(EnemyType.Ranged, 2);

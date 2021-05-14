@@ -14,13 +14,26 @@ public class TileMap : MonoBehaviour
     public bool ShouldRegenerate = false;
     public float noiseScale = 0.5f;
 
+    [Tooltip("Read only")]
+    public int currentSeed;
+
+    public bool useCustom = false;
+    [Tooltip("Custom seed")]
+    public int customSeed;
+
+
 
     public void OnValidate()
     {
 #if UNITY_EDITOR
         if (ShouldRegenerate)
         {
+            
             int newNoise = Random.Range(0, 10000);
+
+            if (useCustom)
+                newNoise = customSeed;
+            currentSeed = newNoise;
 
             EditorApplication.delayCall += () =>
                 {

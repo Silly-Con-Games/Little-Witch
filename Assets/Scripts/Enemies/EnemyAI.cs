@@ -261,7 +261,6 @@ public abstract class EnemyAI : MonoBehaviour, IDamagable, IRootable, IStunnable
         state = State.Chase;
         chasingDeltaTime = chasingDuration;
         if ((healthPoints -= amount) <= 0) Die();
-        Stun(5);
     }
 
     public EObjectType GetObjectType()

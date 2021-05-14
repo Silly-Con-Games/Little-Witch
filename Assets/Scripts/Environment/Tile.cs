@@ -7,6 +7,7 @@ public class Tile : MonoBehaviour {
 
 	public BiomeType wantedType;
 	private BiomeType type;
+	private BiomeType typeBeforeDeath;
 
     public MeshRenderer mesh;
 	public TileColors colors;
@@ -57,20 +58,44 @@ public class Tile : MonoBehaviour {
 		type = wantedType;
 	}
 
-    // to detect changes in edit mode
-    [Button("Setup", "Setup", false)] public string input1;
-	public void Setup() {
 #if UNITY_EDITOR
+
+	// to detect changes in edit mode
+	[Button("Setup", "Setup", false)] public string input1;
+	public void Setup() {
 		if (prop == null)
 		{
 			prop = GetComponentInChildren<IProp>();
 		}
 		UnityEditor.EditorApplication.delayCall += () => Morph(wantedType, true);
-#endif
+
 	}
 
+	// to detect changes in edit mode
+	[Button("Revive", "Revive", false)] public string input2;
+	public void Revive()
+	{
+		if (prop == null)
+		{
+			prop = GetComponentInChildren<IProp>();
+		}
+		UnityEditor.EditorApplication.delayCall += () => Morph(typeBeforeDeath, true);
+	}
 
-    public bool WantsToBeSet() {
+	// to detect changes in edit mode
+	[Button("Kill", "Kill", false)] public string input3;
+	public void Kill()
+	{
+		if (prop == null)
+		{
+			prop = GetComponentInChildren<IProp>();
+		}
+		UnityEditor.EditorApplication.delayCall += () => Morph(BiomeType.DEAD, true);
+	}
+#endif
+
+
+	public bool WantsToBeSet() {
 		return wantedType != type;
 	}
 
@@ -85,11 +110,11 @@ public class Tile : MonoBehaviour {
 			return;
 		}
 		prop = GetComponentInChildren<IProp>();
-
+		wantedType = target;
 		// die
 		if (target == BiomeType.DEAD) {
 			prop?.Die(immediate);
-
+			typeBeforeDeath = type;
 			if (immediate) {
 				ColorUtils.SetSaturation(mesh, 0f);
 				type = target;
