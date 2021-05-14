@@ -51,7 +51,7 @@ public class PlayerController : MonoBehaviour, IDamagable
     {
         mainCamera = Camera.main;
         cameraTrans = mainCamera.transform;
-        animator = GetComponentsInChildren<Animator>()[1];
+        animator = GetComponentInChildren<Animator>();
 
         GlobalConfigManager.onConfigChanged.AddListener(ApplyConfig);
 
@@ -234,7 +234,12 @@ public class PlayerController : MonoBehaviour, IDamagable
     public void OnChargeAbility(InputValue value)
     {
         if (value.isPressed && chargeAbility.IsReady())
+        {
+            animator.ResetTrigger("GetHit");
+            animator.SetTrigger("Cast");
+
             chargeAbility.StartCharge();
+        }
         else if (!value.isPressed && chargeAbility.IsCharging)
             chargeAbility.FireCharged();
     }
@@ -243,6 +248,9 @@ public class PlayerController : MonoBehaviour, IDamagable
     {
         if(currentMainAbility != null && currentMainAbility.IsReady)
         {
+            animator.ResetTrigger("GetHit");
+            animator.SetTrigger("Cast");
+
             currentMainAbility.CastAbility();
             hudController.CastAbility(currentMainAbility);
         }
@@ -277,6 +285,7 @@ public class PlayerController : MonoBehaviour, IDamagable
 
 	public void ReceiveDamage(float amount)
     {
+        animator.ResetTrigger("Swing");
         animator.SetTrigger("GetHit");
 
         health.TakeDamage(amount);
