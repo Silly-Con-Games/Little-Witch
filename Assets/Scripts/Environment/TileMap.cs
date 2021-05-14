@@ -28,7 +28,7 @@ public class TileMap : MonoBehaviour
 #if UNITY_EDITOR
         if (ShouldRegenerate)
         {
-            
+            ShouldRegenerate = false;
             int newNoise = Random.Range(0, 10000);
 
             if (useCustom)
