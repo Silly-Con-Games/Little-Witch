@@ -33,6 +33,8 @@ namespace Config
     {
         public float cooldown;
         public float damage;
+        public float pushbackForce;
+        public float duration;
     }
 
     [Serializable]

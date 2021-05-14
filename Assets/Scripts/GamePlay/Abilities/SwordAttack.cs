@@ -6,12 +6,22 @@ public class SwordAttack : MonoBehaviour
 {
     public Animator swing;
 
-    public float Damage;
+    float damage;
+    float pushForce;
+    float pushDuration;
+    Transform hitOrigin;
 
     HashSet<GameObject> hitObjects = new HashSet<GameObject>();
 
     EObjectType target = EObjectType.Enemy;
 
+    public void Init(Transform hitOrigin, float damage, float pushForce, float pushDuration )
+    {
+        this.damage = damage;
+        this.pushForce = pushForce;
+        this.pushDuration = pushDuration;
+        this.hitOrigin = hitOrigin;
+    }
     public void Attack()
     {
         swing.ResetTrigger("GetHit");
@@ -29,8 +39,15 @@ public class SwordAttack : MonoBehaviour
 
         if (damagable?.GetObjectType() == target)
         {
-            Debug.Log("SwingAttack hit target!");
-            damagable.ReceiveDamage(Damage);
+            damagable.ReceiveDamage(damage);
+        }
+
+        var pushable = other.GetComponent<IPushable>();
+
+        if (pushable?.GetObjectType() == target)
+        {
+            Vector3 force = (other.transform.position - hitOrigin.position).normalized * pushForce;
+            pushable.ReceivePush(force, pushDuration);
         }
     }
 

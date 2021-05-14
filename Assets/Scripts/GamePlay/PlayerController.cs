@@ -108,6 +108,7 @@ public class PlayerController : MonoBehaviour, IDamagable
         energy.onChanged.AddListener(hudController.SetEnergy);
         energy.onNotEnough.AddListener(hudController.NotEnoughEnergy);
 
+        meeleeAbility.player = this;
         meeleeAbility.conf = witchConfig.meeleeAbility;
         chargeAbility.conf = witchConfig.chargeAbility;
 

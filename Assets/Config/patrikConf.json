@@ -7,13 +7,15 @@
         "jumpHeight": 0.0,
         "meeleeAbility": {
             "cooldown": 0.30000001192092898,
-            "damage": 1.0
+            "damage": 1.0,
+            "pushbackForce": 7.0,
+            "duration": 0.17499999701976777
         },
         "chargeAbility": {
             "damageMin": 1.0,
             "damageMax": 2.0,
-            "distanceMin": 4.0,
-            "distanceMax": 8.0,
+            "distanceMin": 1000.0,
+            "distanceMax": 1000.0,
             "explosionRadiusMin": 2.0,
             "explosionRadiusMax": 4.0,
             "explosionSpeedMin": 20.0,
