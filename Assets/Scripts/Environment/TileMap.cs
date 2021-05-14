@@ -29,12 +29,14 @@ public class TileMap : MonoBehaviour
         if (ShouldRegenerate)
         {
             ShouldRegenerate = false;
-            int newNoise = Random.Range(0, 10000);
-
             if (useCustom)
-                newNoise = customSeed;
-            currentSeed = newNoise;
+                currentSeed = customSeed;
+            else
+                currentSeed = (int)(System.DateTime.UtcNow.Ticks* System.DateTime.UtcNow.Ticks* System.DateTime.UtcNow.Ticks);
+            Random.InitState(currentSeed);
 
+            int newNoise = Random.Range(0, 50000);
+          
             EditorApplication.delayCall += () =>
                 {
                     var tempList = transform.Cast<Transform>().ToList();

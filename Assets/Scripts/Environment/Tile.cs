@@ -6,7 +6,9 @@ using UnityEngine;
 public class Tile : MonoBehaviour {
 
 	public BiomeType wantedType;
+	[SerializeField]
 	private BiomeType type;
+	[SerializeField]
 	private BiomeType typeBeforeDeath;
 
     public MeshRenderer mesh;
@@ -52,11 +54,6 @@ public class Tile : MonoBehaviour {
 			mapController = FindObjectOfType<MapController>();
         chosen = false;
     }
-
-    private void Start()
-    {
-		type = wantedType;
-	}
 
 #if UNITY_EDITOR
 
