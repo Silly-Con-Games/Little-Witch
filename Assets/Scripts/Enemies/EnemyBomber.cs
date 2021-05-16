@@ -65,6 +65,7 @@ public class EnemyBomber : EnemyAI
 
     protected override void Attack()
     {
+        animator.SetTrigger("Attack");
         GameObject bomb = Instantiate(bombPrefab);
         bomb.transform.position = this.transform.position;
     }

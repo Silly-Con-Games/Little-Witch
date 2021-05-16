@@ -290,7 +290,12 @@ public class PlayerController : MonoBehaviour, IDamagable
         animator.SetTrigger("GetHit");
 
         health.TakeDamage(amount);
-        if (health.IsDepleted) Destroy(gameObject);
+        if (health.IsDepleted) animator.SetTrigger("Die");
+    }
+
+    public void Die()
+    {
+        Destroy(gameObject);
     }
 
     public EObjectType GetObjectType() => EObjectType.Player;
