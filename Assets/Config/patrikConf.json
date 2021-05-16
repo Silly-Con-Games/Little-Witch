@@ -6,7 +6,7 @@
         "movementSpeed": 5.0,
         "jumpHeight": 0.0,
         "meeleeAbility": {
-            "cooldown": 0.30000001192092898,
+            "cooldown": 0.3499999940395355,
             "damage": 1.0,
             "pushbackForce": 7.0,
             "duration": 0.17499999701976777

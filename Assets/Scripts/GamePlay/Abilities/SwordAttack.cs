@@ -5,7 +5,7 @@ using UnityEngine;
 public class SwordAttack : MonoBehaviour
 {
     public Animator swing;
-
+    public Collider col;
     float damage;
     float pushForce;
     float pushDuration;
@@ -15,7 +15,7 @@ public class SwordAttack : MonoBehaviour
 
     EObjectType target = EObjectType.Enemy;
 
-    public void Init(Transform hitOrigin, float damage, float pushForce, float pushDuration )
+    public void Init(Transform hitOrigin, float damage, float pushForce, float pushDuration)
     {
         this.damage = damage;
         this.pushForce = pushForce;
@@ -27,6 +27,19 @@ public class SwordAttack : MonoBehaviour
         swing.ResetTrigger("GetHit");
         swing.SetTrigger("Swing");
         hitObjects.Clear();
+        StartCoroutine(disableColliderCouroutine());
+        StartCoroutine(enableColliderCouroutine());
+    }
+
+    IEnumerator disableColliderCouroutine()
+    {
+        yield return new WaitForSeconds(0.35f);
+        col.enabled = false;
+    }
+    IEnumerator enableColliderCouroutine()
+    {
+        yield return new WaitForSeconds(0.15f);
+        col.enabled = true;
     }
 
     private void OnTriggerEnter(Collider collision)

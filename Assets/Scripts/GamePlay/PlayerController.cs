@@ -59,6 +59,7 @@ public class PlayerController : MonoBehaviour, IDamagable
 
 		transformAbility.Init(this);
 
+        meeleeAbility.player = this;
         forestAbility.Init(this);
         meadowAbility.Init(this);
         waterAbility.Init(this);
@@ -108,7 +109,6 @@ public class PlayerController : MonoBehaviour, IDamagable
         energy.onChanged.AddListener(hudController.SetEnergy);
         energy.onNotEnough.AddListener(hudController.NotEnoughEnergy);
 
-        meeleeAbility.player = this;
         meeleeAbility.conf = witchConfig.meeleeAbility;
         chargeAbility.conf = witchConfig.chargeAbility;
 
