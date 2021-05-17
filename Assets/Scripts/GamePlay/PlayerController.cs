@@ -45,6 +45,8 @@ public class PlayerController : MonoBehaviour, IDamagable
     float jumpHeight = 1.0f;
     bool wantsJump;
 
+    private bool isDead;
+
     public  Vector3 mouseWorldPosition { get; internal set; }
 
     private void Start()
@@ -70,6 +72,8 @@ public class PlayerController : MonoBehaviour, IDamagable
             hudController = FindObjectOfType<HUDController>();
 
         ApplyConfig();
+
+        isDead = false;
     }
 
     private void OnDestroy()
@@ -236,7 +240,6 @@ public class PlayerController : MonoBehaviour, IDamagable
     {
         if (value.isPressed && chargeAbility.IsReady())
         {
-            animator.ResetTrigger("GetHit");
             animator.SetTrigger("Cast");
 
             chargeAbility.StartCharge();
@@ -249,7 +252,6 @@ public class PlayerController : MonoBehaviour, IDamagable
     {
         if(currentMainAbility != null && currentMainAbility.IsReady)
         {
-            animator.ResetTrigger("GetHit");
             animator.SetTrigger("Cast");
 
             currentMainAbility.CastAbility();
@@ -286,16 +288,20 @@ public class PlayerController : MonoBehaviour, IDamagable
 
 	public void ReceiveDamage(float amount)
     {
-        animator.ResetTrigger("Swing");
+        if (isDead) return;
+
         animator.SetTrigger("GetHit");
 
         health.TakeDamage(amount);
-        if (health.IsDepleted) animator.SetTrigger("Die");
+        if (health.IsDepleted) Die();
     }
 
     public void Die()
     {
-        Destroy(gameObject);
+        isDead = true;
+        animator.SetTrigger("Die");
+        this.enabled = false;
+        GetComponent<PlayerInput>().enabled = false;
     }
 
     public EObjectType GetObjectType() => EObjectType.Player;

@@ -24,7 +24,6 @@ public class SwordAttack : MonoBehaviour
     }
     public void Attack()
     {
-        swing.ResetTrigger("GetHit");
         swing.SetTrigger("Swing");
         hitObjects.Clear();
     }

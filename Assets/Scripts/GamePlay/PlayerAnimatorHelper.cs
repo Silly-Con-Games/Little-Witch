@@ -6,6 +6,7 @@ public class PlayerAnimatorHelper : MonoBehaviour
 {
     public void FinishDyingAnim()
     {
-        GetComponentInParent<PlayerController>().Die();
+        //GetComponentInParent<PlayerController>().enabled = true;
+        Destroy(GetComponentInParent<PlayerController>().gameObject);
     }
 }
