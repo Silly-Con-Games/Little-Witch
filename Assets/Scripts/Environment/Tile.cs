@@ -190,19 +190,13 @@ public class Tile : MonoBehaviour {
 	}
 
 	IEnumerator DieCoroutine() {
+		type = BiomeType.DEAD;
 		for (float progress = 1f; progress >= 0f; progress -= morphSpeed * Time.deltaTime) {
 			ColorUtils.SetSaturation(mesh, progress);
-
-			if (progress > 0.5f) {
-				type = BiomeType.DEAD;
-			}
-
 			yield return null;
 
-			if (progress - morphSpeed * Time.deltaTime < 0f) {
-				progress = morphSpeed * Time.deltaTime * 1.1f;
-			}
 		}
+		ColorUtils.SetSaturation(mesh, 0);
 	}
 
 	IEnumerator MorphCoroutine(BiomeType target) {
