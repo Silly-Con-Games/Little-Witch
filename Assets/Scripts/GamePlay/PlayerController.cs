@@ -4,6 +4,7 @@ using UnityEngine.InputSystem;
 using UnityEngine.Events;
 using System;
 using System.Collections.Generic;
+using System.Collections;
 
 public class PlayerController : MonoBehaviour, IDamagable
 {
@@ -39,6 +40,7 @@ public class PlayerController : MonoBehaviour, IDamagable
     const float gravity = -9.81f;
     float upVelocity = 0;
     Vector2 inputVelocity;
+    bool moveStop = false;
 
     float speed = 3;
     float speedModifier = 1;
@@ -164,6 +166,10 @@ public class PlayerController : MonoBehaviour, IDamagable
         else
             upVelocity += gravity * delta;
         wantsJump = false;
+
+        if (moveStop)
+            velocity = Vector3.zero;
+
         velocity.y = upVelocity;
 
         float velocityX = Vector3.Dot(velocity.normalized, transform.forward);
@@ -232,8 +238,18 @@ public class PlayerController : MonoBehaviour, IDamagable
 
     public void OnMeleeAbility(InputValue value)
     {
-        if(meeleeAbility.IsReady)
+        if (meeleeAbility.IsReady)
+        {
             meeleeAbility.Attack();
+            moveStop = true;
+            StartCoroutine(ResumeMovement(meeleeAbility.conf.cooldown));
+        }
+    }
+
+    IEnumerator ResumeMovement(float duration)
+    {
+        yield return new WaitForSeconds(duration);
+        moveStop = false;
     }
 
     public void OnChargeAbility(InputValue value)
