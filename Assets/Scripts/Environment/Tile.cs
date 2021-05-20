@@ -55,6 +55,7 @@ public class Tile : MonoBehaviour {
         chosen = false;
     }
 
+	#region editor
 #if UNITY_EDITOR
 
 	// to detect changes in edit mode
@@ -90,7 +91,7 @@ public class Tile : MonoBehaviour {
 		UnityEditor.EditorApplication.delayCall += () => Morph(BiomeType.DEAD, true);
 	}
 #endif
-
+	#endregion
 
 	public bool WantsToBeSet() {
 		return wantedType != type;
