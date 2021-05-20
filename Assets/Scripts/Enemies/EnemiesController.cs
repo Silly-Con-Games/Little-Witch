@@ -38,7 +38,7 @@ public class EnemiesController : MonoBehaviour
 
     public bool WasLastWave()
     {
-        return waveCounter == waves.Count;
+        return waveCounter == waves.Count - 1;
     }
 
     public void SpawnNextWave()
