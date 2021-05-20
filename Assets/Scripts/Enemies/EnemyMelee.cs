@@ -16,7 +16,6 @@ public class EnemyMelee : EnemyAI
 
     private float dashDurationDelta;
 
-    // TODO: Add this field to config
     [SerializeField]
     private float dashCooldown;
     
@@ -54,7 +53,7 @@ public class EnemyMelee : EnemyAI
         dashDuration = enemyConfig.dashDuration;
         dashRange = enemyConfig.dashRange;
         dashSpeedModifier = enemyConfig.dashSpeedModifier;
-        dashCooldown = 5f;
+        dashCooldown = enemyConfig.dashCooldown;
         dashCooldownDelta = 0f;
     }
 
@@ -108,7 +107,7 @@ public class EnemyMelee : EnemyAI
                 if (attackCooldownDelta <= 0f)
                 {
                     animator.SetTrigger("Attack");
-                    playerController.ReceiveDamage(3);
+                    playerController.ReceiveDamage(damage);
                     attackCooldownDelta = attackCooldown;
                 }
                 return;
@@ -153,7 +152,7 @@ public class EnemyMelee : EnemyAI
         if (IsPlayerInRange(attackRange))
         {
             animator.SetTrigger("Attack");
-            playerController.ReceiveDamage(1);
+            playerController.ReceiveDamage(damage);
         }
 
         attacking = false;

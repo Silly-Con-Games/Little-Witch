@@ -111,6 +111,7 @@ namespace Config
     [Serializable]
     public struct EnemyConfig
     {
+        public float damage;
         public float idleDuration;
         public float chasingDuration;
         
@@ -150,6 +151,7 @@ namespace Config
         public float dashSpeedModifier;
         // range after reaching which enemy starts dashing
         public float dashRange;
+        public float dashCooldown;
     }
 
     [Serializable]

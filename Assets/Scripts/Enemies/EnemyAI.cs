@@ -74,7 +74,6 @@ public abstract class EnemyAI : MonoBehaviour, IDamagable, IRootable, IStunnable
     [SerializeField]
     protected float rootDefault;
 
-    // TODO: add to config
     [SerializeField]
     protected float damage;
     
@@ -124,6 +123,7 @@ public abstract class EnemyAI : MonoBehaviour, IDamagable, IRootable, IStunnable
         agent.speed = speed;
         attackCooldown = enemyConfig.attackCooldown;
         healthPoints = enemyConfig.healthPoints;
+        damage = enemyConfig.damage;
     }
 
     protected abstract EnemyConfig GetEnemyBaseConfig();

@@ -69,6 +69,7 @@
     "globalEnemyConfig": {
         "enemyRangedConfig": {
             "baseConfig": {
+		"damage": 3.0,
                 "idleDuration": 5.0,
                 "chasingDuration": 3.0,
                 "moveRangeMin": 4.0,
@@ -84,6 +85,7 @@
         },
         "enemyMeleeConfig": {
             "baseConfig": {
+		"damage": 3.0,
                 "idleDuration": 5.0,
                 "chasingDuration": 3.0,
                 "moveRangeMin": 4.0,
@@ -99,10 +101,12 @@
             "dashDelay": 1.0,
             "dashDuration": 2.0,
             "dashSpeedModifier": 3.0,
-            "dashRange": 3.0
+            "dashRange": 3.0,
+	    "dashCooldown": 6.0
         },
         "enemyBomberConfig": {
             "baseConfig": {
+		"damage": 3.0,
                 "idleDuration": 5.0,
                 "chasingDuration": 3.0,
                 "moveRangeMin": 4.0,
@@ -118,6 +122,7 @@
         },
         "enemyEnvDestroyerConfig": {
             "baseConfig": {
+		"damage": 3.0,
                 "idleDuration": 5.0,
                 "chasingDuration": 3.0,
                 "moveRangeMin": 4.0,
