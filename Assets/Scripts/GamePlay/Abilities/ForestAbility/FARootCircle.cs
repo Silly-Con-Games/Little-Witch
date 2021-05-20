@@ -9,7 +9,6 @@ public class FARootCircle : MonoBehaviour
     public Animation singleThornPrefab;
     public OnTriggerEnterEvent circleCollider;
 
-
     public void Init(float radius, int density, UnityAction<Collider> onHit)
     {
         //animationParent.localScale = animationParent.localScale * radius;
@@ -28,7 +27,7 @@ public class FARootCircle : MonoBehaviour
 
     IEnumerator LifeTimeCourotine()
     {
-        yield return new WaitForSeconds(1);
+        yield return new WaitForSeconds(0.5f);
         circleCollider.gameObject.SetActive(true);
         yield return new WaitForSeconds(1);
         circleCollider.gameObject.SetActive(false);
