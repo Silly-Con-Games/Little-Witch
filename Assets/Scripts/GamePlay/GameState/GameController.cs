@@ -44,6 +44,7 @@ public class GameController : MonoBehaviour
     // Start is called before the first frame update
     void Start()
     {
+        internalGS = EGameState.WaitingForNextWave;
         GlobalConfigManager.onConfigChanged.AddListener(ApplyConfig);
         ApplyConfig();
         StartCoroutine(SpawnWithDelay(0.3f));

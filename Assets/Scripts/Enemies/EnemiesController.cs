@@ -19,11 +19,14 @@ public class EnemiesController : MonoBehaviour
     public static void IncreaseAliveCount()
     {
         aliveEnemiesCnt++;
+        Debug.Log($"{aliveEnemiesCnt} enemies alive");
     }
 
     public static void DecreaseAliveCount()
     {
         aliveEnemiesCnt--;
+        Debug.Log($"{aliveEnemiesCnt} enemies alive");
+
         if (aliveEnemiesCnt == 0)
             instance.onWaveEnd.Invoke();
     }
@@ -43,7 +46,7 @@ public class EnemiesController : MonoBehaviour
 
     public void SpawnNextWave()
     {
-        Assert.IsTrue(waveCounter < waves.Count - 1);
+        Assert.IsTrue(waveCounter < waves.Count);
         waves[waveCounter++].Spawn();
     }
 
