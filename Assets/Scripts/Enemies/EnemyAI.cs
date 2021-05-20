@@ -84,8 +84,9 @@ public abstract class EnemyAI : MonoBehaviour, IDamagable, IRootable, IStunnable
     public GameObject indicator { get; set; }
 
     protected Animator animator = null;
-    public virtual void InitEnemy(IndicatorsCreator indicatorsCreator)
+    public virtual void InitEnemy()
     {
+        EnemiesController.IncreaseAliveCount();
         GlobalConfigManager.onConfigChanged.AddListener(ApplyConfig);
         if (!playerController)
         {
@@ -101,7 +102,7 @@ public abstract class EnemyAI : MonoBehaviour, IDamagable, IRootable, IStunnable
             animator = GetComponentInChildren<Animator>();
         }
 
-        this.indicator = indicatorsCreator.CreateIndicator();
+        this.indicator = IndicatorsCreator.CreateIndicator();
         this.indicator.SetActive(false);
         ApplyConfig();
     }
@@ -127,9 +128,9 @@ public abstract class EnemyAI : MonoBehaviour, IDamagable, IRootable, IStunnable
 
     protected abstract EnemyConfig GetEnemyBaseConfig();
 
-    public virtual void InitEnemy(Transform roamPosition, IndicatorsCreator indicatorsCreator)
+    public virtual void InitEnemy(Transform roamPosition)
     {
-        InitEnemy(indicatorsCreator);
+        InitEnemy();
         this.roamPosition = roamPosition;
     }
 
@@ -290,6 +291,7 @@ public abstract class EnemyAI : MonoBehaviour, IDamagable, IRootable, IStunnable
 
     protected void Die()
     {
+        EnemiesController.DecreaseAliveCount();
         GameObject energy = Instantiate(energyPrefab);
         energy.transform.position = new Vector3(this.transform.position.x, 0.5f, this.transform.position.z);
         GlobalConfigManager.onConfigChanged.RemoveListener(ApplyConfig);

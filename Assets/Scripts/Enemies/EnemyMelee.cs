@@ -40,9 +40,9 @@ public class EnemyMelee : EnemyAI
         dashDurationDelta -= Time.deltaTime;
         dashCooldownDelta -= Time.deltaTime;
     }
-    public override void InitEnemy(IndicatorsCreator indicatorsCreator)
+    public override void InitEnemy()
     {
-        base.InitEnemy(indicatorsCreator);
+        base.InitEnemy();
         attacking = false;
     }
 

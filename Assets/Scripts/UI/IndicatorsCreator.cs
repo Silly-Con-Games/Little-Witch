@@ -1,6 +1,7 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.Assertions;
 
 public class IndicatorsCreator : MonoBehaviour
 {
@@ -10,10 +11,18 @@ public class IndicatorsCreator : MonoBehaviour
 
     public RectTransform holder;
 
-    public GameObject CreateIndicator()
+
+    private static IndicatorsCreator instance;
+
+    public void Awake()
     {
-        GameObject indicator = Instantiate(indicatorUIPrefab, holder);
-        return indicator;
+        Assert.IsTrue(instance == null);
+        instance = this;
+    }
+
+    public static GameObject CreateIndicator()
+    { 
+        return Instantiate(instance.indicatorUIPrefab, instance.holder); 
     }
     
 }

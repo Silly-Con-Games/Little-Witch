@@ -10,9 +10,9 @@ public class EnemyBomber : EnemyAI
     private GameObject bombPrefab;
 
 
-    public override void InitEnemy(IndicatorsCreator indicatorsCreator)
+    public override void InitEnemy()
     {
-        base.InitEnemy(indicatorsCreator);
+        base.InitEnemy();
         if (playerController)
             roamPosition = playerController.transform;
         else

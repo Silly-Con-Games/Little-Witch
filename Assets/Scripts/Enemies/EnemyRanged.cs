@@ -9,9 +9,9 @@ public class EnemyRanged : EnemyAI
 
     public GameObject bulletPrefab;
 
-    public override void InitEnemy(IndicatorsCreator indicatorsCreator)
+    public override void InitEnemy()
     {
-        base.InitEnemy(indicatorsCreator);
+        base.InitEnemy();
         attackCooldownDelta = -1f;
     }
 

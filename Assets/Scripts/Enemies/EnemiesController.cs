@@ -1,40 +1,54 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.Assertions;
+using UnityEngine.Events;
 
 public class EnemiesController : MonoBehaviour
 {
+    public List<WaveDefinition> waves;
 
-    [SerializeField]
-    private List<EnemiesSpawn> enemiesSpawns;
+    int waveCounter = 0;
 
-    [SerializeField] 
-    private IndicatorsCreator indicatorsCreator;
-    
-    // Start is called before the first frame update
-    void Start()
+    private static EnemiesController instance;
+
+    public UnityEvent onWaveEnd;
+
+    static int aliveEnemiesCnt = 0;
+
+    public static void IncreaseAliveCount()
     {
-
-        enemiesSpawns[0].indicatorsCreator = indicatorsCreator;
-        StartCoroutine(SpawnCourotine());
+        aliveEnemiesCnt++;
     }
 
-    IEnumerator SpawnCourotine()
+    public static void DecreaseAliveCount()
     {
-        //enemiesSpawns[0].Spawn(EnemyType.EnvDestroyer, 2);
+        aliveEnemiesCnt--;
+        if (aliveEnemiesCnt == 0)
+            instance.onWaveEnd.Invoke();
+    }
 
-        enemiesSpawns[0].Spawn(EnemyType.Melee, 3);
-        yield return new WaitForSeconds(15);
-        enemiesSpawns[0].Spawn(EnemyType.Ranged, 2);
-        enemiesSpawns[0].Spawn(EnemyType.Melee, 2);
-        yield return new WaitForSeconds(15);
-        enemiesSpawns[0].Spawn(EnemyType.Ranged, 2);
-        enemiesSpawns[0].Spawn(EnemyType.Melee, 3);
-        enemiesSpawns[0].Spawn(EnemyType.Bomber, 1);
-        yield return new WaitForSeconds(15);
-        //enemiesSpawns[0].Spawn(EnemyType.Ranged, 2);
-        //enemiesSpawns[0].Spawn(EnemyType.Melee, 3);
-        enemiesSpawns[0].Spawn(EnemyType.Bomber, 2);
-        enemiesSpawns[0].Spawn(EnemyType.EnvDestroyer, 2);
+
+    private void Awake()
+    {
+        onWaveEnd = new UnityEvent();
+        Assert.IsTrue(instance == null);
+        instance = this;
+    }
+
+    public bool WasLastWave()
+    {
+        return waveCounter == waves.Count;
+    }
+
+    public void SpawnNextWave()
+    {
+        Assert.IsTrue(waveCounter < waves.Count - 1);
+        waves[waveCounter++].Spawn();
+    }
+
+    public float GetCurrentPreperationTime()
+    {
+        return waves[waveCounter].preparationTime;
     }
 }
