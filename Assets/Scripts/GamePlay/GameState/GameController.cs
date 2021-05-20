@@ -26,9 +26,8 @@ public class GameController : MonoBehaviour
         {
             if(internalGS != value)
             {
-                Debug.Log($"Changing gamestate from {internalGS} to {value}");
+               Debug.Log($"Changing gamestate from {internalGS} to {value}");
                internalGS = value;
-
                onGameStateChanged.Invoke(value);
             }
         } 
