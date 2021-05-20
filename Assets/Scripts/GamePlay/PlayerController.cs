@@ -241,7 +241,7 @@ public class PlayerController : MonoBehaviour, IDamagable
         if (meeleeAbility.IsReady)
         {
             meeleeAbility.Attack();
-            moveStop = true;
+            ScaleSpeedModifier(meeleeAbility.conf.attackSlow);
             StartCoroutine(ResumeMovement(meeleeAbility.conf.cooldown));
         }
     }
@@ -249,7 +249,7 @@ public class PlayerController : MonoBehaviour, IDamagable
     IEnumerator ResumeMovement(float duration)
     {
         yield return new WaitForSeconds(duration);
-        moveStop = false;
+        ScaleSpeedModifier(1.0f/meeleeAbility.conf.attackSlow);        
     }
 
     public void OnChargeAbility(InputValue value)
