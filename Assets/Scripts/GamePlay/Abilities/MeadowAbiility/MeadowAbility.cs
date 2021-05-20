@@ -48,12 +48,13 @@ public class MeadowAbility : MainAbility
         
     }
 
-    private void OnHit(Collider other)
+    private void OnHit(Collider other, MAGrass owner)
     {
         IDamagable dmg = other.gameObject.GetComponent<IDamagable>();
         if (dmg != null && dmg.GetObjectType() == EObjectType.Enemy && !alreadyHit.Contains(dmg))
         {
             dmg.ReceiveDamage(conf.damage);
+            GameObject.Destroy(owner);
             alreadyHit.Add(dmg);
         }
     }
