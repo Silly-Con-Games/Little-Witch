@@ -46,7 +46,7 @@ public class GameController : MonoBehaviour
     {
         GlobalConfigManager.onConfigChanged.AddListener(ApplyConfig);
         ApplyConfig();
-        Spawn(); // spawn witch
+        StartCoroutine(SpawnWithDelay(0.3f));
 
         enemiesController.onWaveEnd.AddListener(OnWaveEnd);
         StartCoroutine(WaitAndStartWave(enemiesController.GetCurrentPreperationTime()));
@@ -58,8 +58,9 @@ public class GameController : MonoBehaviour
     }
 
 
-    private void Spawn()
+    private IEnumerator SpawnWithDelay(float delay)
     {
+        yield return new WaitForSeconds(delay);
         currentWitch = Instantiate(witchPrefab);
         currentWitch.transform.position = spawnPoint.position;
         currentWitch.transform.rotation = spawnPoint.rotation;
