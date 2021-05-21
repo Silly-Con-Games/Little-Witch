@@ -133,6 +133,7 @@ MonoBehaviour:
   characterController: {fileID: 811825519810356235}
   mapController: {fileID: 0}
   hudController: {fileID: 0}
+  pauseController: {fileID: 0}
   onDeathEvent:
     m_PersistentCalls:
       m_Calls: []

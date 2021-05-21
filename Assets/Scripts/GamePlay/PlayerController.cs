@@ -13,6 +13,7 @@ public class PlayerController : MonoBehaviour, IDamagable
     public CharacterController characterController;
     public MapController mapController;
     public HUDController hudController;
+	public PauseController pauseController;
 
     public UnityEvent onDeathEvent;
 
@@ -238,7 +239,7 @@ public class PlayerController : MonoBehaviour, IDamagable
 
     public void OnMeleeAbility(InputValue value)
     {
-        if (meeleeAbility.IsReady)
+        if (!pauseController.IsPaused() && meeleeAbility.IsReady)
         {
             meeleeAbility.Attack();
             ScaleSpeedModifier(meeleeAbility.conf.attackSlow);
@@ -254,14 +255,15 @@ public class PlayerController : MonoBehaviour, IDamagable
 
     public void OnChargeAbility(InputValue value)
     {
-        if (value.isPressed && chargeAbility.IsReady())
-        {
-            animator.SetTrigger("Cast");
+        if (!pauseController.IsPaused()) {
+			if (value.isPressed && chargeAbility.IsReady()) {
+				animator.SetTrigger("Cast");
 
-            chargeAbility.StartCharge();
-        }
-        else if (!value.isPressed && chargeAbility.IsCharging)
-            chargeAbility.FireCharged();
+				chargeAbility.StartCharge();
+			} else if (!value.isPressed && chargeAbility.IsCharging) {
+				chargeAbility.FireCharged();
+			}
+		}
     }
 
     public void OnMainAbility(InputValue value)
@@ -300,6 +302,10 @@ public class PlayerController : MonoBehaviour, IDamagable
 		if (transformAbility.IsReady()) {
 			transformAbility.Transform(target);
 		}
+	}
+
+	private void OnPause(InputValue value) {
+		pauseController.PauseGame();
 	}
 
 	public void ReceiveDamage(float amount)
