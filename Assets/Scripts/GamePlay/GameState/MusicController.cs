@@ -7,13 +7,18 @@ public class MusicController : MonoBehaviour
 
     [SerializeField]
     private AudioClip battleMusic;
-    
+
+    [SerializeField]
+    private AudioClip waitingMusic;
+
     [SerializeField]
     private AudioSource audioSource;
 
     private AudioClip nextClip;
 
     private AudioState audioState;
+
+    private float volumeDelta;
     
     public enum AudioState
     {
@@ -24,19 +29,24 @@ public class MusicController : MonoBehaviour
     }
     
     // Start is called before the first frame update
-    void Start()
+    public void Start()
     {
         GameController.onGameStateChanged.AddListener(OnGameStateChange);
         audioState = AudioState.PAUSED;
+        audioSource.volume = 0f;
+        nextClip = null;
+        volumeDelta = 0.003f;
     }
 
-    void Update()
+    public void Update()
     {
         switch (audioState)
         {
             case AudioState.PAUSED:
+                Paused();
                 break;
             case AudioState.PLAYING:
+                Playing();
                 break;
             case AudioState.PAUSING:
                 Pausing();
@@ -51,12 +61,31 @@ public class MusicController : MonoBehaviour
     {
         if (audioSource.volume < 1.0f)
         {
-            audioSource.volume += 0.01f;
+            audioSource.volume += volumeDelta;
         }
         else
         {
+            audioSource.volume = 1.0f;
             audioState = AudioState.PLAYING;
+        }
+    }
+
+    private void Playing()
+    {
+        if (nextClip != null && nextClip != audioSource.clip)
+        {
+            audioState = AudioState.PAUSING; 
+        }
+    }
+
+    private void Paused()
+    {
+        if (nextClip != null)
+        {
+            audioSource.clip = nextClip;
             audioSource.Play();
+            nextClip = null;
+            audioState = AudioState.STARTING;
         }
     }
     
@@ -64,10 +93,19 @@ public class MusicController : MonoBehaviour
     {
         if (audioSource.volume > 0.0f)
         {
-            audioSource.volume -= 0.01f;
+            audioSource.volume -= volumeDelta;
         }
         else
         {
+            audioSource.volume = 0.0f;
+            if (nextClip != null)
+            {
+                audioSource.clip = nextClip;
+                nextClip = null;
+                audioSource.Play();
+                audioState = AudioState.STARTING;
+                return;
+            }
             audioSource.Pause();
             audioState = AudioState.PAUSED;
         }
@@ -75,25 +113,20 @@ public class MusicController : MonoBehaviour
     
     public void OnGameStateChange(EGameState eGameState)
     {
+        Debug.Log(eGameState);
         switch (eGameState)
         {
             case EGameState.FightingWave:
-                if (audioState == AudioState.PLAYING)
-                {
-                    nextClip = battleMusic;
-                    audioState = AudioState.PAUSING;
-                }
-                else if (audioState == AudioState.PAUSED)
-                {
-                    audioSource.clip = battleMusic;
-                    audioState = AudioState.STARTING;
-                }
+                nextClip = battleMusic;
                 break;
             case EGameState.WaitingForNextWave:
+                nextClip = waitingMusic;
                 break;
             case EGameState.GameOver:
+                nextClip = null;
                 break;
             case EGameState.GameWon:
+                nextClip = null;
                 break;
         }        
     }
