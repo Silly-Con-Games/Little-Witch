@@ -47,6 +47,7 @@ public class EnemiesController : MonoBehaviour
     public void SpawnNextWave()
     {
         Assert.IsTrue(waveCounter < waves.Count);
+        aliveEnemiesCnt = 0;
         waves[waveCounter++].Spawn();
     }
 
