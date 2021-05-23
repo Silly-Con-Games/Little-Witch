@@ -15,6 +15,8 @@ public class GameController : MonoBehaviour
 
     public HUDController hud;
 
+	public PauseController pauseController;
+
     public MapController mapController;
 
     public EnemiesController enemiesController;
@@ -71,6 +73,7 @@ public class GameController : MonoBehaviour
         currentWitch.onDeathEvent.AddListener(OnWitchDeath);
         currentWitch.mapController = mapController;
         currentWitch.hudController = hud;
+		currentWitch.pauseController = pauseController;
 
         cmCamera.LookAt = currentWitch.transform;
         cmCamera.Follow = currentWitch.transform;
