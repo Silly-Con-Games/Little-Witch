@@ -8,6 +8,7 @@ namespace Config
         public WitchConfig witchConfig;
         public GlobalEnemyConfig globalEnemyConfig;
         public EnergyConfig energyConfig;
+        public SoundConfig soundConfig;
         public float respawnTime;
     }
 
@@ -195,6 +196,13 @@ namespace Config
         public float lifeTimeInSec;
         public float speed;
         public int energyAmount;
+    }
+    
+    [Serializable]
+    public struct SoundConfig
+    {
+        public float musicVolume;
+        public float sfxVolume;
     }
 
 }

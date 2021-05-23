@@ -150,5 +150,9 @@
         "speed": 5.0,
         "energyAmount": 1
     },
+    "soundConfig": {
+        "musicVolume": 0.5,
+        "sfxVolume": 0.5
+    },
     "respawnTime": 2.0
 }

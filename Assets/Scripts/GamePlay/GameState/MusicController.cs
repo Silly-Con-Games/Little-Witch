@@ -1,5 +1,6 @@
 using System.Collections;
 using System.Collections.Generic;
+using Config;
 using UnityEngine;
 
 public class MusicController : MonoBehaviour
@@ -59,13 +60,13 @@ public class MusicController : MonoBehaviour
 
     private void Starting()
     {
-        if (audioSource.volume < 1.0f)
+        if (audioSource.volume < GlobalConfigManager.GetGlobalConfig().soundConfig.musicVolume)
         {
             audioSource.volume += volumeDelta;
         }
         else
         {
-            audioSource.volume = 1.0f;
+            audioSource.volume = GlobalConfigManager.GetGlobalConfig().soundConfig.musicVolume;
             audioState = AudioState.PLAYING;
         }
     }
