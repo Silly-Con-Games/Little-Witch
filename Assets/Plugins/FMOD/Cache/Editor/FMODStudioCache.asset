@@ -262,11 +262,11 @@ MonoBehaviour:
   Path: FMOD/LittleWitch/Build/Desktop/Master.strings.bank
   Name: Master.strings
   StudioPath: bank:/Master.strings
-  lastModified: 637564573260460378
+  lastModified: 637559186160956821
   LoadResult: 0
   FileSizes:
   - Name: Desktop
-    Value: 1104
+    Value: 844
   Exists: 1
 --- !u!114 &-6669268666781295669
 MonoBehaviour:
@@ -578,6 +578,26 @@ MonoBehaviour:
     data1: 0
     data2: 0
   Exists: 1
+--- !u!114 &-2445581419894118543
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: fecb8ef7f94ca804a8ab72049b86782e, type: 3}
+  m_Name: parameter:/shot/shot_pitch
+  m_EditorClassIdentifier: 
+  Name: shot_pitch
+  Min: -1
+  Max: 1
+  Default: 0
+  ID:
+    data1: 0
+    data2: 0
+  Exists: 1
 --- !u!114 &-2236710400162864331
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -824,17 +844,12 @@ MonoBehaviour:
   EditorEvents:
   - {fileID: 2793083445915803610}
   - {fileID: -1247909815167168289}
-  - {fileID: 4750388704304071016}
-  - {fileID: -5495616350905259095}
-  - {fileID: -8009593813742580167}
-  - {fileID: 1827398069988191101}
-  - {fileID: -844947812983291867}
   EditorParameters: []
   MasterBanks:
   - {fileID: 7994675611940157413}
   StringsBanks:
   - {fileID: -6882099937372671058}
-  stringsBankWriteTime: 637564573260460378
+  stringsBankWriteTime: 637559186160956821
   cacheVersion: 6
 --- !u!114 &63060824806312001
 MonoBehaviour:
@@ -1061,7 +1076,7 @@ MonoBehaviour:
   Is3D: 1
   IsOneShot: 1
   Parameters:
-  - {fileID: 2829361457989013823}
+  - {fileID: -2445581419894118543}
   MinDistance: 20
   MaxDistance: 65
   Length: 850
@@ -1449,7 +1464,7 @@ MonoBehaviour:
   Path: FMOD/LittleWitch/Build/Desktop/Master.bank
   Name: Master
   StudioPath: bank:/Master
-  lastModified: 637564573260450381
+  lastModified: 637559186160946820
   LoadResult: 0
   FileSizes: []
   Exists: 1
