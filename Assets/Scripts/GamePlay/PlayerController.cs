@@ -47,6 +47,7 @@ public class PlayerController : MonoBehaviour, IDamagable
     float speed = 3;
     float speedModifier = 1;
     float jumpHeight = 1.0f;
+    int tileMask;
     bool wantsJump;
 
     private bool isDead;
@@ -55,6 +56,9 @@ public class PlayerController : MonoBehaviour, IDamagable
 
     private void Start()
     {
+        
+        tileMask = LayerMask.GetMask("Tile");
+
         mainCamera = Camera.main;
         cameraTrans = mainCamera.transform;
         animator = GetComponentInChildren<Animator>();
@@ -134,7 +138,7 @@ public class PlayerController : MonoBehaviour, IDamagable
         // Direction
         Ray ray = mainCamera.ScreenPointToRay(Pointer.current.position.ReadValue());
 
-        if (Physics.Raycast(ray, out RaycastHit hit, 1000))
+        if (Physics.Raycast(ray, out RaycastHit hit, 1000, tileMask))
         {
             mouseWorldPosition = hit.point;
         }
@@ -180,7 +184,6 @@ public class PlayerController : MonoBehaviour, IDamagable
 
         animator.SetFloat("VelocityX", velocityX, .1f, Time.deltaTime);
         animator.SetFloat("VelocityZ", velocityZ, .1f, Time.deltaTime);
-
         if (velocity.magnitude > 0)
             characterController.Move(velocity * delta);
     }
