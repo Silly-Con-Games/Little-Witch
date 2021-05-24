@@ -289,13 +289,25 @@ PrefabInstance:
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
       objectReference: {fileID: 0}
+    - target: {fileID: -7751308190444494808, guid: 4b3aae4a8f603af418234f522e7e49aa, type: 3}
+      propertyPath: m_Layer
+      value: 8
+      objectReference: {fileID: 0}
     - target: {fileID: -7672098178430525590, guid: 4b3aae4a8f603af418234f522e7e49aa, type: 3}
       propertyPath: m_Materials.Array.data[0]
       value: 
       objectReference: {fileID: 2100000, guid: f80034fcd8462a14d81c76fe638b4b3d, type: 2}
+    - target: {fileID: -7029948723529949830, guid: 4b3aae4a8f603af418234f522e7e49aa, type: 3}
+      propertyPath: m_Layer
+      value: 8
+      objectReference: {fileID: 0}
     - target: {fileID: 919132149155446097, guid: 4b3aae4a8f603af418234f522e7e49aa, type: 3}
       propertyPath: m_Name
       value: sucker_enemy
+      objectReference: {fileID: 0}
+    - target: {fileID: 919132149155446097, guid: 4b3aae4a8f603af418234f522e7e49aa, type: 3}
+      propertyPath: m_Layer
+      value: 8
       objectReference: {fileID: 0}
     - target: {fileID: 2960516636965080437, guid: 4b3aae4a8f603af418234f522e7e49aa, type: 3}
       propertyPath: m_Materials.Array.data[0]
@@ -304,6 +316,10 @@ PrefabInstance:
     - target: {fileID: 4756219718194335464, guid: 4b3aae4a8f603af418234f522e7e49aa, type: 3}
       propertyPath: m_LocalPosition.y
       value: -0.08
+      objectReference: {fileID: 0}
+    - target: {fileID: 7962265503244504871, guid: 4b3aae4a8f603af418234f522e7e49aa, type: 3}
+      propertyPath: m_Layer
+      value: 8
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 4b3aae4a8f603af418234f522e7e49aa, type: 3}
