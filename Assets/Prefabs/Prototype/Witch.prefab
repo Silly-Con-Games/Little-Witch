@@ -353,6 +353,7 @@ MonoBehaviour:
   forestAbility:
     rootPathPrefab: {fileID: 1010815318834259687, guid: db235b2c73331114fa8de52306785352, type: 3}
     rootCirclePrefab: {fileID: 5760741254045953524, guid: 7c7d4c30b18d4f8429101e84fb74ef6f, type: 3}
+    rootIndicatorPrefab: {fileID: 4769726193661630030, guid: fc1174368e56e354f8362314e27c21e9, type: 3}
   meadowAbility:
     grassPrefab: {fileID: 1875613823421694520, guid: 7216260d442240542bda360cb2e3f38d, type: 3}
   waterAbility:
