@@ -418,6 +418,17 @@
                     "action": "Revive",
                     "isComposite": false,
                     "isPartOfComposite": false
+                },
+                {
+                    "name": "",
+                    "id": "14e46398-0718-4fc0-a29f-27bf87b0dcfb",
+                    "path": "<Keyboard>/q",
+                    "interactions": "",
+                    "processors": "",
+                    "groups": "Keyboard&Mouse",
+                    "action": "Revive",
+                    "isComposite": false,
+                    "isPartOfComposite": false
                 }
             ]
         },
