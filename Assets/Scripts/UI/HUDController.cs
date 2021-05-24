@@ -2,6 +2,8 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
+using TMPro;
+using System;
 
 public class HUDController : MonoBehaviour
 {
@@ -15,6 +17,9 @@ public class HUDController : MonoBehaviour
     [SerializeField] private Image[] icons;
     private Image[] iconsInner;
     private Color[] iconColors;
+
+    [SerializeField]
+    private TextMeshProUGUI waveTimer;
 
     private void Start()
     {
@@ -168,6 +173,20 @@ public class HUDController : MonoBehaviour
                 icons[2].GetComponent<Animator>().SetTrigger("NotReady");
                 break;
         }
+    }
+
+    public IEnumerator ShowTimeTillNextWave(float duration)
+    {
+        waveTimer.enabled = true;
+        float timeStart = Time.time;
+        float time;
+        while ((time = duration - (Time.time - timeStart) )> 0)
+        {
+            
+            waveTimer.text = $"!! {Mathf.Ceil(time).ToString("0")}s";
+            yield return null;
+        }
+        waveTimer.enabled = false;
     }
 
 }

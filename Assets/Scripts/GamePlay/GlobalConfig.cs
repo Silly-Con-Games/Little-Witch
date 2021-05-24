@@ -8,6 +8,7 @@ namespace Config
         public WitchConfig witchConfig;
         public GlobalEnemyConfig globalEnemyConfig;
         public EnergyConfig energyConfig;
+        public SoundConfig soundConfig;
         public float respawnTime;
     }
 
@@ -25,6 +26,7 @@ namespace Config
         public ForestAbilityConfig forestAbility;
         public WaterAbilityConfig waterAbility;
         public MeadowAbilityConfig meadowAbility;
+        public DashAbilityConfig dashAbility;
 
     }
 
@@ -107,6 +109,15 @@ namespace Config
         public float spellWidth;
         public float maxRange;
         public float damage;
+    }
+
+    [Serializable]
+    public struct DashAbilityConfig
+    {
+        public MainAbilityConfig baseConfig;
+        public float speed;
+        public float maxRange;
+        public float animSpeed;
     }
 
     [Serializable]
@@ -195,6 +206,13 @@ namespace Config
         public float lifeTimeInSec;
         public float speed;
         public int energyAmount;
+    }
+    
+    [Serializable]
+    public struct SoundConfig
+    {
+        public float musicVolume;
+        public float sfxVolume;
     }
 
 }

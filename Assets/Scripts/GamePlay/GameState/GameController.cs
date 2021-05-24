@@ -21,6 +21,8 @@ public class GameController : MonoBehaviour
 
     public EnemiesController enemiesController;
 
+    public AudioSource audioSource;
+
     public static EGameState GameState 
     { 
         get => internalGS; 
@@ -35,17 +37,16 @@ public class GameController : MonoBehaviour
         } 
     }
 
-
     private static EGameState internalGS = EGameState.WaitingForNextWave;
     public static UnityEvent<EGameState> onGameStateChanged = new UnityEvent<EGameState>();
 
     private PlayerController currentWitch;
     private GlobalConfig conf;
 
-
     // Start is called before the first frame update
     void Start()
     {
+
         internalGS = EGameState.WaitingForNextWave;
         GlobalConfigManager.onConfigChanged.AddListener(ApplyConfig);
         ApplyConfig();
@@ -57,9 +58,11 @@ public class GameController : MonoBehaviour
 
     void ApplyConfig()
     {
-        conf = GlobalConfigManager.GetGlobalConfig(); 
+        conf = GlobalConfigManager.GetGlobalConfig();
+        FMOD.Studio.VCA vca = FMODUnity.RuntimeManager.GetVCA("vca:/GameVCA"); 
+        vca.setVolume(conf.soundConfig.sfxVolume);
+        audioSource.volume = conf.soundConfig.musicVolume;
     }
-
 
     private IEnumerator SpawnWithDelay(float delay)
     {
@@ -89,9 +92,11 @@ public class GameController : MonoBehaviour
         if (enemiesController.WasLastWave())
         {
             GameState = EGameState.GameWon;
+            FMODUnity.RuntimeManager.PlayOneShot("event:/game/game_won");
         }
         else
         {
+            FMODUnity.RuntimeManager.PlayOneShot("event:/game/wave_end");
             GameState = EGameState.WaitingForNextWave;
             StartCoroutine(WaitAndStartWave(enemiesController.GetCurrentPreperationTime()));
         }
@@ -99,8 +104,10 @@ public class GameController : MonoBehaviour
 
     private IEnumerator WaitAndStartWave(float duration)
     {
+        StartCoroutine(hud.ShowTimeTillNextWave(duration));
         yield return new WaitForSeconds(duration);
         GameState = EGameState.FightingWave;
+        FMODUnity.RuntimeManager.PlayOneShot("event:/game/wave_start");
         enemiesController.SpawnNextWave();
     }
 
