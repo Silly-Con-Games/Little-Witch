@@ -25,6 +25,7 @@ public class PlayerController : MonoBehaviour, IDamagable
     public ForestAbility forestAbility;
     public MeadowAbility meadowAbility;
     public WaterAbility waterAbility;
+    public DashAbility dashAbility;
 
     public HashSet<UnityAction> passiveEffects { get; internal set; }
 
@@ -41,7 +42,7 @@ public class PlayerController : MonoBehaviour, IDamagable
     const float gravity = -9.81f;
     float upVelocity = 0;
     Vector2 inputVelocity;
-    bool moveStop = false;
+    public bool moveStop { get; set; }
 
     float speed = 3;
     float speedModifier = 1;
@@ -68,6 +69,7 @@ public class PlayerController : MonoBehaviour, IDamagable
         forestAbility.Init(this);
         meadowAbility.Init(this);
         waterAbility.Init(this);
+        dashAbility.Init(this);
 
         if (!mapController)
             mapController = FindObjectOfType<MapController>();
@@ -124,6 +126,7 @@ public class PlayerController : MonoBehaviour, IDamagable
         forestAbility.conf = witchConfig.forestAbility;
         waterAbility.conf = witchConfig.waterAbility;
         meadowAbility.conf = witchConfig.meadowAbility;
+        dashAbility.conf = witchConfig.dashAbility;
     }
 
     void MoveUpdate()
@@ -131,15 +134,17 @@ public class PlayerController : MonoBehaviour, IDamagable
         // Direction
         Ray ray = mainCamera.ScreenPointToRay(Pointer.current.position.ReadValue());
 
-        RaycastHit hit;
-        bool didHit = false;
-        if (didHit = Physics.Raycast(ray, out hit, 1000))
+        if (Physics.Raycast(ray, out RaycastHit hit, 1000))
         {
-            var targetPosition = mouseWorldPosition = hit.point;
-            targetPosition.y = transform.position.y;
-            transform.LookAt(targetPosition);
-
+            mouseWorldPosition = hit.point;
         }
+
+        if (moveStop)
+            return;
+
+        var targetPosition = mouseWorldPosition;
+        targetPosition.y = transform.position.y;
+        transform.LookAt(targetPosition);
 
         // Movement
         Vector3 forwardV = cameraTrans.forward;
@@ -167,9 +172,6 @@ public class PlayerController : MonoBehaviour, IDamagable
         else
             upVelocity += gravity * delta;
         wantsJump = false;
-
-        if (moveStop)
-            velocity = Vector3.zero;
 
         velocity.y = upVelocity;
 
@@ -231,10 +233,22 @@ public class PlayerController : MonoBehaviour, IDamagable
         inputVelocity = value.Get<Vector2>();
     }
 
-    public void OnJump(InputValue value)
+    public void OnDash(InputValue value)
     {
-        if(value.isPressed)
+        if (value.isPressed && dashAbility.IsReady)
+        {
+            dashAbility.CastAbility();
+        }
+           
+    }
+
+    public void OnJummp(InputValue value)
+    {
+        if (value.isPressed)
+        {
             wantsJump = true;
+        }
+
     }
 
     public void OnMeleeAbility(InputValue value)
