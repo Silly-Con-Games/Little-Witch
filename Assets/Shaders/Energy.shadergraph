@@ -460,7 +460,7 @@
     "m_ActiveSubTarget": {
         "m_Id": "511be094a5a741a59f7885816c014d80"
     },
-    "m_SurfaceType": 1,
+    "m_SurfaceType": 0,
     "m_AlphaMode": 0,
     "m_TwoSided": false,
     "m_AlphaClip": false,
