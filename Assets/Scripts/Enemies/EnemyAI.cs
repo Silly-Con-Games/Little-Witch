@@ -292,12 +292,18 @@ public abstract class EnemyAI : MonoBehaviour, IDamagable, IRootable, IStunnable
     {
         EnemiesController.DecreaseAliveCount();
         GameObject energy = Instantiate(energyPrefab);
-        energy.transform.position = new Vector3(this.transform.position.x, 0.5f, this.transform.position.z);
+        energy.transform.position = new Vector3(transform.position.x, 0.5f, transform.position.z);
         GlobalConfigManager.onConfigChanged.RemoveListener(ApplyConfig);
         Destroy(indicator);
 
         agent.enabled = false;
         GetComponent<Collider>().enabled = false;
+
+        gameObject.layer = 0;
+        foreach (Transform trans in gameObject.GetComponentsInChildren<Transform>())
+        {
+            trans.gameObject.layer = 0;
+        }
 
         StartCoroutine(DieCoroutine());
     }

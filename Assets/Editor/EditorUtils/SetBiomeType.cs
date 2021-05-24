@@ -24,7 +24,7 @@ public class SetBiomeTypes
     {
         foreach (var tile in Selection.gameObjects)
         {
-            tile.GetComponent<Tile>()?.Revive();               
+            tile.GetComponent<Tile>()?.ReviveInEditor();               
         }
     }
 

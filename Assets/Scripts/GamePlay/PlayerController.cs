@@ -251,7 +251,6 @@ public class PlayerController : MonoBehaviour, IDamagable
         {
             wantsJump = true;
         }
-
     }
 
     public void OnMeleeAbility(InputValue value)
@@ -314,6 +313,14 @@ public class PlayerController : MonoBehaviour, IDamagable
 	public void OnTransformDead(InputValue value) {
 		Transform(BiomeType.DEAD);
 	}
+
+    public void OnRevive(InputValue value)
+    {
+        if (transformAbility.IsReady())
+        {
+            transformAbility.Revive();
+        }
+    }
 
 	private void Transform(BiomeType target) {
 		if (transformAbility.IsReady()) {

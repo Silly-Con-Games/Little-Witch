@@ -67,6 +67,26 @@ public class TransformAbility
 		}
 	}
 
+	public void Revive()
+	{
+		lastUsedTime = Time.time;
+		Tile tile = player.mapController.GetTileAtPosition(origin.position);
+		if (tile != null && tile.GetBiomeType() == BiomeType.DEAD)
+		{
+			tile.Revive();
+			int cost = 1;
+			foreach(var neigh in tile.GetNeighbours())
+            {
+				if (neigh.GetBiomeType() == BiomeType.DEAD)
+                {
+					neigh.Revive();
+					cost++;
+				}
+			}
+			player.energy.UseEnergy(conf.energyCost);
+		}
+	}
+
 	public bool IsReady() {
 		if (!player.energy.HasEnough(conf.energyCost))
 			return false;
