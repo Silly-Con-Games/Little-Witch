@@ -11,7 +11,7 @@ GameObject:
   - component: {fileID: 5579269561096414006}
   - component: {fileID: 1875613823421694520}
   - component: {fileID: 6557315205880653196}
-  m_Layer: 0
+  m_Layer: 11
   m_Name: GrassProjectile
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -69,7 +69,7 @@ GameObject:
   - component: {fileID: 3012139555830013684}
   - component: {fileID: 7685401144527976285}
   - component: {fileID: 8417623155416995577}
-  m_Layer: 0
+  m_Layer: 11
   m_Name: Cylinder
   m_TagString: Untagged
   m_Icon: {fileID: 0}
