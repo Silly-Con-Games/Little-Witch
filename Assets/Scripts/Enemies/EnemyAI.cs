@@ -295,6 +295,23 @@ public abstract class EnemyAI : MonoBehaviour, IDamagable, IRootable, IStunnable
         energy.transform.position = new Vector3(this.transform.position.x, 0.5f, this.transform.position.z);
         GlobalConfigManager.onConfigChanged.RemoveListener(ApplyConfig);
         Destroy(indicator);
+
+        agent.enabled = false;
+        GetComponent<Collider>().enabled = false;
+
+        StartCoroutine(DieCoroutine());
+    }
+
+    protected IEnumerator DieCoroutine()
+    {
+        float duration = 3;
+        float time = 0;
+        float deathSpeed = 2;
+        while ((time += Time.deltaTime) < duration)
+        {
+            transform.position += Vector3.down * Time.deltaTime * deathSpeed;
+            yield return null;
+        }
         Destroy(gameObject);
     }
 
