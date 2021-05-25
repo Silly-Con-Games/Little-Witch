@@ -163,6 +163,26 @@ MonoBehaviour:
     data1: 0
     data2: 0
   Exists: 0
+--- !u!114 &-7578426972922515654
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: fecb8ef7f94ca804a8ab72049b86782e, type: 3}
+  m_Name: parameter:/generic_hit/shot_pitch
+  m_EditorClassIdentifier: 
+  Name: shot_pitch
+  Min: -1
+  Max: 1
+  Default: 0
+  ID:
+    data1: 0
+    data2: 0
+  Exists: 1
 --- !u!114 &-7492578747297680114
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -282,7 +302,7 @@ MonoBehaviour:
   Path: FMOD/LittleWitch/Build/Desktop/Master.strings.bank
   Name: Master.strings
   StudioPath: bank:/Master.strings
-  lastModified: 637574210823799679
+  lastModified: 637575415909443068
   LoadResult: 0
   FileSizes:
   - Name: Desktop
@@ -471,6 +491,29 @@ MonoBehaviour:
     data1: 0
     data2: 0
   Exists: 1
+--- !u!114 &-6000821899624147580
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: ceb653cd98e289a4e8697a1af55201f2, type: 3}
+  m_Name: event:/enemies/dash/dash
+  m_EditorClassIdentifier: 
+  Path: event:/enemies/dash/dash
+  guid: 2896de5f8f6d7f44b4aa5f15a076b869
+  Banks:
+  - {fileID: 7994675611940157413}
+  IsStream: 0
+  Is3D: 1
+  IsOneShot: 1
+  Parameters: []
+  MinDistance: 20
+  MaxDistance: 60
+  Length: 1000
 --- !u!114 &-5980401973068038110
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -534,6 +577,53 @@ MonoBehaviour:
   MinDistance: 20
   MaxDistance: 60
   Length: 2000
+--- !u!114 &-4840819957063908330
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: ceb653cd98e289a4e8697a1af55201f2, type: 3}
+  m_Name: event:/enemies/hit/generic_hit
+  m_EditorClassIdentifier: 
+  Path: event:/enemies/hit/generic_hit
+  guid: 0235a8555f38bd46885d406f7d84dd64
+  Banks:
+  - {fileID: 7994675611940157413}
+  IsStream: 0
+  Is3D: 1
+  IsOneShot: 1
+  Parameters:
+  - {fileID: -7578426972922515654}
+  MinDistance: 0
+  MaxDistance: 0
+  Length: 500
+--- !u!114 &-4500539446575199757
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: ceb653cd98e289a4e8697a1af55201f2, type: 3}
+  m_Name: event:/enemies/mine/trigger
+  m_EditorClassIdentifier: 
+  Path: event:/enemies/mine/trigger
+  guid: cac5e73b4a82a04887f048bba92d2c48
+  Banks:
+  - {fileID: 7994675611940157413}
+  IsStream: 0
+  Is3D: 1
+  IsOneShot: 1
+  Parameters: []
+  MinDistance: 20
+  MaxDistance: 60
+  Length: 2000
 --- !u!114 &-4279130295431709280
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -554,6 +644,52 @@ MonoBehaviour:
     data1: 0
     data2: 0
   Exists: 1
+--- !u!114 &-4201504103543811072
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: ceb653cd98e289a4e8697a1af55201f2, type: 3}
+  m_Name: event:/game/wave_start
+  m_EditorClassIdentifier: 
+  Path: event:/game/wave_start
+  guid: eba44fbd02562543a5e0f85082dfa80b
+  Banks:
+  - {fileID: 7994675611940157413}
+  IsStream: 0
+  Is3D: 0
+  IsOneShot: 1
+  Parameters: []
+  MinDistance: 0
+  MaxDistance: 0
+  Length: 5811
+--- !u!114 &-3233151742709041561
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: ceb653cd98e289a4e8697a1af55201f2, type: 3}
+  m_Name: event:/enemies/sucking/sucking
+  m_EditorClassIdentifier: 
+  Path: event:/enemies/sucking/sucking
+  guid: ba76d5816315ad49a9ccdefc1264b859
+  Banks:
+  - {fileID: 7994675611940157413}
+  IsStream: 1
+  Is3D: 1
+  IsOneShot: 1
+  Parameters: []
+  MinDistance: 20
+  MaxDistance: 60
+  Length: 3000
 --- !u!114 &-3068407333624880905
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -678,6 +814,29 @@ MonoBehaviour:
     data1: 0
     data2: 0
   Exists: 0
+--- !u!114 &-2028999851119727341
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: ceb653cd98e289a4e8697a1af55201f2, type: 3}
+  m_Name: event:/enemies/mine/explosion
+  m_EditorClassIdentifier: 
+  Path: event:/enemies/mine/explosion
+  guid: 3bd35d6db3630a4aad0fe3bb1c9eec42
+  Banks:
+  - {fileID: 7994675611940157413}
+  IsStream: 0
+  Is3D: 1
+  IsOneShot: 1
+  Parameters: []
+  MinDistance: 20
+  MaxDistance: 60
+  Length: 1000
 --- !u!114 &-2027458075661868731
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -924,20 +1083,20 @@ MonoBehaviour:
   EditorEvents:
   - {fileID: 2793083445915803610}
   - {fileID: -1247909815167168289}
-  - {fileID: 4750388704304071016}
-  - {fileID: -5495616350905259095}
-  - {fileID: -8009593813742580167}
-  - {fileID: 1827398069988191101}
-  - {fileID: -844947812983291867}
-  - {fileID: 1083517197116940520}
-  - {fileID: 1195493090814325051}
-  - {fileID: 4649282568184283700}
+  - {fileID: -4840819957063908330}
+  - {fileID: -6000821899624147580}
+  - {fileID: -2028999851119727341}
+  - {fileID: 1664893738144568450}
+  - {fileID: -3233151742709041561}
+  - {fileID: -4500539446575199757}
+  - {fileID: -4201504103543811072}
+  - {fileID: 6092624342898760866}
   EditorParameters: []
   MasterBanks:
   - {fileID: 7994675611940157413}
   StringsBanks:
   - {fileID: -6882099937372671058}
-  stringsBankWriteTime: 637574210823799679
+  stringsBankWriteTime: 637575415909443068
   cacheVersion: 6
 --- !u!114 &63060824806312001
 MonoBehaviour:
@@ -1104,6 +1263,29 @@ MonoBehaviour:
   LoadResult: 0
   FileSizes: []
   Exists: 1
+--- !u!114 &1664893738144568450
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: ceb653cd98e289a4e8697a1af55201f2, type: 3}
+  m_Name: event:/game/wave_end
+  m_EditorClassIdentifier: 
+  Path: event:/game/wave_end
+  guid: 9fb3ea54e866e940a76c255e2b8024f3
+  Banks:
+  - {fileID: 7994675611940157413}
+  IsStream: 0
+  Is3D: 0
+  IsOneShot: 1
+  Parameters: []
+  MinDistance: 0
+  MaxDistance: 0
+  Length: 3546
 --- !u!114 &1797543663947798331
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -1250,7 +1432,7 @@ MonoBehaviour:
   Is3D: 1
   IsOneShot: 1
   Parameters:
-  - {fileID: -2394179242277760270}
+  - {fileID: 4933852474049912354}
   MinDistance: 20
   MaxDistance: 65
   Length: 850
@@ -1401,6 +1583,26 @@ MonoBehaviour:
   MinDistance: 0
   MaxDistance: 0
   Length: 500
+--- !u!114 &4933852474049912354
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: fecb8ef7f94ca804a8ab72049b86782e, type: 3}
+  m_Name: parameter:/shot/shot_pitch
+  m_EditorClassIdentifier: 
+  Name: shot_pitch
+  Min: -1
+  Max: 1
+  Default: 0
+  ID:
+    data1: 0
+    data2: 0
+  Exists: 1
 --- !u!114 &5166907417583960274
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -1484,6 +1686,29 @@ MonoBehaviour:
     data1: 0
     data2: 0
   Exists: 0
+--- !u!114 &6092624342898760866
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: ceb653cd98e289a4e8697a1af55201f2, type: 3}
+  m_Name: event:/game/game_won
+  m_EditorClassIdentifier: 
+  Path: event:/game/game_won
+  guid: f93eeb5dd522b24587dbf1a28c8b5cb0
+  Banks:
+  - {fileID: 7994675611940157413}
+  IsStream: 0
+  Is3D: 0
+  IsOneShot: 1
+  Parameters: []
+  MinDistance: 0
+  MaxDistance: 0
+  Length: 3157
 --- !u!114 &6295944058014087963
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -1681,7 +1906,27 @@ MonoBehaviour:
   Path: FMOD/LittleWitch/Build/Desktop/Master.bank
   Name: Master
   StudioPath: bank:/Master
-  lastModified: 637574210823789685
+  lastModified: 637575415909423060
   LoadResult: 0
   FileSizes: []
+  Exists: 1
+--- !u!114 &8893695223732482364
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: fecb8ef7f94ca804a8ab72049b86782e, type: 3}
+  m_Name: parameter:/shot/shot_pitch
+  m_EditorClassIdentifier: 
+  Name: shot_pitch
+  Min: -1
+  Max: 1
+  Default: 0
+  ID:
+    data1: 0
+    data2: 0
   Exists: 1
