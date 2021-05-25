@@ -32,7 +32,7 @@ public class Bomb : MonoBehaviour
 
         if (!animator)
         {
-            gameObject.GetComponent<Animator>();
+            gameObject.GetComponentInChildren<Animator>();
         }
         GlobalConfigManager.onConfigChanged.AddListener(ApplyConfig);
         bombCollider = gameObject.GetComponent<Collider>();

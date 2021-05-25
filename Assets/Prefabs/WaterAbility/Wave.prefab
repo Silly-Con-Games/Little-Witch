@@ -11,7 +11,7 @@ GameObject:
   - component: {fileID: 972670197456993921}
   - component: {fileID: 972670197456993920}
   - component: {fileID: 972670197456993927}
-  m_Layer: 0
+  m_Layer: 11
   m_Name: waveParticle
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -122,7 +122,7 @@ GameObject:
   - component: {fileID: 1476429413158742263}
   - component: {fileID: 6764458773066933775}
   - component: {fileID: 7227073971030847826}
-  m_Layer: 0
+  m_Layer: 11
   m_Name: DebugCube
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -202,7 +202,7 @@ GameObject:
   m_Component:
   - component: {fileID: 3891616697965329153}
   - component: {fileID: 8972801291812609718}
-  m_Layer: 0
+  m_Layer: 11
   m_Name: Wave
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -238,8 +238,6 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   wave: {fileID: 972670197456993920}
-  chargeTime: 0.2
-  speed: 8
   onCollide: {fileID: 7071725375362203623}
 --- !u!1 &7176180331048245695
 GameObject:
@@ -252,7 +250,7 @@ GameObject:
   - component: {fileID: 4421232478981743455}
   - component: {fileID: 6547290563723769575}
   - component: {fileID: 7071725375362203623}
-  m_Layer: 0
+  m_Layer: 11
   m_Name: collider
   m_TagString: Untagged
   m_Icon: {fileID: 0}

@@ -8,27 +8,30 @@ public class EnemiesController : MonoBehaviour
 {
     public List<WaveDefinition> waves;
 
-    int waveCounter = 0;
+    int waveCounter = 3;
 
     private static EnemiesController instance;
 
     public UnityEvent onWaveEnd;
 
-    static int aliveEnemiesCnt = 0;
+    int aliveEnemiesCnt = 0;
+
 
     public static void IncreaseAliveCount()
     {
-        aliveEnemiesCnt++;
-        Debug.Log($"{aliveEnemiesCnt} enemies alive");
+        instance.aliveEnemiesCnt++;
+        Debug.Log($"{instance.aliveEnemiesCnt} enemies alive");
     }
 
     public static void DecreaseAliveCount()
     {
-        aliveEnemiesCnt--;
-        Debug.Log($"{aliveEnemiesCnt} enemies alive");
+        instance.aliveEnemiesCnt--;
+        Debug.Log($"{instance.aliveEnemiesCnt} enemies alive");
 
-        if (aliveEnemiesCnt == 0)
+        if (instance.aliveEnemiesCnt == 0)
+        {
             instance.onWaveEnd.Invoke();
+        }
     }
 
 
@@ -37,6 +40,11 @@ public class EnemiesController : MonoBehaviour
         onWaveEnd = new UnityEvent();
         Assert.IsTrue(instance == null);
         instance = this;
+    }
+
+    private void OnDestroy()
+    {
+        instance = null;
     }
 
     public bool WasLastWave()

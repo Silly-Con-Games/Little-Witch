@@ -54,7 +54,17 @@ public class MeadowAbility : MainAbility
         if (dmg != null && dmg.GetObjectType() == EObjectType.Enemy && !alreadyHit.Contains(dmg))
         {
             dmg.ReceiveDamage(conf.damage);
-            GameObject.Destroy(owner);
+
+            if (owner.transform.parent.childCount == 1)
+            {
+
+                GameObject.Destroy(owner.transform.parent.gameObject);
+            }
+            else
+            {
+                owner.gameObject.SetActive(false);
+                GameObject.Destroy(owner);
+            }
             alreadyHit.Add(dmg);
         }
     }
