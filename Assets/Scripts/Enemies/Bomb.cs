@@ -8,6 +8,9 @@ public class Bomb : MonoBehaviour
     
     [SerializeField]
     private ParticleSystem particle;
+
+    [SerializeField]
+    private Animator animator;
     
     private PlayerController playerController;
 
@@ -26,9 +29,15 @@ public class Bomb : MonoBehaviour
         {
             particle.GetComponentInChildren<ParticleSystem>();
         }
+
+        if (!animator)
+        {
+            gameObject.GetComponent<Animator>();
+        }
         GlobalConfigManager.onConfigChanged.AddListener(ApplyConfig);
         bombCollider = gameObject.GetComponent<Collider>();
         ApplyConfig();
+        animator.enabled = false;
     }
 
     protected virtual void ApplyConfig()
@@ -51,6 +60,7 @@ public class Bomb : MonoBehaviour
 
     public IEnumerator BombCoroutine(float duration)
     {
+        animator.enabled = true;
         while (duration >= 0f)
         {
             duration -= Time.deltaTime;
@@ -58,7 +68,7 @@ public class Bomb : MonoBehaviour
         }
         FMODUnity.RuntimeManager.PlayOneShot("event:/enemies/mine/explosion");
         particle.Play();
-
+        animator.enabled = false;
         if (playerController)
         {
             float distance = Vector3.Distance(this.transform.position, playerController.transform.position);
