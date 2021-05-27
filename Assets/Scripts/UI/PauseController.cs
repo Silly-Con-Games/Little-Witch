@@ -7,6 +7,7 @@ using UnityEngine.SceneManagement;
 public class PauseController : MonoBehaviour
 {
 	public GameObject menu;
+	public GameObject controls;
 
 	private bool paused = false;
 
@@ -30,7 +31,12 @@ public class PauseController : MonoBehaviour
 		paused = false;
 	}
 
+	public void ShowControls() {
+		controls.SetActive(true);
+	}
+
 	public void QuitGame() {
+		ResumeGame();
 		SceneManager.LoadScene(0);
 	}
 }
