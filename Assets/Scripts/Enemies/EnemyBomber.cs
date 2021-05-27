@@ -33,6 +33,7 @@ public class EnemyBomber : EnemyAI
             agent.isStopped = true;
             state = State.Idle;
             idleDeltaTime = idleDuration;
+            animator.SetTrigger("Attack");
         }
     }
 
@@ -65,7 +66,6 @@ public class EnemyBomber : EnemyAI
 
     protected override void Attack()
     {
-        animator.SetTrigger("Attack");
         GameObject bomb = Instantiate(bombPrefab);
         bomb.transform.position = this.transform.position;
     }
