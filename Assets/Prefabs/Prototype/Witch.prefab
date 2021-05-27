@@ -271,7 +271,6 @@ GameObject:
   - component: {fileID: 6295430965828045209}
   - component: {fileID: 811825519810356235}
   - component: {fileID: 4461358339646151885}
-  - component: {fileID: 35013610122597127}
   - component: {fileID: 7070350008393180897}
   m_Layer: 10
   m_Name: Witch
@@ -359,6 +358,9 @@ MonoBehaviour:
   waterAbility:
     wavePrefab: {fileID: 8972801291812609718, guid: 40feebb2275793f4b8ce53b67896aa51, type: 3}
     healingEffect: {fileID: 6933957314243148155}
+  dashAbility:
+    playerHeight: 1.2
+  stepLengthSqr: 1.78
 --- !u!143 &811825519810356235
 CharacterController:
   m_ObjectHideFlags: 0
@@ -463,19 +465,6 @@ MonoBehaviour:
   m_DefaultActionMap: Player
   m_SplitScreenIndex: -1
   m_Camera: {fileID: 0}
---- !u!114 &35013610122597127
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 6295430965828045210}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 541a61fdb7346424f988be0f0fad466b, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  stepLengthSqr: 1.78
 --- !u!208 &7070350008393180897
 NavMeshObstacle:
   m_ObjectHideFlags: 0

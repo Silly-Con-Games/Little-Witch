@@ -7,7 +7,7 @@ using UnityEngine;
 public class DashAbility : MainAbility
 {
     public DashAbilityConfig conf { get => internalConf; set { internalConf = value; mainAbilityConfig = value.baseConfig; } }
-
+    public float playerHeight = 1.2f;
     private DashAbilityConfig internalConf;
 
     public override void CastAbility()
@@ -19,11 +19,12 @@ public class DashAbility : MainAbility
     IEnumerator PerformDash()
     {
         playerController.moveStop = true;
-        Debug.Log("Dashing");
         Transform playerTrans = playerController.transform;
         Vector3 start = playerTrans.position;
         Vector3 end = playerController.mouseWorldPosition;
-        end.y += 1.2f;
+        end.y += playerHeight;
+        if (end.y < 0.35f)
+            end.y = playerHeight;
         Vector3 direction = (end - start);
         float distance = Mathf.Min(direction.magnitude, conf.maxRange);
         direction.Normalize();

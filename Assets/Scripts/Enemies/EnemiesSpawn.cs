@@ -8,7 +8,6 @@ public class EnemiesSpawn : MonoBehaviour
     [SerializeField]
     private float spawnRange;
 
-    [SerializeField]
     private float spawnDelay;
 
     [SerializeField]

@@ -42,7 +42,11 @@ public class PlayerController : MonoBehaviour, IDamagable
     const float gravity = -9.81f;
     float upVelocity = 0;
     Vector2 inputVelocity;
-    public bool moveStop { get; set; }
+    public bool moveStop { get => moveStopInternal; set { moveStopInternal = value; lastPos = transform.position; } }
+    private bool moveStopInternal;
+    public float stepLengthSqr = 1.78f;
+
+    private Vector3 lastPos;
 
     float speed = 3;
     float speedModifier = 1;
@@ -56,7 +60,7 @@ public class PlayerController : MonoBehaviour, IDamagable
 
     private void Start()
     {
-        
+        lastPos = transform.position;
         tileMask = LayerMask.GetMask("Tile");
 
         mainCamera = Camera.main;
@@ -145,6 +149,14 @@ public class PlayerController : MonoBehaviour, IDamagable
 
         if (moveStop)
             return;
+
+        Vector3 diff = transform.position - lastPos;
+        if (diff.sqrMagnitude > stepLengthSqr)
+        {
+            lastPos = transform.position;
+
+            FMODUnity.RuntimeManager.PlayOneShot("event:/test/step");
+        }
 
         var targetPosition = mouseWorldPosition;
         targetPosition.y = transform.position.y;

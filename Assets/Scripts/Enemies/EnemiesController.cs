@@ -8,7 +8,7 @@ public class EnemiesController : MonoBehaviour
 {
     public List<WaveDefinition> waves;
 
-    int waveCounter = 3;
+    int waveCounter = 0;
 
     private static EnemiesController instance;
 
