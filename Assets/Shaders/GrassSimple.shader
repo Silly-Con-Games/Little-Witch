@@ -1,8 +1,8 @@
-﻿Shader "Custom/Grass"
+﻿Shader "Custom/GrassSimple"
 {
 	Properties
 	{
-		_WindTex ("Wind texture", 2D) = "white" {}
+		_WindTexture ("Wind texture", 2D) = "white" {}
 		_TopColor("Top Color", Color) = (1,1,1,1)
 		_BottomColor("Bottom Color", Color) = (0,0,0,1)
 		_BladesPerTriangle("Blades per Triangle", Float) = 5
@@ -35,28 +35,19 @@
 		float2 uv : TEXTCOORD0;
 	};
 
+	TEXTURE2D(_WindTexture);
+	SAMPLER(sampler_WindTexture);
+
+	CBUFFER_START(UnityPerMaterial)
+		float4 _WindTexture_ST;
+	CBUFFER_END
+
 	Varyings vert(Attributes input) {
 		Varyings output;
 		output.position = float4(TransformObjectToWorld(input.positionOS.xyz), 1);
 		
 		return output;
 	}
-
-	/*Varyings getpos(float4 middle, float4 offset) {
-		Varyings output;
-		float4 tmp = TransformWorldToHClip(middle + offset);
-
-		#if UNITY_REVERSED_Z
-		tmp.z = min(tmp.z, UNITY_NEAR_CLIP_VALUE);
-		#else
-		tmp.z = max(tmp.z, UNITY_NEAR_CLIP_VALUE);
-		#endif
-
-
-		output.position = tmp;
-
-		return output;
-	}*/
 
 	float _Height;
 	float _Width;
@@ -71,29 +62,6 @@
 			float3(0, 1, 0)
 	};
 	static const float uvShiftX = 0.5;
-
-	Varyings CreateBladeVertex(float3 basePosition, int index, float rotation, float tilt, float3 windAxis, float3 windStrength) {
-		float3 position = bladeVertices[index];
-		float2 uv = float2(position.x + uvShiftX, position.y);
-
-		position.x *= _Width;
-		position.y *= _Height;
-		position.z *= _Width;
-
-		float3x3 tiltM = RotationFromAxisAngle(float3(1,0,0), sin(tilt * uv.y), cos(tilt * uv.y));
-		float3x3 rotationM = RotationFromAxisAngle(float3(0,1,0), sin(rotation), cos(rotation));
-
-		//position = Rotate(float3(0,0,0), position, float3(1,0,0), tilt * uv.y);
-		//position = Rotate(float3(0,0,0), position, float3(0,1,0), rotation);
-		//position = Rotate(float3(0,0,0), position, windAxis, windStrength * uv.y);
-
-		position = mul(mul(rotationM, tiltM), position);
-
-		Varyings output;
-		output.position = TransformWorldToHClip(basePosition + position);
-		output.uv = uv;
-		return output;
-	}
 
 	Varyings CreateVertex(float3 positionWS, float2 uv) {
 		Varyings output;
@@ -120,14 +88,12 @@
 		float3x3 rotationOS;
 	};
 
-	TEXTURE2D(_WindTexture);
-	SAMPLER(sampler_WindTexture);
-	float4 _WindTexture_ST;
+	
 
 	float _WindStrength;
 	float _WindSpeed;
 
-	VertexInfo ProcessVertex(float3 position, float tilt, float3 windDir, float3 windStrength) {
+	VertexInfo ProcessVertex(float3 position, float tilt, float3 wind) {
 		float2 uv = float2(position.x + uvShiftX, position.y);
 
 		position.y -= segment.positionOSy;
@@ -136,31 +102,22 @@
 		position.y *= _Height;
 
 		float3x3 tiltRotation = RotationFromAxisAngle(float3(1,0,0), sin(tilt), cos(tilt));
-		float3 positionWS = mul(mul(segment.orientation, tiltRotation), position);
-		// place for potential limiter
+		position = mul(mul(segment.orientation, tiltRotation), position);
 
-		float3 windAxis = cross(windDir, positionWS);
-		
-		//windAxis = windAxis / length(windAxis);
-		//float3 windAxis = windDir;
-
-		float3x3 windRotation = RotationFromAxisAngle(windAxis, sin(windStrength), cos(windStrength));
-		position = mul(mul(segment.orientation, mul(windRotation, tiltRotation)), position);
-
-		position += segment.position;
+		position += segment.position + wind * uv.y;
 
 		VertexInfo output;
 		output.position = position;
 		output.uv = uv;
-		output.rotationOS = mul(windRotation, tiltRotation);
-		//output.rotationOS = tiltRotation;
+		//output.rotationOS = mul(windRotation, tiltRotation);
+		output.rotationOS = tiltRotation;
 
 		return output;
 	}
 
-	void CreateGrassSegment(int indexFrom, int indexTo, float tilt, inout TriangleStream<Varyings> triStream, float3 windDir, float windStrength) {
+	void CreateGrassSegment(int indexFrom, int indexTo, float tilt, inout TriangleStream<Varyings> triStream, float3 wind) {
 		for (int i = indexFrom; i <= indexTo; i++) {
-			VertexInfo vertex = ProcessVertex(bladeVertices[i], tilt, windDir, windStrength);
+			VertexInfo vertex = ProcessVertex(bladeVertices[i], tilt, wind);
 			triStream.Append(CreateVertex(vertex.position, vertex.uv));
 		}
 
@@ -168,7 +125,7 @@
 
 		float3 position = (bladeVertices[indexFrom] + bladeVertices[indexTo]) / 2;
 		newInfo.positionOSy = position.y;
-		VertexInfo vertex = ProcessVertex(position, tilt, windDir, windStrength);
+		VertexInfo vertex = ProcessVertex(position, tilt, wind);
 
 		newInfo.position = vertex.position;
 		newInfo.orientation = mul(segment.orientation, vertex.rotationOS);
@@ -185,18 +142,6 @@
 		float p2 = rand(middle.xyz + index) * (1 - p1);
 		float p3 = 1 - p1 - p2;
 
-		/*float3x4 permutations[6];
-		permutations[0] = float3x4(a, b, c);
-		permutations[1] = float3x4(a, c, b);
-		permutations[2] = float3x4(b, a, c);
-		permutations[3] = float3x4(b, c, b);
-		permutations[4] = float3x4(c, a, b);
-		permutations[5] = float3x4(c, b, a);
-
-
-		int index = (int)round(rand(middle.xzz) * 5);
-		float3x4 perm = permutations[index];*/
-
 		return middle + float3(a * p1 + b * p2 + c * p3);
 	}
 
@@ -204,7 +149,6 @@
 	float _TiltModifier;
 
 	[maxvertexcount(MAX_BLADES * VERTICES_PER_BLADE)]
-	//[maxvertexcount(30)]
 	void geom(triangle Varyings input[3], inout TriangleStream<Varyings> triStream) {
 		float3 middle = (input[0].position + input[1].position + input[2].position) / 3;
 		float3 a = input[0].position - middle;
@@ -216,29 +160,18 @@
 			float tilt = (rand(position.xyz) * 2 - 1) * degToRad(30) * _TiltModifier;
 			float rotation = (rand(position.yzz) * 2 - 1) * degToRad(90);
 
-			float2 windUV = position.xz * _WindTexture_ST.xy + _WindTexture_ST.zw + float2(_WindSpeed * _Time.y, _WindSpeed * _Time.y);
-			//float2 windUV = TRANSFORM_TEX(position.xz, _WindTexture) + float2(_WindSpeed * _Time.y, _WindSpeed * _Time.y);
-			float2 windSample = SAMPLE_TEXTURE2D_LOD(_WindTexture, sampler_WindTexture, windUV, 0) * 2 - 1;
-			windSample = float2(1, 1);
-			float3 windDir = float3(windSample.x, 0, windSample.y) * _WindStrength;
-			//float3 windDir = float3(1, 0, 1) * _WindStrength;
-			float windStrength = length(windDir);
+			float2 windUV = TRANSFORM_TEX(position.xz, _WindTexture) + float2(_WindSpeed * _Time.x, _WindSpeed * _Time.x);
+			float4 windSample = SAMPLE_TEXTURE2D_LOD(_WindTexture, sampler_WindTexture, windUV, 0) * 2 - 1;
+			float3 wind = float3(windSample.x, 0, windSample.y) * _WindStrength * 0.01;
 
 			segment.position = position;
 			segment.orientation = RotationFromAxisAngle(float3(0,1,0), sin(rotation), cos(rotation));
 			segment.positionOSy = 0;
 
 			for (int j = 0; j < VERTICES_PER_BLADE - 2; j += 2) {
-				CreateGrassSegment(j, j + 1, tilt, triStream, windDir, windStrength);
+				CreateGrassSegment(j, j + 1, tilt, triStream, wind);
 			}
-			CreateGrassSegment(VERTICES_PER_BLADE - 1, VERTICES_PER_BLADE - 1, tilt, triStream, windDir, windStrength);
-
-			/*float3 windAxis = float3(0.7, 0, -0.5);
-			float windStrength = length(windAxis) * rand(position.xzy) * (sin(_Time * _WindSpeed) + 1) * _WindStrength;
-
-			for (int j = 0; j < VERTICES_PER_BLADE; j++) {
-				triStream.Append(CreateBladeVertex(position, j, rotation, tilt, windAxis, windStrength));
-			}*/
+			CreateGrassSegment(VERTICES_PER_BLADE - 1, VERTICES_PER_BLADE - 1, tilt, triStream, wind);
 			triStream.RestartStrip();
 		}
 	}
@@ -253,6 +186,8 @@
 
 		Pass
 		{
+			Tags { "LightMode" = "UniversalForward" }
+
 			HLSLPROGRAM
 
 			float4 _TopColor;

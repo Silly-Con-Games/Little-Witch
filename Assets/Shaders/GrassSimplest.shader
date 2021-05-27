@@ -1,4 +1,4 @@
-﻿Shader "Custom/Grass"
+﻿Shader "Custom/GrassSimplest"
 {
 	Properties
 	{
@@ -35,28 +35,22 @@
 		float2 uv : TEXTCOORD0;
 	};
 
+	TEXTURE2D(_WindTexture);
+	SAMPLER(sampler_WindTexture);
+
+	CBUFFER_START(UnityPerMaterial)
+		float4 _BaseMap_ST;
+	CBUFFER_END
+
 	Varyings vert(Attributes input) {
 		Varyings output;
-		output.position = float4(TransformObjectToWorld(input.positionOS.xyz), 1);
+		float3 position = TransformObjectToWorld(input.positionOS.xyz);
+		float4 windSample = SAMPLE_TEXTURE2D_LOD(_WindTexture, sampler_WindTexture, position.xz + float2(_Time.y, _Time.y), 0) * 2 - 1;
+		float3 windDir = float3(windSample.x, 0, windSample.y);
+		output.position = float4(position, 1);
 		
 		return output;
 	}
-
-	/*Varyings getpos(float4 middle, float4 offset) {
-		Varyings output;
-		float4 tmp = TransformWorldToHClip(middle + offset);
-
-		#if UNITY_REVERSED_Z
-		tmp.z = min(tmp.z, UNITY_NEAR_CLIP_VALUE);
-		#else
-		tmp.z = max(tmp.z, UNITY_NEAR_CLIP_VALUE);
-		#endif
-
-
-		output.position = tmp;
-
-		return output;
-	}*/
 
 	float _Height;
 	float _Width;
@@ -120,9 +114,7 @@
 		float3x3 rotationOS;
 	};
 
-	TEXTURE2D(_WindTexture);
-	SAMPLER(sampler_WindTexture);
-	float4 _WindTexture_ST;
+	
 
 	float _WindStrength;
 	float _WindSpeed;
@@ -144,16 +136,16 @@
 		//windAxis = windAxis / length(windAxis);
 		//float3 windAxis = windDir;
 
-		float3x3 windRotation = RotationFromAxisAngle(windAxis, sin(windStrength), cos(windStrength));
-		position = mul(mul(segment.orientation, mul(windRotation, tiltRotation)), position);
+		//float3x3 windRotation = RotationFromAxisAngle(windAxis, sin(windStrength), cos(windStrength));
+		position = mul(mul(segment.orientation, tiltRotation), position);
 
 		position += segment.position;
 
 		VertexInfo output;
 		output.position = position;
 		output.uv = uv;
-		output.rotationOS = mul(windRotation, tiltRotation);
-		//output.rotationOS = tiltRotation;
+		//output.rotationOS = mul(windRotation, tiltRotation);
+		output.rotationOS = tiltRotation;
 
 		return output;
 	}
@@ -185,18 +177,6 @@
 		float p2 = rand(middle.xyz + index) * (1 - p1);
 		float p3 = 1 - p1 - p2;
 
-		/*float3x4 permutations[6];
-		permutations[0] = float3x4(a, b, c);
-		permutations[1] = float3x4(a, c, b);
-		permutations[2] = float3x4(b, a, c);
-		permutations[3] = float3x4(b, c, b);
-		permutations[4] = float3x4(c, a, b);
-		permutations[5] = float3x4(c, b, a);
-
-
-		int index = (int)round(rand(middle.xzz) * 5);
-		float3x4 perm = permutations[index];*/
-
 		return middle + float3(a * p1 + b * p2 + c * p3);
 	}
 
@@ -204,7 +184,6 @@
 	float _TiltModifier;
 
 	[maxvertexcount(MAX_BLADES * VERTICES_PER_BLADE)]
-	//[maxvertexcount(30)]
 	void geom(triangle Varyings input[3], inout TriangleStream<Varyings> triStream) {
 		float3 middle = (input[0].position + input[1].position + input[2].position) / 3;
 		float3 a = input[0].position - middle;
@@ -216,22 +195,25 @@
 			float tilt = (rand(position.xyz) * 2 - 1) * degToRad(30) * _TiltModifier;
 			float rotation = (rand(position.yzz) * 2 - 1) * degToRad(90);
 
-			float2 windUV = position.xz * _WindTexture_ST.xy + _WindTexture_ST.zw + float2(_WindSpeed * _Time.y, _WindSpeed * _Time.y);
+			//float2 windUV = position.xz * _WindTexture_ST.xy + _WindTexture_ST.zw + float2(_WindSpeed * _Time.y, _WindSpeed * _Time.y);
 			//float2 windUV = TRANSFORM_TEX(position.xz, _WindTexture) + float2(_WindSpeed * _Time.y, _WindSpeed * _Time.y);
-			float2 windSample = SAMPLE_TEXTURE2D_LOD(_WindTexture, sampler_WindTexture, windUV, 0) * 2 - 1;
-			windSample = float2(1, 1);
+			//float2 windUV = position.xz + float2(_WindSpeed * _Time.y, _WindSpeed * _Time.y);
+			float4 windSample = SAMPLE_TEXTURE2D_LOD(_WindTexture, sampler_WindTexture, position.xz + float2(_Time.y, _Time.y), 0) * 2 - 1;
+			//float4 windSample = float4(0,0,0,0);
+			//windSample = float2(1, 1);
 			float3 windDir = float3(windSample.x, 0, windSample.y) * _WindStrength;
 			//float3 windDir = float3(1, 0, 1) * _WindStrength;
-			float windStrength = length(windDir);
+			float windStrength = 0;//length(windDir);
 
-			segment.position = position;
-			segment.orientation = RotationFromAxisAngle(float3(0,1,0), sin(rotation), cos(rotation));
-			segment.positionOSy = 0;
+			//segment.position = position + windDir;
+			//segment.orientation = RotationFromAxisAngle(float3(0,1,0), sin(rotation), cos(rotation));
+			//segment.positionOSy = 0;
 
 			for (int j = 0; j < VERTICES_PER_BLADE - 2; j += 2) {
-				CreateGrassSegment(j, j + 1, tilt, triStream, windDir, windStrength);
+				//CreateGrassSegment(j, j + 1, tilt, triStream, windDir, windStrength);
+				triStream.Append(CreateVertex(position + bladeVertices[j] + windDir, float2(0, bladeVertices[j].y)));
 			}
-			CreateGrassSegment(VERTICES_PER_BLADE - 1, VERTICES_PER_BLADE - 1, tilt, triStream, windDir, windStrength);
+			//CreateGrassSegment(VERTICES_PER_BLADE - 1, VERTICES_PER_BLADE - 1, tilt, triStream, windDir, windStrength);
 
 			/*float3 windAxis = float3(0.7, 0, -0.5);
 			float windStrength = length(windAxis) * rand(position.xzy) * (sin(_Time * _WindSpeed) + 1) * _WindStrength;
@@ -253,6 +235,8 @@
 
 		Pass
 		{
+			Tags { "LightMode" = "UniversalForward" }
+
 			HLSLPROGRAM
 
 			float4 _TopColor;
