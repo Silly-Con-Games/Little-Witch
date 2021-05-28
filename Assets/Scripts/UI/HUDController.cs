@@ -21,6 +21,8 @@ public class HUDController : MonoBehaviour
     [SerializeField]
     private Image waveTimer;
 
+    public PlayerController playerController;
+
     private void Start()
     {
         // ability icons
@@ -104,6 +106,22 @@ public class HUDController : MonoBehaviour
         for (int i = 0; i < energybar.Length; i++)
         {
             energybar[i].GetComponent<Animator>().SetTrigger("NotEnoughEnergy");
+        }
+    }
+
+    public void TransformBiome(string type)
+    {
+        if (type == "forest")
+        {
+            playerController.OnTransformForest(null);
+        }
+        else if (type == "meadow")
+        {
+            playerController.OnTransformMeadow(null);
+        }
+        else if (type == "water")
+        {
+            playerController.OnTransformWater(null);
         }
     }
 
