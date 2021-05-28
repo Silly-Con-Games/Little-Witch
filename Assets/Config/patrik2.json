@@ -6,21 +6,21 @@
         "movementSpeed": 4.5,
         "jumpHeight": 0.0,
         "meeleeAbility": {
-            "cooldown": 0.3499999940395355,
+            "cooldown": 0.44999998807907107,
             "damage": 2.0,
             "pushbackForce": 7.0,
             "pushbackDuration": 0.4000000059604645,
             "attackSlow": 0.5
         },
         "chargeAbility": {
-            "damageMin": 2.0,
-            "damageMax": 4.0,
+            "damageMin": 1.0,
+            "damageMax": 3.0,
             "distanceMin": 1000.0,
             "distanceMax": 1000.0,
             "explosionRadiusMin": 6.0,
-            "explosionRadiusMax": 12.0,
+            "explosionRadiusMax": 10.0,
             "explosionSpeedMin": 20.0,
-            "explosionSpeedMax": 30.0,
+            "explosionSpeedMax": 25.0,
             "spawnRadiusMin": 0.5,
             "spawnRadiusMax": 1.5,
             "speedMin": 10.0,
@@ -72,7 +72,7 @@
             "baseConfig": {
                 "cooldown": 0.5
             },
-            "speed": 23.0,
+            "speed": 16.0,
             "maxRange": 3.0,
             "animSpeed": 0.0
         }
@@ -163,7 +163,7 @@
     },
     "soundConfig": {
         "musicVolume": 0.5,
-        "sfxVolume": 0.5
+        "sfxVolume": 0.15000000596046449
     },
     "respawnTime": 2.0
 }

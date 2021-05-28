@@ -91,17 +91,10 @@ public class PlayerController : MonoBehaviour, IDamagable
         }
 
         hudController.playerController = this;
-        Debug.Log("what " + this);
 
         ApplyConfig();
 
         isDead = false;
-    }
-
-    private void OnDestroy()
-    {
-        GlobalConfigManager.onConfigChanged.RemoveListener(ApplyConfig);
-        onDeathEvent.Invoke();
     }
 
     void Update()
@@ -115,7 +108,6 @@ public class PlayerController : MonoBehaviour, IDamagable
             meeleeAbility.attackInQ = false;
             OnMeleeAbility(null);
         }
-
 
         if (chargeAbility.IsCharging)
             chargeAbility.UpdateAnimation();
@@ -379,7 +371,11 @@ public class PlayerController : MonoBehaviour, IDamagable
     {
         isDead = true;
         animator.SetTrigger("Die");
-        this.enabled = false;
+
+		GlobalConfigManager.onConfigChanged.RemoveListener(ApplyConfig);
+		onDeathEvent.Invoke();
+
+		this.enabled = false;
         GetComponent<PlayerInput>().enabled = false;
     }
 
