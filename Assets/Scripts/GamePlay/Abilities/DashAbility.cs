@@ -8,6 +8,7 @@ public class DashAbility : MainAbility
 {
     public DashAbilityConfig conf { get => internalConf; set { internalConf = value; mainAbilityConfig = value.baseConfig; } }
     public float playerHeight = 1.2f;
+    public TrailRenderer dashEffect;
     private DashAbilityConfig internalConf;
 
     public override void CastAbility()
@@ -18,6 +19,7 @@ public class DashAbility : MainAbility
 
     IEnumerator PerformDash()
     {
+        dashEffect.emitting = true;
         playerController.moveStop = true;
         Transform playerTrans = playerController.transform;
         Vector3 start = playerTrans.position;
@@ -49,5 +51,6 @@ public class DashAbility : MainAbility
         playerTrans.localScale = Vector3.one;
         playerTrans.position = start +  direction * distance;       
         playerController.moveStop = false;
+        dashEffect.emitting = false;
     }
 }

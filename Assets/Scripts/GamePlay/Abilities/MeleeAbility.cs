@@ -20,7 +20,7 @@ public class MeleeAbility
     {
         if (IsReady)
         {
-            Debug.Log("atack");
+            timeSinceLastAttack = Time.time;
             swing.Attack();
         }
     }

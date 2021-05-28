@@ -103,7 +103,11 @@ public class PlayerController : MonoBehaviour, IDamagable
         CheckCurrentBiome();
 
         if (meeleeAbility.attackInQ)
+        {
+            meeleeAbility.attackInQ = false;
             OnMeleeAbility(null);
+        }
+
 
         if (chargeAbility.IsCharging)
             chargeAbility.UpdateAnimation();

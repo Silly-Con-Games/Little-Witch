@@ -50,7 +50,7 @@ public class GameController : MonoBehaviour
         internalGS = EGameState.WaitingForNextWave;
         GlobalConfigManager.onConfigChanged.AddListener(ApplyConfig);
         ApplyConfig();
-        StartCoroutine(SpawnWithDelay(0.3f));
+        StartCoroutine(SpawnWithDelay(0.1f));
 
         enemiesController.onWaveEnd.AddListener(OnWaveEnd);
         StartCoroutine(WaitAndStartWave(enemiesController.GetCurrentPreperationTime()));
@@ -67,9 +67,7 @@ public class GameController : MonoBehaviour
     private IEnumerator SpawnWithDelay(float delay)
     {
         yield return new WaitForSeconds(delay);
-        currentWitch = Instantiate(witchPrefab);
-        currentWitch.transform.position = spawnPoint.position;
-        currentWitch.transform.rotation = spawnPoint.rotation;
+        currentWitch = Instantiate(witchPrefab, spawnPoint.position, spawnPoint.rotation);
         currentWitch.onDeathEvent.AddListener(OnWitchDeath);
         currentWitch.mapController = mapController;
         currentWitch.hudController = hud;
