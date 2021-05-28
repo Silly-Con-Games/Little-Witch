@@ -91,7 +91,6 @@ public class PlayerController : MonoBehaviour, IDamagable
         }
 
         hudController.playerController = this;
-        Debug.Log("what " + this);
 
         ApplyConfig();
 
