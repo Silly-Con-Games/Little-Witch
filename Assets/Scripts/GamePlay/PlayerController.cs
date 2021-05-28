@@ -267,6 +267,7 @@ public class PlayerController : MonoBehaviour, IDamagable
     {
         if (value.isPressed && dashAbility.IsReady)
         {
+            FMODUnity.RuntimeManager.PlayOneShot("event:/witch/dash/dash");
             dashAbility.CastAbility();
         }
            
