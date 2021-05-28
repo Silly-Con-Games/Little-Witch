@@ -8,9 +8,13 @@ using System;
 public class HUDController : MonoBehaviour
 {
     // health and energy
-    [SerializeField] private Slider[] healthbar;
+    [SerializeField] private GameObject healthParent;
+    [SerializeField] private Slider healthbar;
+    private Slider[] healthbars;
     private float oldHealth;
-    [SerializeField] private Slider[] energybar;
+    [SerializeField] private GameObject energyParent;
+    [SerializeField] private Slider energybar;
+    private Slider[] energybars;
     private float oldEnergy;
 
     // ability icons
@@ -35,15 +39,28 @@ public class HUDController : MonoBehaviour
         }
     }
 
-    public void SetUpHealth(float startingHealth, float maxHealth)
+    public void SetUpHealth(float startingHealth, float maxHealth, int barCount = 5)
     {
-        SetUpBar(startingHealth, maxHealth, ref healthbar);
+        healthbars = new Slider[barCount];
+        healthbars[0] = healthbar;
+        for (int i = 1; i < barCount; i++)
+        {
+            healthbars[i] = Instantiate(healthbar, healthParent.transform);
+        }
+        SetUpBar(startingHealth, maxHealth, ref healthbars);
         oldHealth = startingHealth;
     }
 
-    public void SetUpEnergy(float startingEnergy, float maxEnergy)
+    public void SetUpEnergy(float startingEnergy, float maxEnergy, int barCount = 3)
     {
-        SetUpBar(startingEnergy, maxEnergy, ref energybar);
+        energybars = new Slider[barCount];
+        energybars[0] = energybar;
+        for (int i = 1; i < barCount; i++)
+        {
+            energybars[i] = Instantiate(energybar, energyParent.transform);
+        }
+
+        SetUpBar(startingEnergy, maxEnergy, ref energybars);
         oldEnergy = startingEnergy;
     }
 
@@ -63,13 +80,13 @@ public class HUDController : MonoBehaviour
 
     public void SetHealth(float newHealth)
     {
-        SetBar(oldHealth, newHealth, ref healthbar);
+        SetBar(oldHealth, newHealth, ref healthbars);
         oldHealth = newHealth;
     }
 
     public void SetEnergy(float newEnergy)
     {
-        SetBar(oldEnergy, newEnergy, ref energybar);
+        SetBar(oldEnergy, newEnergy, ref energybars);
         oldEnergy = newEnergy;
     }
 
@@ -103,9 +120,9 @@ public class HUDController : MonoBehaviour
 
     public void NotEnoughEnergy()
     {
-        for (int i = 0; i < energybar.Length; i++)
+        for (int i = 0; i < energybars.Length; i++)
         {
-            energybar[i].GetComponent<Animator>().SetTrigger("NotEnoughEnergy");
+            energybars[i].GetComponent<Animator>().SetTrigger("NotEnoughEnergy");
         }
     }
 
