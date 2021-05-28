@@ -11,14 +11,18 @@ public class ChargeAbilityProjectile : MonoBehaviour
     public Vector3 origin;
     public float explosionRadius;
     public float explosionSpeed;
-
+    private float rad = 0;
     private bool isExploding;
     private void Update()
     {
         if (isExploding)
         {
-            transform.localScale += new Vector3(Time.deltaTime * explosionSpeed, Time.deltaTime * explosionSpeed, Time.deltaTime * explosionSpeed);
-            if (transform.localScale.x > explosionRadius)
+            rad += Time.deltaTime * explosionSpeed;
+            float alp = 1 - rad / explosionRadius;
+            alp = Mathf.Clamp(alp,0,1);
+            transform.localScale = Vector3.one * ( 1 - (alp * alp ) ) * explosionRadius;
+            
+            if (alp == 0)
                 Destroy(gameObject);
             return;
         }

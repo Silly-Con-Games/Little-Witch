@@ -103,7 +103,11 @@ public class PlayerController : MonoBehaviour, IDamagable
         CheckCurrentBiome();
 
         if (meeleeAbility.attackInQ)
+        {
+            meeleeAbility.attackInQ = false;
             OnMeleeAbility(null);
+        }
+
 
         if (chargeAbility.IsCharging)
             chargeAbility.UpdateAnimation();
@@ -354,7 +358,7 @@ public class PlayerController : MonoBehaviour, IDamagable
 	public void ReceiveDamage(float amount)
     {
         if (isDead) return;
-
+        FMODUnity.RuntimeManager.PlayOneShot("event:/witch/hit/witch_hit");
         animator.SetTrigger("GetHit");
 
         health.TakeDamage(amount);

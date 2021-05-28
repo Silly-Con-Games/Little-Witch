@@ -162,6 +162,9 @@ public abstract class EnemyAI : MonoBehaviour, IDamagable, IRootable, IStunnable
             default:
                 break;
         }
+
+        float speed = agent.velocity.sqrMagnitude;
+        animator.SetFloat("Speed", speed);
     }
     private void UpdateIndicator()
     {
@@ -260,6 +263,7 @@ public abstract class EnemyAI : MonoBehaviour, IDamagable, IRootable, IStunnable
         agent.isStopped = false;
         state = State.Chase;
         chasingDeltaTime = chasingDuration;
+        FMODUnity.RuntimeManager.PlayOneShot("event:/enemies/hit/generic_hit");
         if ((healthPoints -= amount) <= 0) Die();
     }
 

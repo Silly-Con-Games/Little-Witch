@@ -1,0 +1,23 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<objects serializationModel="Studio.02.01.00">
+	<object class="AudioFile" id="{50581ed7-a261-4b0a-80e6-bc0945be06cc}">
+		<property name="assetPath">
+			<value>G4F SFX07-YNP-WATER SPLASH-Sawmill Geyser Errupt.wav</value>
+		</property>
+		<property name="isStreaming">
+			<value>true</value>
+		</property>
+		<property name="frequencyInKHz">
+			<value>96</value>
+		</property>
+		<property name="channelCount">
+			<value>2</value>
+		</property>
+		<property name="length">
+			<value>157.67601041666666</value>
+		</property>
+		<relationship name="masterAssetFolder">
+			<destination>{786d8474-8665-4209-a523-6ad97a8ad45d}</destination>
+		</relationship>
+	</object>
+</objects>
