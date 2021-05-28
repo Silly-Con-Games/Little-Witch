@@ -19,7 +19,7 @@ public class HUDController : MonoBehaviour
     private Color[] iconColors;
 
     [SerializeField]
-    private TextMeshProUGUI waveTimer;
+    private Image waveTimer;
 
     private void Start()
     {
@@ -177,16 +177,17 @@ public class HUDController : MonoBehaviour
 
     public IEnumerator ShowTimeTillNextWave(float duration)
     {
-        waveTimer.enabled = true;
+        waveTimer.gameObject.SetActive(true);
+        TextMeshProUGUI waveTimerText = waveTimer.GetComponentInChildren<TextMeshProUGUI>();
         float timeStart = Time.time;
         float time;
         while ((time = duration - (Time.time - timeStart) )> 0)
         {
-            
-            waveTimer.text = $"!! {Mathf.Ceil(time).ToString("0")}s";
+
+            waveTimerText.text = $"next wave in {Mathf.Ceil(time).ToString("0")}s";
             yield return null;
         }
-        waveTimer.enabled = false;
+        waveTimer.gameObject.SetActive(false); 
     }
 
 }
