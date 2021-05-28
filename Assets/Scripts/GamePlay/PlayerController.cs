@@ -41,7 +41,8 @@ public class PlayerController : MonoBehaviour, IDamagable
 
     const float gravity = -9.81f;
     float upVelocity = 0;
-    Vector2 inputVelocity;
+
+    public Vector2 inputVelocity;
     public bool moveStop { get => moveStopInternal; set { moveStopInternal = value; lastPos = transform.position; } }
     private bool moveStopInternal;
     public float stepLengthSqr = 1.78f;
@@ -73,7 +74,7 @@ public class PlayerController : MonoBehaviour, IDamagable
 
 		transformAbility.Init(this);
 
-        meeleeAbility.player = this;
+        meeleeAbility.player = this;        
         forestAbility.Init(this);
         meadowAbility.Init(this);
         waterAbility.Init(this);
