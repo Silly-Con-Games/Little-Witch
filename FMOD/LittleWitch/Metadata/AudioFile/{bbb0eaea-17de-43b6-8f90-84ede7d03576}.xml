@@ -1,0 +1,20 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<objects serializationModel="Studio.02.01.00">
+	<object class="AudioFile" id="{bbb0eaea-17de-43b6-8f90-84ede7d03576}">
+		<property name="assetPath">
+			<value>abilities/forest_meadow_ability_1.wav</value>
+		</property>
+		<property name="frequencyInKHz">
+			<value>48</value>
+		</property>
+		<property name="channelCount">
+			<value>2</value>
+		</property>
+		<property name="length">
+			<value>1.2344791666666666</value>
+		</property>
+		<relationship name="masterAssetFolder">
+			<destination>{786d8474-8665-4209-a523-6ad97a8ad45d}</destination>
+		</relationship>
+	</object>
+</objects>

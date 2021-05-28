@@ -1,0 +1,20 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<objects serializationModel="Studio.02.01.00">
+	<object class="AudioFile" id="{4d0d391a-d59d-4d4a-901f-29d7ab5cff81}">
+		<property name="assetPath">
+			<value>enemies/hit/enemy_gen_hit_8.wav</value>
+		</property>
+		<property name="frequencyInKHz">
+			<value>96</value>
+		</property>
+		<property name="channelCount">
+			<value>2</value>
+		</property>
+		<property name="length">
+			<value>3.45740625</value>
+		</property>
+		<relationship name="masterAssetFolder">
+			<destination>{786d8474-8665-4209-a523-6ad97a8ad45d}</destination>
+		</relationship>
+	</object>
+</objects>

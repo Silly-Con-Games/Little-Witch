@@ -367,7 +367,7 @@ public class PlayerController : MonoBehaviour, IDamagable
 	public void ReceiveDamage(float amount)
     {
         if (isDead) return;
-
+        FMODUnity.RuntimeManager.PlayOneShot("event:/witch/hit/witch_hit");
         animator.SetTrigger("GetHit");
 
         health.TakeDamage(amount);

@@ -68,6 +68,7 @@ public class ForestAbility : MainAbility
         var inst = GameObject.Instantiate(rootCirclePrefab);
         inst.transform.position = destination;
         inst.Init(conf.rootBurstRadius, conf.rootBurstDensity, OnRootCircleHit);
+        FMODUnity.RuntimeManager.PlayOneShot("event:/witch/abilities/forest_ability_circle", inst.transform.position);
     }
 
     private void OnRootCircleHit(Collider other)
@@ -85,4 +86,6 @@ public class ForestAbility : MainAbility
             ind.transform.position = other.transform.position;
         }
     }
+    
+    
 }

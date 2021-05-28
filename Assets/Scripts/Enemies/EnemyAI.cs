@@ -263,6 +263,7 @@ public abstract class EnemyAI : MonoBehaviour, IDamagable, IRootable, IStunnable
         agent.isStopped = false;
         state = State.Chase;
         chasingDeltaTime = chasingDuration;
+        FMODUnity.RuntimeManager.PlayOneShot("event:/enemies/hit/generic_hit");
         if ((healthPoints -= amount) <= 0) Die();
     }
 

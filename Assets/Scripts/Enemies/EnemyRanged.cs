@@ -30,7 +30,7 @@ public class EnemyRanged : EnemyAI
 
         animator.SetTrigger("Attack");
 
-        FMOD.Studio.EventInstance instance = RuntimeManager.CreateInstance("event:/test/shot");
+        FMOD.Studio.EventInstance instance = RuntimeManager.CreateInstance("event:/enemies/shot/ranged_shot");
 		RuntimeManager.AttachInstanceToGameObject(instance, transform, GetComponent<Rigidbody>());
 		instance.setParameterByName("shot_pitch", Random.Range(-1f, 1f));
 		instance.start();

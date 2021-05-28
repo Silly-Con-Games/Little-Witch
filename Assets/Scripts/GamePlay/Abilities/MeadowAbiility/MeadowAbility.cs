@@ -21,6 +21,7 @@ public class MeadowAbility : MainAbility
         var parent = new GameObject("MAParent").transform;
         parent.position = playerController.transform.position;
         parent.rotation = playerController.transform.rotation;
+        FMODUnity.RuntimeManager.PlayOneShot("event:/witch/abilities/meadow_ability", parent.transform.position);
 
         int half = (conf.projectileCnt - 1) / 2;
         float stepWidth = conf.spellWidth / conf.projectileCnt; 
