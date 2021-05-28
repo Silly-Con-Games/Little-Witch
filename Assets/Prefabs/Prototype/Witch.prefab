@@ -639,6 +639,7 @@ MonoBehaviour:
   dashAbility:
     playerHeight: 1.2
     dashEffect: {fileID: 4390266047583887119}
+  inputVelocity: {x: 0, y: 0}
   stepLengthSqr: 1.78
 --- !u!143 &811825519810356235
 CharacterController:
@@ -1103,7 +1104,7 @@ PrefabInstance:
     - target: {fileID: -5305533565454700271, guid: 0cd445c24f9478144b50471a01df4dc2, type: 3}
       propertyPath: m_Materials.Array.data[0]
       value: 
-      objectReference: {fileID: 0}
+      objectReference: {fileID: 2100000, guid: 216036ea43bd28c4395c39cde4633b58, type: 2}
     - target: {fileID: -5049032948309972686, guid: 0cd445c24f9478144b50471a01df4dc2, type: 3}
       propertyPath: m_Layer
       value: 10
