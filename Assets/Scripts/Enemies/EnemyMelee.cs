@@ -152,7 +152,7 @@ public class EnemyMelee : EnemyAI
         if (IsPlayerInRange(attackRange))
         {
             animator.SetTrigger("Attack");
-            playerController.ReceiveDamage(damage);
+            StartCoroutine(WaitAndTryDealDamage(0.6f));
         }
 
         attacking = false;
@@ -160,6 +160,15 @@ public class EnemyMelee : EnemyAI
         agent.speed = speed;
         dashCooldownDelta = dashCooldown;
         attackCooldownDelta = attackCooldown;
+    }
+
+    IEnumerator WaitAndTryDealDamage(float duration)
+    {
+        yield return new WaitForSeconds(duration);
+        if (IsPlayerInRange(attackRange))
+        {
+            playerController.ReceiveDamage(damage);
+        }
     }
 
 }

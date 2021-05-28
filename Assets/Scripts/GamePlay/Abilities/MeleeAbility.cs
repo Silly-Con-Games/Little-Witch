@@ -14,10 +14,13 @@ public class MeleeAbility
 
     public bool IsReady => Time.time - timeSinceLastAttack > conf.cooldown;
 
+    public bool attackInQ;
+
     public void Attack()
     {
         if (IsReady)
         {
+            Debug.Log("atack");
             swing.Attack();
         }
     }

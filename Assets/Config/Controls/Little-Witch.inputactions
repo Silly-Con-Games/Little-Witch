@@ -27,7 +27,7 @@
                     "id": "dc1e8368-02c0-45cd-92ea-791c9503d0b1",
                     "expectedControlType": "Button",
                     "processors": "",
-                    "interactions": "Hold(duration=0.21)"
+                    "interactions": "Hold(duration=0.3)"
                 },
                 {
                     "name": "MeleeAbility",
@@ -35,7 +35,7 @@
                     "id": "9141c0b7-1b8a-4698-b771-56821668732a",
                     "expectedControlType": "Button",
                     "processors": "",
-                    "interactions": "Tap"
+                    "interactions": "Tap(duration=0.3)"
                 },
                 {
                     "name": "MainAbility",

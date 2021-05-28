@@ -102,6 +102,9 @@ public class PlayerController : MonoBehaviour, IDamagable
 
         CheckCurrentBiome();
 
+        if (meeleeAbility.attackInQ)
+            OnMeleeAbility(null);
+
         if (chargeAbility.IsCharging)
             chargeAbility.UpdateAnimation();
 
@@ -272,6 +275,10 @@ public class PlayerController : MonoBehaviour, IDamagable
             meeleeAbility.Attack();
             ScaleSpeedModifier(meeleeAbility.conf.attackSlow);
             StartCoroutine(ResumeMovement(meeleeAbility.conf.cooldown));
+        }
+        else if (!pauseController.IsPaused())
+        {
+            meeleeAbility.attackInQ = true;
         }
     }
 
