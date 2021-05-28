@@ -354,7 +354,11 @@ public class PlayerController : MonoBehaviour, IDamagable
 	}
 
 	private void OnPause(InputValue value) {
-		pauseController.PauseGame();
+		if (pauseController.IsPaused()) {
+			pauseController.ResumeGame();
+		} else {
+			pauseController.PauseGame();
+		}
 	}
 
 	public void ReceiveDamage(float amount)

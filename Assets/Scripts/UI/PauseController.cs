@@ -10,19 +10,28 @@ public class PauseController : MonoBehaviour
 	public GameObject controls;
 
 	private bool paused = false;
+	private bool pauseLocked = false;
 
 	public bool IsPaused() {
 		return paused;
 	}
 
+	public bool CanResume() {
+		return !pauseLocked;
+	}
+
+	public void LockPause() {
+		pauseLocked = true;
+	}
+
+	public void UnlockPause() {
+		pauseLocked = false;
+	}
+ 
 	public void PauseGame() {
-		if (paused) {
-			ResumeGame();
-		} else {
-			Time.timeScale = 0f;
-			menu.SetActive(true);
-			paused = true;
-		}
+		Time.timeScale = 0f;
+		menu.SetActive(true);
+		paused = true;
 	}
 
 	public void UnpauseGame() {
@@ -31,11 +40,14 @@ public class PauseController : MonoBehaviour
 	}
 
 	public void ResumeGame() {
-		UnpauseGame();
-		menu.SetActive(false);
+		if (!pauseLocked) {
+			UnpauseGame();
+			menu.SetActive(false);
+		}
 	}
 
 	public void ShowControls() {
+		LockPause();
 		controls.SetActive(true);
 	}
 

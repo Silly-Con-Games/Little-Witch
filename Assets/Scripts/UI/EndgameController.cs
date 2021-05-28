@@ -12,11 +12,13 @@ public class EndgameController : MonoBehaviour
 
     public void Win() {
 		pauseController.PauseGame();
+		pauseController.LockPause();
 		winMenu.SetActive(true);
 	}
 
 	public void Lose() {
 		pauseController.PauseGame();
+		pauseController.LockPause();
 		loseMenu.SetActive(true);
 	}
 
