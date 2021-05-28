@@ -85,7 +85,7 @@ public class EnemyEnvDestroyer : EnemyAI
 
     protected override void Roam()
     {
-        if (!agent.pathPending && agent.remainingDistance < 0.1f)
+        if (agent.isActiveAndEnabled && !agent.pathPending && agent.remainingDistance < 0.1f)
         {
             state = State.Idle;
             agent.isStopped = true;
@@ -163,7 +163,7 @@ public class EnemyEnvDestroyer : EnemyAI
     public override void ReceiveDamage(float amount)
     {
         animator.SetTrigger("GetHit");
-
+        FMODUnity.RuntimeManager.PlayOneShot("event:/enemies/hit/generic_hit");
         if ((healthPoints -= amount) <= 0)
         {
             for (int i = 0; i < enemiesMelee.Count; i++)

@@ -28,7 +28,7 @@ public class EnemyBomber : EnemyAI
 
     protected override void Roam()
     {
-        if (!agent.pathPending && agent.remainingDistance < 0.5f)
+        if (agent.isActiveAndEnabled && !agent.pathPending && agent.remainingDistance < 0.5f)
         {
             agent.isStopped = true;
             state = State.Idle;
@@ -44,7 +44,7 @@ public class EnemyBomber : EnemyAI
     protected override void Idle()
     {
         idleDeltaTime -= Time.deltaTime;
-        if (idleDeltaTime <= 0)
+        if (agent.isActiveAndEnabled && idleDeltaTime <= 0)
         {
             state = State.Roam;
             agent.isStopped = false;

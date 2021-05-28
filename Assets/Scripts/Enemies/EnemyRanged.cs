@@ -30,12 +30,8 @@ public class EnemyRanged : EnemyAI
 
         animator.SetTrigger("Attack");
 
-        FMOD.Studio.EventInstance instance = RuntimeManager.CreateInstance("event:/enemies/shot/ranged_shot");
-		RuntimeManager.AttachInstanceToGameObject(instance, transform, GetComponent<Rigidbody>());
-		instance.setParameterByName("shot_pitch", Random.Range(-1f, 1f));
-		instance.start();
-		instance.release();
-	}
+        FMODUnity.RuntimeManager.PlayOneShot("event:/enemies/shot/ranged_shot");
+    }
 
     protected override void Idle()
     {
@@ -69,7 +65,7 @@ public class EnemyRanged : EnemyAI
             return;
         }
 
-        if (!agent.pathPending && agent.remainingDistance < 0.5f)
+        if (agent.isActiveAndEnabled && !agent.pathPending && agent.remainingDistance < 0.5f)
         {
             agent.SetDestination(EnemiesUtils.GetRoamPosition(roamPosition.position, moveRangeMin, moveRangeMax));
         }
@@ -78,13 +74,13 @@ public class EnemyRanged : EnemyAI
     { 
         if (!IsPlayerInRange(maxRangeToPlayer))
         {
-            if (chasingDeltaTime > 0 && playerController)
+            if (chasingDeltaTime > 0 && playerController && agent.isActiveAndEnabled)
             {
                 agent.SetDestination(playerController.transform.position);
                 chasingDeltaTime -= Time.deltaTime;
                 return;
             }
-            if (roamPosition)
+            if (roamPosition && agent.isActiveAndEnabled)
             {
                 state = State.Roam;
                 agent.isStopped = false;
@@ -92,22 +88,26 @@ public class EnemyRanged : EnemyAI
             }
             else
             {
-                if (playerController)
+                if (playerController && agent.isActiveAndEnabled)
                 {
                     agent.SetDestination(playerController.transform.position);
                 }
-                else
+                else if (agent.isActiveAndEnabled)
                 {
                     state = State.Roam;
                     roamPosition = transform;
                     agent.SetDestination(EnemiesUtils.GetRoamPosition(roamPosition.position, moveRangeMin, moveRangeMax));
                 }
-                agent.isStopped = false;
+
+                if (agent.isActiveAndEnabled)
+                {
+                    agent.isStopped = false;
+                }
             }
             return;
         }
 
-        if (!IsPlayerInRange(attackRange))
+        if (!IsPlayerInRange(attackRange) && agent.isActiveAndEnabled)
         {
             agent.isStopped = false;
             agent.SetDestination(playerController.transform.position);
@@ -121,7 +121,11 @@ public class EnemyRanged : EnemyAI
                 Attack();
                 attackCooldownDelta = attackCooldown;
             }
-            agent.isStopped = true;
+
+            if (agent.isActiveAndEnabled)
+            {
+                agent.isStopped = true;
+            }
         }
     }
 

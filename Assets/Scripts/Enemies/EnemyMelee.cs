@@ -101,7 +101,7 @@ public class EnemyMelee : EnemyAI
             state = State.Attack;
         } else
         {
-            if (IsPlayerInRange(attackRange))
+            if (IsPlayerInRange(attackRange) && agent.isActiveAndEnabled)
             {
                 agent.isStopped = true;
                 if (attackCooldownDelta <= 0f)
@@ -112,8 +112,12 @@ public class EnemyMelee : EnemyAI
                 }
                 return;
             }
-            agent.isStopped = false;
-            agent.SetDestination(playerController.transform.position);
+
+            if (agent.isActiveAndEnabled)
+            {
+                agent.isStopped = false;
+                agent.SetDestination(playerController.transform.position);
+            }
         }
     }
 
@@ -127,15 +131,23 @@ public class EnemyMelee : EnemyAI
             agent.speed = speed;
             return;
         }
+
+        if (agent.isActiveAndEnabled)
+        {
+            agent.isStopped = true;
+        }
         
-        agent.isStopped = true;
         // waiting some time before dash
         while (dashDelta >= 0)
         {
             return;
         }
-        agent.speed = speed * dashSpeedModifier;
-        agent.isStopped = false;
+
+        if (agent.isActiveAndEnabled)
+        {
+            agent.speed = speed * dashSpeedModifier;
+            agent.isStopped = false;
+        }
 
         if (!attacking)
         {
@@ -143,7 +155,7 @@ public class EnemyMelee : EnemyAI
             attacking = true;
         }
 
-        while (dashDurationDelta >= 0 && !IsPlayerInRange(attackRange))
+        while (agent.isActiveAndEnabled && dashDurationDelta >= 0 && !IsPlayerInRange(attackRange))
         {
             agent.SetDestination(playerController.transform.position);
             return;
