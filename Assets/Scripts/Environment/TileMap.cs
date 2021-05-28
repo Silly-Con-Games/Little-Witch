@@ -14,6 +14,9 @@ public class TileMap : MonoBehaviour
     public bool ShouldRegenerate = false;
     public float noiseScale = 0.5f;
 
+    public bool KillDeadBefore = false;
+    public float reviveCircleInMiddle = -1; 
+
     [Tooltip("Read only")]
     public int currentSeed;
 
@@ -21,7 +24,7 @@ public class TileMap : MonoBehaviour
     [Tooltip("Custom seed")]
     public int customSeed;
 
-
+    public Transform parent;
 
     public void OnValidate()
     {
@@ -39,9 +42,16 @@ public class TileMap : MonoBehaviour
           
             EditorApplication.delayCall += () =>
                 {
-                    var tempList = transform.Cast<Transform>().ToList();
+                    HashSet<Vector2> dead = new HashSet<Vector2>();
+                    var tempList = parent.Cast<Transform>().ToList();
                     foreach (var child in tempList)
                     {
+                        var tile = child.gameObject.GetComponent<Tile>();
+                        if(tile != null && tile.GetBiomeType() == BiomeType.DEAD) 
+                        {
+                            Vector2 v = new Vector2(child.position.x, child.position.z);
+                            dead.Add(child.position);
+                        }
                         DestroyImmediate(child.gameObject);
                     }
 
@@ -52,7 +62,7 @@ public class TileMap : MonoBehaviour
                             for (int y = 0; y < height; y++)
                             {
                                 //var inst = (PrefabUtility.InstantiatePrefab(tilePrefab, transform) as Tile).transform;
-                                var inst = Instantiate(tilePrefab, transform);
+                                var inst = Instantiate(tilePrefab, parent);
                                 float offset = y % 2 == 0 ? 0.8660254f : 0;
                                 inst.transform.position = new Vector3(offset + 0.8660254f * 2 * (x - width / 2), 0, 1.5f * (y - height / 2));
                                 float val = Mathf.PerlinNoise(x* noiseScale + newNoise, y* noiseScale + newNoise);
@@ -63,6 +73,15 @@ public class TileMap : MonoBehaviour
                                     inst.Morph(BiomeType.MEADOW, true);
                                 else 
                                     inst.Morph(BiomeType.WATER, true);
+                                Vector2 v = new Vector2(inst.transform.position.x, inst.transform.position.z);
+
+                                if (reviveCircleInMiddle > 0 && v.sqrMagnitude > reviveCircleInMiddle * reviveCircleInMiddle)
+                                {
+                                    inst.Kill();
+                                }
+
+                                if (KillDeadBefore && dead.Contains(v))
+                                    inst.Kill();
                             }
                         }
                     };
