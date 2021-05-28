@@ -83,7 +83,14 @@ public class PlayerController : MonoBehaviour, IDamagable
             mapController = FindObjectOfType<MapController>();
 
         if (!hudController)
+        {
             hudController = FindObjectOfType<HUDController>();
+            hudController.playerController = this;
+            Debug.Log("setting hudcont player cont to " + this);
+        }
+
+        hudController.playerController = this;
+        Debug.Log("what " + this);
 
         ApplyConfig();
 
