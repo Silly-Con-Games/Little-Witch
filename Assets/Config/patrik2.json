@@ -1,8 +1,8 @@
 {
     "witchConfig": {
         "health": 10.0,
-        "energyMax": 9.0,
-        "energyInitial": 6.0,
+        "energyMax": 18.0,
+        "energyInitial": 9.0,
         "movementSpeed": 4.5,
         "jumpHeight": 0.0,
         "meeleeAbility": {
@@ -150,8 +150,8 @@
             "enemiesRangedMax": 2
         },
         "mineConfig": {
-            "explosionDelay": 2.0,
-            "damageRange": 4.0,
+            "explosionDelay": 0.4000000059604645,
+            "damageRange": 3.0,
             "baseDamage": 4.0,
             "disappearingDuration": 1.0
         }
