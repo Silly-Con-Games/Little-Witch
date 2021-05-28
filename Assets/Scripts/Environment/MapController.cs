@@ -103,6 +103,17 @@ public class MapController : MonoBehaviour
         return BiomeType.UNKNOWN;
     }
 
+    public float TileHeightInPosition(Vector3 position)
+    {
+        Tile tile = GetTileAtPosition(position);
+        if (tile != null)
+        {
+            return tile.transform.position.y;
+        }
+
+        return float.NaN;
+    }
+
 
     private Tile cachedTile;
     private Vector3 lastPos = Vector3.positiveInfinity;
