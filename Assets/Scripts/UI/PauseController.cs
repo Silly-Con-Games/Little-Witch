@@ -25,10 +25,14 @@ public class PauseController : MonoBehaviour
 		}
 	}
 
-	public void ResumeGame() {
+	public void UnpauseGame() {
 		Time.timeScale = 1f;
-		menu.SetActive(false);
 		paused = false;
+	}
+
+	public void ResumeGame() {
+		UnpauseGame();
+		menu.SetActive(false);
 	}
 
 	public void ShowControls() {
@@ -36,7 +40,7 @@ public class PauseController : MonoBehaviour
 	}
 
 	public void QuitGame() {
-		ResumeGame();
+		UnpauseGame();
 		SceneManager.LoadScene(0);
 	}
 }

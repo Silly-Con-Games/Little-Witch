@@ -17,6 +17,8 @@ public class GameController : MonoBehaviour
 
 	public PauseController pauseController;
 
+	public EndgameController endgameController;
+
     public MapController mapController;
 
     public EnemiesController enemiesController;
@@ -81,8 +83,7 @@ public class GameController : MonoBehaviour
     {
         currentWitch.onDeathEvent.RemoveListener(OnWitchDeath);
         currentWitch = null;
-        GameState = EGameState.GameOver;
-        StartCoroutine(WaitAndRespawnCouroutine());
+        StartCoroutine(WaitAndLoseCouroutine());
     }
 
     private void OnWaveEnd()
@@ -91,7 +92,8 @@ public class GameController : MonoBehaviour
         {
             GameState = EGameState.GameWon;
             FMODUnity.RuntimeManager.PlayOneShot("event:/game/game_won");
-        }
+			StartCoroutine(WaitAndWinCouroutine());
+		}
         else
         {
             FMODUnity.RuntimeManager.PlayOneShot("event:/game/wave_end");
@@ -109,11 +111,18 @@ public class GameController : MonoBehaviour
         enemiesController.SpawnNextWave();
     }
 
-    IEnumerator WaitAndRespawnCouroutine()
+    private IEnumerator WaitAndLoseCouroutine()
     {
         GameState = EGameState.GameOver;
         yield return new WaitForSeconds(conf.respawnTime);
-        SceneManager.GetActiveScene();
-        SceneManager.LoadScene(SceneManager.GetActiveScene().name, LoadSceneMode.Single);
+
+		endgameController.Lose();
     }
+
+	private IEnumerator WaitAndWinCouroutine() {
+		GameState = EGameState.GameWon;
+		yield return new WaitForSeconds(conf.respawnTime);
+
+		endgameController.Win();
+	}
 }
