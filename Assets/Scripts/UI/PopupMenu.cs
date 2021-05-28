@@ -2,9 +2,9 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-public class ControlsController : MonoBehaviour
+public class PopupMenu : MonoBehaviour
 {
-    public void Close() {
+	public void Close() {
 		gameObject.SetActive(false);
 	}
 }
