@@ -22,14 +22,21 @@ public class DashAbility : MainAbility
         dashEffect.emitting = true;
         playerController.moveStop = true;
         Transform playerTrans = playerController.transform;
+        MapController mapController = playerController.mapController;
         Vector3 start = playerTrans.position;
-        Vector3 end = playerController.mouseWorldPosition;
-        end.y += playerHeight;
-        if (end.y < 0.35f)
-            end.y = playerHeight;
-        Vector3 direction = (end - start);
-        float distance = Mathf.Min(direction.magnitude, conf.maxRange);
-        direction.Normalize();
+        Vector3 direction = new Vector3(playerController.inputVelocity.x, 0, playerController.inputVelocity.y);
+        float distance = conf.maxRange;
+
+        if (direction.sqrMagnitude == 0)
+        {
+            Vector3 end = playerController.mouseWorldPosition;
+            end.y += playerHeight;
+            if (end.y < 0.35f)
+                end.y = playerHeight;
+            direction = (end - start);
+            distance = Mathf.Min(direction.magnitude, conf.maxRange);
+            direction.Normalize();
+        }
 
         float actDist;
         float halfDist = distance /2;
@@ -45,11 +52,18 @@ public class DashAbility : MainAbility
                 float scaler = ((actDist - halfDist) / halfDist);
                 playerTrans.localScale = Vector3.one * (scaler * scaler * scaler);
             }
-            playerTrans.position += direction * conf.speed * Time.deltaTime;
+
+            Vector3 pos = playerTrans.position + direction * conf.speed * Time.deltaTime;
+            pos.y = mapController.TileHeightInPosition(playerTrans.position) + playerHeight;
+            playerTrans.position = pos;
             yield return null;
         }
         playerTrans.localScale = Vector3.one;
-        playerTrans.position = start +  direction * distance;       
+
+        Vector3 posAf = start + direction * distance;
+        posAf.y = mapController.TileHeightInPosition(playerTrans.position) + playerHeight;
+        playerTrans.position = posAf;
+
         playerController.moveStop = false;
         dashEffect.emitting = false;
     }

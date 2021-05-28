@@ -41,7 +41,8 @@ public class PlayerController : MonoBehaviour, IDamagable
 
     const float gravity = -9.81f;
     float upVelocity = 0;
-    Vector2 inputVelocity;
+
+    public Vector2 inputVelocity;
     public bool moveStop { get => moveStopInternal; set { moveStopInternal = value; lastPos = transform.position; } }
     private bool moveStopInternal;
     public float stepLengthSqr = 1.78f;
@@ -73,7 +74,7 @@ public class PlayerController : MonoBehaviour, IDamagable
 
 		transformAbility.Init(this);
 
-        meeleeAbility.player = this;
+        meeleeAbility.player = this;        
         forestAbility.Init(this);
         meadowAbility.Init(this);
         waterAbility.Init(this);
@@ -83,7 +84,14 @@ public class PlayerController : MonoBehaviour, IDamagable
             mapController = FindObjectOfType<MapController>();
 
         if (!hudController)
+        {
             hudController = FindObjectOfType<HUDController>();
+            hudController.playerController = this;
+            Debug.Log("setting hudcont player cont to " + this);
+        }
+
+        hudController.playerController = this;
+        Debug.Log("what " + this);
 
         ApplyConfig();
 
@@ -129,7 +137,8 @@ public class PlayerController : MonoBehaviour, IDamagable
         health.onChanged.AddListener(hudController.SetHealth);
 
         energy = new EnergyTracker(witchConfig.energyMax, witchConfig.energyInitial);
-        hudController.SetUpEnergy(energy.Energy, energy.MaxEnergy);
+        
+        hudController.SetUpEnergy(energy.Energy, energy.MaxEnergy, Mathf.CeilToInt(energy.MaxEnergy/witchConfig.transformAbility.energyCost));
         energy.onChanged.AddListener(hudController.SetEnergy);
         energy.onNotEnough.AddListener(hudController.NotEnoughEnergy);
 
