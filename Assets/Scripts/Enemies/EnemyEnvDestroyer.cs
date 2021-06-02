@@ -162,9 +162,12 @@ public class EnemyEnvDestroyer : EnemyAI
 
     public override void ReceiveDamage(float amount)
     {
+        healthPoints -= amount;
         animator.SetTrigger("GetHit");
         FMODUnity.RuntimeManager.PlayOneShot("event:/enemies/hit/generic_hit");
-        if ((healthPoints -= amount) <= 0)
+        if (!healthbar.gameObject.activeSelf) healthbar.gameObject.SetActive(true);
+        healthbar.value = healthPoints;
+        if (healthPoints <= 0)
         {
             for (int i = 0; i < enemiesMelee.Count; i++)
             {

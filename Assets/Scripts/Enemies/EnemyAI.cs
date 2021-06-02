@@ -2,6 +2,7 @@ using System.Collections;
 using Config;
 using UnityEngine;
 using UnityEngine.AI;
+using UnityEngine.UI;
 
 public abstract class EnemyAI : MonoBehaviour, IDamagable, IRootable, IStunnable, ISlowable, IPushable
 {
@@ -83,6 +84,9 @@ public abstract class EnemyAI : MonoBehaviour, IDamagable, IRootable, IStunnable
     public GameObject indicator { get; set; }
 
     protected Animator animator = null;
+
+    protected Slider healthbar = null;
+
     public virtual void InitEnemy()
     {
         EnemiesController.IncreaseAliveCount();
@@ -104,6 +108,14 @@ public abstract class EnemyAI : MonoBehaviour, IDamagable, IRootable, IStunnable
         this.indicator = IndicatorsCreator.CreateIndicator();
         this.indicator.SetActive(false);
         ApplyConfig();
+
+        if (!healthbar)
+        {
+            healthbar = GetComponentInChildren<Slider>();
+            healthbar.maxValue = healthPoints;
+            healthbar.value = healthPoints;
+            healthbar.gameObject.SetActive(false);
+        }
     }
 
     protected virtual void ApplyConfig()
@@ -259,12 +271,16 @@ public abstract class EnemyAI : MonoBehaviour, IDamagable, IRootable, IStunnable
 
     public virtual void ReceiveDamage(float amount)
     {
+        healthPoints -= amount;
         animator.SetTrigger("GetHit");
         agent.isStopped = false;
         state = State.Chase;
         chasingDeltaTime = chasingDuration;
         FMODUnity.RuntimeManager.PlayOneShot("event:/enemies/hit/generic_hit");
-        if ((healthPoints -= amount) <= 0) Die();
+        if (!healthbar.gameObject.activeSelf) healthbar.gameObject.SetActive(true);
+        healthbar.value = healthPoints;
+
+        if (healthPoints <= 0) Die();
     }
 
     public EObjectType GetObjectType()
@@ -308,6 +324,8 @@ public abstract class EnemyAI : MonoBehaviour, IDamagable, IRootable, IStunnable
         {
             trans.gameObject.layer = 0;
         }
+
+        healthbar.gameObject.SetActive(false);
 
         StartCoroutine(DieCoroutine());
     }
