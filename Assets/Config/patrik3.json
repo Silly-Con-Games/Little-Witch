@@ -1,0 +1,210 @@
+{
+    "witchConfig": {
+        "health": 10.0,
+        "energyMax": 18.0,
+        "energyInitial": 9.0,
+        "movementSpeed": 4.5,
+        "jumpHeight": 0.0,
+        "meeleeAbility": {
+            "cooldown": 0.44999998807907107,
+            "damage": 2.5,
+            "pushbackForce": 7.0,
+            "pushbackDuration": 0.4000000059604645,
+            "attackSlow": 0.5
+        },
+        "chargeAbility": {
+            "damageMin": 1.0,
+            "damageMax": 3.0,
+            "distanceMin": 1000.0,
+            "distanceMax": 1000.0,
+            "explosionRadiusMin": 6.0,
+            "explosionRadiusMax": 10.0,
+            "explosionSpeedMin": 20.0,
+            "explosionSpeedMax": 25.0,
+            "spawnRadiusMin": 0.5,
+            "spawnRadiusMax": 1.5,
+            "speedMin": 10.0,
+            "speedMax": 15.0,
+            "chargeTimeMax": 1.5,
+            "cooldown": 1.5,
+            "witchSlowMSMultiplier": 0.30000001192092898,
+            "energyCost": 1.0
+        },
+        "transformAbility": {
+            "cooldown": 1.0,
+            "energyCost": 3.0,
+            "radius": 2,
+            "minBiomeSize": 2
+        },
+        "forestAbility": {
+            "baseConfig": {
+                "cooldown": 4.5
+            },
+            "rootPathDamage": 2.0,
+            "rootBurstDamage": 2.0,
+            "maxRange": 10.0,
+            "rootPathSpeed": 25.0,
+            "rootDuration": 3.0,
+            "rootBurstRadius": 1.2999999523162842,
+            "rootBurstDensity": 20
+        },
+        "waterAbility": {
+            "baseConfig": {
+                "cooldown": 3.5
+            },
+            "chargeTime": 0.20000000298023225,
+            "waveDuration": 0.5,
+            "waveSpeed": 10.0,
+            "healPerSec": 1.0
+        },
+        "meadowAbility": {
+            "baseConfig": {
+                "cooldown": 2.5
+            },
+            "MSMultiplier": 1.2999999523162842,
+            "speed": 1.0,
+            "projectileCnt": 7,
+            "spellWidth": 0.800000011920929,
+            "maxRange": 20.0,
+            "damage": 1.0
+        },
+        "dashAbility": {
+            "baseConfig": {
+                "cooldown": 0.5
+            },
+            "speed": 16.0,
+            "maxRange": 3.0,
+            "animSpeed": 0.0
+        }
+    },
+    "globalEnemyConfig": {
+        "enemyRangedConfigs": [
+            {
+                "baseConfig": {
+                    "damage": 2.0,
+                    "idleDuration": 5.0,
+                    "chasingDuration": 3.0,
+                    "moveRangeMin": 4.0,
+                    "moveRangeMax": 4.0,
+                    "maxRangeToPlayer": 8.0,
+                    "attackRange": 5.0,
+                    "speed": 4.0,
+                    "attackCooldown": 3.0,
+                    "healthPoints": 3.0,
+                    "slowDefault": 3.0,
+                    "rootDefault": 3.0
+                }
+            },
+            {
+                "baseConfig": {
+                    "damage": 2.0,
+                    "idleDuration": 5.0,
+                    "chasingDuration": 3.0,
+                    "moveRangeMin": 4.0,
+                    "moveRangeMax": 4.0,
+                    "maxRangeToPlayer": 8.0,
+                    "attackRange": 5.0,
+                    "speed": 4.0,
+                    "attackCooldown": 3.0,
+                    "healthPoints": 3.0,
+                    "slowDefault": 3.0,
+                    "rootDefault": 3.0
+                }
+            }
+        ],
+        "enemyMeleeConfigs": [
+            {
+                "baseConfig": {
+                    "damage": 1.0,
+                    "idleDuration": 5.0,
+                    "chasingDuration": 3.0,
+                    "moveRangeMin": 4.0,
+                    "moveRangeMax": 4.0,
+                    "maxRangeToPlayer": 8.0,
+                    "attackRange": 1.5,
+                    "speed": 4.0,
+                    "attackCooldown": 4.0,
+                    "healthPoints": 5.0,
+                    "slowDefault": 3.0,
+                    "rootDefault": 3.0
+                },
+                "dashDelay": 1.0,
+                "dashDuration": 2.0,
+                "dashSpeedModifier": 2.0,
+                "dashRange": 3.0,
+                "dashCooldown": 4.0
+            },
+            {
+                "baseConfig": {
+                    "damage": 1.0,
+                    "idleDuration": 5.0,
+                    "chasingDuration": 3.0,
+                    "moveRangeMin": 4.0,
+                    "moveRangeMax": 4.0,
+                    "maxRangeToPlayer": 8.0,
+                    "attackRange": 1.5,
+                    "speed": 4.0,
+                    "attackCooldown": 4.0,
+                    "healthPoints": 5.0,
+                    "slowDefault": 3.0,
+                    "rootDefault": 3.0
+                },
+                "dashDelay": 1.0,
+                "dashDuration": 2.0,
+                "dashSpeedModifier": 2.0,
+                "dashRange": 3.0,
+                "dashCooldown": 4.0
+            }
+        ],
+        "enemyBomberConfig": {
+            "baseConfig": {
+                "damage": 3.0,
+                "idleDuration": 5.0,
+                "chasingDuration": 4.0,
+                "moveRangeMin": 4.0,
+                "moveRangeMax": 4.0,
+                "maxRangeToPlayer": 8.0,
+                "attackRange": 1.5,
+                "speed": 4.0,
+                "attackCooldown": 3.0,
+                "healthPoints": 5.0,
+                "slowDefault": 3.0,
+                "rootDefault": 3.0
+            }
+        },
+        "enemyEnvDestroyerConfig": {
+            "baseConfig": {
+                "damage": 3.0,
+                "idleDuration": 5.0,
+                "chasingDuration": 3.0,
+                "moveRangeMin": 4.0,
+                "moveRangeMax": 4.0,
+                "maxRangeToPlayer": 8.0,
+                "attackRange": 1.5,
+                "speed": 2.0,
+                "attackCooldown": 1.0,
+                "healthPoints": 7.0,
+                "slowDefault": 3.0,
+                "rootDefault": 3.0
+            },
+            "enemiesMeleeMax": 2,
+            "enemiesRangedMax": 2
+        },
+        "mineConfig": {
+            "explosionDelay": 0.4000000059604645,
+            "damageRange": 3.0,
+            "baseDamage": 4.0,
+            "disappearingDuration": 1.0
+        }
+    },
+    "energyConfig": {
+        "lifeTimeInSec": 999999.0,
+        "speed": 15.0,
+        "energyAmount": 1
+    },
+    "soundConfig": {
+        "musicVolume": 0.5,
+        "sfxVolume": 0.15000000596046449
+    },
+    "respawnTime": 2.0
+}

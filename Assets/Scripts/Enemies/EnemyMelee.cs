@@ -2,10 +2,12 @@ using System.Collections;
 using System.Collections.Generic;
 using Config;
 using UnityEngine;
+using UnityEngine.Assertions;
 
 public class EnemyMelee : EnemyAI
 {
-    
+    public int threatLevel = 0;
+
     [SerializeField]
     private float dashDelay;
 
@@ -47,8 +49,9 @@ public class EnemyMelee : EnemyAI
 
     protected override void ApplyConfig()
     {
+        Assert.IsTrue(threatLevel < GlobalConfigManager.GetGlobalConfig().globalEnemyConfig.enemyMeleeConfigs.Count);
         base.ApplyConfig();
-        var enemyConfig = GlobalConfigManager.GetGlobalConfig().globalEnemyConfig.enemyMeleeConfig;
+        var enemyConfig = GlobalConfigManager.GetGlobalConfig().globalEnemyConfig.enemyMeleeConfigs[threatLevel];
         dashDelay = enemyConfig.dashDelay;
         dashDuration = enemyConfig.dashDuration;
         dashRange = enemyConfig.dashRange;
@@ -59,7 +62,8 @@ public class EnemyMelee : EnemyAI
 
     protected override EnemyConfig GetEnemyBaseConfig()
     {
-        return GlobalConfigManager.GetGlobalConfig().globalEnemyConfig.enemyMeleeConfig.baseConfig;
+        Assert.IsTrue(threatLevel < GlobalConfigManager.GetGlobalConfig().globalEnemyConfig.enemyMeleeConfigs.Count);
+        return GlobalConfigManager.GetGlobalConfig().globalEnemyConfig.enemyMeleeConfigs[threatLevel].baseConfig;
     }
 
     protected override void Idle()

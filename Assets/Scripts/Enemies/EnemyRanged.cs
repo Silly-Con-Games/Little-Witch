@@ -3,10 +3,11 @@ using System.Collections.Generic;
 using Config;
 using UnityEngine;
 using FMODUnity;
+using UnityEngine.Assertions;
 
 public class EnemyRanged : EnemyAI
 {
-
+    public int threatLevel;
     public GameObject bulletPrefab;
 
     public override void InitEnemy()
@@ -17,7 +18,8 @@ public class EnemyRanged : EnemyAI
 
     protected override EnemyConfig GetEnemyBaseConfig()
     {
-        return GlobalConfigManager.GetGlobalConfig().globalEnemyConfig.enemyRangedConfig.baseConfig;
+        Assert.IsTrue(threatLevel < GlobalConfigManager.GetGlobalConfig().globalEnemyConfig.enemyRangedConfigs.Count);
+        return GlobalConfigManager.GetGlobalConfig().globalEnemyConfig.enemyRangedConfigs[threatLevel].baseConfig;
     }
 
     protected override void Attack()

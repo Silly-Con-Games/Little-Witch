@@ -7,7 +7,7 @@
         "jumpHeight": 0.0,
         "meeleeAbility": {
             "cooldown": 0.44999998807907107,
-            "damage": 2.0,
+            "damage": 2.5,
             "pushbackForce": 7.0,
             "pushbackDuration": 0.4000000059604645,
             "attackSlow": 0.5

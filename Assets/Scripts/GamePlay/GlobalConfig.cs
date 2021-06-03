@@ -1,4 +1,5 @@
 using System;
+using System.Collections.Generic;
 
 namespace Config
 {
@@ -193,8 +194,8 @@ namespace Config
     [Serializable]
     public struct GlobalEnemyConfig
     {
-        public EnemyRangedConfig enemyRangedConfig;
-        public EnemyMeleeConfig enemyMeleeConfig;
+        public List<EnemyRangedConfig> enemyRangedConfigs;
+        public List<EnemyMeleeConfig> enemyMeleeConfigs;
         public EnemyBomberConfig enemyBomberConfig;
         public EnemyEnvDestroyerConfig enemyEnvDestroyerConfig;
         public MineConfig mineConfig;
