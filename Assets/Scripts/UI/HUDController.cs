@@ -22,8 +22,9 @@ public class HUDController : MonoBehaviour
     private Image[] iconsInner;
     private Color[] iconColors;
 
-    [SerializeField]
-    private Image waveTimer;
+    // wave info
+    [SerializeField] private Image waveTimer;
+    [SerializeField] private Animator waveDefeated;
 
     public PlayerController playerController;
 
@@ -38,6 +39,8 @@ public class HUDController : MonoBehaviour
             iconColors[i] = iconsInner[i].color;
         }
     }
+
+    #region Health and Energy
 
     public void SetUpHealth(float startingHealth, float maxHealth, int barCount = 5)
     {
@@ -126,6 +129,10 @@ public class HUDController : MonoBehaviour
         }
     }
 
+    #endregion
+
+    #region Ability Icons
+
     public void TransformBiome(string type)
     {
         if (type == "forest")
@@ -210,6 +217,10 @@ public class HUDController : MonoBehaviour
         }
     }
 
+    #endregion
+
+    #region Wave Info
+
     public IEnumerator ShowTimeTillNextWave(float duration)
     {
         waveTimer.gameObject.SetActive(true);
@@ -225,4 +236,11 @@ public class HUDController : MonoBehaviour
         waveTimer.gameObject.SetActive(false); 
     }
 
+    public void ShowWaveDefeated()
+    {
+        Debug.Log("wave defeted ui");
+        waveDefeated.SetTrigger("WaveDefeated");
+    }
+
+    #endregion
 }

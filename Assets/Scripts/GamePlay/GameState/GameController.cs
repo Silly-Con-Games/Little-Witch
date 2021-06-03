@@ -99,6 +99,7 @@ public class GameController : MonoBehaviour
             FMODUnity.RuntimeManager.PlayOneShot("event:/game/wave_end");
             GameState = EGameState.WaitingForNextWave;
             StartCoroutine(WaitAndStartWave(enemiesController.GetCurrentPreperationTime()));
+            hud.ShowWaveDefeated();
         }
     }
 
