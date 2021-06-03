@@ -328,6 +328,8 @@ public abstract class EnemyAI : MonoBehaviour, IDamagable, IRootable, IStunnable
         healthbar.gameObject.SetActive(false);
 
         StartCoroutine(DieCoroutine());
+
+        enabled = false;
     }
 
     protected IEnumerator DieCoroutine()
