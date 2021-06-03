@@ -163,6 +163,7 @@
 			float2 windUV = TRANSFORM_TEX(position.xz, _WindTexture) + float2(_WindSpeed * _Time.x, _WindSpeed * _Time.x);
 			float4 windSample = SAMPLE_TEXTURE2D_LOD(_WindTexture, sampler_WindTexture, windUV, 0) * 2 - 1;
 			float3 wind = float3(windSample.x, 0, windSample.y) * _WindStrength * 0.01;
+			wind = float3(0,0,0);
 
 			segment.position = position;
 			segment.orientation = RotationFromAxisAngle(float3(0,1,0), sin(rotation), cos(rotation));
