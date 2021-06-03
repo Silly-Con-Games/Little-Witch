@@ -20,13 +20,11 @@ public class EnemiesController : MonoBehaviour
     public static void IncreaseAliveCount()
     {
         instance.aliveEnemiesCnt++;
-        Debug.Log($"{instance.aliveEnemiesCnt} enemies alive");
     }
 
     public static void DecreaseAliveCount()
     {
         instance.aliveEnemiesCnt--;
-        Debug.Log($"{instance.aliveEnemiesCnt} enemies alive");
 
         if (instance.aliveEnemiesCnt == 0)
         {

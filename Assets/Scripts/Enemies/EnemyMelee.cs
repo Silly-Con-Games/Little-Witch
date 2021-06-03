@@ -34,9 +34,10 @@ public class EnemyMelee : EnemyAI
     private Vector3 playerPos;
     private Vector3 lastPos;
 
-    protected void Update()
+    override protected void Update() 
     {
         base.Update();
+
         dashDelta -= Time.deltaTime;
         dashDurationDelta -= Time.deltaTime;
         dashCooldownDelta -= Time.deltaTime;

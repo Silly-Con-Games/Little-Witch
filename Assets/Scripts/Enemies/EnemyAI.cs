@@ -11,7 +11,7 @@ public abstract class EnemyAI : MonoBehaviour, IDamagable, IRootable, IStunnable
         Roam,
         Chase,
         Idle,
-        Attack
+        Attack, 
     }
 
     public enum SecondaryState
@@ -87,6 +87,8 @@ public abstract class EnemyAI : MonoBehaviour, IDamagable, IRootable, IStunnable
 
     protected Slider healthbar = null;
 
+    protected bool falling = false;
+    protected Rigidbody rigid;
     public virtual void InitEnemy()
     {
         EnemiesController.IncreaseAliveCount();
@@ -104,6 +106,8 @@ public abstract class EnemyAI : MonoBehaviour, IDamagable, IRootable, IStunnable
         {
             animator = GetComponentInChildren<Animator>();
         }
+
+        rigid = GetComponent<Rigidbody>();
 
         this.indicator = IndicatorsCreator.CreateIndicator();
         this.indicator.SetActive(false);
@@ -146,12 +150,15 @@ public abstract class EnemyAI : MonoBehaviour, IDamagable, IRootable, IStunnable
         this.roamPosition = roamPosition;
     }
 
-    protected void Update()
+    protected virtual void Update()
     {
         chasingDeltaTime -= Time.deltaTime;
         attackCooldownDelta -= Time.deltaTime;
-
         UpdateIndicator();
+
+        if (CheckIsFalling())
+            return;
+        
         if (secondaryState == SecondaryState.Stun)
         {
             return;
@@ -178,6 +185,33 @@ public abstract class EnemyAI : MonoBehaviour, IDamagable, IRootable, IStunnable
         float speed = agent.velocity.sqrMagnitude;
         animator.SetFloat("Speed", speed);
     }
+
+    private bool CheckIsFalling()
+    {
+        if (!agent.isOnNavMesh)
+        {
+            if (!falling)
+            {
+                falling = true;
+                rigid.isKinematic = false;
+                rigid.velocity = new Vector3(0, -5, 0);
+                agent.enabled = false;
+                return true;
+            }
+        }
+
+        if (falling && rigid.velocity.sqrMagnitude <= 0.000001)
+        {
+            falling = false;
+            rigid.isKinematic = true;
+            agent.enabled = true;
+        }
+
+        if (falling)
+            return true;
+        return false;
+    }
+
     private void UpdateIndicator()
     {
         
