@@ -50,6 +50,8 @@ public class EnemiesController : MonoBehaviour
         return waveCounter == waves.Count;
     }
 
+    public int GetWaveCounter() => waveCounter;
+
     public void SpawnNextWave()
     {
         Assert.IsTrue(waveCounter < waves.Count);

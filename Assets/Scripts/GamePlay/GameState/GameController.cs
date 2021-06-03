@@ -105,7 +105,7 @@ public class GameController : MonoBehaviour
 
     private IEnumerator WaitAndStartWave(float duration)
     {
-        StartCoroutine(hud.ShowTimeTillNextWave(duration));
+        StartCoroutine(hud.ShowTimeTillNextWave(duration, enemiesController.GetWaveCounter()));
         yield return new WaitForSeconds(duration);
         GameState = EGameState.FightingWave;
         FMODUnity.RuntimeManager.PlayOneShot("event:/game/wave_start");

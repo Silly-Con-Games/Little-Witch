@@ -24,7 +24,8 @@ public class HUDController : MonoBehaviour
 
     // wave info
     [SerializeField] private Image waveTimer;
-    [SerializeField] private Animator waveDefeated;
+    [SerializeField] private Animator waveInfo;
+    [SerializeField] private TextMeshProUGUI waveInfoText;
 
     public PlayerController playerController;
 
@@ -221,7 +222,7 @@ public class HUDController : MonoBehaviour
 
     #region Wave Info
 
-    public IEnumerator ShowTimeTillNextWave(float duration)
+    public IEnumerator ShowTimeTillNextWave(float duration, int waveNumber)
     {
         waveTimer.gameObject.SetActive(true);
         TextMeshProUGUI waveTimerText = waveTimer.GetComponentInChildren<TextMeshProUGUI>();
@@ -233,13 +234,20 @@ public class HUDController : MonoBehaviour
             waveTimerText.text = $"next wave in {Mathf.Ceil(time).ToString("0")}s";
             yield return null;
         }
-        waveTimer.gameObject.SetActive(false); 
+        waveTimer.gameObject.SetActive(false);
+        ShowWaveStart(waveNumber);
     }
 
     public void ShowWaveDefeated()
     {
-        Debug.Log("wave defeted ui");
-        waveDefeated.SetTrigger("WaveDefeated");
+        waveInfoText.text = "Wave Defeated";
+        waveInfo.SetTrigger("WaveDefeated");
+    }
+
+    private void ShowWaveStart(int waveNumber)
+    {
+        waveInfoText.text = "Wave " + (waveNumber+1);
+        waveInfo.SetTrigger("WaveDefeated");
     }
 
     #endregion

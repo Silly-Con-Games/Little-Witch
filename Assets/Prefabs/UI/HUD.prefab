@@ -1149,8 +1149,9 @@ MonoBehaviour:
   - {fileID: 631904724106694081}
   - {fileID: 631904723981771713}
   - {fileID: 631904723663314126}
-  waveTimer: {fileID: 8908634559358828412}
-  waveDefeated: {fileID: 177278382715937686}
+  waveTimer: {fileID: 8272949363675969797}
+  waveInfo: {fileID: 177278382715937686}
+  waveInfoText: {fileID: 2491218004036962904}
   playerController: {fileID: 0}
 --- !u!114 &9088950664556170557
 MonoBehaviour:
