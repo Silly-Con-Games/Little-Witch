@@ -65,7 +65,6 @@ public class Tile : MonoBehaviour {
 			prop = GetComponentInChildren<IProp>();
 		}
 		UnityEditor.EditorApplication.delayCall += () => Morph(wantedType, true);
-
 	}
 
 	// to detect changes in edit mode
@@ -103,6 +102,10 @@ public class Tile : MonoBehaviour {
 
 	public BiomeType GetBiomeType() {
 		return type;
+	}
+
+	public bool HasProp() {
+		return prop != null;
 	}
 
 	public void Morph(BiomeType target, bool immediate) {
@@ -145,7 +148,6 @@ public class Tile : MonoBehaviour {
 			propRevived = true;
 		}
 		
-
 		// morph - revive
 		if (immediate) {
 			if (target == BiomeType.WATER) {
@@ -176,7 +178,7 @@ public class Tile : MonoBehaviour {
 
 	private void TrySpawnProp(bool immediate, BiomeType biomeType)
     {
-		if(prop == null)
+		if (prop == null)
         {
 			PropAndProbability propPref = mapController.GetProp(biomeType);
 			if (propPref != null && propPref.chance >= Random.Range(0.0f, 1.0f))
@@ -184,9 +186,23 @@ public class Tile : MonoBehaviour {
 				prop = Instantiate(propPref.prop, transform).GetComponent<IProp>();
 				prop.Spawn(immediate);
             }
-
-		}		
+		}
     }
+
+	public void SetupPropOnLoad(bool shouldSpawn) {
+		if (shouldSpawn) {
+			PropAndProbability propPref = mapController.GetProp(type);
+			if (propPref != null) {
+				prop = Instantiate(propPref.prop, transform).GetComponent<IProp>();
+				prop.Spawn(true);
+			}
+		} else {
+			if (prop != null) {
+				prop.Despawn(true);
+				prop = null;
+			}
+		}
+	}
 
 	public Color GetColor(BiomeType type) {
 		switch (type) {

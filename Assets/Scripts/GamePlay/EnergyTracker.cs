@@ -19,7 +19,12 @@ public class EnergyTracker
         onNotEnough = new UnityEvent();
     }
 
-    public bool HasEnough(float amount)
+	public void Set(float value) {
+		Energy = value;
+		onChanged.Invoke(Energy);
+	}
+
+	public bool HasEnough(float amount)
     {
         if (amount > Energy)
         {

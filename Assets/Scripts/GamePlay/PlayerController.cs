@@ -59,7 +59,7 @@ public class PlayerController : MonoBehaviour, IDamagable
 
     public  Vector3 mouseWorldPosition { get; internal set; }
 
-    private void Start()
+    public void Initialize()
     {
         lastPos = transform.position;
         tileMask = LayerMask.GetMask("Tile");
@@ -117,7 +117,7 @@ public class PlayerController : MonoBehaviour, IDamagable
 
     }
 
-    void ApplyConfig()
+    private void ApplyConfig()
     {
         var witchConfig = GlobalConfigManager.GetWitchConfig();
 
@@ -278,7 +278,7 @@ public class PlayerController : MonoBehaviour, IDamagable
 
     public void OnMeleeAbility(InputValue value)
     {
-        if (!pauseController.IsPaused() && meeleeAbility.IsReady)
+		if (!pauseController.IsPaused() && meeleeAbility.IsReady)
         {
             meeleeAbility.Attack();
             ScaleSpeedModifier(meeleeAbility.conf.attackSlow);
@@ -298,7 +298,7 @@ public class PlayerController : MonoBehaviour, IDamagable
 
     public void OnChargeAbility(InputValue value)
     {
-        if (!pauseController.IsPaused()) {
+		if (!pauseController.IsPaused()) {
 			if (value.isPressed && chargeAbility.IsReady()) {
 				animator.SetTrigger("Cast");
 

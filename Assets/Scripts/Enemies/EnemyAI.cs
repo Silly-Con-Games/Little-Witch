@@ -344,10 +344,10 @@ public abstract class EnemyAI : MonoBehaviour, IDamagable, IRootable, IStunnable
 
     protected void Die()
     {
-        EnemiesController.DecreaseAliveCount();
         GameObject energy = Instantiate(energyPrefab);
         energy.transform.position = new Vector3(transform.position.x, 0.5f, transform.position.z);
-        GlobalConfigManager.onConfigChanged.RemoveListener(ApplyConfig);
+		EnemiesController.DecreaseAliveCount();
+		GlobalConfigManager.onConfigChanged.RemoveListener(ApplyConfig);
         Destroy(indicator);
 
         agent.enabled = false;

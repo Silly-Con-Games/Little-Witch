@@ -32,7 +32,6 @@ public class EnemiesController : MonoBehaviour
         }
     }
 
-
     private void Awake()
     {
         onWaveEnd = new UnityEvent();
@@ -44,6 +43,10 @@ public class EnemiesController : MonoBehaviour
     {
         instance = null;
     }
+
+	public void SetWave(int wave) {
+		waveCounter = wave;
+	}
 
     public bool WasLastWave()
     {
