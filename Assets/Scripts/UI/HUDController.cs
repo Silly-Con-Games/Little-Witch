@@ -27,6 +27,9 @@ public class HUDController : MonoBehaviour
     [SerializeField] private Animator waveInfo;
     [SerializeField] private TextMeshProUGUI waveInfoText;
 
+    // game goal
+    [SerializeField] private string gameGoalText = "Defeat waves of enemies and protect your home!";
+
     public PlayerController playerController;
 
     private void Start()
@@ -251,4 +254,14 @@ public class HUDController : MonoBehaviour
     }
 
     #endregion
+
+    #region Game goal
+
+    public void ShowGameGoal()
+    {
+        waveInfoText.text = gameGoalText;
+        waveInfo.SetTrigger("WaveDefeated");
+    }
+
+    #endregion Game goal
 }

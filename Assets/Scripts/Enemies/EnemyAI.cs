@@ -307,7 +307,8 @@ public abstract class EnemyAI : MonoBehaviour, IDamagable, IRootable, IStunnable
     {
         healthPoints -= amount;
         animator.SetTrigger("GetHit");
-        agent.isStopped = false;
+        if(agent.enabled)
+            agent.isStopped = false;
         state = State.Chase;
         chasingDeltaTime = chasingDuration;
         FMODUnity.RuntimeManager.PlayOneShot("event:/enemies/hit/generic_hit");

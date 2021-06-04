@@ -1152,6 +1152,7 @@ MonoBehaviour:
   waveTimer: {fileID: 8272949363675969797}
   waveInfo: {fileID: 177278382715937686}
   waveInfoText: {fileID: 2491218004036962904}
+  gameGoalText: Defeat waves of enemies and protect your home!
   playerController: {fileID: 0}
 --- !u!114 &9088950664556170557
 MonoBehaviour:

@@ -55,6 +55,7 @@ public class GameController : MonoBehaviour
         StartCoroutine(SpawnWithDelay(0.1f));
 
         enemiesController.onWaveEnd.AddListener(OnWaveEnd);
+        hud.ShowGameGoal();
         StartCoroutine(WaitAndStartWave(enemiesController.GetCurrentPreperationTime()));
     }
 
