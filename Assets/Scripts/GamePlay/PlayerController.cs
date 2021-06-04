@@ -129,7 +129,9 @@ public class PlayerController : MonoBehaviour, IDamagable
         health.onChanged.AddListener(hudController.SetHealth);
 
         energy = new EnergyTracker(witchConfig.energyMax, witchConfig.energyInitial);
-        
+        energy.onChanged.AddListener(ChangeEnergyTankAppearance);
+        ChangeEnergyTankAppearance(energy.Energy);
+
         hudController.SetUpEnergy(energy.Energy, energy.MaxEnergy, Mathf.CeilToInt(energy.MaxEnergy/witchConfig.transformAbility.energyCost));
         energy.onChanged.AddListener(hudController.SetEnergy);
         energy.onNotEnough.AddListener(hudController.NotEnoughEnergy);
@@ -388,5 +390,11 @@ public class PlayerController : MonoBehaviour, IDamagable
     public void ScaleSpeedModifier(float val)
     {
         speedModifier *= val;
+    }
+
+    public void ChangeEnergyTankAppearance(float curEnergy)
+    {
+        Debug.Log("changing energy tank appearance");
+        animator.SetBool("EnoughEnergy", curEnergy >= transformAbility.conf.energyCost);
     }
 }

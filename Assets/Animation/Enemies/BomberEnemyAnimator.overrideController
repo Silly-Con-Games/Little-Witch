@@ -9,7 +9,5 @@ AnimatorOverrideController:
   m_Name: BomberEnemyAnimator
   m_Controller: {fileID: 9100000, guid: 5ddabe27e64772f47998f92ec52bd9a0, type: 2}
   m_Clips:
-  - m_OriginalClip: {fileID: -623603649343465320, guid: a2508b27d280bcd4180eb97ca282a228, type: 3}
-    m_OverrideClip: {fileID: 7400000, guid: d2c5fe28f945dd3408bbeda9282d28f0, type: 2}
   - m_OriginalClip: {fileID: 7400000, guid: f07203669e07bd945ad4628ffdb65a86, type: 2}
     m_OverrideClip: {fileID: 7400000, guid: 6a6549795690f794e95973d299bf7f07, type: 2}

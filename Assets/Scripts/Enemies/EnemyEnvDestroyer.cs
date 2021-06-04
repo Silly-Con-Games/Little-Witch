@@ -163,7 +163,7 @@ public class EnemyEnvDestroyer : EnemyAI
     public override void ReceiveDamage(float amount)
     {
         healthPoints -= amount;
-        animator.SetTrigger("GetHit");
+        animator.GetHit();
         FMODUnity.RuntimeManager.PlayOneShot("event:/enemies/hit/generic_hit");
         if (!healthbar.gameObject.activeSelf) healthbar.gameObject.SetActive(true);
         healthbar.value = healthPoints;

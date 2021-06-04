@@ -33,7 +33,7 @@ public class EnemyBomber : EnemyAI
             agent.isStopped = true;
             state = State.Idle;
             idleDeltaTime = idleDuration;
-            animator.SetTrigger("Attack");
+            animator.Attack();
         }
     }
 

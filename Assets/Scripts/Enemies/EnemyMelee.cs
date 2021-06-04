@@ -111,7 +111,7 @@ public class EnemyMelee : EnemyAI
                 agent.isStopped = true;
                 if (attackCooldownDelta <= 0f)
                 {
-                    animator.SetTrigger("Attack");
+                    animator.Attack();
                     playerController.ReceiveDamage(damage);
                     attackCooldownDelta = attackCooldown;
                 }
@@ -168,7 +168,7 @@ public class EnemyMelee : EnemyAI
 
         if (IsPlayerInRange(attackRange))
         {
-            animator.SetTrigger("Attack");
+            animator.Attack();
             StartCoroutine(WaitAndTryDealDamage(0.6f));
         }
 

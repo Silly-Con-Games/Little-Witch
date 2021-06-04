@@ -83,7 +83,7 @@ public abstract class EnemyAI : MonoBehaviour, IDamagable, IRootable, IStunnable
 
     public GameObject indicator { get; set; }
 
-    protected Animator animator = null;
+    protected EnemyAnimator animator = null;
 
     protected Slider healthbar = null;
 
@@ -104,7 +104,7 @@ public abstract class EnemyAI : MonoBehaviour, IDamagable, IRootable, IStunnable
         state = State.Roam;
         if (!animator)
         {
-            animator = GetComponentInChildren<Animator>();
+            animator = GetComponentInChildren<EnemyAnimator>();
         }
 
         rigid = GetComponent<Rigidbody>();
@@ -182,8 +182,7 @@ public abstract class EnemyAI : MonoBehaviour, IDamagable, IRootable, IStunnable
                 break;
         }
 
-        float speed = agent.velocity.sqrMagnitude;
-        animator.SetFloat("Speed", speed);
+        animator.Move(agent.velocity.sqrMagnitude);
     }
 
     private bool CheckIsFalling()
@@ -306,7 +305,7 @@ public abstract class EnemyAI : MonoBehaviour, IDamagable, IRootable, IStunnable
     public virtual void ReceiveDamage(float amount)
     {
         healthPoints -= amount;
-        animator.SetTrigger("GetHit");
+        animator.GetHit();
         if(agent.enabled)
             agent.isStopped = false;
         state = State.Chase;

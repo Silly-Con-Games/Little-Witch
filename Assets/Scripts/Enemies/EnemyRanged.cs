@@ -30,7 +30,7 @@ public class EnemyRanged : EnemyAI
         bulletInstanceTrans.position = transform.position;
         bulletInstanceTrans.eulerAngles = new Vector3(transform.eulerAngles.x, transform.eulerAngles.y, transform.eulerAngles.z);
 
-        animator.SetTrigger("Attack");
+        animator.Attack();
 
         FMODUnity.RuntimeManager.PlayOneShot("event:/enemies/shot/ranged_shot");
     }
