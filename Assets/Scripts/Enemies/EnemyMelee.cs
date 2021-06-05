@@ -2,10 +2,12 @@ using System.Collections;
 using System.Collections.Generic;
 using Config;
 using UnityEngine;
+using UnityEngine.Assertions;
 
 public class EnemyMelee : EnemyAI
 {
-    
+    public int threatLevel = 0;
+
     [SerializeField]
     private float dashDelay;
 
@@ -32,9 +34,10 @@ public class EnemyMelee : EnemyAI
     private Vector3 playerPos;
     private Vector3 lastPos;
 
-    protected void Update()
+    override protected void Update() 
     {
         base.Update();
+
         dashDelta -= Time.deltaTime;
         dashDurationDelta -= Time.deltaTime;
         dashCooldownDelta -= Time.deltaTime;
@@ -47,8 +50,9 @@ public class EnemyMelee : EnemyAI
 
     protected override void ApplyConfig()
     {
+        Assert.IsTrue(threatLevel < GlobalConfigManager.GetGlobalConfig().globalEnemyConfig.enemyMeleeConfigs.Count);
         base.ApplyConfig();
-        var enemyConfig = GlobalConfigManager.GetGlobalConfig().globalEnemyConfig.enemyMeleeConfig;
+        var enemyConfig = GlobalConfigManager.GetGlobalConfig().globalEnemyConfig.enemyMeleeConfigs[threatLevel];
         dashDelay = enemyConfig.dashDelay;
         dashDuration = enemyConfig.dashDuration;
         dashRange = enemyConfig.dashRange;
@@ -59,7 +63,8 @@ public class EnemyMelee : EnemyAI
 
     protected override EnemyConfig GetEnemyBaseConfig()
     {
-        return GlobalConfigManager.GetGlobalConfig().globalEnemyConfig.enemyMeleeConfig.baseConfig;
+        Assert.IsTrue(threatLevel < GlobalConfigManager.GetGlobalConfig().globalEnemyConfig.enemyMeleeConfigs.Count);
+        return GlobalConfigManager.GetGlobalConfig().globalEnemyConfig.enemyMeleeConfigs[threatLevel].baseConfig;
     }
 
     protected override void Idle()
@@ -106,7 +111,7 @@ public class EnemyMelee : EnemyAI
                 agent.isStopped = true;
                 if (attackCooldownDelta <= 0f)
                 {
-                    animator.SetTrigger("Attack");
+                    animator.Attack();
                     playerController.ReceiveDamage(damage);
                     attackCooldownDelta = attackCooldown;
                 }
@@ -163,7 +168,7 @@ public class EnemyMelee : EnemyAI
 
         if (IsPlayerInRange(attackRange))
         {
-            animator.SetTrigger("Attack");
+            animator.Attack();
             StartCoroutine(WaitAndTryDealDamage(0.6f));
         }
 

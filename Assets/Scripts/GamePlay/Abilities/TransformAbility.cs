@@ -113,7 +113,7 @@ public class TransformAbility
 	private void MorphTile(Tile tile, BiomeType target) {
 		tile.Morph(target, false);
 		if (target != BiomeType.DEAD) {
-			tile.mapController.ReviveTile(tile);
+			tile.mapController.ReviveTile();
 		}
 	}
 }

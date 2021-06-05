@@ -1,4 +1,4 @@
 public enum EnemyType
 {
-    Ranged, Melee, EnvDestroyer, Bomber
+    Ranged, RangedMiniboss, Melee, MeleeMiniboss, EnvDestroyer, Bomber
 }

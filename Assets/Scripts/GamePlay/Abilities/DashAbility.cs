@@ -54,15 +54,22 @@ public class DashAbility : MainAbility
             }
 
             Vector3 pos = playerTrans.position + direction * conf.speed * Time.deltaTime;
-            pos.y = mapController.TileHeightInPosition(playerTrans.position) + playerHeight;
+            float tileHeight = mapController.TileHeightInPosition(playerTrans.position) + playerHeight;
+            if (float.IsNaN(tileHeight))
+                break;
+            pos.y = tileHeight;
             playerTrans.position = pos;
             yield return null;
         }
         playerTrans.localScale = Vector3.one;
 
         Vector3 posAf = start + direction * distance;
-        posAf.y = mapController.TileHeightInPosition(playerTrans.position) + playerHeight;
-        playerTrans.position = posAf;
+        float tileHeightAf = mapController.TileHeightInPosition(playerTrans.position) + playerHeight;
+        if (!float.IsNaN(tileHeightAf))
+        {
+            posAf.y = mapController.TileHeightInPosition(playerTrans.position) + playerHeight;
+            playerTrans.position = posAf;
+        }        
 
         playerController.moveStop = false;
         dashEffect.emitting = false;

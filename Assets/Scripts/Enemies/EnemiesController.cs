@@ -20,20 +20,17 @@ public class EnemiesController : MonoBehaviour
     public static void IncreaseAliveCount()
     {
         instance.aliveEnemiesCnt++;
-        Debug.Log($"{instance.aliveEnemiesCnt} enemies alive");
     }
 
     public static void DecreaseAliveCount()
     {
         instance.aliveEnemiesCnt--;
-        Debug.Log($"{instance.aliveEnemiesCnt} enemies alive");
 
         if (instance.aliveEnemiesCnt == 0)
         {
             instance.onWaveEnd.Invoke();
         }
     }
-
 
     private void Awake()
     {
@@ -47,10 +44,16 @@ public class EnemiesController : MonoBehaviour
         instance = null;
     }
 
+	public void SetWave(int wave) {
+		waveCounter = wave;
+	}
+
     public bool WasLastWave()
     {
         return waveCounter == waves.Count;
     }
+
+    public int GetWaveCounter() => waveCounter;
 
     public void SpawnNextWave()
     {

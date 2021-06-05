@@ -22,8 +22,13 @@ public class HUDController : MonoBehaviour
     private Image[] iconsInner;
     private Color[] iconColors;
 
-    [SerializeField]
-    private Image waveTimer;
+    // wave info
+    [SerializeField] private Image waveTimer;
+    [SerializeField] private Animator waveInfo;
+    [SerializeField] private TextMeshProUGUI waveInfoText;
+
+    // game goal
+    [SerializeField] private string gameGoalText = "Defeat waves of enemies and protect your home!";
 
     public PlayerController playerController;
 
@@ -38,6 +43,8 @@ public class HUDController : MonoBehaviour
             iconColors[i] = iconsInner[i].color;
         }
     }
+
+    #region Health and Energy
 
     public void SetUpHealth(float startingHealth, float maxHealth, int barCount = 5)
     {
@@ -126,6 +133,10 @@ public class HUDController : MonoBehaviour
         }
     }
 
+    #endregion
+
+    #region Ability Icons
+
     public void TransformBiome(string type)
     {
         if (type == "forest")
@@ -210,7 +221,11 @@ public class HUDController : MonoBehaviour
         }
     }
 
-    public IEnumerator ShowTimeTillNextWave(float duration)
+    #endregion
+
+    #region Wave Info
+
+    public IEnumerator ShowTimeTillNextWave(float duration, int waveNumber)
     {
         waveTimer.gameObject.SetActive(true);
         TextMeshProUGUI waveTimerText = waveTimer.GetComponentInChildren<TextMeshProUGUI>();
@@ -222,7 +237,31 @@ public class HUDController : MonoBehaviour
             waveTimerText.text = $"next wave in {Mathf.Ceil(time).ToString("0")}s";
             yield return null;
         }
-        waveTimer.gameObject.SetActive(false); 
+        waveTimer.gameObject.SetActive(false);
+        ShowWaveStart(waveNumber);
     }
 
+    public void ShowWaveDefeated()
+    {
+        waveInfoText.text = "Wave Defeated";
+        waveInfo.SetTrigger("WaveDefeated");
+    }
+
+    private void ShowWaveStart(int waveNumber)
+    {
+        waveInfoText.text = "Wave " + (waveNumber+1);
+        waveInfo.SetTrigger("WaveDefeated");
+    }
+
+    #endregion
+
+    #region Game goal
+
+    public void ShowGameGoal()
+    {
+        waveInfoText.text = gameGoalText;
+        waveInfo.SetTrigger("WaveDefeated");
+    }
+
+    #endregion Game goal
 }

@@ -17,8 +17,8 @@ public class EnemyBomber : EnemyAI
             roamPosition = playerController.transform;
         else
             roamPosition = transform;
-        agent.isStopped = false;
-        agent.SetDestination(EnemiesUtils.GetRoamPosition(roamPosition.position, moveRangeMin, moveRangeMax));
+        //agent.isStopped = false;
+        //agent.SetDestination(EnemiesUtils.GetRoamPosition(roamPosition.position, moveRangeMin, moveRangeMax));
     }
 
     protected override EnemyConfig GetEnemyBaseConfig()
@@ -33,7 +33,7 @@ public class EnemyBomber : EnemyAI
             agent.isStopped = true;
             state = State.Idle;
             idleDeltaTime = idleDuration;
-            animator.SetTrigger("Attack");
+            animator.Attack();
         }
     }
 

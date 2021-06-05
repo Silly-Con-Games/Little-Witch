@@ -44,8 +44,9 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   spawnRange: 5
-  spawnDelay: 5
   rangedPrefab: {fileID: 2909162330852038180, guid: 8e1072016e682fa4a9e7fb2cf75d86ed, type: 3}
+  rangedMinibossPrefab: {fileID: 2909162330852038180, guid: d0023457223b51b4dbbc46a13c4dabcb, type: 3}
   meleePrefab: {fileID: 5384379442950274118, guid: 58384ed62a1f90d499b5af62efeed90c, type: 3}
+  meleeMinibossPrefab: {fileID: 5384379442950274118, guid: ccc45e6d909b3d4488c2f8103876e1fc, type: 3}
   bomberPrefab: {fileID: 1632079588551944693, guid: 6f28f263629592b4ca6405fcdeb80535, type: 3}
   envDestroyerPrefab: {fileID: 1642520030457959126, guid: 60951678d6e9bd845ab16b46ffb6cef2, type: 3}

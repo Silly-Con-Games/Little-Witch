@@ -121,7 +121,7 @@ public class EnemyEnvDestroyer : EnemyAI
     {
         for (int i = 0; i < mapController.tiles.Count; i++)
         {
-            if (!mapController.tiles[i] || mapController.tiles[i].GetBiomeType() == BiomeType.DEAD || mapController.tiles[i].wantedType == BiomeType.DEAD || mapController.tiles[i].chosen)
+            if (mapController.tiles[i].GetBiomeType() == BiomeType.DEAD || mapController.tiles[i].wantedType == BiomeType.DEAD || mapController.tiles[i].chosen)
                 continue;
             distanceTmp = Vector3.Distance(transform.position, mapController.tiles[i].transform.position);
             if (distanceTmp < minDistance)
@@ -168,9 +168,12 @@ public class EnemyEnvDestroyer : EnemyAI
 
     public override void ReceiveDamage(float amount)
     {
-        animator.SetTrigger("GetHit");
+        healthPoints -= amount;
+        animator.GetHit();
         FMODUnity.RuntimeManager.PlayOneShot("event:/enemies/hit/generic_hit");
-        if ((healthPoints -= amount) <= 0)
+        if (!healthbar.gameObject.activeSelf) healthbar.gameObject.SetActive(true);
+        healthbar.value = healthPoints;
+        if (healthPoints <= 0)
         {
             for (int i = 0; i < enemiesMelee.Count; i++)
             {

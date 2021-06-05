@@ -15,6 +15,7 @@ namespace Config
         [Tooltip("If no name is specified for load/save config function, this one will be used")]
         public string DefaultConfigFileName = "defaultConfig.json";
 
+
         [Button("LoadConfig", "Load config", true)] public string loadFileName;
         public void LoadConfig(string filename)
         {

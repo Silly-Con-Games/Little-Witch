@@ -25,44 +25,73 @@ public class MapController : MonoBehaviour
 
     private int tileMask;
 
-    // Start is called before the first frame update
-    void Start()
-    {
-        tileMask = LayerMask.GetMask("Tile");
+    private bool initialized;
 
-        initTile = FindObjectOfType<Tile>();
+	void Awake() {
+		initialized = false;
+	}
 
-        aliveTilesCnt = 0;
-        Queue<Tile> tilesQueue = new Queue<Tile>();
-        tilesQueue.Enqueue(initTile);
-        initTile.mapInfo.visited = true;
-        Tile tile;
-        tiles = new List<Tile>();
-
-        while (tilesQueue.Count > 0)
-        {
-            tile = tilesQueue.Dequeue();
-            tile.mapInfo.index = tiles.Count;
-            if (tile.GetBiomeType() != BiomeType.DEAD)
-            {
-                tiles.Add(tile);
-                aliveTilesCnt++;
-            }
-            else
-            {
-                tiles.Add(null);
-            }
-
-            foreach (Tile ngb in tile.GetNeighbours())
-            {
-                if (ngb && !(ngb.mapInfo.visited))
-                {
-					ngb.mapInfo.visited = true;
-                    tilesQueue.Enqueue(ngb);
-                }
-            }
-        }
+	void Start() {
+        if (!initialized) {
+			Initialize();
+		}
     }
+
+	private void Initialize() {
+		tileMask = LayerMask.GetMask("Tile");
+
+		initTile = FindObjectOfType<Tile>();
+
+		aliveTilesCnt = 0;
+		Queue<Tile> tilesQueue = new Queue<Tile>();
+		tilesQueue.Enqueue(initTile);
+		initTile.mapInfo.visited = true;
+		Tile tile;
+		tiles = new List<Tile>();
+
+		while (tilesQueue.Count > 0) {
+			tile = tilesQueue.Dequeue();
+			tile.mapInfo.index = tiles.Count;
+			tiles.Add(tile);
+			if (tile.GetBiomeType() != BiomeType.DEAD) {
+				aliveTilesCnt++;
+			}
+
+			foreach (Tile ngb in tile.GetNeighbours()) {
+				if (ngb && !(ngb.mapInfo.visited)) {
+					ngb.mapInfo.visited = true;
+					tilesQueue.Enqueue(ngb);
+				}
+			}
+		}
+
+		initialized = true;
+	}
+
+	public void SetTiles(List<TileSaveInfo> savedTiles) {
+		if (!initialized) {
+			Initialize();
+		}
+
+		for (int i = 0; i < tiles.Count; i++) {
+			if (tiles[i].GetBiomeType() != savedTiles[i].type) {
+				tiles[i].Morph(savedTiles[i].type, true);
+				tiles[i].SetupPropOnLoad(savedTiles[i].hasProp);
+			}
+		}
+	}
+
+	public List<TileSaveInfo> GetTiles() {
+		List<TileSaveInfo> tilesInfo = new List<TileSaveInfo>();
+		for (int i = 0; i < tiles.Count; i++) {
+			TileSaveInfo info = new TileSaveInfo();
+			info.type = tiles[i].GetBiomeType();
+			info.hasProp = tiles[i].HasProp();
+			tilesInfo.Add(info);
+		}
+
+		return tilesInfo;
+	}
 
     public PropAndProbability GetProp(BiomeType type)
     {
@@ -81,14 +110,12 @@ public class MapController : MonoBehaviour
 
     public void AttackTile(Tile tile)
     {
-        tiles[tile.mapInfo.index] = null;
         aliveTilesCnt--;
         tile.Morph(BiomeType.DEAD, false);
     }
 
-	public void ReviveTile(Tile tile) 
+	public void ReviveTile() 
 	{ 
-		tiles[tile.mapInfo.index] = tile;
 		aliveTilesCnt++;
 	}
 
@@ -117,16 +144,22 @@ public class MapController : MonoBehaviour
 
     private Tile cachedTile;
     private Vector3 lastPos = Vector3.positiveInfinity;
+
     public Tile GetTileAtPosition(Vector3 position)
     {
         if (lastPos != position)
         {
             lastPos = position;
             if (Physics.Raycast(position, Vector3.down, out RaycastHit hit, 3f, tileMask))
+			{ 
                 cachedTile = hit.transform.gameObject.GetComponent<Tile>();
+			}
             else
+			{
                 cachedTile = null;
+			}
         }
+
         return cachedTile;
     }
 }

@@ -12,10 +12,16 @@ public class EnemiesSpawn : MonoBehaviour
 
     [SerializeField]
     private GameObject rangedPrefab;
-    
+
+    [SerializeField]
+    private GameObject rangedMinibossPrefab;
+
     [SerializeField]
     private GameObject meleePrefab;
-    
+
+    [SerializeField]
+    private GameObject meleeMinibossPrefab;
+
     [SerializeField]
     private GameObject bomberPrefab;
     
@@ -83,6 +89,22 @@ public class EnemiesSpawn : MonoBehaviour
                     transform.rotation
                 );
                 enemy.GetComponent<EnemyEnvDestroyer>().InitEnemy();
+                break;
+            case EnemyType.MeleeMiniboss:
+                enemy = Instantiate(
+                    meleeMinibossPrefab,
+                    EnemiesUtils.GetRoamPosition(transform.position, 0f, spawnRange),
+                    transform.rotation
+                );
+                enemy.GetComponent<EnemyMelee>().InitEnemy();
+                break;
+            case EnemyType.RangedMiniboss:
+                enemy = Instantiate(
+                    rangedMinibossPrefab,
+                    EnemiesUtils.GetRoamPosition(transform.position, 0f, spawnRange),
+                    transform.rotation
+                );
+                enemy.GetComponent<EnemyRanged>().InitEnemy();
                 break;
         }
 

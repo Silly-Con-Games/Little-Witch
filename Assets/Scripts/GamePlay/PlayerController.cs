@@ -59,7 +59,7 @@ public class PlayerController : MonoBehaviour, IDamagable
 
     public  Vector3 mouseWorldPosition { get; internal set; }
 
-    private void Start()
+    public void Initialize()
     {
         lastPos = transform.position;
         tileMask = LayerMask.GetMask("Tile");
@@ -117,7 +117,7 @@ public class PlayerController : MonoBehaviour, IDamagable
 
     }
 
-    void ApplyConfig()
+    private void ApplyConfig()
     {
         var witchConfig = GlobalConfigManager.GetWitchConfig();
 
@@ -129,7 +129,9 @@ public class PlayerController : MonoBehaviour, IDamagable
         health.onChanged.AddListener(hudController.SetHealth);
 
         energy = new EnergyTracker(witchConfig.energyMax, witchConfig.energyInitial);
-        
+        energy.onChanged.AddListener(ChangeEnergyTankAppearance);
+        ChangeEnergyTankAppearance(energy.Energy);
+
         hudController.SetUpEnergy(energy.Energy, energy.MaxEnergy, Mathf.CeilToInt(energy.MaxEnergy/witchConfig.transformAbility.energyCost));
         energy.onChanged.AddListener(hudController.SetEnergy);
         energy.onNotEnough.AddListener(hudController.NotEnoughEnergy);
@@ -276,7 +278,7 @@ public class PlayerController : MonoBehaviour, IDamagable
 
     public void OnMeleeAbility(InputValue value)
     {
-        if (!pauseController.IsPaused() && meeleeAbility.IsReady)
+		if (!pauseController.IsPaused() && meeleeAbility.IsReady)
         {
             meeleeAbility.Attack();
             ScaleSpeedModifier(meeleeAbility.conf.attackSlow);
@@ -296,7 +298,7 @@ public class PlayerController : MonoBehaviour, IDamagable
 
     public void OnChargeAbility(InputValue value)
     {
-        if (!pauseController.IsPaused()) {
+		if (!pauseController.IsPaused()) {
 			if (value.isPressed && chargeAbility.IsReady()) {
 				animator.SetTrigger("Cast");
 
@@ -388,5 +390,11 @@ public class PlayerController : MonoBehaviour, IDamagable
     public void ScaleSpeedModifier(float val)
     {
         speedModifier *= val;
+    }
+
+    public void ChangeEnergyTankAppearance(float curEnergy)
+    {
+        Debug.Log("changing energy tank appearance");
+        animator.SetBool("EnoughEnergy", curEnergy >= transformAbility.conf.energyCost);
     }
 }

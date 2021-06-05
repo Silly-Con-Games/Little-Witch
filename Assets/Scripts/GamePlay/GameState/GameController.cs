@@ -4,6 +4,9 @@ using UnityEngine;
 using UnityEngine.SceneManagement;
 using Cinemachine;
 using UnityEngine.Events;
+using System.Runtime.Serialization.Formatters.Binary;
+using System.IO;
+using System.Collections.Generic;
 
 public class GameController : MonoBehaviour
 {
@@ -25,10 +28,12 @@ public class GameController : MonoBehaviour
 
     public AudioSource audioSource;
 
-    public static EGameState GameState 
-    { 
-        get => internalGS; 
-        internal set 
+	public GameObject energySphere;
+
+    public static EGameState GameState
+    {
+        get => internalGS;
+        internal set
         {
             if(internalGS != value)
             {
@@ -36,7 +41,7 @@ public class GameController : MonoBehaviour
                internalGS = value;
                onGameStateChanged.Invoke(value);
             }
-        } 
+        }
     }
 
     private static EGameState internalGS = EGameState.WaitingForNextWave;
@@ -45,23 +50,29 @@ public class GameController : MonoBehaviour
     private PlayerController currentWitch;
     private GlobalConfig conf;
 
+	private Save saveToBeLoaded;
+
     // Start is called before the first frame update
     void Start()
     {
-
         internalGS = EGameState.WaitingForNextWave;
         GlobalConfigManager.onConfigChanged.AddListener(ApplyConfig);
         ApplyConfig();
         StartCoroutine(SpawnWithDelay(0.1f));
 
-        enemiesController.onWaveEnd.AddListener(OnWaveEnd);
+		saveToBeLoaded = null;
+		LoadGame();
+
+		enemiesController.onWaveEnd.AddListener(OnWaveEnd);
         StartCoroutine(WaitAndStartWave(enemiesController.GetCurrentPreperationTime()));
-    }
+
+		hud.ShowGameGoal();
+	}
 
     void ApplyConfig()
     {
         conf = GlobalConfigManager.GetGlobalConfig();
-        FMOD.Studio.VCA vca = FMODUnity.RuntimeManager.GetVCA("vca:/GameVCA"); 
+        FMOD.Studio.VCA vca = FMODUnity.RuntimeManager.GetVCA("vca:/GameVCA");
         vca.setVolume(conf.soundConfig.sfxVolume);
         audioSource.volume = conf.soundConfig.musicVolume;
     }
@@ -75,9 +86,77 @@ public class GameController : MonoBehaviour
         currentWitch.hudController = hud;
 		currentWitch.pauseController = pauseController;
 
+		currentWitch.Initialize();
+
+		if (saveToBeLoaded != null) {
+			currentWitch.energy.Set(saveToBeLoaded.energy);
+			currentWitch.health.Set(saveToBeLoaded.health);
+			currentWitch.gameObject.transform.position = saveToBeLoaded.witchPosition.Get();
+		}
+
         cmCamera.LookAt = currentWitch.transform;
         cmCamera.Follow = currentWitch.transform;
     }
+
+	[Button("DeleteSave", "Delete save", false)] public string input1;
+	public void DeleteSave() {
+		string filename = Application.persistentDataPath + "/gamesave.save";
+		if (File.Exists(filename)) {
+			File.Delete(filename);
+		}
+	}
+
+	private void SaveGame() {
+		Save save = new Save();
+		save.wave = enemiesController.GetWaveCounter();
+		save.energy = currentWitch.energy.Energy;
+		save.health = currentWitch.health.Health;
+		save.witchPosition = new SerializableVector(currentWitch.gameObject.transform.position + Vector3.up * 0.2f);
+		save.tiles = mapController.GetTiles();
+		List<SerializableVector> energySpheres = new List<SerializableVector>();
+		foreach (Object o in FindObjectsOfType<Energy>()) {
+			energySpheres.Add(new SerializableVector(((Energy)o).gameObject.transform.position));
+		}
+		save.energySpheres = energySpheres;
+
+		string filename = Application.persistentDataPath + "/gamesave.save";
+		if (File.Exists(filename)) {
+			File.Delete(filename);
+		}
+
+		BinaryFormatter bf = new BinaryFormatter();
+		FileStream file = File.Create(filename);
+		bf.Serialize(file, save);
+		file.Close();
+	}
+
+	private void LoadGame() {
+		string filename = Application.persistentDataPath + "/gamesave.save";
+		if (File.Exists(filename)) {
+			BinaryFormatter bf = new BinaryFormatter();
+			FileStream file = File.Open(filename, FileMode.Open);
+			Save save = null;
+
+			try {
+				save = (Save)bf.Deserialize(file);
+			} catch (System.Exception e) {
+				Debug.LogError("Exception during load deserialization, deleting save file.");
+				file.Close();
+				File.Delete(filename);
+				return;
+			}
+
+			file.Close();
+
+			enemiesController.SetWave(save.wave);
+			mapController.SetTiles(save.tiles);
+
+			foreach (SerializableVector v in save.energySpheres) {
+				Instantiate(energySphere, v.Get(), Quaternion.identity);
+			}
+			saveToBeLoaded = save;
+		}
+	}
 
     private void OnWitchDeath()
     {
@@ -98,13 +177,15 @@ public class GameController : MonoBehaviour
         {
             FMODUnity.RuntimeManager.PlayOneShot("event:/game/wave_end");
             GameState = EGameState.WaitingForNextWave;
+			SaveGame();
             StartCoroutine(WaitAndStartWave(enemiesController.GetCurrentPreperationTime()));
+            hud.ShowWaveDefeated();
         }
     }
 
     private IEnumerator WaitAndStartWave(float duration)
     {
-        StartCoroutine(hud.ShowTimeTillNextWave(duration));
+        StartCoroutine(hud.ShowTimeTillNextWave(duration, enemiesController.GetWaveCounter()));
         yield return new WaitForSeconds(duration);
         GameState = EGameState.FightingWave;
         FMODUnity.RuntimeManager.PlayOneShot("event:/game/wave_start");
