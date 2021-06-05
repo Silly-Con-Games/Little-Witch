@@ -36,10 +36,6 @@ public class EnemyEnvDestroyer : EnemyAI
     public override void InitEnemy()
     {
         base.InitEnemy();
-        enemiesMeleeMax = 1;
-        enemiesRangedMax = 1;
-        moveRangeMax = 8f;
-        moveRangeMin = 5f;
         if (!mapController)
             mapController = FindObjectOfType<MapController>();
         coroutineRunning = false;
@@ -103,7 +99,8 @@ public class EnemyEnvDestroyer : EnemyAI
         if (!coroutineRunning)
         {
             Attack();
-            if (mapController.aliveTilesCnt == 0)
+            // because one tile(under the home tree) is unreachable
+            if (mapController.aliveTilesCnt == 1)
             {
                 agent.SetDestination(EnemiesUtils.GetRoamPosition(transform.position, moveRangeMin, moveRangeMax));
                 state = State.Roam;
@@ -134,11 +131,20 @@ public class EnemyEnvDestroyer : EnemyAI
             }
         }
 
-        tileTmp.chosen = true;
+        if (tileTmp)
+        {
+            tileTmp.chosen = true;
+        }
+        else
+        {
+            state = State.Roam;
+            coroutineRunning = false;
+            return;
+        }
         
         await Task.Delay(Mathf.CeilToInt(idleDuration * 1000f));
 
-        if (agent)
+        if (agent && agent.isActiveAndEnabled)
         {
             agent.SetDestination(tileTmp.transform.position);
             agent.isStopped = false;
@@ -156,7 +162,7 @@ public class EnemyEnvDestroyer : EnemyAI
             if (!tile || tile.GetBiomeType() == BiomeType.DEAD)
                 return;
             FMODUnity.RuntimeManager.PlayOneShot("event:/enemies/sucking/sucking");
-            mapController.AttackTile(tile);
+            mapController.AttackTile(tile); 
         }
     }
 

@@ -189,9 +189,15 @@ public abstract class EnemyAI : MonoBehaviour, IDamagable, IRootable, IStunnable
         
         Vector2 posMy = Camera.main.WorldToScreenPoint(transform.position);
         Vector2 posPlayer = Camera.main.WorldToScreenPoint(playerController.transform.position);
-
         Vector2 intersection;
 
+        if (posMy.x < 0 && posMy.y > 10000)
+        {
+            posMy.x = -posMy.x;
+            posMy.y = -posMy.y;
+        }
+        
+        
         if (LineUtils.GetIntersectWithScreenEdges(posMy, posPlayer, out intersection))
         {
             indicator.GetComponent<RectTransform>().position = new Vector3(intersection.x, intersection.y, 0);
