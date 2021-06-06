@@ -59,9 +59,9 @@ public class EnemyBomber : EnemyAI
 
     public override void ReceiveDamage(float amount)
     {
-        State tmp = state;
         base.ReceiveDamage(amount);
-        state = tmp;
+        state = State.Roam;
+        agent.isStopped = false;
     }
 
     protected override void Attack()
