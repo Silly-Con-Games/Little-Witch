@@ -231,23 +231,35 @@ public abstract class EnemyAI : MonoBehaviour, IDamagable, IRootable, IStunnable
         {
             indicator.SetActive(true);
         }
-        
-        Vector2 posMy = Camera.main.WorldToScreenPoint(transform.position);
+
+        Vector2 posMy = Camera.main.WorldToScreenPoint(CalculateWorldPosition(transform.position, Camera.main));
         Vector2 posPlayer = Camera.main.WorldToScreenPoint(playerController.transform.position);
         Vector2 intersection;
-
-        if (posMy.x < 0 && posMy.y > 10000)
-        {
-            posMy.x = -posMy.x;
-            posMy.y = -posMy.y;
-        }
-        
         
         if (LineUtils.GetIntersectWithScreenEdges(posMy, posPlayer, out intersection))
         {
             indicator.GetComponent<RectTransform>().position = new Vector3(intersection.x, intersection.y, 0);
         }
         
+    }
+
+    //from https://forum.unity.com/threads/camera-worldtoscreenpoint-bug.85311/
+    // position = the world position of the entity to be tested
+    private Vector3 CalculateWorldPosition(Vector3 position, Camera camera)
+    {
+        //if the point is behind the camera then project it onto the camera plane
+        Vector3 camNormal = camera.transform.forward;
+        Vector3 vectorFromCam = position - camera.transform.position;
+        float camNormDot = Vector3.Dot(camNormal, vectorFromCam.normalized);
+        if (camNormDot <= 0f)
+        {
+            //we are beind the camera, project the position on the camera plane
+            float camDot = Vector3.Dot(camNormal, vectorFromCam);
+            Vector3 proj = (camNormal * camDot * 1.01f);   //small epsilon to keep the position infront of the camera
+            position = camera.transform.position + (vectorFromCam - proj);
+        }
+
+        return position;
     }
 
     protected abstract void Roam();

@@ -100,7 +100,7 @@ public class EnemyEnvDestroyer : EnemyAI
         {
             Attack();
             // because one tile(under the home tree) is unreachable
-            if (mapController.aliveTilesCnt == 1)
+            if (mapController.aliveTilesCnt <= 1)
             {
                 agent.SetDestination(EnemiesUtils.GetRoamPosition(transform.position, moveRangeMin, moveRangeMax));
                 state = State.Roam;

@@ -27,7 +27,7 @@ public class MapController : MonoBehaviour
 
     private bool initialized;
 
-	void Awake() {
+    void Awake() {
 		initialized = false;
 	}
 
@@ -77,9 +77,20 @@ public class MapController : MonoBehaviour
 			if (tiles[i].GetBiomeType() != savedTiles[i].type) {
 				tiles[i].Morph(savedTiles[i].type, true);
 				tiles[i].SetupPropOnLoad(savedTiles[i].hasProp);
-			}
+            }
 		}
-	}
+
+        // restoring alive tiles count
+        int cnt = 0;
+        for (int i = 0; i < tiles.Count; i++)
+        {
+            if (!(tiles[i].GetBiomeType() == BiomeType.DEAD))
+            {
+                cnt++;
+            }
+        }
+        aliveTilesCnt = cnt;
+    }
 
 	public List<TileSaveInfo> GetTiles() {
 		List<TileSaveInfo> tilesInfo = new List<TileSaveInfo>();

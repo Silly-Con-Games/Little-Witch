@@ -74,13 +74,11 @@ public class TransformAbility
 		if (tile != null && tile.GetBiomeType() == BiomeType.DEAD)
 		{
 			tile.Revive();
-            tile.mapController.ReviveTile(tile);
-			int cost = 1;
+            int cost = 1;
 			foreach(var neigh in tile.GetNeighbours())
             {
 				if (neigh.GetBiomeType() == BiomeType.DEAD)
                 {
-                    neigh.mapController.ReviveTile(neigh);
 					neigh.Revive();
 					cost++;
 				}
