@@ -21,7 +21,7 @@ AnimationClip:
   - curve:
     - time: 0
       value: {fileID: 2100000, guid: 405b4fdc463f08d488520b9305ca8887, type: 2}
-    - time: 1
+    - time: 1.0166667
       value: {fileID: 2100000, guid: 405b4fdc463f08d488520b9305ca8887, type: 2}
     attribute: m_Materials.Array.data[0]
     path: EnergyTank
@@ -49,7 +49,7 @@ AnimationClip:
     m_AdditiveReferencePoseClip: {fileID: 0}
     m_AdditiveReferencePoseTime: 0
     m_StartTime: 0
-    m_StopTime: 1.0166667
+    m_StopTime: 1.0333333
     m_OrientationOffsetY: 0
     m_Level: 0
     m_CycleOffset: 0
