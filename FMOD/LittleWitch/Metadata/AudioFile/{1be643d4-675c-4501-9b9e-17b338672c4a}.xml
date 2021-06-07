@@ -2,7 +2,7 @@
 <objects serializationModel="Studio.02.01.00">
 	<object class="AudioFile" id="{1be643d4-675c-4501-9b9e-17b338672c4a}">
 		<property name="assetPath">
-			<value>witch/dash/whoosh_weapon_knife_swing_04.wav</value>
+			<value>witch/attack/whoosh_weapon_knife_swing_04.wav</value>
 		</property>
 		<property name="frequencyInKHz">
 			<value>96</value>

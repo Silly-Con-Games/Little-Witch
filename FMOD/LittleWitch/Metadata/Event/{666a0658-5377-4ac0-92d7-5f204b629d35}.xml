@@ -2,7 +2,7 @@
 <objects serializationModel="Studio.02.01.00">
 	<object class="Event" id="{666a0658-5377-4ac0-92d7-5f204b629d35}">
 		<property name="name">
-			<value>meadow_ability</value>
+			<value>meadow_ability_start</value>
 		</property>
 		<property name="outputFormat">
 			<value>1</value>

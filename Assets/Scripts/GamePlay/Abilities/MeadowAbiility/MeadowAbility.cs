@@ -21,7 +21,7 @@ public class MeadowAbility : MainAbility
         var parent = new GameObject("MAParent").transform;
         parent.position = playerController.transform.position;
         parent.rotation = playerController.transform.rotation;
-        FMODUnity.RuntimeManager.PlayOneShot("event:/witch/abilities/meadow_ability", parent.transform.position);
+        FMODUnity.RuntimeManager.PlayOneShot("event:/witch/abilities/meadow_ability_start", parent.transform.position);
 
         int half = (conf.projectileCnt - 1) / 2;
         float stepWidth = conf.spellWidth / conf.projectileCnt; 
@@ -46,7 +46,7 @@ public class MeadowAbility : MainAbility
             var inst = GameObject.Instantiate(grassPrefab, parent);
             inst.Init(new CatmulRollSpline(points), conf.speed, OnHit);
         }
-        
+
     }
 
     private void OnHit(Collider other, MAGrass owner)

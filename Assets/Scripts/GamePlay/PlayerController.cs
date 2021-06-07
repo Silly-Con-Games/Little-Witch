@@ -316,6 +316,10 @@ public class PlayerController : MonoBehaviour, IDamagable
             animator.SetTrigger("Cast");
 
             currentMainAbility.CastAbility();
+            if (currentMainAbility is MeadowAbility)
+            {
+                StartCoroutine(PlayMeadowPathSoundCoroutine());
+            }
             hudController.CastAbility(currentMainAbility);
         }
         else if (currentMainAbility != null)
@@ -323,6 +327,12 @@ public class PlayerController : MonoBehaviour, IDamagable
             hudController.AbilityNotReady(currentMainAbility);
         }
 
+    }
+
+    IEnumerator PlayMeadowPathSoundCoroutine()
+    {
+        yield return new WaitForSeconds(0.4f);
+         
     }
 
 	public void OnTransformForest(InputValue value) {
