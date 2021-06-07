@@ -105,6 +105,7 @@ namespace Config
     {
         public MainAbilityConfig baseConfig;
         public float MSMultiplier;
+        public float DashDistMultiplier;
         public float speed;
         public int projectileCnt;
         public float spellWidth;

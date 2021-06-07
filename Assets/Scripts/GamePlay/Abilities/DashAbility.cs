@@ -10,6 +10,7 @@ public class DashAbility : MainAbility
     public float playerHeight = 1.2f;
     public TrailRenderer dashEffect;
     private DashAbilityConfig internalConf;
+    public float dashLengthModifier = 1;
 
     public override void CastAbility()
     {
@@ -25,7 +26,7 @@ public class DashAbility : MainAbility
         MapController mapController = playerController.mapController;
         Vector3 start = playerTrans.position;
         Vector3 direction = new Vector3(playerController.inputVelocity.x, 0, playerController.inputVelocity.y);
-        float distance = conf.maxRange;
+        float distance = conf.maxRange * dashLengthModifier;
 
         if (direction.sqrMagnitude == 0)
         {
@@ -34,7 +35,7 @@ public class DashAbility : MainAbility
             if (end.y < 0.35f)
                 end.y = playerHeight;
             direction = (end - start);
-            distance = Mathf.Min(direction.magnitude, conf.maxRange);
+            distance = Mathf.Min(direction.magnitude, conf.maxRange * dashLengthModifier);
             direction.Normalize();
         }
 

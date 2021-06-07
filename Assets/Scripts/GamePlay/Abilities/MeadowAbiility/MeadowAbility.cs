@@ -6,6 +6,10 @@ using System.Collections.Generic;
 public class MeadowAbility : MainAbility
 {
     public MAGrass grassPrefab;
+
+    public TrailRenderer msEffect;
+    public TrailRenderer msEffectSec;
+
     public MeadowAbilityConfig conf { get => internalConf; set { internalConf = value; mainAbilityConfig = value.baseConfig; } }
 
     private MeadowAbilityConfig internalConf;
@@ -73,10 +77,17 @@ public class MeadowAbility : MainAbility
     public void SteppedOnMeadow()
     {
         playerController.ScaleSpeedModifier(conf.MSMultiplier);
+        msEffect.emitting = true;
+        msEffectSec.emitting = true;
+        playerController.dashAbility.dashLengthModifier *= conf.DashDistMultiplier;
     }
 
     public void SteppedFromMeadow()
     {
         playerController.ScaleSpeedModifier(1/conf.MSMultiplier);
+        msEffect.emitting = false;
+        msEffectSec.emitting = false;
+        playerController.dashAbility.dashLengthModifier /= conf.DashDistMultiplier;
+
     }
 }

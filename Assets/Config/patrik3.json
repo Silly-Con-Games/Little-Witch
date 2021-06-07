@@ -61,7 +61,8 @@
             "baseConfig": {
                 "cooldown": 2.5
             },
-            "MSMultiplier": 1.2999999523162842,
+            "MSMultiplier": 1.350000023841858,
+            "DashDistMultiplier": 1.350000023841858,
             "speed": 1.0,
             "projectileCnt": 7,
             "spellWidth": 0.800000011920929,
@@ -204,7 +205,7 @@
     },
     "soundConfig": {
         "musicVolume": 0.5,
-        "sfxVolume": 0.15000000596046449
+        "sfxVolume": 0.25
     },
     "respawnTime": 2.0
 }

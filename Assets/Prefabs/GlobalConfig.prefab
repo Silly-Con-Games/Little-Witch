@@ -101,7 +101,8 @@ MonoBehaviour:
       meadowAbility:
         baseConfig:
           cooldown: 2.5
-        MSMultiplier: 1.3
+        MSMultiplier: 1.35
+        DashDistMultiplier: 1.35
         speed: 1
         projectileCnt: 7
         spellWidth: 0.8
