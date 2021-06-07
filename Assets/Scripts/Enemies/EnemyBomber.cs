@@ -61,7 +61,10 @@ public class EnemyBomber : EnemyAI
     {
         base.ReceiveDamage(amount);
         state = State.Roam;
-        agent.isStopped = false;
+        if (agent && agent.isActiveAndEnabled)
+        {
+            agent.isStopped = false;
+        }
     }
 
     protected override void Attack()

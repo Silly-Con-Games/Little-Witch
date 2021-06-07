@@ -121,7 +121,6 @@ public class MusicController : MonoBehaviour
     
     public void OnGameStateChange(EGameState eGameState)
     {
-        Debug.Log(eGameState);
         switch (eGameState)
         {
             case EGameState.FightingWave:
