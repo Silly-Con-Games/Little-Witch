@@ -26,7 +26,7 @@ public class GameController : MonoBehaviour
 
     public EnemiesController enemiesController;
 
-    public AudioSource audioSource;
+    public MusicController musicController;
 
 	public GameObject energySphere;
 
@@ -73,8 +73,8 @@ public class GameController : MonoBehaviour
     {
         conf = GlobalConfigManager.GetGlobalConfig();
         FMOD.Studio.VCA vca = FMODUnity.RuntimeManager.GetVCA("vca:/GameVCA");
-        vca.setVolume(conf.soundConfig.sfxVolume);
-        audioSource.volume = conf.soundConfig.musicVolume;
+        vca.setVolume(PlayerPrefs.GetFloat("sounds_volume", 1f) * conf.soundConfig.sfxVolume);
+        musicController.SetVolume(PlayerPrefs.GetFloat("music_volume", 1f) * conf.soundConfig.musicVolume);
     }
 
     private IEnumerator SpawnWithDelay(float delay)

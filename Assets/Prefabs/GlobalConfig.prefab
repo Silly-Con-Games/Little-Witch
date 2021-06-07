@@ -1,0 +1,223 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!1 &2356201280017625516
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 2356201280017625514}
+  - component: {fileID: 2356201280017625517}
+  m_Layer: 0
+  m_Name: GlobalConfig
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!4 &2356201280017625514
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 2356201280017625516}
+  m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
+  m_LocalPosition: {x: -6.5, y: 0.541, z: -8.41}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_Children: []
+  m_Father: {fileID: 0}
+  m_RootOrder: 0
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!114 &2356201280017625517
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 2356201280017625516}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 7b5458f442cd3f44ab3a83e9aee0280e, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  DefaultConfigFileName: defaultConfig.json
+  loadFileName: patrik3.json
+  saveFileName: patrik3.json
+  globalConfig:
+    witchConfig:
+      health: 10
+      energyMax: 18
+      energyInitial: 9
+      movementSpeed: 4.5
+      jumpHeight: 0
+      meeleeAbility:
+        cooldown: 0.45
+        damage: 2.5
+        pushbackForce: 7
+        pushbackDuration: 0.4
+        attackSlow: 0.5
+      chargeAbility:
+        damageMin: 1
+        damageMax: 3
+        distanceMin: 1000
+        distanceMax: 1000
+        explosionRadiusMin: 6
+        explosionRadiusMax: 10
+        explosionSpeedMin: 20
+        explosionSpeedMax: 25
+        spawnRadiusMin: 0.5
+        spawnRadiusMax: 1.5
+        speedMin: 10
+        speedMax: 15
+        chargeTimeMax: 1.5
+        cooldown: 1.5
+        witchSlowMSMultiplier: 0.3
+        energyCost: 1
+      transformAbility:
+        cooldown: 1
+        energyCost: 3
+        radius: 2
+        minBiomeSize: 2
+      forestAbility:
+        baseConfig:
+          cooldown: 4.5
+        rootPathDamage: 2
+        rootBurstDamage: 2
+        maxRange: 10
+        rootPathSpeed: 25
+        rootDuration: 3
+        rootBurstRadius: 1.3
+        rootBurstDensity: 20
+      waterAbility:
+        baseConfig:
+          cooldown: 3.5
+        chargeTime: 0.2
+        waveDuration: 0.5
+        waveSpeed: 10
+        healPerSec: 1
+      meadowAbility:
+        baseConfig:
+          cooldown: 2.5
+        MSMultiplier: 1.3
+        speed: 1
+        projectileCnt: 7
+        spellWidth: 0.8
+        maxRange: 20
+        damage: 1
+      dashAbility:
+        baseConfig:
+          cooldown: 0.5
+        speed: 16
+        maxRange: 3
+        animSpeed: 0
+    globalEnemyConfig:
+      enemyRangedConfigs:
+      - baseConfig:
+          damage: 2
+          idleDuration: 5
+          chasingDuration: 3
+          moveRangeMin: 4
+          moveRangeMax: 4
+          maxRangeToPlayer: 8
+          attackRange: 5
+          speed: 4
+          attackCooldown: 3
+          healthPoints: 3
+          slowDefault: 3
+          rootDefault: 3
+      - baseConfig:
+          damage: 2
+          idleDuration: 5
+          chasingDuration: 3
+          moveRangeMin: 4
+          moveRangeMax: 4
+          maxRangeToPlayer: 8
+          attackRange: 5
+          speed: 4
+          attackCooldown: 3
+          healthPoints: 3
+          slowDefault: 3
+          rootDefault: 3
+      enemyMeleeConfigs:
+      - baseConfig:
+          damage: 1
+          idleDuration: 5
+          chasingDuration: 3
+          moveRangeMin: 4
+          moveRangeMax: 4
+          maxRangeToPlayer: 8
+          attackRange: 1.5
+          speed: 4
+          attackCooldown: 4
+          healthPoints: 5
+          slowDefault: 3
+          rootDefault: 3
+        dashDelay: 1
+        dashDuration: 2
+        dashSpeedModifier: 2
+        dashRange: 3
+        dashCooldown: 4
+      - baseConfig:
+          damage: 1
+          idleDuration: 5
+          chasingDuration: 3
+          moveRangeMin: 4
+          moveRangeMax: 4
+          maxRangeToPlayer: 8
+          attackRange: 1.5
+          speed: 4
+          attackCooldown: 4
+          healthPoints: 5
+          slowDefault: 3
+          rootDefault: 3
+        dashDelay: 1
+        dashDuration: 2
+        dashSpeedModifier: 2
+        dashRange: 3
+        dashCooldown: 4
+      enemyBomberConfig:
+        baseConfig:
+          damage: 3
+          idleDuration: 5
+          chasingDuration: 4
+          moveRangeMin: 4
+          moveRangeMax: 4
+          maxRangeToPlayer: 8
+          attackRange: 1.5
+          speed: 4
+          attackCooldown: 3
+          healthPoints: 5
+          slowDefault: 3
+          rootDefault: 3
+      enemyEnvDestroyerConfig:
+        baseConfig:
+          damage: 3
+          idleDuration: 5
+          chasingDuration: 3
+          moveRangeMin: 4
+          moveRangeMax: 4
+          maxRangeToPlayer: 8
+          attackRange: 1.5
+          speed: 2
+          attackCooldown: 1
+          healthPoints: 7
+          slowDefault: 3
+          rootDefault: 3
+        enemiesMeleeMax: 2
+        enemiesRangedMax: 2
+      mineConfig:
+        explosionDelay: 0.4
+        damageRange: 3
+        baseDamage: 4
+        disappearingDuration: 1
+    energyConfig:
+      lifeTimeInSec: 999999
+      speed: 15
+      energyAmount: 1
+    soundConfig:
+      musicVolume: 0.5
+      sfxVolume: 0.25
+    respawnTime: 2

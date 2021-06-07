@@ -1,5 +1,3 @@
-using System.Collections;
-using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.SceneManagement;
 using System.IO;
@@ -8,7 +6,7 @@ using UnityEngine.UI;
 public class MainMenu : MonoBehaviour
 {
 	public GameObject controls;
-	public GameObject settins;
+	public GameObject settings;
 	public GameObject credits;
 
 	public Button continueButton;
@@ -36,7 +34,7 @@ public class MainMenu : MonoBehaviour
 	}
 
 	public void ShowSettings() {
-		settins.SetActive(true);
+		settings.SetActive(true);
 	}
 
 	public void ShowCredits() {

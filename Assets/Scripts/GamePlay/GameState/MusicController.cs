@@ -20,6 +20,8 @@ public class MusicController : MonoBehaviour
     private AudioState audioState;
 
     private float volumeDelta;
+
+	private float fullVolume;
     
     public enum AudioState
     {
@@ -30,14 +32,19 @@ public class MusicController : MonoBehaviour
     }
     
     // Start is called before the first frame update
-    public void Start()
+    public void Awake()
     {
         GameController.onGameStateChanged.AddListener(OnGameStateChange);
         audioState = AudioState.PAUSED;
         audioSource.volume = 0f;
+		fullVolume = 0f;
         nextClip = null;
         volumeDelta = 0.003f;
     }
+
+	public void SetVolume(float volume) {
+		fullVolume = volume;
+	}
 
     public void Update()
     {
@@ -60,13 +67,13 @@ public class MusicController : MonoBehaviour
 
     private void Starting()
     {
-        if (audioSource.volume < GlobalConfigManager.GetGlobalConfig().soundConfig.musicVolume)
+        if (audioSource.volume < fullVolume)
         {
             audioSource.volume += volumeDelta;
         }
         else
         {
-            audioSource.volume = GlobalConfigManager.GetGlobalConfig().soundConfig.musicVolume;
+            audioSource.volume = fullVolume;
             audioState = AudioState.PLAYING;
         }
     }
