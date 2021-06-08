@@ -4,23 +4,21 @@ using Config;
 using UnityEngine;
 
 public class Bomb : MonoBehaviour
-{
-    
+{ 
     [SerializeField]
     private ParticleSystem particle;
 
     [SerializeField]
     private Animator animator;
-    
-    private PlayerController playerController;
 
-    private Collider bombCollider;
+	private Collider bombCollider;
+
+	private PlayerController playerController;
 
     private float explosionDelay;
     private float damageRange;
     private float baseDamage;
     private float disappearingDuration;
-    
     
     // Start is called before the first frame update
     void Start()
@@ -34,8 +32,9 @@ public class Bomb : MonoBehaviour
         {
             gameObject.GetComponentInChildren<Animator>();
         }
-        GlobalConfigManager.onConfigChanged.AddListener(ApplyConfig);
-        bombCollider = gameObject.GetComponent<Collider>();
+		
+		bombCollider = GetComponent<SphereCollider>();
+		GlobalConfigManager.onConfigChanged.AddListener(ApplyConfig);
         ApplyConfig();
         animator.enabled = false;
     }
@@ -47,6 +46,11 @@ public class Bomb : MonoBehaviour
         damageRange = enemyConfig.damageRange;
         baseDamage = enemyConfig.baseDamage;
         disappearingDuration = enemyConfig.disappearingDuration;
+
+		float diameter = damageRange * 2;
+		transform.localScale = new Vector3(diameter, diameter, diameter);
+		ParticleSystem.VelocityOverLifetimeModule module = particle.velocityOverLifetime;
+		module.speedModifier = diameter;
     }
 
 
@@ -86,7 +90,7 @@ public class Bomb : MonoBehaviour
             yield return null;
         }
         GlobalConfigManager.onConfigChanged.RemoveListener(ApplyConfig);
-        Destroy(gameObject);
+        Destroy(gameObject.transform.parent.gameObject);
     }
     
 }
