@@ -373,6 +373,11 @@ public class PlayerController : MonoBehaviour, IDamagable
 		}
 	}
 
+    private void OnLook(InputValue value)
+    {
+
+    }
+
 	public void ReceiveDamage(float amount)
     {
         if (isDead) return;
