@@ -184,8 +184,8 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0.5, y: 0.5}
   m_AnchorMax: {x: 0.5, y: 0.5}
-  m_AnchoredPosition: {x: 0, y: -1.5}
-  m_SizeDelta: {x: 300, y: 350}
+  m_AnchoredPosition: {x: 0, y: 34}
+  m_SizeDelta: {x: 500, y: 400}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!222 &2414786281698572380
 CanvasRenderer:
@@ -216,7 +216,8 @@ MonoBehaviour:
     m_PersistentCalls:
       m_Calls: []
   m_text: "Developers\n\tPatrik K\u0159epinsk\xFD\n\tKarel Petr\n\tRobert Badronov\n\tAlex
-    Petrova\nArt \n\tRoland  Johnson\n\tAlex Petrova\nMusic\n\tRoland Johnson\n"
+    Petrova\nArt \n\tRoland  Johnson\n\tAlex Petrova\nMusic\n\tRoland Johnson\nConsultant\n\tAndrew
+    Barron\nThird party assets\n\tAnimations from mixamo.com\n\tSFX from sonniss.com/gameaudiogdc\n"
   m_isRightToLeft: 0
   m_fontAsset: {fileID: 11400000, guid: 8f586378b4e144a9851e7b34d9b748ee, type: 2}
   m_sharedMaterial: {fileID: 2100000, guid: 79459efec17a4d00a321bdcc27bbc385, type: 2}
@@ -377,6 +378,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 13c6bf23c8c4b1c4cabff1e76ede524c, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  pages: []
 --- !u!1 &5814898111878971693
 GameObject:
   m_ObjectHideFlags: 0
