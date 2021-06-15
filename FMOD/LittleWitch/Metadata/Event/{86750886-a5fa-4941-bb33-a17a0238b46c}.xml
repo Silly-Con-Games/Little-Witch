@@ -5,7 +5,7 @@
 			<value>meadow_ability_path</value>
 		</property>
 		<property name="outputFormat">
-			<value>1</value>
+			<value>2</value>
 		</property>
 		<relationship name="folder">
 			<destination>{00894ddf-dcb4-4ebb-a0d7-7e923acd64d5}</destination>
@@ -53,7 +53,7 @@
 			<destination>{6f8d38c8-fe8a-4d0d-a44d-f89a5d08e197}</destination>
 		</relationship>
 		<relationship name="output">
-			<destination>{d5f69dbb-8c49-419b-bec7-a0d5f3591362}</destination>
+			<destination>{be89dcf6-0a04-4d01-b126-e11df31ea7df}</destination>
 		</relationship>
 	</object>
 	<object class="EventAutomatableProperties" id="{7477b94d-9d63-47a9-97e0-a37bc97c050d}" />
@@ -115,6 +115,7 @@
 	</object>
 	<object class="MixerBusEffectChain" id="{6e84c54a-fe2a-4119-9f4e-abc74e4312b4}">
 		<relationship name="effects">
+			<destination>{df6e26a2-5dc4-4b96-a2d6-fd453fd027b2}</destination>
 			<destination>{50b05ffc-04b7-4ead-93b9-bb6c6c599ba9}</destination>
 		</relationship>
 	</object>
@@ -126,6 +127,17 @@
 		</relationship>
 	</object>
 	<object class="MixerBusPanner" id="{2981f34e-0f90-4869-ac63-d94ce810ae2f}" />
+	<object class="SpatialiserEffect" id="{df6e26a2-5dc4-4b96-a2d6-fd453fd027b2}">
+		<property name="distanceRolloffType">
+			<value>1</value>
+		</property>
+		<property name="minimumDistance">
+			<value>20</value>
+		</property>
+		<property name="maximumDistance">
+			<value>60</value>
+		</property>
+	</object>
 	<object class="MixerBusFader" id="{50b05ffc-04b7-4ead-93b9-bb6c6c599ba9}" />
 	<object class="MixerBusFader" id="{92f264c7-9987-4c87-9e66-26995dbadd7b}" />
 </objects>

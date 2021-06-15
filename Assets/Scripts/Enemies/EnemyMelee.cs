@@ -156,7 +156,7 @@ public class EnemyMelee : EnemyAI
 
         if (!attacking)
         {
-            FMODUnity.RuntimeManager.PlayOneShot("event:/enemies/dash/dash");
+            FMODUnity.RuntimeManager.PlayOneShot("event:/enemies/dash/dash", transform.position);
             attacking = true;
         }
 

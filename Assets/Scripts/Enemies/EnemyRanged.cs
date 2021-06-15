@@ -32,7 +32,7 @@ public class EnemyRanged : EnemyAI
 
         animator.Attack();
 
-        FMODUnity.RuntimeManager.PlayOneShot("event:/enemies/shot/ranged_shot");
+        FMODUnity.RuntimeManager.PlayOneShot("event:/enemies/shot/ranged_shot", transform.position);
     }
 
     protected override void Idle()

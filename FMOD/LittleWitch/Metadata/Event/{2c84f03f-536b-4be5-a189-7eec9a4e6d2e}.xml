@@ -5,7 +5,7 @@
 			<value>water_ability</value>
 		</property>
 		<property name="outputFormat">
-			<value>1</value>
+			<value>2</value>
 		</property>
 		<relationship name="folder">
 			<destination>{00894ddf-dcb4-4ebb-a0d7-7e923acd64d5}</destination>
@@ -123,6 +123,9 @@
 		</relationship>
 	</object>
 	<object class="EventMixerGroup" id="{d9f6d640-fbeb-40c3-bd24-e18bc3091a24}">
+		<property name="volume">
+			<value>-4</value>
+		</property>
 		<property name="name">
 			<value>Audio 1</value>
 		</property>
@@ -151,6 +154,9 @@
 		</relationship>
 	</object>
 	<object class="EventMixerGroup" id="{fc773e45-5bc2-4210-a031-cc243c4026ed}">
+		<property name="volume">
+			<value>-4</value>
+		</property>
 		<property name="name">
 			<value>Audio 2</value>
 		</property>
@@ -179,6 +185,9 @@
 		</relationship>
 	</object>
 	<object class="EventMixerGroup" id="{30018779-9fcc-454e-b029-302f9862d3e5}">
+		<property name="volume">
+			<value>-4</value>
+		</property>
 		<property name="name">
 			<value>Audio 3</value>
 		</property>
@@ -194,6 +203,7 @@
 	</object>
 	<object class="MixerBusEffectChain" id="{a003b102-15fc-40a4-a6e5-e6ff2d784727}">
 		<relationship name="effects">
+			<destination>{3639c7d0-ae2c-46cf-8c01-13cd26a135cd}</destination>
 			<destination>{f498dba7-ffe6-45ad-9254-add3d299099f}</destination>
 		</relationship>
 	</object>
@@ -241,6 +251,17 @@
 		</relationship>
 	</object>
 	<object class="MixerBusPanner" id="{056a5657-64ea-4aa6-bf26-d9814015942c}" />
+	<object class="SpatialiserEffect" id="{3639c7d0-ae2c-46cf-8c01-13cd26a135cd}">
+		<property name="distanceRolloffType">
+			<value>1</value>
+		</property>
+		<property name="minimumDistance">
+			<value>20</value>
+		</property>
+		<property name="maximumDistance">
+			<value>60</value>
+		</property>
+	</object>
 	<object class="MixerBusFader" id="{f498dba7-ffe6-45ad-9254-add3d299099f}" />
 	<object class="AutomationPoint" id="{787374a8-744c-4b60-ab62-c8e6f24ba480}">
 		<property name="position">

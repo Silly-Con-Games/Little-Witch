@@ -161,7 +161,7 @@ public class EnemyEnvDestroyer : EnemyAI
             Tile tile = hit.transform.gameObject.GetComponent<Tile>();
             if (!tile || tile.GetBiomeType() == BiomeType.DEAD)
                 return;
-            FMODUnity.RuntimeManager.PlayOneShot("event:/enemies/sucking/sucking");
+            FMODUnity.RuntimeManager.PlayOneShot("event:/enemies/sucking/sucking", transform.position);
             mapController.AttackTile(tile); 
         }
     }
@@ -170,7 +170,7 @@ public class EnemyEnvDestroyer : EnemyAI
     {
         healthPoints -= amount;
         animator.GetHit();
-        FMODUnity.RuntimeManager.PlayOneShot("event:/enemies/hit/generic_hit");
+        FMODUnity.RuntimeManager.PlayOneShot("event:/enemies/hit/generic_hit", transform.position);
         if (!healthbar.gameObject.activeSelf) healthbar.gameObject.SetActive(true);
         healthbar.value = healthPoints;
         if (healthPoints <= 0)

@@ -5,7 +5,7 @@
 			<value>forest_ability_path</value>
 		</property>
 		<property name="outputFormat">
-			<value>1</value>
+			<value>2</value>
 		</property>
 		<relationship name="folder">
 			<destination>{00894ddf-dcb4-4ebb-a0d7-7e923acd64d5}</destination>
@@ -144,6 +144,7 @@
 	</object>
 	<object class="MixerBusEffectChain" id="{c01b2007-cb37-4659-9fee-6224c14d0cbe}">
 		<relationship name="effects">
+			<destination>{56c58ee9-5f14-48b1-8938-606c50739c57}</destination>
 			<destination>{38ef822b-6b1e-4689-ae4c-c03592a53a63}</destination>
 		</relationship>
 	</object>
@@ -161,6 +162,17 @@
 		</relationship>
 	</object>
 	<object class="MixerBusPanner" id="{ce68ffac-f9f1-46e5-a89e-a16e2b8686c4}" />
+	<object class="SpatialiserEffect" id="{56c58ee9-5f14-48b1-8938-606c50739c57}">
+		<property name="distanceRolloffType">
+			<value>1</value>
+		</property>
+		<property name="minimumDistance">
+			<value>20</value>
+		</property>
+		<property name="maximumDistance">
+			<value>60</value>
+		</property>
+	</object>
 	<object class="MixerBusFader" id="{38ef822b-6b1e-4689-ae4c-c03592a53a63}" />
 	<object class="MixerBusFader" id="{810bc180-626d-46a2-9d32-e8d0c71c96d8}" />
 	<object class="MixerBusFader" id="{f2a520c1-2659-4f4a-af01-6ff983e644af}" />

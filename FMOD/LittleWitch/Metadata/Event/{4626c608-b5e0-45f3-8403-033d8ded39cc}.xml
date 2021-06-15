@@ -53,7 +53,7 @@
 			<destination>{956a27fb-4540-42d0-a80f-f69f0b527972}</destination>
 		</relationship>
 		<relationship name="output">
-			<destination>{d5f69dbb-8c49-419b-bec7-a0d5f3591362}</destination>
+			<destination>{be89dcf6-0a04-4d01-b126-e11df31ea7df}</destination>
 		</relationship>
 	</object>
 	<object class="EventAutomatableProperties" id="{5b434ed7-70d7-4966-953f-c704e0c72c0c}" />
@@ -92,7 +92,6 @@
 		<property name="length">
 			<value>0.16</value>
 		</property>
-		<property name="name" />
 		<property name="playlistMode">
 			<value>1</value>
 		</property>
@@ -139,10 +138,10 @@
 			<value>1</value>
 		</property>
 		<property name="minimumDistance">
-			<value>30.5</value>
+			<value>20</value>
 		</property>
 		<property name="maximumDistance">
-			<value>85</value>
+			<value>60</value>
 		</property>
 	</object>
 	<object class="MixerBusFader" id="{17c4ae03-69b4-49cf-a818-d779e53ca6a1}" />

@@ -66,7 +66,7 @@ public class Bomb : MonoBehaviour
             duration -= Time.deltaTime;
             yield return null;
         }
-        FMODUnity.RuntimeManager.PlayOneShot("event:/enemies/mine/explosion");
+        FMODUnity.RuntimeManager.PlayOneShot("event:/enemies/mine/explosion", transform.position);
         particle.Play();
         animator.enabled = false;
         if (playerController)

@@ -107,7 +107,7 @@
 	</object>
 	<object class="EventMixerGroup" id="{0ebc029d-2a82-48bb-823d-d06aff40c29e}">
 		<property name="volume">
-			<value>-6.5</value>
+			<value>-2</value>
 		</property>
 		<property name="name">
 			<value>Audio 1</value>
@@ -124,6 +124,7 @@
 	</object>
 	<object class="MixerBusEffectChain" id="{96786929-9a85-4647-841b-0a37893d54c0}">
 		<relationship name="effects">
+			<destination>{50785fc1-fcdc-4fa0-86d1-ca572b7e531c}</destination>
 			<destination>{bf956a6f-79eb-473a-a314-12a01b250931}</destination>
 			<destination>{f2e726bf-532a-4848-92f9-81b20043e63b}</destination>
 		</relationship>
@@ -190,6 +191,17 @@
 		</relationship>
 	</object>
 	<object class="MixerBusPanner" id="{3c4b14f9-4441-40f1-b009-064ebbca2b02}" />
+	<object class="SpatialiserEffect" id="{50785fc1-fcdc-4fa0-86d1-ca572b7e531c}">
+		<property name="distanceRolloffType">
+			<value>1</value>
+		</property>
+		<property name="minimumDistance">
+			<value>20</value>
+		</property>
+		<property name="maximumDistance">
+			<value>60</value>
+		</property>
+	</object>
 	<object class="MixerBusFader" id="{bf956a6f-79eb-473a-a314-12a01b250931}" />
 	<object class="PitchShifterEffect" id="{f2e726bf-532a-4848-92f9-81b20043e63b}">
 		<relationship name="automators">
