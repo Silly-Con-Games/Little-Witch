@@ -128,6 +128,10 @@ public class Tile : MonoBehaviour {
 			StartCoroutine(DieCoroutine());
 			return;
 		}
+        else
+        {
+			mapController.ReviveTile();
+        }
 
 		bool propRevived = false;
 		if (prop != null)
