@@ -54,6 +54,7 @@ MonoBehaviour:
   mesh: {fileID: 182741234298061443}
   colors: {fileID: 11400000, guid: 3bd6890aa877a624ab34b3eb8a353ca5, type: 2}
   waterDepression: 0.3
+  grass: {fileID: 1725270210105178505}
   mapController: {fileID: 0}
   neighbours: []
   input1: 
