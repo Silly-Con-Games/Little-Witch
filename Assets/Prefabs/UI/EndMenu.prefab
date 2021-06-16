@@ -565,6 +565,7 @@ MonoBehaviour:
   pauseController: {fileID: 0}
   winMenu: {fileID: 2468186207275751791}
   loseMenu: {fileID: 2703001167771827929}
+  text: {fileID: 7557001093185544607}
 --- !u!1 &4447176355460638165
 GameObject:
   m_ObjectHideFlags: 0

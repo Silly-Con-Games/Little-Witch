@@ -54,6 +54,7 @@ public class EnemiesController : MonoBehaviour
     }
 
     public int GetWaveCounter() => waveCounter;
+    public int GetRemainingWaves() => waves.Count - waveCounter;
 
     public void SpawnNextWave()
     {
