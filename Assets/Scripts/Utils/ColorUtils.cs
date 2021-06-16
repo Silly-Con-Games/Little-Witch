@@ -11,6 +11,13 @@ public static class ColorUtils
 		return Color.HSVToRGB(h, s, v);
 	}
 
+	public static Color Darken(Color input, float strength) {
+		float h, s, v;
+		Color.RGBToHSV(input, out h, out s, out v);
+		v *= strength;
+		return Color.HSVToRGB(h, s, v);
+	}
+
 	public static void SetColor(MeshRenderer mesh, Color color) {
 		Material[] tempMaterials = new Material[mesh.sharedMaterials.Length];
 		for (int i = 0; i < mesh.sharedMaterials.Length; i++) {

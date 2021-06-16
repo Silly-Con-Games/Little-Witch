@@ -115,6 +115,7 @@ public class PlayerController : MonoBehaviour, IDamagable
         foreach(var passive in passiveEffects)
             passive();
 
+		mapController.SetPlayerPosition(transform.position);
     }
 
     private void ApplyConfig()

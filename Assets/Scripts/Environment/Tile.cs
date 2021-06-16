@@ -15,6 +15,8 @@ public class Tile : MonoBehaviour {
 	public TileColors colors;
 	public float waterDepression;
 
+	public MeshRenderer grass;
+
 	[Tooltip("Add in scene map controller")]
 	public MapController mapController;
 
@@ -124,6 +126,7 @@ public class Tile : MonoBehaviour {
 			typeBeforeDeath = type;
 			if (immediate) {
 				ColorUtils.SetSaturation(mesh, 0f);
+				SetGrassSaturation(grass, 0f);
 				type = target;
 				return;
 			}
@@ -159,12 +162,17 @@ public class Tile : MonoBehaviour {
 			if (target == BiomeType.WATER) {
 				SetWater(mesh, 1f);
 				SetHeight(-waterDepression);
+				SetGrassHeightModifier(grass, 0f);
 			} else {
 				SetWater(mesh, 0f);
 				SetHeight(0f);
+				SetGrassHeightModifier(grass, 1f);
 			}
+			Color newColor = GetColor(target);
 			ColorUtils.SetSaturation(mesh, 1f);
-			ColorUtils.SetColor(mesh, GetColor(target));
+			ColorUtils.SetColor(mesh, newColor);
+			SetGrassSaturation(grass, 1f);
+			SetGrassColor(grass, ColorUtils.Darken(newColor, 1.2f), newColor);
 			if(!propRevived)
 				TrySpawnProp(true, target);
 			type = target;
@@ -223,14 +231,20 @@ public class Tile : MonoBehaviour {
 		}
 	}
 
+	public void SetGrassPlayerPosition(Vector3 playerPosition) {
+		grass.GetComponent<MeshRenderer>().material.SetVector("playerPosition", playerPosition);
+	}
+
 	IEnumerator DieCoroutine() {
 		type = BiomeType.DEAD;
 		for (float progress = 1f; progress >= 0f; progress -= morphSpeed * Time.deltaTime) {
 			ColorUtils.SetSaturation(mesh, progress);
+			SetGrassSaturation(grass, progress);
 			yield return null;
 
 		}
 		ColorUtils.SetSaturation(mesh, 0);
+		SetGrassSaturation(grass, 0);
 	}
 
 	IEnumerator MorphCoroutine(BiomeType target, bool propRevived) {
@@ -243,20 +257,27 @@ public class Tile : MonoBehaviour {
 
 		Color from = mesh.sharedMaterials[0].color;
 		Color to = GetColor(target);
+
+		Color grassFromTop = ColorUtils.Darken(from, 1.2f);
+		Color grassToTop = ColorUtils.Darken(to, 1.2f);
 		bool isNotSet = true;
 		type = target;
 		for (float progress = 0f; progress <= 1f; progress += morphSpeed * Time.deltaTime) {
 			if (toWater) {
 				SetWater(mesh, Mathf.Lerp(initWater, 1f, progress));
 				SetHeight(Mathf.Lerp(initHieght, -waterDepression, progress));
+				SetGrassHeightModifier(grass, 1 - progress);
 			} else {
 				SetWater(mesh, Mathf.Lerp(initWater, 0f, progress));
 				SetHeight(Mathf.Lerp(initHieght, 0f, progress));
+				SetGrassHeightModifier(grass, progress);
 			}
 			ColorUtils.SetColor(mesh, Color.Lerp(from, to, progress));
+			SetGrassColor(grass, Color.Lerp(grassFromTop, grassToTop, progress), Color.Lerp(from, to, progress));
 
 			if (alsoSaturate) {
 				ColorUtils.SetSaturation(mesh, progress);
+				SetGrassSaturation(grass, progress);
 			}
 
 			if (!propRevived && isNotSet && progress > 0.5f) {
@@ -270,22 +291,26 @@ public class Tile : MonoBehaviour {
 		if(!propRevived && isNotSet)
 			TrySpawnProp(false, target);
 
-		float MaxProgress = 1.0f;
+		float maxProgress = 1.0f;
 		if (toWater)
 		{
-			SetWater(mesh, Mathf.Lerp(initWater, 1f, MaxProgress));
-			SetHeight(Mathf.Lerp(initHieght, -waterDepression, MaxProgress));
+			SetWater(mesh, Mathf.Lerp(initWater, 1f, maxProgress));
+			SetHeight(Mathf.Lerp(initHieght, -waterDepression, maxProgress));
+			SetGrassHeightModifier(grass, 0f);
 		}
 		else
 		{
-			SetWater(mesh, Mathf.Lerp(initWater, 0f, MaxProgress));
-			SetHeight(Mathf.Lerp(initHieght, 0f, MaxProgress));
+			SetWater(mesh, Mathf.Lerp(initWater, 0f, maxProgress));
+			SetHeight(Mathf.Lerp(initHieght, 0f, maxProgress));
+			SetGrassHeightModifier(grass, maxProgress);
 		}
-		ColorUtils.SetColor(mesh, Color.Lerp(from, to, MaxProgress));
+		ColorUtils.SetColor(mesh, Color.Lerp(from, to, maxProgress));
+		SetGrassColor(grass, Color.Lerp(grassFromTop, grassToTop, maxProgress), Color.Lerp(from, to, maxProgress));
 
 		if (alsoSaturate)
 		{
-			ColorUtils.SetSaturation(mesh, MaxProgress);
+			ColorUtils.SetSaturation(mesh, maxProgress);
+			SetGrassSaturation(grass, maxProgress);
 		}
 	}
 
@@ -298,8 +323,26 @@ public class Tile : MonoBehaviour {
 		mesh.sharedMaterials = tempMaterials;
 	}
 
-	private void SetHeight(float height) {
+	private void SetGrassColor(MeshRenderer mesh, Color top, Color bottom) {
+		Material tempMaterial = new Material(mesh.sharedMaterial);
+		tempMaterial.SetColor("_TopColor", top);
+		tempMaterial.SetColor("_BottomColor", bottom);
+		mesh.sharedMaterial = tempMaterial;
+	}
 
+	private void SetGrassSaturation(MeshRenderer mesh, float value) {
+		Material tempMaterial = new Material(mesh.sharedMaterial);
+		tempMaterial.SetFloat("_Saturation", value);
+		mesh.sharedMaterial = tempMaterial;
+	}
+
+	private void SetGrassHeightModifier(MeshRenderer mesh, float value) {
+		Material tempMaterial = new Material(mesh.sharedMaterial);
+		tempMaterial.SetFloat("_HeightModifier", value);
+		mesh.sharedMaterial = tempMaterial;
+	}
+
+	private void SetHeight(float height) {
 		transform.position = new Vector3(transform.position.x, height, transform.position.z);
 	}
 }

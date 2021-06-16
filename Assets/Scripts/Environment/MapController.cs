@@ -119,6 +119,12 @@ public class MapController : MonoBehaviour
         }
     }
 
+	public void SetPlayerPosition(Vector3 playerPosition) {
+		foreach (Tile tile in tiles) {
+			tile.SetGrassPlayerPosition(playerPosition);
+		}
+	}
+
     public void AttackTile(Tile tile)
     {
         aliveTilesCnt--;

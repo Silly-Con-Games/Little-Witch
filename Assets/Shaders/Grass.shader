@@ -16,6 +16,8 @@
 		_TopColor("Top Color", Color) = (1,1,1,1)
 		_BottomColor("Bottom Color", Color) = (0,0,0,1)
 		_AmbientStrength("Ambient light strength", Float) = 0
+		_Saturation("Saturation", Float) = 1
+		_HeightModifier("Height modifier", Float) = 1
 	}
 
 	HLSLINCLUDE
@@ -58,6 +60,7 @@
 
 	float _Height;
 	float _Width;
+	float _HeightModifier;
 
 	static const float3 bladeVertices[] = {
 			float3(0.15, 0, 0),
@@ -107,7 +110,7 @@
 		position.y -= segment.positionOSy;
 
 		position.x *= _Width;
-		position.y *= _Height;
+		position.y *= _Height * _HeightModifier;
 
 		float3x3 tiltRotation = RotationFromAxisAngle(float3(1, 0, 0), sin(tilt), cos(tilt));
 		position = mul(mul(segment.orientation, tiltRotation), position);
@@ -223,10 +226,12 @@
 
 			#include "Packages/com.unity.render-pipelines.universal/ShaderLibrary/Lighting.hlsl"
 			#include "Packages/com.unity.render-pipelines.universal/ShaderLibrary/Shadows.hlsl" 
+			#include "Packages/com.unity.render-pipelines.core/ShaderLibrary/Color.hlsl"
 
 			float4 _TopColor;
 			float4 _BottomColor;
 			float _AmbientStrength;
+			float _Saturation;
 
 			half4 frag(Varyings input, float facing : VFACE) : SV_Target {
 				float3 normal = facing > 0 ? input.normal : -input.normal;
@@ -249,7 +254,7 @@
 
 				color += baseColor * _AmbientStrength;
 
-				return color;
+				return half4(Desaturate(color.xyz, _Saturation), 1);
 			}
 
 			ENDHLSL
