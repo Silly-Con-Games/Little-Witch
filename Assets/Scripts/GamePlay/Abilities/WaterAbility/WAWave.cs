@@ -37,6 +37,7 @@ public class WAWave : MonoBehaviour
 
     private IEnumerator SendLateEvent()
     {
+        FMODUnity.RuntimeManager.PlayOneShot("event:/witch/abilities/water_ability", transform.position);
         float halfduration = waveDuration / 2;
         yield return new WaitForSeconds(chargeTime);
         wave.SendEvent("ChargeEnd");

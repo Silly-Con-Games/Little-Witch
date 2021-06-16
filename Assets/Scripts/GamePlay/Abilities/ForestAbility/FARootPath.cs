@@ -1,7 +1,9 @@
 using System.Collections;
 using System.Collections.Generic;
+using FMODUnity;
 using UnityEngine;
 using UnityEngine.Events;
+using STOP_MODE = FMOD.Studio.STOP_MODE;
 
 public class FARootPath : MonoBehaviour
 {
@@ -22,6 +24,10 @@ public class FARootPath : MonoBehaviour
 
     private UnityAction onEnd;
     private bool started = false;
+
+    private FMOD.Studio.EventInstance instance;
+
+
     public void Init(float distance, float duration, UnityAction<Collider> onHit, UnityAction onEnd)
     {
         this.distance = distance;
@@ -34,6 +40,12 @@ public class FARootPath : MonoBehaviour
         started = true;
         movingCollider.gameObject.SetActive(true);
         movingCollider.ontriggerenter.AddListener(onHit);
+
+        instance = RuntimeManager.CreateInstance("event:/witch/abilities/forest_ability_path");
+        RuntimeManager.AttachInstanceToGameObject(instance, transform, GetComponent<Rigidbody>());
+        instance.start();
+        instance.release();
+
         StartCoroutine(SpawnPathCourotine());
     }
 
@@ -67,6 +79,7 @@ public class FARootPath : MonoBehaviour
 
             currentStep = (int)((Time.time - timeStart) / stepDuration);
         }
+        instance.stop(STOP_MODE.IMMEDIATE);
         yield return new WaitForSeconds(2);
         Destroy(gameObject);
     }

@@ -6,6 +6,7 @@ public class SwordAttack : MonoBehaviour
 {
     public Animator swing;
     public Collider col;
+    public TrailRenderer trail;
     float damage;
     float pushForce;
     float pushDuration;
@@ -28,17 +29,35 @@ public class SwordAttack : MonoBehaviour
         hitObjects.Clear();
         StartCoroutine(disableColliderCouroutine());
         StartCoroutine(enableColliderCouroutine());
+        StartCoroutine(disableTrailCouroutine());
+        StartCoroutine(playSwordSoundCoroutine());
     }
 
     IEnumerator disableColliderCouroutine()
     {
-        yield return new WaitForSeconds(0.35f);
+        yield return new WaitForSeconds(0.4f);
+
         col.enabled = false;
     }
     IEnumerator enableColliderCouroutine()
     {
         yield return new WaitForSeconds(0.15f);
+        trail.emitting = true;
+
         col.enabled = true;
+    }
+
+    IEnumerator disableTrailCouroutine()
+    {
+        yield return new WaitForSeconds(0.4f);
+        trail.emitting = false;
+
+    }
+
+    IEnumerator playSwordSoundCoroutine()
+    {
+        yield return new WaitForSeconds(0.2f);
+        FMODUnity.RuntimeManager.PlayOneShot("event:/witch/attack/melee");
     }
 
     private void OnTriggerEnter(Collider collision)

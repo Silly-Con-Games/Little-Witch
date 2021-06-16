@@ -10,9 +10,9 @@ public class MAGrass : MonoBehaviour
 
     float t = 0;
     float speed = 0.5f;
-    UnityAction<Collider> onHit;
+    UnityAction<Collider, MAGrass> onHit;
 
-    public void Init(CatmulRollSpline spline, float speed, UnityAction<Collider> onHit)
+    public void Init(CatmulRollSpline spline, float speed, UnityAction<Collider, MAGrass> onHit)
     {
         this.spline = spline;
         this.speed = speed;
@@ -46,6 +46,6 @@ public class MAGrass : MonoBehaviour
 
     private void OnTriggerEnter(Collider other)
     {
-        onHit?.Invoke(other);
+        onHit?.Invoke(other, this);
     }
 }

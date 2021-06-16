@@ -10,7 +10,7 @@ GameObject:
   m_Component:
   - component: {fileID: 6401734574865223056}
   - component: {fileID: 5760741254045953524}
-  m_Layer: 0
+  m_Layer: 11
   m_Name: FARootCircle
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -59,13 +59,13 @@ GameObject:
   - component: {fileID: 1254455624270908815}
   - component: {fileID: 8256218948960701288}
   - component: {fileID: 6805249926133201021}
-  m_Layer: 0
+  m_Layer: 11
   m_Name: Collider
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 1
+  m_IsActive: 0
 --- !u!4 &1254455624270908815
 Transform:
   m_ObjectHideFlags: 0
@@ -117,7 +117,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 236647284185817479}
-  m_Layer: 0
+  m_Layer: 11
   m_Name: AnimationParentTransform
   m_TagString: Untagged
   m_Icon: {fileID: 0}

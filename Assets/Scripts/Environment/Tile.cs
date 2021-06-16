@@ -56,7 +56,7 @@ public class Tile : MonoBehaviour {
     }
 
 	#region editor
-#if UNITY_EDITOR
+	#if UNITY_EDITOR
 
 	// to detect changes in edit mode
 	[Button("Setup", "Setup", false)] public string input1;
@@ -66,12 +66,11 @@ public class Tile : MonoBehaviour {
 			prop = GetComponentInChildren<IProp>();
 		}
 		UnityEditor.EditorApplication.delayCall += () => Morph(wantedType, true);
-
 	}
 
 	// to detect changes in edit mode
-	[Button("Revive", "Revive", false)] public string input2;
-	public void Revive()
+	[Button("ReviveInEditor", "ReviveInEditor", false)] public string input2;
+	public void ReviveInEditor()
 	{
 		if (prop == null)
 		{
@@ -90,8 +89,14 @@ public class Tile : MonoBehaviour {
 		}
 		UnityEditor.EditorApplication.delayCall += () => Morph(BiomeType.DEAD, true);
 	}
-#endif
+	#endif
 	#endregion
+
+	public void Revive()
+    {
+		Morph(typeBeforeDeath, false);
+	}
+
 
 	public bool WantsToBeSet() {
 		return wantedType != type;
@@ -99,6 +104,10 @@ public class Tile : MonoBehaviour {
 
 	public BiomeType GetBiomeType() {
 		return type;
+	}
+
+	public bool HasProp() {
+		return prop != null;
 	}
 
 	public void Morph(BiomeType target, bool immediate) {
@@ -121,12 +130,18 @@ public class Tile : MonoBehaviour {
 			StartCoroutine(DieCoroutine());
 			return;
 		}
+        else
+        {
+			mapController.ReviveTile();
+        }
 
+		bool propRevived = false;
 		if (prop != null)
         {
-			if (type == BiomeType.DEAD && prop.GetBiomeType() == target)
+			if (type == BiomeType.DEAD && typeBeforeDeath == target)
 			{
 				prop.Revive(immediate);
+				propRevived = true;
 			}
             else
             {
@@ -134,7 +149,10 @@ public class Tile : MonoBehaviour {
 				prop = null;
 			}
 		}
-		
+        else if(typeBeforeDeath == target)
+        {
+			propRevived = true;
+		}
 
 		// morph - revive
 		if (immediate) {
@@ -147,12 +165,13 @@ public class Tile : MonoBehaviour {
 			}
 			ColorUtils.SetSaturation(mesh, 1f);
 			ColorUtils.SetColor(mesh, GetColor(target));
-			TrySpawnProp(true, target);
+			if(!propRevived)
+				TrySpawnProp(true, target);
 			type = target;
 			return;
 		}
 
-		StartCoroutine(MorphCoroutine(target));
+		StartCoroutine(MorphCoroutine(target, propRevived));
 	}
 
 	public Tile[] GetNeighbours() {
@@ -165,7 +184,7 @@ public class Tile : MonoBehaviour {
 
 	private void TrySpawnProp(bool immediate, BiomeType biomeType)
     {
-		if(prop == null)
+		if (prop == null)
         {
 			PropAndProbability propPref = mapController.GetProp(biomeType);
 			if (propPref != null && propPref.chance >= Random.Range(0.0f, 1.0f))
@@ -173,9 +192,23 @@ public class Tile : MonoBehaviour {
 				prop = Instantiate(propPref.prop, transform).GetComponent<IProp>();
 				prop.Spawn(immediate);
             }
-
-		}		
+		}
     }
+
+	public void SetupPropOnLoad(bool shouldSpawn) {
+		if (shouldSpawn) {
+			PropAndProbability propPref = mapController.GetProp(type);
+			if (propPref != null) {
+				prop = Instantiate(propPref.prop, transform).GetComponent<IProp>();
+				prop.Spawn(true);
+			}
+		} else {
+			if (prop != null) {
+				prop.Despawn(true);
+				prop = null;
+			}
+		}
+	}
 
 	public Color GetColor(BiomeType type) {
 		switch (type) {
@@ -191,22 +224,16 @@ public class Tile : MonoBehaviour {
 	}
 
 	IEnumerator DieCoroutine() {
+		type = BiomeType.DEAD;
 		for (float progress = 1f; progress >= 0f; progress -= morphSpeed * Time.deltaTime) {
 			ColorUtils.SetSaturation(mesh, progress);
-
-			if (progress > 0.5f) {
-				type = BiomeType.DEAD;
-			}
-
 			yield return null;
 
-			if (progress - morphSpeed * Time.deltaTime < 0f) {
-				progress = morphSpeed * Time.deltaTime * 1.1f;
-			}
 		}
+		ColorUtils.SetSaturation(mesh, 0);
 	}
 
-	IEnumerator MorphCoroutine(BiomeType target) {
+	IEnumerator MorphCoroutine(BiomeType target, bool propRevived) {
 
 		bool alsoSaturate = type == BiomeType.DEAD;
 
@@ -232,7 +259,7 @@ public class Tile : MonoBehaviour {
 				ColorUtils.SetSaturation(mesh, progress);
 			}
 
-			if (isNotSet && progress > 0.5f) {
+			if (!propRevived && isNotSet && progress > 0.5f) {
 				TrySpawnProp(false, target);
 				isNotSet = false;
 			}
@@ -240,7 +267,7 @@ public class Tile : MonoBehaviour {
 			yield return null;
 		}
 
-		if(isNotSet)
+		if(!propRevived && isNotSet)
 			TrySpawnProp(false, target);
 
 		float MaxProgress = 1.0f;

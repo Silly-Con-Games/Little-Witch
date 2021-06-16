@@ -4,20 +4,21 @@ using Config;
 using UnityEngine;
 
 public class Bomb : MonoBehaviour
-{
-    
+{ 
     [SerializeField]
     private ParticleSystem particle;
-    
-    private PlayerController playerController;
 
-    private Collider bombCollider;
+    [SerializeField]
+    private Animator animator;
+
+	private Collider bombCollider;
+
+	private PlayerController playerController;
 
     private float explosionDelay;
     private float damageRange;
     private float baseDamage;
     private float disappearingDuration;
-    
     
     // Start is called before the first frame update
     void Start()
@@ -26,9 +27,16 @@ public class Bomb : MonoBehaviour
         {
             particle.GetComponentInChildren<ParticleSystem>();
         }
-        GlobalConfigManager.onConfigChanged.AddListener(ApplyConfig);
-        bombCollider = gameObject.GetComponent<Collider>();
+
+        if (!animator)
+        {
+            gameObject.GetComponentInChildren<Animator>();
+        }
+		
+		bombCollider = GetComponent<SphereCollider>();
+		GlobalConfigManager.onConfigChanged.AddListener(ApplyConfig);
         ApplyConfig();
+        animator.enabled = false;
     }
 
     protected virtual void ApplyConfig()
@@ -38,6 +46,11 @@ public class Bomb : MonoBehaviour
         damageRange = enemyConfig.damageRange;
         baseDamage = enemyConfig.baseDamage;
         disappearingDuration = enemyConfig.disappearingDuration;
+
+		float diameter = damageRange * 2;
+		transform.localScale = new Vector3(diameter, diameter, diameter);
+		ParticleSystem.VelocityOverLifetimeModule module = particle.velocityOverLifetime;
+		module.speedModifier = diameter;
     }
 
 
@@ -51,14 +64,15 @@ public class Bomb : MonoBehaviour
 
     public IEnumerator BombCoroutine(float duration)
     {
+        animator.enabled = true;
         while (duration >= 0f)
         {
             duration -= Time.deltaTime;
             yield return null;
         }
-        FMODUnity.RuntimeManager.PlayOneShot("event:/enemies/mine/explosion");
+        FMODUnity.RuntimeManager.PlayOneShot("event:/enemies/mine/explosion", transform.position);
         particle.Play();
-
+        animator.enabled = false;
         if (playerController)
         {
             float distance = Vector3.Distance(this.transform.position, playerController.transform.position);
@@ -76,7 +90,7 @@ public class Bomb : MonoBehaviour
             yield return null;
         }
         GlobalConfigManager.onConfigChanged.RemoveListener(ApplyConfig);
-        Destroy(gameObject);
+        Destroy(gameObject.transform.parent.gameObject);
     }
     
 }

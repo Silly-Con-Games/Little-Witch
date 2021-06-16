@@ -4,6 +4,7 @@ using UnityEngine.InputSystem;
 using UnityEngine.Events;
 using System;
 using System.Collections.Generic;
+using System.Collections;
 
 public class PlayerController : MonoBehaviour, IDamagable
 {
@@ -12,6 +13,7 @@ public class PlayerController : MonoBehaviour, IDamagable
     public CharacterController characterController;
     public MapController mapController;
     public HUDController hudController;
+	public PauseController pauseController;
 
     public UnityEvent onDeathEvent;
 
@@ -23,6 +25,7 @@ public class PlayerController : MonoBehaviour, IDamagable
     public ForestAbility forestAbility;
     public MeadowAbility meadowAbility;
     public WaterAbility waterAbility;
+    public DashAbility dashAbility;
 
     public HashSet<UnityAction> passiveEffects { get; internal set; }
 
@@ -38,19 +41,29 @@ public class PlayerController : MonoBehaviour, IDamagable
 
     const float gravity = -9.81f;
     float upVelocity = 0;
-    Vector2 inputVelocity;
+
+    public Vector2 inputVelocity;
+    public bool moveStop { get => moveStopInternal; set { moveStopInternal = value; lastPos = transform.position; } }
+    private bool moveStopInternal;
+    public float stepLengthSqr = 1.78f;
+
+    private Vector3 lastPos;
 
     float speed = 3;
     float speedModifier = 1;
     float jumpHeight = 1.0f;
+    int tileMask;
     bool wantsJump;
 
     private bool isDead;
 
     public  Vector3 mouseWorldPosition { get; internal set; }
 
-    private void Start()
+    public void Initialize()
     {
+        lastPos = transform.position;
+        tileMask = LayerMask.GetMask("Tile");
+
         mainCamera = Camera.main;
         cameraTrans = mainCamera.transform;
         animator = GetComponentInChildren<Animator>();
@@ -61,26 +74,27 @@ public class PlayerController : MonoBehaviour, IDamagable
 
 		transformAbility.Init(this);
 
-        meeleeAbility.player = this;
+        meeleeAbility.player = this;        
         forestAbility.Init(this);
         meadowAbility.Init(this);
         waterAbility.Init(this);
+        dashAbility.Init(this);
 
         if (!mapController)
             mapController = FindObjectOfType<MapController>();
 
         if (!hudController)
+        {
             hudController = FindObjectOfType<HUDController>();
+            hudController.playerController = this;
+            Debug.Log("setting hudcont player cont to " + this);
+        }
+
+        hudController.playerController = this;
 
         ApplyConfig();
 
         isDead = false;
-    }
-
-    private void OnDestroy()
-    {
-        GlobalConfigManager.onConfigChanged.RemoveListener(ApplyConfig);
-        onDeathEvent.Invoke();
     }
 
     void Update()
@@ -88,6 +102,12 @@ public class PlayerController : MonoBehaviour, IDamagable
         MoveUpdate();
 
         CheckCurrentBiome();
+
+        if (meeleeAbility.attackInQ)
+        {
+            meeleeAbility.attackInQ = false;
+            OnMeleeAbility(null);
+        }
 
         if (chargeAbility.IsCharging)
             chargeAbility.UpdateAnimation();
@@ -97,7 +117,7 @@ public class PlayerController : MonoBehaviour, IDamagable
 
     }
 
-    void ApplyConfig()
+    private void ApplyConfig()
     {
         var witchConfig = GlobalConfigManager.GetWitchConfig();
 
@@ -109,7 +129,10 @@ public class PlayerController : MonoBehaviour, IDamagable
         health.onChanged.AddListener(hudController.SetHealth);
 
         energy = new EnergyTracker(witchConfig.energyMax, witchConfig.energyInitial);
-        hudController.SetUpEnergy(energy.Energy, energy.MaxEnergy);
+        energy.onChanged.AddListener(ChangeEnergyTankAppearance);
+        ChangeEnergyTankAppearance(energy.Energy);
+
+        hudController.SetUpEnergy(energy.Energy, energy.MaxEnergy, Mathf.CeilToInt(energy.MaxEnergy/witchConfig.transformAbility.energyCost));
         energy.onChanged.AddListener(hudController.SetEnergy);
         energy.onNotEnough.AddListener(hudController.NotEnoughEnergy);
 
@@ -121,6 +144,7 @@ public class PlayerController : MonoBehaviour, IDamagable
         forestAbility.conf = witchConfig.forestAbility;
         waterAbility.conf = witchConfig.waterAbility;
         meadowAbility.conf = witchConfig.meadowAbility;
+        dashAbility.conf = witchConfig.dashAbility;
     }
 
     void MoveUpdate()
@@ -128,15 +152,25 @@ public class PlayerController : MonoBehaviour, IDamagable
         // Direction
         Ray ray = mainCamera.ScreenPointToRay(Pointer.current.position.ReadValue());
 
-        RaycastHit hit;
-        bool didHit = false;
-        if (didHit = Physics.Raycast(ray, out hit, 1000))
+        if (Physics.Raycast(ray, out RaycastHit hit, 1000, tileMask))
         {
-            var targetPosition = mouseWorldPosition = hit.point;
-            targetPosition.y = transform.position.y;
-            transform.LookAt(targetPosition);
-
+            mouseWorldPosition = hit.point;
         }
+
+        if (moveStop)
+            return;
+
+        Vector3 diff = transform.position - lastPos;
+        if (diff.sqrMagnitude > stepLengthSqr)
+        {
+            lastPos = transform.position;
+
+            FMODUnity.RuntimeManager.PlayOneShot("event:/test/step");
+        }
+
+        var targetPosition = mouseWorldPosition;
+        targetPosition.y = transform.position.y;
+        transform.LookAt(targetPosition);
 
         // Movement
         Vector3 forwardV = cameraTrans.forward;
@@ -164,6 +198,7 @@ public class PlayerController : MonoBehaviour, IDamagable
         else
             upVelocity += gravity * delta;
         wantsJump = false;
+
         velocity.y = upVelocity;
 
         float velocityX = Vector3.Dot(velocity.normalized, transform.forward);
@@ -171,7 +206,6 @@ public class PlayerController : MonoBehaviour, IDamagable
 
         animator.SetFloat("VelocityX", velocityX, .1f, Time.deltaTime);
         animator.SetFloat("VelocityZ", velocityZ, .1f, Time.deltaTime);
-
         if (velocity.magnitude > 0)
             characterController.Move(velocity * delta);
     }
@@ -224,28 +258,55 @@ public class PlayerController : MonoBehaviour, IDamagable
         inputVelocity = value.Get<Vector2>();
     }
 
-    public void OnJump(InputValue value)
+    public void OnDash(InputValue value)
     {
-        if(value.isPressed)
+        if (value.isPressed && dashAbility.IsReady)
+        {
+            FMODUnity.RuntimeManager.PlayOneShot("event:/witch/dash/dash");
+            dashAbility.CastAbility();
+        }
+           
+    }
+
+    public void OnJummp(InputValue value)
+    {
+        if (value.isPressed)
+        {
             wantsJump = true;
+        }
     }
 
     public void OnMeleeAbility(InputValue value)
     {
-        if(meeleeAbility.IsReady)
+		if (!pauseController.IsPaused() && meeleeAbility.IsReady)
+        {
             meeleeAbility.Attack();
+            ScaleSpeedModifier(meeleeAbility.conf.attackSlow);
+            StartCoroutine(ResumeMovement(meeleeAbility.conf.cooldown));
+        }
+        else if (!pauseController.IsPaused())
+        {
+            meeleeAbility.attackInQ = true;
+        }
+    }
+
+    IEnumerator ResumeMovement(float duration)
+    {
+        yield return new WaitForSeconds(duration);
+        ScaleSpeedModifier(1.0f/meeleeAbility.conf.attackSlow);        
     }
 
     public void OnChargeAbility(InputValue value)
     {
-        if (value.isPressed && chargeAbility.IsReady())
-        {
-            animator.SetTrigger("Cast");
+		if (!pauseController.IsPaused()) {
+			if (value.isPressed && chargeAbility.IsReady()) {
+				animator.SetTrigger("Cast");
 
-            chargeAbility.StartCharge();
-        }
-        else if (!value.isPressed && chargeAbility.IsCharging)
-            chargeAbility.FireCharged();
+				chargeAbility.StartCharge();
+			} else if (!value.isPressed && chargeAbility.IsCharging) {
+				chargeAbility.FireCharged();
+			}
+		}
     }
 
     public void OnMainAbility(InputValue value)
@@ -255,6 +316,10 @@ public class PlayerController : MonoBehaviour, IDamagable
             animator.SetTrigger("Cast");
 
             currentMainAbility.CastAbility();
+            if (currentMainAbility is MeadowAbility)
+            {
+                StartCoroutine(PlayMeadowPathSoundCoroutine());
+            }
             hudController.CastAbility(currentMainAbility);
         }
         else if (currentMainAbility != null)
@@ -262,6 +327,12 @@ public class PlayerController : MonoBehaviour, IDamagable
             hudController.AbilityNotReady(currentMainAbility);
         }
 
+    }
+
+    IEnumerator PlayMeadowPathSoundCoroutine()
+    {
+        yield return new WaitForSeconds(0.4f);
+         
     }
 
 	public void OnTransformForest(InputValue value) {
@@ -280,16 +351,37 @@ public class PlayerController : MonoBehaviour, IDamagable
 		Transform(BiomeType.DEAD);
 	}
 
+    public void OnRevive(InputValue value)
+    {
+        if (transformAbility.IsReady())
+        {
+            transformAbility.Revive();
+        }
+    }
+
 	private void Transform(BiomeType target) {
 		if (transformAbility.IsReady()) {
 			transformAbility.Transform(target);
 		}
 	}
 
+	private void OnPause(InputValue value) {
+		if (pauseController.IsPaused()) {
+			pauseController.ResumeGame();
+		} else {
+			pauseController.PauseGame();
+		}
+	}
+
+    private void OnLook(InputValue value)
+    {
+
+    }
+
 	public void ReceiveDamage(float amount)
     {
         if (isDead) return;
-
+        FMODUnity.RuntimeManager.PlayOneShot("event:/witch/hit/witch_hit");
         animator.SetTrigger("GetHit");
 
         health.TakeDamage(amount);
@@ -300,7 +392,11 @@ public class PlayerController : MonoBehaviour, IDamagable
     {
         isDead = true;
         animator.SetTrigger("Die");
-        this.enabled = false;
+
+		GlobalConfigManager.onConfigChanged.RemoveListener(ApplyConfig);
+		onDeathEvent.Invoke();
+
+		this.enabled = false;
         GetComponent<PlayerInput>().enabled = false;
     }
 
@@ -309,5 +405,11 @@ public class PlayerController : MonoBehaviour, IDamagable
     public void ScaleSpeedModifier(float val)
     {
         speedModifier *= val;
+    }
+
+    public void ChangeEnergyTankAppearance(float curEnergy)
+    {
+        Debug.Log("changing energy tank appearance");
+        animator.SetBool("EnoughEnergy", curEnergy >= transformAbility.conf.energyCost);
     }
 }

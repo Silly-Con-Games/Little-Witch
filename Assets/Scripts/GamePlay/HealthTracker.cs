@@ -17,6 +17,11 @@ public class HealthTracker
         onChanged = new UnityEvent<float>();
     }
 
+	public void Set(float value) {
+		Health = value;
+		onChanged.Invoke(Health);
+	}
+
     public bool IsDepleted => Health <= 0;
 
     public void ResetHealth() 

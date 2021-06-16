@@ -1,4 +1,5 @@
 using System;
+using System.Collections.Generic;
 
 namespace Config
 {
@@ -8,6 +9,7 @@ namespace Config
         public WitchConfig witchConfig;
         public GlobalEnemyConfig globalEnemyConfig;
         public EnergyConfig energyConfig;
+        public SoundConfig soundConfig;
         public float respawnTime;
     }
 
@@ -25,6 +27,7 @@ namespace Config
         public ForestAbilityConfig forestAbility;
         public WaterAbilityConfig waterAbility;
         public MeadowAbilityConfig meadowAbility;
+        public DashAbilityConfig dashAbility;
 
     }
 
@@ -34,7 +37,8 @@ namespace Config
         public float cooldown;
         public float damage;
         public float pushbackForce;
-        public float duration;
+        public float pushbackDuration;
+        public float attackSlow;
     }
 
     [Serializable]
@@ -101,6 +105,7 @@ namespace Config
     {
         public MainAbilityConfig baseConfig;
         public float MSMultiplier;
+        public float DashDistMultiplier;
         public float speed;
         public int projectileCnt;
         public float spellWidth;
@@ -109,8 +114,18 @@ namespace Config
     }
 
     [Serializable]
+    public struct DashAbilityConfig
+    {
+        public MainAbilityConfig baseConfig;
+        public float speed;
+        public float maxRange;
+        public float animSpeed;
+    }
+
+    [Serializable]
     public struct EnemyConfig
     {
+        public float damage;
         public float idleDuration;
         public float chasingDuration;
         
@@ -150,6 +165,7 @@ namespace Config
         public float dashSpeedModifier;
         // range after reaching which enemy starts dashing
         public float dashRange;
+        public float dashCooldown;
     }
 
     [Serializable]
@@ -179,8 +195,8 @@ namespace Config
     [Serializable]
     public struct GlobalEnemyConfig
     {
-        public EnemyRangedConfig enemyRangedConfig;
-        public EnemyMeleeConfig enemyMeleeConfig;
+        public List<EnemyRangedConfig> enemyRangedConfigs;
+        public List<EnemyMeleeConfig> enemyMeleeConfigs;
         public EnemyBomberConfig enemyBomberConfig;
         public EnemyEnvDestroyerConfig enemyEnvDestroyerConfig;
         public MineConfig mineConfig;
@@ -192,6 +208,13 @@ namespace Config
         public float lifeTimeInSec;
         public float speed;
         public int energyAmount;
+    }
+    
+    [Serializable]
+    public struct SoundConfig
+    {
+        public float musicVolume;
+        public float sfxVolume;
     }
 
 }

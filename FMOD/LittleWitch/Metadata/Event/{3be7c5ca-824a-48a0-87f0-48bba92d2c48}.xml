@@ -53,7 +53,7 @@
 			<destination>{047d6219-3470-4782-aecf-784f7e24e4fb}</destination>
 		</relationship>
 		<relationship name="output">
-			<destination>{d5f69dbb-8c49-419b-bec7-a0d5f3591362}</destination>
+			<destination>{be89dcf6-0a04-4d01-b126-e11df31ea7df}</destination>
 		</relationship>
 	</object>
 	<object class="EventAutomatableProperties" id="{ac103573-1309-446d-a14f-b98433f39aeb}" />
@@ -89,8 +89,11 @@
 	</object>
 	<object class="MixerBusPanner" id="{047d6219-3470-4782-aecf-784f7e24e4fb}" />
 	<object class="SingleSound" id="{90927be2-4f13-422b-bdb9-594204b648f9}">
+		<property name="start">
+			<value>0.02</value>
+		</property>
 		<property name="length">
-			<value>2</value>
+			<value>0.12000000000000002</value>
 		</property>
 		<relationship name="audioFile">
 			<destination>{a0c5de52-79c2-4d67-bf3f-19e194e775ff}</destination>
@@ -127,6 +130,9 @@
 	<object class="MixerBusPanner" id="{96669fa0-7e8a-4d29-8a1d-3467cd53f475}" />
 	<object class="MixerBusFader" id="{04c9598e-0264-4fb1-9680-6097b48c3228}" />
 	<object class="SpatialiserEffect" id="{006a53e6-94b3-4fd2-bb90-bdd4e995534d}">
+		<property name="distanceRolloffType">
+			<value>1</value>
+		</property>
 		<property name="minimumDistance">
 			<value>20</value>
 		</property>

@@ -6,6 +6,10 @@ using System.Collections.Generic;
 public class MeadowAbility : MainAbility
 {
     public MAGrass grassPrefab;
+
+    public TrailRenderer msEffect;
+    public TrailRenderer msEffectSec;
+
     public MeadowAbilityConfig conf { get => internalConf; set { internalConf = value; mainAbilityConfig = value.baseConfig; } }
 
     private MeadowAbilityConfig internalConf;
@@ -21,6 +25,7 @@ public class MeadowAbility : MainAbility
         var parent = new GameObject("MAParent").transform;
         parent.position = playerController.transform.position;
         parent.rotation = playerController.transform.rotation;
+        FMODUnity.RuntimeManager.PlayOneShot("event:/witch/abilities/meadow_ability_start", parent.transform.position);
 
         int half = (conf.projectileCnt - 1) / 2;
         float stepWidth = conf.spellWidth / conf.projectileCnt; 
@@ -45,15 +50,26 @@ public class MeadowAbility : MainAbility
             var inst = GameObject.Instantiate(grassPrefab, parent);
             inst.Init(new CatmulRollSpline(points), conf.speed, OnHit);
         }
-        
+
     }
 
-    private void OnHit(Collider other)
+    private void OnHit(Collider other, MAGrass owner)
     {
         IDamagable dmg = other.gameObject.GetComponent<IDamagable>();
         if (dmg != null && dmg.GetObjectType() == EObjectType.Enemy && !alreadyHit.Contains(dmg))
         {
             dmg.ReceiveDamage(conf.damage);
+
+            if (owner.transform.parent.childCount == 1)
+            {
+
+                GameObject.Destroy(owner.transform.parent.gameObject);
+            }
+            else
+            {
+                owner.gameObject.SetActive(false);
+                GameObject.Destroy(owner);
+            }
             alreadyHit.Add(dmg);
         }
     }
@@ -61,10 +77,17 @@ public class MeadowAbility : MainAbility
     public void SteppedOnMeadow()
     {
         playerController.ScaleSpeedModifier(conf.MSMultiplier);
+        msEffect.emitting = true;
+        msEffectSec.emitting = true;
+        playerController.dashAbility.dashLengthModifier *= conf.DashDistMultiplier;
     }
 
     public void SteppedFromMeadow()
     {
         playerController.ScaleSpeedModifier(1/conf.MSMultiplier);
+        msEffect.emitting = false;
+        msEffectSec.emitting = false;
+        playerController.dashAbility.dashLengthModifier /= conf.DashDistMultiplier;
+
     }
 }

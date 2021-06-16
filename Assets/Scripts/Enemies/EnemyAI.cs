@@ -2,6 +2,7 @@ using System.Collections;
 using Config;
 using UnityEngine;
 using UnityEngine.AI;
+using UnityEngine.UI;
 
 public abstract class EnemyAI : MonoBehaviour, IDamagable, IRootable, IStunnable, ISlowable, IPushable
 {
@@ -10,7 +11,7 @@ public abstract class EnemyAI : MonoBehaviour, IDamagable, IRootable, IStunnable
         Roam,
         Chase,
         Idle,
-        Attack
+        Attack, 
     }
 
     public enum SecondaryState
@@ -74,7 +75,6 @@ public abstract class EnemyAI : MonoBehaviour, IDamagable, IRootable, IStunnable
     [SerializeField]
     protected float rootDefault;
 
-    // TODO: add to config
     [SerializeField]
     protected float damage;
     
@@ -83,9 +83,15 @@ public abstract class EnemyAI : MonoBehaviour, IDamagable, IRootable, IStunnable
 
     public GameObject indicator { get; set; }
 
-    protected Animator animator = null;
-    public virtual void InitEnemy(IndicatorsCreator indicatorsCreator)
+    protected EnemyAnimator animator = null;
+
+    protected Slider healthbar = null;
+
+    protected bool falling = false;
+    protected Rigidbody rigid;
+    public virtual void InitEnemy()
     {
+        EnemiesController.IncreaseAliveCount();
         GlobalConfigManager.onConfigChanged.AddListener(ApplyConfig);
         if (!playerController)
         {
@@ -98,12 +104,22 @@ public abstract class EnemyAI : MonoBehaviour, IDamagable, IRootable, IStunnable
         state = State.Roam;
         if (!animator)
         {
-            animator = GetComponentInChildren<Animator>();
+            animator = GetComponentInChildren<EnemyAnimator>();
         }
 
-        this.indicator = indicatorsCreator.CreateIndicator();
+        rigid = GetComponent<Rigidbody>();
+
+        this.indicator = IndicatorsCreator.CreateIndicator();
         this.indicator.SetActive(false);
         ApplyConfig();
+
+        if (!healthbar)
+        {
+            healthbar = GetComponentInChildren<Slider>();
+            healthbar.maxValue = healthPoints;
+            healthbar.value = healthPoints;
+            healthbar.gameObject.SetActive(false);
+        }
     }
 
     protected virtual void ApplyConfig()
@@ -123,22 +139,26 @@ public abstract class EnemyAI : MonoBehaviour, IDamagable, IRootable, IStunnable
         agent.speed = speed;
         attackCooldown = enemyConfig.attackCooldown;
         healthPoints = enemyConfig.healthPoints;
+        damage = enemyConfig.damage;
     }
 
     protected abstract EnemyConfig GetEnemyBaseConfig();
 
-    public virtual void InitEnemy(Transform roamPosition, IndicatorsCreator indicatorsCreator)
+    public virtual void InitEnemy(Transform roamPosition)
     {
-        InitEnemy(indicatorsCreator);
+        InitEnemy();
         this.roamPosition = roamPosition;
     }
 
-    protected void Update()
+    protected virtual void Update()
     {
         chasingDeltaTime -= Time.deltaTime;
         attackCooldownDelta -= Time.deltaTime;
-
         UpdateIndicator();
+
+        if (CheckIsFalling())
+            return;
+        
         if (secondaryState == SecondaryState.Stun)
         {
             return;
@@ -161,7 +181,36 @@ public abstract class EnemyAI : MonoBehaviour, IDamagable, IRootable, IStunnable
             default:
                 break;
         }
+
+        animator.Move(agent.velocity.sqrMagnitude);
     }
+
+    private bool CheckIsFalling()
+    {
+        if (!agent.isOnNavMesh)
+        {
+            if (!falling)
+            {
+                falling = true;
+                rigid.isKinematic = false;
+                rigid.velocity = new Vector3(0, -5, 0);
+                agent.enabled = false;
+                return true;
+            }
+        }
+
+        if (falling && rigid.velocity.sqrMagnitude <= 0.000001)
+        {
+            falling = false;
+            rigid.isKinematic = true;
+            agent.enabled = true;
+        }
+
+        if (falling)
+            return true;
+        return false;
+    }
+
     private void UpdateIndicator()
     {
         
@@ -182,17 +231,35 @@ public abstract class EnemyAI : MonoBehaviour, IDamagable, IRootable, IStunnable
         {
             indicator.SetActive(true);
         }
-        
-        Vector2 posMy = Camera.main.WorldToScreenPoint(transform.position);
+
+        Vector2 posMy = Camera.main.WorldToScreenPoint(CalculateWorldPosition(transform.position, Camera.main));
         Vector2 posPlayer = Camera.main.WorldToScreenPoint(playerController.transform.position);
-
         Vector2 intersection;
-
+        
         if (LineUtils.GetIntersectWithScreenEdges(posMy, posPlayer, out intersection))
         {
             indicator.GetComponent<RectTransform>().position = new Vector3(intersection.x, intersection.y, 0);
         }
         
+    }
+
+    //from https://forum.unity.com/threads/camera-worldtoscreenpoint-bug.85311/
+    // position = the world position of the entity to be tested
+    private Vector3 CalculateWorldPosition(Vector3 position, Camera camera)
+    {
+        //if the point is behind the camera then project it onto the camera plane
+        Vector3 camNormal = camera.transform.forward;
+        Vector3 vectorFromCam = position - camera.transform.position;
+        float camNormDot = Vector3.Dot(camNormal, vectorFromCam.normalized);
+        if (camNormDot <= 0f)
+        {
+            //we are beind the camera, project the position on the camera plane
+            float camDot = Vector3.Dot(camNormal, vectorFromCam);
+            Vector3 proj = (camNormal * camDot * 1.01f);   //small epsilon to keep the position infront of the camera
+            position = camera.transform.position + (vectorFromCam - proj);
+        }
+
+        return position;
     }
 
     protected abstract void Roam();
@@ -255,12 +322,17 @@ public abstract class EnemyAI : MonoBehaviour, IDamagable, IRootable, IStunnable
 
     public virtual void ReceiveDamage(float amount)
     {
-        animator.SetTrigger("GetHit");
-        FMODUnity.RuntimeManager.PlayOneShot("event:/enemies/hit/generic_hit");
-        agent.isStopped = false;
+        healthPoints -= amount;
+        animator.GetHit();
+        if(agent.enabled)
+            agent.isStopped = false;
         state = State.Chase;
         chasingDeltaTime = chasingDuration;
-        if ((healthPoints -= amount) <= 0) Die();
+        FMODUnity.RuntimeManager.PlayOneShot("event:/enemies/hit/generic_hit", transform.position);
+        if (!healthbar.gameObject.activeSelf) healthbar.gameObject.SetActive(true);
+        healthbar.value = healthPoints;
+
+        if (healthPoints <= 0) Die();
     }
 
     public EObjectType GetObjectType()
@@ -291,9 +363,37 @@ public abstract class EnemyAI : MonoBehaviour, IDamagable, IRootable, IStunnable
     protected void Die()
     {
         GameObject energy = Instantiate(energyPrefab);
-        energy.transform.position = new Vector3(this.transform.position.x, 0.5f, this.transform.position.z);
-        GlobalConfigManager.onConfigChanged.RemoveListener(ApplyConfig);
+        energy.transform.position = new Vector3(transform.position.x, 0.5f, transform.position.z);
+		EnemiesController.DecreaseAliveCount();
+		GlobalConfigManager.onConfigChanged.RemoveListener(ApplyConfig);
         Destroy(indicator);
+
+        agent.enabled = false;
+        GetComponent<Collider>().enabled = false;
+
+        gameObject.layer = 0;
+        foreach (Transform trans in gameObject.GetComponentsInChildren<Transform>())
+        {
+            trans.gameObject.layer = 0;
+        }
+
+        healthbar.gameObject.SetActive(false);
+
+        StartCoroutine(DieCoroutine());
+
+        enabled = false;
+    }
+
+    protected IEnumerator DieCoroutine()
+    {
+        float duration = 3;
+        float time = 0;
+        float deathSpeed = 2;
+        while ((time += Time.deltaTime) < duration)
+        {
+            transform.position += Vector3.down * Time.deltaTime * deathSpeed;
+            yield return null;
+        }
         Destroy(gameObject);
     }
 

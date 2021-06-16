@@ -2,19 +2,35 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
+using TMPro;
+using System;
 
 public class HUDController : MonoBehaviour
 {
     // health and energy
-    [SerializeField] private Slider[] healthbar;
+    [SerializeField] private GameObject healthParent;
+    [SerializeField] private Slider healthbar;
+    private Slider[] healthbars;
     private float oldHealth;
-    [SerializeField] private Slider[] energybar;
+    [SerializeField] private GameObject energyParent;
+    [SerializeField] private Slider energybar;
+    private Slider[] energybars;
     private float oldEnergy;
 
     // ability icons
     [SerializeField] private Image[] icons;
     private Image[] iconsInner;
     private Color[] iconColors;
+
+    // wave info
+    [SerializeField] private Image waveTimer;
+    [SerializeField] private Animator waveInfo;
+    [SerializeField] private TextMeshProUGUI waveInfoText;
+
+    // game goal
+    [SerializeField] private string gameGoalText = "Defeat waves of enemies and protect your home!";
+
+    public PlayerController playerController;
 
     private void Start()
     {
@@ -28,15 +44,30 @@ public class HUDController : MonoBehaviour
         }
     }
 
-    public void SetUpHealth(float startingHealth, float maxHealth)
+    #region Health and Energy
+
+    public void SetUpHealth(float startingHealth, float maxHealth, int barCount = 5)
     {
-        SetUpBar(startingHealth, maxHealth, ref healthbar);
+        healthbars = new Slider[barCount];
+        healthbars[0] = healthbar;
+        for (int i = 1; i < barCount; i++)
+        {
+            healthbars[i] = Instantiate(healthbar, healthParent.transform);
+        }
+        SetUpBar(startingHealth, maxHealth, ref healthbars);
         oldHealth = startingHealth;
     }
 
-    public void SetUpEnergy(float startingEnergy, float maxEnergy)
+    public void SetUpEnergy(float startingEnergy, float maxEnergy, int barCount = 3)
     {
-        SetUpBar(startingEnergy, maxEnergy, ref energybar);
+        energybars = new Slider[barCount];
+        energybars[0] = energybar;
+        for (int i = 1; i < barCount; i++)
+        {
+            energybars[i] = Instantiate(energybar, energyParent.transform);
+        }
+
+        SetUpBar(startingEnergy, maxEnergy, ref energybars);
         oldEnergy = startingEnergy;
     }
 
@@ -56,13 +87,13 @@ public class HUDController : MonoBehaviour
 
     public void SetHealth(float newHealth)
     {
-        SetBar(oldHealth, newHealth, ref healthbar);
+        SetBar(oldHealth, newHealth, ref healthbars);
         oldHealth = newHealth;
     }
 
     public void SetEnergy(float newEnergy)
     {
-        SetBar(oldEnergy, newEnergy, ref energybar);
+        SetBar(oldEnergy, newEnergy, ref energybars);
         oldEnergy = newEnergy;
     }
 
@@ -96,9 +127,29 @@ public class HUDController : MonoBehaviour
 
     public void NotEnoughEnergy()
     {
-        for (int i = 0; i < energybar.Length; i++)
+        for (int i = 0; i < energybars.Length; i++)
         {
-            energybar[i].GetComponent<Animator>().SetTrigger("NotEnoughEnergy");
+            energybars[i].GetComponent<Animator>().SetTrigger("NotEnoughEnergy");
+        }
+    }
+
+    #endregion
+
+    #region Ability Icons
+
+    public void TransformBiome(string type)
+    {
+        if (type == "forest")
+        {
+            playerController.OnTransformForest(null);
+        }
+        else if (type == "meadow")
+        {
+            playerController.OnTransformMeadow(null);
+        }
+        else if (type == "water")
+        {
+            playerController.OnTransformWater(null);
         }
     }
 
@@ -170,4 +221,47 @@ public class HUDController : MonoBehaviour
         }
     }
 
+    #endregion
+
+    #region Wave Info
+
+    public IEnumerator ShowTimeTillNextWave(float duration, int waveNumber)
+    {
+        waveTimer.gameObject.SetActive(true);
+        TextMeshProUGUI waveTimerText = waveTimer.GetComponentInChildren<TextMeshProUGUI>();
+        float timeStart = Time.time;
+        float time;
+        while ((time = duration - (Time.time - timeStart) )> 0)
+        {
+
+            waveTimerText.text = $"next wave in {Mathf.Ceil(time).ToString("0")}s";
+            yield return null;
+        }
+        waveTimer.gameObject.SetActive(false);
+        ShowWaveStart(waveNumber);
+    }
+
+    public void ShowWaveDefeated()
+    {
+        waveInfoText.text = "Wave Defeated";
+        waveInfo.SetTrigger("WaveDefeated");
+    }
+
+    private void ShowWaveStart(int waveNumber)
+    {
+        waveInfoText.text = "Wave " + (waveNumber+1);
+        waveInfo.SetTrigger("WaveDefeated");
+    }
+
+    #endregion
+
+    #region Game goal
+
+    public void ShowGameGoal()
+    {
+        waveInfoText.text = gameGoalText;
+        waveInfo.SetTrigger("WaveDefeated");
+    }
+
+    #endregion Game goal
 }

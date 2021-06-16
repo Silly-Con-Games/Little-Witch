@@ -9,6 +9,8 @@ public class ForestAbility : MainAbility
 
     public FARootCircle rootCirclePrefab;
 
+    public DieAfterInit rootIndicatorPrefab;
+
     public ForestAbilityConfig conf { get => internalConf; set { internalConf = value; mainAbilityConfig = value.baseConfig; } }
 
     private ForestAbilityConfig internalConf;
@@ -66,6 +68,7 @@ public class ForestAbility : MainAbility
         var inst = GameObject.Instantiate(rootCirclePrefab);
         inst.transform.position = destination;
         inst.Init(conf.rootBurstRadius, conf.rootBurstDensity, OnRootCircleHit);
+        FMODUnity.RuntimeManager.PlayOneShot("event:/witch/abilities/forest_ability_circle", inst.transform.position);
     }
 
     private void OnRootCircleHit(Collider other)
@@ -76,6 +79,13 @@ public class ForestAbility : MainAbility
 
         IRootable rootEnemy = other.GetComponent<IRootable>();
         if (rootEnemy != null && rootEnemy.GetObjectType() == target)
+        {
             rootEnemy.ReceiveRoot(conf.rootDuration);
+            var ind = GameObject.Instantiate(rootIndicatorPrefab);
+            ind.Init(conf.rootDuration);
+            ind.transform.position = other.transform.position;
+        }
     }
+    
+    
 }

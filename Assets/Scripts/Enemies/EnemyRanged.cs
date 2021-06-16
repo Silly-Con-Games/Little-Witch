@@ -3,21 +3,23 @@ using System.Collections.Generic;
 using Config;
 using UnityEngine;
 using FMODUnity;
+using UnityEngine.Assertions;
 
 public class EnemyRanged : EnemyAI
 {
-
+    public int threatLevel;
     public GameObject bulletPrefab;
 
-    public override void InitEnemy(IndicatorsCreator indicatorsCreator)
+    public override void InitEnemy()
     {
-        base.InitEnemy(indicatorsCreator);
+        base.InitEnemy();
         attackCooldownDelta = -1f;
     }
 
     protected override EnemyConfig GetEnemyBaseConfig()
     {
-        return GlobalConfigManager.GetGlobalConfig().globalEnemyConfig.enemyRangedConfig.baseConfig;
+        Assert.IsTrue(threatLevel < GlobalConfigManager.GetGlobalConfig().globalEnemyConfig.enemyRangedConfigs.Count);
+        return GlobalConfigManager.GetGlobalConfig().globalEnemyConfig.enemyRangedConfigs[threatLevel].baseConfig;
     }
 
     protected override void Attack()
@@ -28,14 +30,10 @@ public class EnemyRanged : EnemyAI
         bulletInstanceTrans.position = transform.position;
         bulletInstanceTrans.eulerAngles = new Vector3(transform.eulerAngles.x, transform.eulerAngles.y, transform.eulerAngles.z);
 
-        animator.SetTrigger("Attack");
+        animator.Attack();
 
-        FMOD.Studio.EventInstance instance = RuntimeManager.CreateInstance("event:/test/shot");
-		RuntimeManager.AttachInstanceToGameObject(instance, transform, GetComponent<Rigidbody>());
-		instance.setParameterByName("shot_pitch", Random.Range(-1f, 1f));
-		instance.start();
-		instance.release();
-	}
+        FMODUnity.RuntimeManager.PlayOneShot("event:/enemies/shot/ranged_shot", transform.position);
+    }
 
     protected override void Idle()
     {
@@ -69,7 +67,7 @@ public class EnemyRanged : EnemyAI
             return;
         }
 
-        if (!agent.pathPending && agent.remainingDistance < 0.5f)
+        if (agent.isActiveAndEnabled && !agent.pathPending && agent.remainingDistance < 0.5f)
         {
             agent.SetDestination(EnemiesUtils.GetRoamPosition(roamPosition.position, moveRangeMin, moveRangeMax));
         }
@@ -78,13 +76,13 @@ public class EnemyRanged : EnemyAI
     { 
         if (!IsPlayerInRange(maxRangeToPlayer))
         {
-            if (chasingDeltaTime > 0 && playerController)
+            if (chasingDeltaTime > 0 && playerController && agent.isActiveAndEnabled)
             {
                 agent.SetDestination(playerController.transform.position);
                 chasingDeltaTime -= Time.deltaTime;
                 return;
             }
-            if (roamPosition)
+            if (roamPosition && agent.isActiveAndEnabled)
             {
                 state = State.Roam;
                 agent.isStopped = false;
@@ -92,22 +90,26 @@ public class EnemyRanged : EnemyAI
             }
             else
             {
-                if (playerController)
+                if (playerController && agent.isActiveAndEnabled)
                 {
                     agent.SetDestination(playerController.transform.position);
                 }
-                else
+                else if (agent.isActiveAndEnabled)
                 {
                     state = State.Roam;
                     roamPosition = transform;
                     agent.SetDestination(EnemiesUtils.GetRoamPosition(roamPosition.position, moveRangeMin, moveRangeMax));
                 }
-                agent.isStopped = false;
+
+                if (agent.isActiveAndEnabled)
+                {
+                    agent.isStopped = false;
+                }
             }
             return;
         }
 
-        if (!IsPlayerInRange(attackRange))
+        if (!IsPlayerInRange(attackRange) && agent.isActiveAndEnabled)
         {
             agent.isStopped = false;
             agent.SetDestination(playerController.transform.position);
@@ -121,7 +123,11 @@ public class EnemyRanged : EnemyAI
                 Attack();
                 attackCooldownDelta = attackCooldown;
             }
-            agent.isStopped = true;
+
+            if (agent.isActiveAndEnabled)
+            {
+                agent.isStopped = true;
+            }
         }
     }
 

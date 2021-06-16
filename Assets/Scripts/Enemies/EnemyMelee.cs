@@ -2,10 +2,12 @@ using System.Collections;
 using System.Collections.Generic;
 using Config;
 using UnityEngine;
+using UnityEngine.Assertions;
 
 public class EnemyMelee : EnemyAI
 {
-    
+    public int threatLevel = 0;
+
     [SerializeField]
     private float dashDelay;
 
@@ -16,7 +18,6 @@ public class EnemyMelee : EnemyAI
 
     private float dashDurationDelta;
 
-    // TODO: Add this field to config
     [SerializeField]
     private float dashCooldown;
     
@@ -33,34 +34,37 @@ public class EnemyMelee : EnemyAI
     private Vector3 playerPos;
     private Vector3 lastPos;
 
-    protected void Update()
+    override protected void Update() 
     {
         base.Update();
+
         dashDelta -= Time.deltaTime;
         dashDurationDelta -= Time.deltaTime;
         dashCooldownDelta -= Time.deltaTime;
     }
-    public override void InitEnemy(IndicatorsCreator indicatorsCreator)
+    public override void InitEnemy()
     {
-        base.InitEnemy(indicatorsCreator);
+        base.InitEnemy();
         attacking = false;
     }
 
     protected override void ApplyConfig()
     {
+        Assert.IsTrue(threatLevel < GlobalConfigManager.GetGlobalConfig().globalEnemyConfig.enemyMeleeConfigs.Count);
         base.ApplyConfig();
-        var enemyConfig = GlobalConfigManager.GetGlobalConfig().globalEnemyConfig.enemyMeleeConfig;
+        var enemyConfig = GlobalConfigManager.GetGlobalConfig().globalEnemyConfig.enemyMeleeConfigs[threatLevel];
         dashDelay = enemyConfig.dashDelay;
         dashDuration = enemyConfig.dashDuration;
         dashRange = enemyConfig.dashRange;
         dashSpeedModifier = enemyConfig.dashSpeedModifier;
-        dashCooldown = 5f;
+        dashCooldown = enemyConfig.dashCooldown;
         dashCooldownDelta = 0f;
     }
 
     protected override EnemyConfig GetEnemyBaseConfig()
     {
-        return GlobalConfigManager.GetGlobalConfig().globalEnemyConfig.enemyMeleeConfig.baseConfig;
+        Assert.IsTrue(threatLevel < GlobalConfigManager.GetGlobalConfig().globalEnemyConfig.enemyMeleeConfigs.Count);
+        return GlobalConfigManager.GetGlobalConfig().globalEnemyConfig.enemyMeleeConfigs[threatLevel].baseConfig;
     }
 
     protected override void Idle()
@@ -102,19 +106,23 @@ public class EnemyMelee : EnemyAI
             state = State.Attack;
         } else
         {
-            if (IsPlayerInRange(attackRange))
+            if (IsPlayerInRange(attackRange) && agent.isActiveAndEnabled)
             {
                 agent.isStopped = true;
                 if (attackCooldownDelta <= 0f)
                 {
-                    animator.SetTrigger("Attack");
-                    playerController.ReceiveDamage(3);
+                    animator.Attack();
+                    playerController.ReceiveDamage(damage);
                     attackCooldownDelta = attackCooldown;
                 }
                 return;
             }
-            agent.isStopped = false;
-            agent.SetDestination(playerController.transform.position);
+
+            if (agent.isActiveAndEnabled)
+            {
+                agent.isStopped = false;
+                agent.SetDestination(playerController.transform.position);
+            }
         }
     }
 
@@ -128,23 +136,31 @@ public class EnemyMelee : EnemyAI
             agent.speed = speed;
             return;
         }
+
+        if (agent.isActiveAndEnabled)
+        {
+            agent.isStopped = true;
+        }
         
-        agent.isStopped = true;
         // waiting some time before dash
         while (dashDelta >= 0)
         {
             return;
         }
-        agent.speed = speed * dashSpeedModifier;
-        agent.isStopped = false;
+
+        if (agent.isActiveAndEnabled)
+        {
+            agent.speed = speed * dashSpeedModifier;
+            agent.isStopped = false;
+        }
 
         if (!attacking)
         {
-            FMODUnity.RuntimeManager.PlayOneShot("event:/enemies/dash/dash");
+            FMODUnity.RuntimeManager.PlayOneShot("event:/enemies/dash/dash", transform.position);
             attacking = true;
         }
 
-        while (dashDurationDelta >= 0 && !IsPlayerInRange(attackRange))
+        while (agent.isActiveAndEnabled && dashDurationDelta >= 0 && !IsPlayerInRange(attackRange))
         {
             agent.SetDestination(playerController.transform.position);
             return;
@@ -152,8 +168,8 @@ public class EnemyMelee : EnemyAI
 
         if (IsPlayerInRange(attackRange))
         {
-            animator.SetTrigger("Attack");
-            playerController.ReceiveDamage(1);
+            animator.Attack();
+            StartCoroutine(WaitAndTryDealDamage(0.6f));
         }
 
         attacking = false;
@@ -161,6 +177,15 @@ public class EnemyMelee : EnemyAI
         agent.speed = speed;
         dashCooldownDelta = dashCooldown;
         attackCooldownDelta = attackCooldown;
+    }
+
+    IEnumerator WaitAndTryDealDamage(float duration)
+    {
+        yield return new WaitForSeconds(duration);
+        if (IsPlayerInRange(attackRange))
+        {
+            playerController.ReceiveDamage(damage);
+        }
     }
 
 }

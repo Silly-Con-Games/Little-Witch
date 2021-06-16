@@ -10,15 +10,15 @@ public class EnemyBomber : EnemyAI
     private GameObject bombPrefab;
 
 
-    public override void InitEnemy(IndicatorsCreator indicatorsCreator)
+    public override void InitEnemy()
     {
-        base.InitEnemy(indicatorsCreator);
+        base.InitEnemy();
         if (playerController)
             roamPosition = playerController.transform;
         else
             roamPosition = transform;
-        agent.isStopped = false;
-        agent.SetDestination(EnemiesUtils.GetRoamPosition(roamPosition.position, moveRangeMin, moveRangeMax));
+        //agent.isStopped = false;
+        //agent.SetDestination(EnemiesUtils.GetRoamPosition(roamPosition.position, moveRangeMin, moveRangeMax));
     }
 
     protected override EnemyConfig GetEnemyBaseConfig()
@@ -28,11 +28,12 @@ public class EnemyBomber : EnemyAI
 
     protected override void Roam()
     {
-        if (!agent.pathPending && agent.remainingDistance < 0.5f)
+        if (agent.isActiveAndEnabled && !agent.pathPending && agent.remainingDistance < 0.5f)
         {
             agent.isStopped = true;
             state = State.Idle;
             idleDeltaTime = idleDuration;
+            animator.Attack();
         }
     }
 
@@ -43,7 +44,7 @@ public class EnemyBomber : EnemyAI
     protected override void Idle()
     {
         idleDeltaTime -= Time.deltaTime;
-        if (idleDeltaTime <= 0)
+        if (agent.isActiveAndEnabled && idleDeltaTime <= 0)
         {
             state = State.Roam;
             agent.isStopped = false;
@@ -58,14 +59,16 @@ public class EnemyBomber : EnemyAI
 
     public override void ReceiveDamage(float amount)
     {
-        State tmp = state;
         base.ReceiveDamage(amount);
-        state = tmp;
+        state = State.Roam;
+        if (agent && agent.isActiveAndEnabled)
+        {
+            agent.isStopped = false;
+        }
     }
 
     protected override void Attack()
     {
-        animator.SetTrigger("Attack");
         GameObject bomb = Instantiate(bombPrefab);
         bomb.transform.position = this.transform.position;
     }

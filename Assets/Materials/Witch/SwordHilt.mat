@@ -8,7 +8,7 @@ Material:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_Name: SwordHilt
-  m_Shader: {fileID: -6465566751694194690, guid: b5c2ba27e459ec047ae1f4417f554880, type: 3}
+  m_Shader: {fileID: -6465566751694194690, guid: cbfd63f2575fc2d4599edfaffb07190e, type: 3}
   m_ShaderKeywords: MAIN_LIGHT_CALCULATE_SHADOWS _MAIN_LIGHT_SHADOWS_CASCADE _SHADOWS_SOFT
   m_LightmapFlags: 4
   m_EnableInstancingVariants: 0
@@ -116,10 +116,10 @@ Material:
     - Color_7e2a5e6da403449a9ce39c601ac3c193: {r: 0.8690605, g: 2.670157, b: 2.414528, a: 0}
     - Color_f1213717fa834b239702b23af6a2cc99: {r: 0.7075471, g: 0.7035422, b: 0.7035422, a: 1}
     - _BaseColor: {r: 0, g: 0.008023262, b: 1, a: 1}
-    - _Color: {r: 0.75, g: 0.95312893, b: 1, a: 1}
+    - _Color: {r: 0.4339623, g: 0.4339623, b: 0.4339623, a: 1}
     - _EmissionColor: {r: 0, g: 0, b: 0, a: 1}
     - _SpecColor: {r: 0.19999996, g: 0.19999996, b: 0.19999996, a: 1}
-    - _SpecularColor: {r: 0, g: 0, b: 0, a: 1}
+    - _SpecularColor: {r: 0.16981131, g: 0.16564612, b: 0.16564612, a: 1}
   m_BuildTextureStacks: []
 --- !u!114 &1206158878945120445
 MonoBehaviour:

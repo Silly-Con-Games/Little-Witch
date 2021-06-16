@@ -33,13 +33,9 @@ public class EnemyEnvDestroyer : EnemyAI
     private float distanceTmp;
     private Tile tileTmp;
 
-    public override void InitEnemy(IndicatorsCreator indicatorsCreator)
+    public override void InitEnemy()
     {
-        base.InitEnemy(indicatorsCreator);
-        enemiesMeleeMax = 1;
-        enemiesRangedMax = 1;
-        moveRangeMax = 8f;
-        moveRangeMin = 5f;
+        base.InitEnemy();
         if (!mapController)
             mapController = FindObjectOfType<MapController>();
         coroutineRunning = false;
@@ -54,7 +50,7 @@ public class EnemyEnvDestroyer : EnemyAI
             enemy = Instantiate(meleePrefab);
             enemy.transform.position = EnemiesUtils.GetRoamPosition(transform.position, moveRangeMin, moveRangeMax);
             enemiesMelee.Add(enemy.GetComponent<EnemyMelee>());
-            enemiesMelee[i].InitEnemy(transform, indicatorsCreator);
+            enemiesMelee[i].InitEnemy(transform);
             enemiesMelee[i].state = State.Roam;
         }
 
@@ -64,7 +60,7 @@ public class EnemyEnvDestroyer : EnemyAI
             enemy = Instantiate(rangedPrefab);
             enemy.transform.position = EnemiesUtils.GetRoamPosition(transform.position, moveRangeMin, moveRangeMax);
             enemiesRanged.Add(enemy.GetComponent<EnemyRanged>());
-            enemiesRanged[i].InitEnemy(transform, indicatorsCreator);
+            enemiesRanged[i].InitEnemy(transform);
             enemiesRanged[i].state = State.Roam;
         }
         state = State.Idle;
@@ -85,7 +81,7 @@ public class EnemyEnvDestroyer : EnemyAI
 
     protected override void Roam()
     {
-        if (!agent.pathPending && agent.remainingDistance < 0.1f)
+        if (agent.isActiveAndEnabled && !agent.pathPending && agent.remainingDistance < 0.1f)
         {
             state = State.Idle;
             agent.isStopped = true;
@@ -103,7 +99,8 @@ public class EnemyEnvDestroyer : EnemyAI
         if (!coroutineRunning)
         {
             Attack();
-            if (mapController.aliveTilesCnt == 0)
+            // because one tile(under the home tree) is unreachable
+            if (mapController.aliveTilesCnt <= 1)
             {
                 agent.SetDestination(EnemiesUtils.GetRoamPosition(transform.position, moveRangeMin, moveRangeMax));
                 state = State.Roam;
@@ -124,7 +121,7 @@ public class EnemyEnvDestroyer : EnemyAI
     {
         for (int i = 0; i < mapController.tiles.Count; i++)
         {
-            if (!mapController.tiles[i] || mapController.tiles[i].GetBiomeType() == BiomeType.DEAD || mapController.tiles[i].wantedType == BiomeType.DEAD || mapController.tiles[i].chosen)
+            if (mapController.tiles[i].GetBiomeType() == BiomeType.DEAD || mapController.tiles[i].wantedType == BiomeType.DEAD || mapController.tiles[i].chosen)
                 continue;
             distanceTmp = Vector3.Distance(transform.position, mapController.tiles[i].transform.position);
             if (distanceTmp < minDistance)
@@ -134,11 +131,20 @@ public class EnemyEnvDestroyer : EnemyAI
             }
         }
 
-        tileTmp.chosen = true;
+        if (tileTmp)
+        {
+            tileTmp.chosen = true;
+        }
+        else
+        {
+            state = State.Roam;
+            coroutineRunning = false;
+            return;
+        }
         
         await Task.Delay(Mathf.CeilToInt(idleDuration * 1000f));
 
-        if (agent)
+        if (agent && agent.isActiveAndEnabled)
         {
             agent.SetDestination(tileTmp.transform.position);
             agent.isStopped = false;
@@ -155,16 +161,19 @@ public class EnemyEnvDestroyer : EnemyAI
             Tile tile = hit.transform.gameObject.GetComponent<Tile>();
             if (!tile || tile.GetBiomeType() == BiomeType.DEAD)
                 return;
-            FMODUnity.RuntimeManager.PlayOneShot("event:/enemies/sucking/sucking");
-            mapController.AttackTile(tile);
+            FMODUnity.RuntimeManager.PlayOneShot("event:/enemies/sucking/sucking", transform.position);
+            mapController.AttackTile(tile); 
         }
     }
 
     public override void ReceiveDamage(float amount)
     {
-        animator.SetTrigger("GetHit");
-
-        if ((healthPoints -= amount) <= 0)
+        healthPoints -= amount;
+        animator.GetHit();
+        FMODUnity.RuntimeManager.PlayOneShot("event:/enemies/hit/generic_hit", transform.position);
+        if (!healthbar.gameObject.activeSelf) healthbar.gameObject.SetActive(true);
+        healthbar.value = healthPoints;
+        if (healthPoints <= 0)
         {
             for (int i = 0; i < enemiesMelee.Count; i++)
             {

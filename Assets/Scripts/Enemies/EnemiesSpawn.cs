@@ -8,15 +8,20 @@ public class EnemiesSpawn : MonoBehaviour
     [SerializeField]
     private float spawnRange;
 
-    [SerializeField]
     private float spawnDelay;
 
     [SerializeField]
     private GameObject rangedPrefab;
-    
+
+    [SerializeField]
+    private GameObject rangedMinibossPrefab;
+
     [SerializeField]
     private GameObject meleePrefab;
-    
+
+    [SerializeField]
+    private GameObject meleeMinibossPrefab;
+
     [SerializeField]
     private GameObject bomberPrefab;
     
@@ -27,8 +32,6 @@ public class EnemiesSpawn : MonoBehaviour
     
     private Queue<EnemyAI> enemiesQueue;
 
-    public IndicatorsCreator indicatorsCreator { get; set; }
-
     void Start()
     {
         spawnDelay = 0.1f;
@@ -37,7 +40,8 @@ public class EnemiesSpawn : MonoBehaviour
     // spawns @number enemies of @enemyType type
     public void Spawn(EnemyType enemyType, int number)
     {
-        StartCoroutine(SpawnEnemiesCoroutine(enemyType, number));
+        if(number > 0)
+            StartCoroutine(SpawnEnemiesCoroutine(enemyType, number));
     }
 
     IEnumerator SpawnEnemiesCoroutine(EnemyType enemyType, int number)
@@ -52,7 +56,6 @@ public class EnemiesSpawn : MonoBehaviour
     private void SpawnSingleEnemy(EnemyType enemyType)
     {
         GameObject enemy = null;
-        
         switch (enemyType)
         {
             case EnemyType.Ranged:
@@ -61,7 +64,7 @@ public class EnemiesSpawn : MonoBehaviour
                     EnemiesUtils.GetRoamPosition(transform.position, 0f, spawnRange),
                     transform.rotation
                 );
-                enemy.GetComponent<EnemyRanged>().InitEnemy(indicatorsCreator);
+                enemy.GetComponent<EnemyRanged>().InitEnemy();
                 break;
             case EnemyType.Melee:
                 enemy = Instantiate(
@@ -69,7 +72,7 @@ public class EnemiesSpawn : MonoBehaviour
                     EnemiesUtils.GetRoamPosition(transform.position, 0f, spawnRange),
                     transform.rotation
                 );
-                enemy.GetComponent<EnemyMelee>().InitEnemy(indicatorsCreator);
+                enemy.GetComponent<EnemyMelee>().InitEnemy();
                 break;
             case EnemyType.Bomber:
                 enemy = Instantiate(
@@ -77,7 +80,7 @@ public class EnemiesSpawn : MonoBehaviour
                     EnemiesUtils.GetRoamPosition(transform.position, 0f, spawnRange),
                     transform.rotation
                 );
-                enemy.GetComponent<EnemyBomber>().InitEnemy(indicatorsCreator);
+                enemy.GetComponent<EnemyBomber>().InitEnemy();
                 break;
             case EnemyType.EnvDestroyer:
                 enemy = Instantiate(
@@ -85,7 +88,23 @@ public class EnemiesSpawn : MonoBehaviour
                     EnemiesUtils.GetRoamPosition(transform.position, 0f, spawnRange),
                     transform.rotation
                 );
-                enemy.GetComponent<EnemyEnvDestroyer>().InitEnemy(indicatorsCreator);
+                enemy.GetComponent<EnemyEnvDestroyer>().InitEnemy();
+                break;
+            case EnemyType.MeleeMiniboss:
+                enemy = Instantiate(
+                    meleeMinibossPrefab,
+                    EnemiesUtils.GetRoamPosition(transform.position, 0f, spawnRange),
+                    transform.rotation
+                );
+                enemy.GetComponent<EnemyMelee>().InitEnemy();
+                break;
+            case EnemyType.RangedMiniboss:
+                enemy = Instantiate(
+                    rangedMinibossPrefab,
+                    EnemiesUtils.GetRoamPosition(transform.position, 0f, spawnRange),
+                    transform.rotation
+                );
+                enemy.GetComponent<EnemyRanged>().InitEnemy();
                 break;
         }
 

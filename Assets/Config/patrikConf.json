@@ -9,7 +9,8 @@
             "cooldown": 0.3499999940395355,
             "damage": 1.0,
             "pushbackForce": 7.0,
-            "duration": 0.17499999701976777
+            "pushbackDuration": 0.4000000059604645,
+            "attackSlow": 0.5
         },
         "chargeAbility": {
             "damageMin": 1.0,
@@ -71,6 +72,7 @@
     "globalEnemyConfig": {
         "enemyRangedConfig": {
             "baseConfig": {
+                "damage": 0.0,
                 "idleDuration": 5.0,
                 "chasingDuration": 3.0,
                 "moveRangeMin": 4.0,
@@ -86,6 +88,7 @@
         },
         "enemyMeleeConfig": {
             "baseConfig": {
+                "damage": 0.0,
                 "idleDuration": 5.0,
                 "chasingDuration": 3.0,
                 "moveRangeMin": 4.0,
@@ -101,10 +104,12 @@
             "dashDelay": 1.0,
             "dashDuration": 2.0,
             "dashSpeedModifier": 3.0,
-            "dashRange": 3.0
+            "dashRange": 3.0,
+            "dashCooldown": 0.0
         },
         "enemyBomberConfig": {
             "baseConfig": {
+                "damage": 0.0,
                 "idleDuration": 5.0,
                 "chasingDuration": 3.0,
                 "moveRangeMin": 4.0,
@@ -120,6 +125,7 @@
         },
         "enemyEnvDestroyerConfig": {
             "baseConfig": {
+                "damage": 0.0,
                 "idleDuration": 5.0,
                 "chasingDuration": 3.0,
                 "moveRangeMin": 4.0,
@@ -146,6 +152,10 @@
         "lifeTimeInSec": 15.0,
         "speed": 10.0,
         "energyAmount": 1
+    },
+    "soundConfig": {
+        "musicVolume": 0.5,
+        "sfxVolume": 0.5
     },
     "respawnTime": 2.0
 }

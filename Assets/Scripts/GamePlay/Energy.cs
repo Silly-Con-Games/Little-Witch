@@ -56,6 +56,7 @@ public class Energy : MonoBehaviour
         }
         playerController.energy.AddEnergy(energyAmount);
         GlobalConfigManager.onConfigChanged.RemoveListener(ApplyConfig);
+        FMODUnity.RuntimeManager.PlayOneShot("event:/energy/collect", transform.position);
         Destroy(gameObject);
     }
 
