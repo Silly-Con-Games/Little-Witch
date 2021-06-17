@@ -362,7 +362,7 @@ MonoBehaviour:
   Path: FMOD/LittleWitch/Build/Desktop/Master.strings.bank
   Name: Master.strings
   StudioPath: bank:/Master.strings
-  lastModified: 637587017404711561
+  lastModified: 637595616041352771
   LoadResult: 0
   FileSizes:
   - Name: Desktop
@@ -869,9 +869,9 @@ MonoBehaviour:
   Is3D: 1
   IsOneShot: 1
   Parameters:
-  - {fileID: 5777073519566746007}
-  MinDistance: 0
-  MaxDistance: 0
+  - {fileID: 6476479294651056298}
+  MinDistance: 20
+  MaxDistance: 60
   Length: 830
 --- !u!114 &-4500539446575199757
 MonoBehaviour:
@@ -976,11 +976,11 @@ MonoBehaviour:
   Banks:
   - {fileID: 7994675611940157413}
   IsStream: 1
-  Is3D: 0
+  Is3D: 1
   IsOneShot: 1
   Parameters: []
-  MinDistance: 0
-  MaxDistance: 0
+  MinDistance: 20
+  MaxDistance: 60
   Length: 2500
 --- !u!114 &-3616095417143242000
 MonoBehaviour:
@@ -1106,11 +1106,11 @@ MonoBehaviour:
   Banks:
   - {fileID: 7994675611940157413}
   IsStream: 0
-  Is3D: 0
+  Is3D: 1
   IsOneShot: 1
   Parameters: []
-  MinDistance: 0
-  MaxDistance: 0
+  MinDistance: 20
+  MaxDistance: 60
   Length: 699
 --- !u!114 &-2477979673010272607
 MonoBehaviour:
@@ -1440,11 +1440,11 @@ MonoBehaviour:
   Banks:
   - {fileID: 7994675611940157413}
   IsStream: 1
-  Is3D: 0
+  Is3D: 1
   IsOneShot: 1
   Parameters: []
-  MinDistance: 0
-  MaxDistance: 0
+  MinDistance: 20
+  MaxDistance: 60
   Length: 9400
 --- !u!114 &-844947812983291867
 MonoBehaviour:
@@ -1614,7 +1614,7 @@ MonoBehaviour:
   - {fileID: 7994675611940157413}
   StringsBanks:
   - {fileID: -6882099937372671058}
-  stringsBankWriteTime: 637587017404711561
+  stringsBankWriteTime: 637595616041352771
   cacheVersion: 6
 --- !u!114 &63060824806312001
 MonoBehaviour:
@@ -2099,6 +2099,26 @@ MonoBehaviour:
     data1: 0
     data2: 0
   Exists: 1
+--- !u!114 &2758252183472821885
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: fecb8ef7f94ca804a8ab72049b86782e, type: 3}
+  m_Name: parameter:/shot/shot_pitch
+  m_EditorClassIdentifier: 
+  Name: shot_pitch
+  Min: -1
+  Max: 1
+  Default: 0
+  ID:
+    data1: 0
+    data2: 0
+  Exists: 1
 --- !u!114 &2793083445915803610
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -2119,7 +2139,7 @@ MonoBehaviour:
   Is3D: 1
   IsOneShot: 1
   Parameters:
-  - {fileID: -4282485476046872698}
+  - {fileID: 2758252183472821885}
   MinDistance: 20
   MaxDistance: 65
   Length: 850
@@ -2200,11 +2220,11 @@ MonoBehaviour:
   Banks:
   - {fileID: 7994675611940157413}
   IsStream: 0
-  Is3D: 0
+  Is3D: 1
   IsOneShot: 1
   Parameters: []
-  MinDistance: 0
-  MaxDistance: 0
+  MinDistance: 20
+  MaxDistance: 60
   Length: 800
 --- !u!114 &2916008924628990530
 MonoBehaviour:
@@ -2639,11 +2659,11 @@ MonoBehaviour:
   Banks:
   - {fileID: 7994675611940157413}
   IsStream: 0
-  Is3D: 0
+  Is3D: 1
   IsOneShot: 1
   Parameters: []
-  MinDistance: 0
-  MaxDistance: 0
+  MinDistance: 20
+  MaxDistance: 60
   Length: 600
 --- !u!114 &6367011549049300767
 MonoBehaviour:
@@ -2688,6 +2708,26 @@ MonoBehaviour:
     data1: 0
     data2: 0
   Exists: 0
+--- !u!114 &6476479294651056298
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: fecb8ef7f94ca804a8ab72049b86782e, type: 3}
+  m_Name: parameter:/generic_hit/shot_pitch
+  m_EditorClassIdentifier: 
+  Name: shot_pitch
+  Min: -1
+  Max: 1
+  Default: 0
+  ID:
+    data1: 0
+    data2: 0
+  Exists: 1
 --- !u!114 &6780103527455374957
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -2807,11 +2847,11 @@ MonoBehaviour:
   Banks:
   - {fileID: 7994675611940157413}
   IsStream: 0
-  Is3D: 0
+  Is3D: 1
   IsOneShot: 1
   Parameters: []
-  MinDistance: 0
-  MaxDistance: 0
+  MinDistance: 20
+  MaxDistance: 60
   Length: 554
 --- !u!114 &7622736253133637074
 MonoBehaviour:
@@ -2908,7 +2948,7 @@ MonoBehaviour:
   Path: FMOD/LittleWitch/Build/Desktop/Master.bank
   Name: Master
   StudioPath: bank:/Master
-  lastModified: 637587017404701566
+  lastModified: 637595616041342756
   LoadResult: 0
   FileSizes: []
   Exists: 1
@@ -2932,8 +2972,8 @@ MonoBehaviour:
   Is3D: 1
   IsOneShot: 1
   Parameters: []
-  MinDistance: 30.5
-  MaxDistance: 85
+  MinDistance: 20
+  MaxDistance: 60
   Length: 160
 --- !u!114 &8435344372257523603
 MonoBehaviour:
