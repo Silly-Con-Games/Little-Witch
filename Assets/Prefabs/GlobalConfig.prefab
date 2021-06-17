@@ -44,8 +44,8 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   DefaultConfigFileName: defaultConfig.json
-  loadFileName: patrik3.json
-  saveFileName: patrik3.json
+  loadFileName: patrik4.json
+  saveFileName: patrik4.json
   globalConfig:
     witchConfig:
       health: 10
@@ -83,34 +83,34 @@ MonoBehaviour:
         minBiomeSize: 2
       forestAbility:
         baseConfig:
-          cooldown: 4.5
-        rootPathDamage: 2
-        rootBurstDamage: 2
+          cooldown: 5
+        rootPathDamage: 2.5
+        rootBurstDamage: 2.5
         maxRange: 10
         rootPathSpeed: 25
         rootDuration: 3
-        rootBurstRadius: 1.3
+        rootBurstRadius: 1.35
         rootBurstDensity: 20
       waterAbility:
         baseConfig:
-          cooldown: 3.5
+          cooldown: 3.25
         chargeTime: 0.2
         waveDuration: 0.5
         waveSpeed: 10
-        healPerSec: 1
+        healPerSec: 0.85
       meadowAbility:
         baseConfig:
-          cooldown: 2.5
+          cooldown: 2.2
         MSMultiplier: 1.35
         DashDistMultiplier: 1.35
         speed: 1
         projectileCnt: 7
-        spellWidth: 0.8
+        spellWidth: 1.2
         maxRange: 20
-        damage: 1
+        damage: 1.5
       dashAbility:
         baseConfig:
-          cooldown: 0.5
+          cooldown: 0.75
         speed: 16
         maxRange: 3
         animSpeed: 0
@@ -130,18 +130,18 @@ MonoBehaviour:
           slowDefault: 3
           rootDefault: 3
       - baseConfig:
-          damage: 2
+          damage: 4
           idleDuration: 5
           chasingDuration: 3
           moveRangeMin: 4
           moveRangeMax: 4
-          maxRangeToPlayer: 8
-          attackRange: 5
-          speed: 4
+          maxRangeToPlayer: 10
+          attackRange: 6
+          speed: 3.75
           attackCooldown: 3
-          healthPoints: 3
-          slowDefault: 3
-          rootDefault: 3
+          healthPoints: 10
+          slowDefault: 2.5
+          rootDefault: 2.5
       enemyMeleeConfigs:
       - baseConfig:
           damage: 1
@@ -151,37 +151,37 @@ MonoBehaviour:
           moveRangeMax: 4
           maxRangeToPlayer: 8
           attackRange: 1.5
-          speed: 4
-          attackCooldown: 4
+          speed: 4.3
+          attackCooldown: 2
           healthPoints: 5
           slowDefault: 3
           rootDefault: 3
-        dashDelay: 1
-        dashDuration: 2
+        dashDelay: 0.5
+        dashDuration: 1.5
         dashSpeedModifier: 2
         dashRange: 3
-        dashCooldown: 4
+        dashCooldown: 2.5
       - baseConfig:
-          damage: 1
+          damage: 4.5
           idleDuration: 5
           chasingDuration: 3
           moveRangeMin: 4
           moveRangeMax: 4
           maxRangeToPlayer: 8
-          attackRange: 1.5
+          attackRange: 2.3
           speed: 4
           attackCooldown: 4
-          healthPoints: 5
-          slowDefault: 3
-          rootDefault: 3
-        dashDelay: 1
-        dashDuration: 2
-        dashSpeedModifier: 2
-        dashRange: 3
+          healthPoints: 12
+          slowDefault: 2.5
+          rootDefault: 2.5
+        dashDelay: 0.75
+        dashDuration: 1.8
+        dashSpeedModifier: 2.1
+        dashRange: 4
         dashCooldown: 4
       enemyBomberConfig:
         baseConfig:
-          damage: 3
+          damage: 4
           idleDuration: 5
           chasingDuration: 4
           moveRangeMin: 4
@@ -189,7 +189,7 @@ MonoBehaviour:
           maxRangeToPlayer: 8
           attackRange: 1.5
           speed: 4
-          attackCooldown: 3
+          attackCooldown: 4.5
           healthPoints: 5
           slowDefault: 3
           rootDefault: 3
@@ -203,12 +203,12 @@ MonoBehaviour:
           maxRangeToPlayer: 8
           attackRange: 1.5
           speed: 2
-          attackCooldown: 1
-          healthPoints: 7
+          attackCooldown: 3
+          healthPoints: 10
           slowDefault: 3
           rootDefault: 3
-        enemiesMeleeMax: 2
-        enemiesRangedMax: 2
+        enemiesMeleeMax: 1
+        enemiesRangedMax: 1
       mineConfig:
         explosionDelay: 0.4
         damageRange: 3
