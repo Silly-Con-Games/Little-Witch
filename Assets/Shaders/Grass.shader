@@ -109,6 +109,8 @@
 
 		position.y -= segment.positionOSy;
 
+		_Height = 0.35;
+
 		position.x *= _Width;
 		position.y *= _Height * _HeightModifier;
 
@@ -165,6 +167,10 @@
 
 	[maxvertexcount(MAX_BLADES * VERTICES_PER_BLADE)]
 	void geom(triangle Varyings input[3], inout TriangleStream<Varyings> triStream) {
+
+		_WindSpeed = 1.3;
+		_WindStrength = 15;
+
 		float3 middle = (input[0].position + input[1].position + input[2].position) / 3;
 		float3 a = input[0].position - middle;
 		float3 b = input[1].position - middle;
