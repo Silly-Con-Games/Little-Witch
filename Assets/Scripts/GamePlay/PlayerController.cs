@@ -18,7 +18,7 @@ public class PlayerController : MonoBehaviour, IDamagable
     public UnityEvent onDeathEvent;
 
     public ChargeAbility chargeAbility;
-    public MeleeAbility meeleeAbility;
+    public MeleeAbility meleeAbility;
 
 	public TransformAbility transformAbility;
 
@@ -74,7 +74,7 @@ public class PlayerController : MonoBehaviour, IDamagable
 
 		transformAbility.Init(this);
 
-        meeleeAbility.player = this;        
+        meleeAbility.player = this;        
         forestAbility.Init(this);
         meadowAbility.Init(this);
         waterAbility.Init(this);
@@ -103,9 +103,9 @@ public class PlayerController : MonoBehaviour, IDamagable
 
         CheckCurrentBiome();
 
-        if (meeleeAbility.attackInQ)
+        if ( meleeAbility.attackInQ )
         {
-            meeleeAbility.attackInQ = false;
+            meleeAbility.attackInQ = false;
             OnMeleeAbility(null);
         }
 
@@ -137,7 +137,7 @@ public class PlayerController : MonoBehaviour, IDamagable
         energy.onChanged.AddListener(hudController.SetEnergy);
         energy.onNotEnough.AddListener(hudController.NotEnoughEnergy);
 
-        meeleeAbility.conf = witchConfig.meeleeAbility;
+        meleeAbility.conf = witchConfig.meeleeAbility;
         chargeAbility.conf = witchConfig.chargeAbility;
 
 		transformAbility.conf = witchConfig.transformAbility;
@@ -279,22 +279,22 @@ public class PlayerController : MonoBehaviour, IDamagable
 
     public void OnMeleeAbility(InputValue value)
     {
-		if (!pauseController.IsPaused() && meeleeAbility.IsReady)
+		if (!pauseController.IsPaused() && meleeAbility.IsReady)
         {
-            meeleeAbility.Attack();
-            ScaleSpeedModifier(meeleeAbility.conf.attackSlow);
-            StartCoroutine(ResumeMovement(meeleeAbility.conf.cooldown));
+            meleeAbility.Attack();
+            ScaleSpeedModifier(meleeAbility.conf.attackSlow);
+            StartCoroutine(ResumeMovement(meleeAbility.conf.cooldown));
         }
         else if (!pauseController.IsPaused())
         {
-            meeleeAbility.attackInQ = true;
+            meleeAbility.attackInQ = true;
         }
     }
 
     IEnumerator ResumeMovement(float duration)
     {
         yield return new WaitForSeconds(duration);
-        ScaleSpeedModifier(1.0f/meeleeAbility.conf.attackSlow);        
+        ScaleSpeedModifier(1.0f/meleeAbility.conf.attackSlow);        
     }
 
     public void OnChargeAbility(InputValue value)
