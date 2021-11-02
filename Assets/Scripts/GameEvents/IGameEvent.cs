@@ -1,5 +1,5 @@
 
-namespace Assets.Scripts.Analytics
+namespace Assets.Scripts.GameEvents
 {
     public interface IGameEvent
     {

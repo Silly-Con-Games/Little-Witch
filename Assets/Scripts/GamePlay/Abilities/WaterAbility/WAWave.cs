@@ -3,6 +3,7 @@ using UnityEngine;
 using UnityEngine.VFX;
 using Config;
 using System.Collections.Generic;
+using Assets.Scripts.GameEvents;
 
 public class WAWave : MonoBehaviour
 {
@@ -72,6 +73,7 @@ public class WAWave : MonoBehaviour
         if(pushable != null && !hashSet.Contains(pushable))
         {
             hashSet.Add(pushable);
+            GameEventQueue.QueueEvent(new WaterAbilityEvent(pushedEnemy: true));
             Vector3 force = (collider.transform.position - transform.position).normalized * speed;
             pushable.ReceivePush(force, 0.9f - (Time.time - start));
         }
@@ -79,6 +81,7 @@ public class WAWave : MonoBehaviour
         IObjectType objectType = collider.gameObject.GetComponent<IObjectType>();
         if(objectType?.GetObjectType() == EObjectType.Projectile)
         {
+            GameEventQueue.QueueEvent(new WaterAbilityEvent(killedProjectile: true));
             Destroy(collider.gameObject);
         }
     }

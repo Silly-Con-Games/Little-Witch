@@ -3,6 +3,7 @@ using System;
 using Config;
 using UnityEngine.Assertions;
 using UnityEngine.VFX;
+using Assets.Scripts.GameEvents;
 
 [Serializable]
 public class WaterAbility : MainAbility
@@ -16,6 +17,8 @@ public class WaterAbility : MainAbility
     public override void CastAbility()
     {
         base.CastAbility();
+        GameEventQueue.QueueEvent(new WaterAbilityEvent(cast: true));
+
         Debug.Log("Casted water ability!");
         var inst = GameObject.Instantiate(wavePrefab);
         var instTrans = inst.transform;

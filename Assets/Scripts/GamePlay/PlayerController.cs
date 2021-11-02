@@ -5,6 +5,7 @@ using UnityEngine.Events;
 using System;
 using System.Collections.Generic;
 using System.Collections;
+using Assets.Scripts.GameEvents;
 
 public class PlayerController : MonoBehaviour, IDamagable
 {
@@ -102,12 +103,6 @@ public class PlayerController : MonoBehaviour, IDamagable
         MoveUpdate();
 
         CheckCurrentBiome();
-
-        if ( meleeAbility.attackInQ )
-        {
-            meleeAbility.attackInQ = false;
-            OnMeleeAbility(null);
-        }
 
         if (chargeAbility.IsCharging)
             chargeAbility.UpdateAnimation();
@@ -287,7 +282,7 @@ public class PlayerController : MonoBehaviour, IDamagable
         }
         else if (!pauseController.IsPaused())
         {
-            meleeAbility.attackInQ = true;
+            GameEventQueue.QueueEvent(new MeleeAbilityEvent(failedCast : true));
         }
     }
 
@@ -326,6 +321,11 @@ public class PlayerController : MonoBehaviour, IDamagable
         else if (currentMainAbility != null)
         {
             hudController.AbilityNotReady(currentMainAbility);
+            GameEventQueue.QueueEvent(new MainAbilityFailEvent(notOnCd: true));
+        }
+        else
+        {
+            GameEventQueue.QueueEvent(new MainAbilityFailEvent(deadBiome: true));
         }
 
     }

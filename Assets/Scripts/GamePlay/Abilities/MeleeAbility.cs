@@ -1,6 +1,7 @@
 using System;
 using UnityEngine;
 using Config;
+using Assets.Scripts.GameEvents;
 
 [Serializable]
 public class MeleeAbility
@@ -14,14 +15,13 @@ public class MeleeAbility
 
     public bool IsReady => Time.time - timeSinceLastAttack > conf.cooldown;
 
-    public bool attackInQ;
-
     public void Attack()
     {
         if (IsReady)
         {
             timeSinceLastAttack = Time.time;
             swing.Attack();
+            GameEventQueue.QueueEvent(new MeleeAbilityEvent(cast : true));
         }
     }
 }

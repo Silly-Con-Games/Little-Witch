@@ -2,7 +2,7 @@
 using System;
 using System.Collections.Generic;
 
-namespace Assets.Scripts.Analytics
+namespace Assets.Scripts.GameEvents
 {
     public static class GameEventQueue
     {

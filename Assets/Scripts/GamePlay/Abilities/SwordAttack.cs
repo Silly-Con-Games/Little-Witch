@@ -1,3 +1,4 @@
+using Assets.Scripts.GameEvents;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
@@ -71,6 +72,7 @@ public class SwordAttack : MonoBehaviour
         if (damagable?.GetObjectType() == target)
         {
             damagable.ReceiveDamage(damage);
+            GameEventQueue.QueueEvent(new MeleeAbilityEvent(damage : damage));
         }
 
         var pushable = other.GetComponent<IPushable>();
