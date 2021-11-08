@@ -762,10 +762,9 @@ MonoBehaviour:
       cooldown: 0
       witchSlowMSMultiplier: 0
       energyCost: 0
-  meeleeAbility:
+  meleeAbility:
     swing: {fileID: 3416802918216370586}
-    player: {fileID: 6295430965828045209}
-    attackInQ: 0
+    player: {fileID: 0}
   transformAbility:
     origin: {fileID: 6295430965828045206}
     player: {fileID: 0}
@@ -788,6 +787,7 @@ MonoBehaviour:
   dashAbility:
     playerHeight: 1.2
     dashEffect: {fileID: 4390266047583887119}
+    dashLengthModifier: 1
   inputVelocity: {x: 0, y: 0}
   stepLengthSqr: 1.78
 --- !u!143 &811825519810356235

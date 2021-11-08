@@ -9,6 +9,7 @@ namespace Assets.Scripts.Analytics
 {
     public class MeleeData : BaseData
     {
+        float damage = 0;
         public override Type GetEventType()
         {
             return typeof(MeleeAbilityEvent);
