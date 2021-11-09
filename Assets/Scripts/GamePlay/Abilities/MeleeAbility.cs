@@ -7,7 +7,19 @@ using Assets.Scripts.GameEvents;
 public class MeleeAbility
 {
     public SwordAttack swing;
-    public MeleeAbilityConfig conf { get => internalConf; set { internalConf = value; swing.Init(player.transform, internalConf.damage, internalConf.pushbackForce, internalConf.pushbackDuration); } }
+    public MeleeAbilityConfig conf 
+        { 
+          get => internalConf; 
+          set 
+            { 
+                internalConf = value; 
+                swing.Init(player.transform, 
+                        internalConf.damage, 
+                        internalConf.pushbackForce, 
+                        internalConf.pushbackDuration
+                );
+            } 
+        }
     MeleeAbilityConfig internalConf;
     public PlayerController player;
 
