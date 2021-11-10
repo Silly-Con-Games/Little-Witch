@@ -20,8 +20,7 @@ namespace Assets.Scripts.Analytics
             string path = Application.streamingAssetsPath +
                 Path.DirectorySeparatorChar +
                 "Test" +
-                Path.DirectorySeparatorChar +
-                "test.txt";
+                Path.DirectorySeparatorChar;
             meleeEventHandler.WriteToFile(path);
         }
 

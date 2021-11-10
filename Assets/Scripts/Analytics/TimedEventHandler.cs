@@ -1,6 +1,7 @@
 ﻿using Assets.Scripts.GameEvents;
 using System;
 using System.Collections.Generic;
+using System.IO;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
@@ -51,15 +52,22 @@ namespace Assets.Scripts.Analytics
 
         public void WriteToFile(string path)
         {
-            Debug.Log(snapshotInterval);
+            snapshots.Add(currentSnapshot);
             string serialized = "";
+
             for (int i = 0; i < snapshots.Count; i++)
             {
-                serialized += JsonUtility.ToJson(snapshots[i], true) + '\n';
+                serialized += JsonUtility.ToJson(snapshots[i], true) + ",\n";
             }
-            Debug.Log(snapshots);
-            Debug.Log(serialized);
-            
+
+            path += typeof(TData).Name + ".json";
+            Debug.Log($"Writing data to file {path}");
+
+            if (!File.Exists(path))
+                File.Create(path);
+
+            File.WriteAllText(path, serialized);
+
         }
     }
 }
