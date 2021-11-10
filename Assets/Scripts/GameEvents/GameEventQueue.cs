@@ -17,12 +17,20 @@ namespace Assets.Scripts.GameEvents
 
         public static void AddListener(Type type, Action<IGameEvent> listener)
         {
-            listeners[type].Add(listener);
+            if (listeners.ContainsKey(type))
+                listeners[type].Add(listener);
+            else
+            {
+                HashSet<Action<IGameEvent>> set = new HashSet<Action<IGameEvent>>();
+                set.Add(listener);
+                listeners.Add(type, set);
+            }
         }
 
         public static void RemoveListener(Type type, Action<IGameEvent> listener)
         {
-            listeners[type].Remove(listener);
+            if(listeners.ContainsKey(type))
+                listeners[type].Remove(listener);
         }
 
         public static void ProcessEvents()
@@ -30,9 +38,10 @@ namespace Assets.Scripts.GameEvents
             while(queue.Count > 0)
             {
                 IGameEvent e = queue.Dequeue();
-
-                foreach (var listener in listeners[e.GetType()])
-                    listener.Invoke(e);
+                Type type = e.GetType();
+                if(listeners.ContainsKey(type))
+                    foreach (var listener in listeners[type])
+                        listener.Invoke(e);
             }
         }
     }

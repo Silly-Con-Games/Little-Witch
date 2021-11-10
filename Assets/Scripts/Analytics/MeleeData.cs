@@ -1,7 +1,9 @@
 ﻿using Assets.Scripts.GameEvents;
+using System;
 
 namespace Assets.Scripts.Analytics
 {
+    [Serializable]
     public struct MeleeData : ITimedData<MeleeAbilityEvent>
     {
         public int snapShotIndex;
