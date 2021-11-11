@@ -64,10 +64,18 @@ namespace Assets.Scripts.Analytics
             Debug.Log($"Writing data to file {path}");
 
             if (!File.Exists(path))
+            {
                 File.Create(path);
+                File.WriteAllText(path, serialized);
+            }
+            else
+            {
+                File.AppendAllText(path, serialized);
+            }
+                
 
-            File.WriteAllText(path, serialized);
-
+            
+             
         }
     }
 }

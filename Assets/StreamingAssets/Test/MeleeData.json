@@ -1,5 +1,11 @@
 {
-    "snapShotIndex": 0,
+    "snapShotIndex": 1,
+    "damageDealt": 0.0,
+    "failedCastsCnt": 0,
+    "successCastsCnt": 1
+},
+{
+    "snapShotIndex": 2,
     "damageDealt": 0.0,
     "failedCastsCnt": 0,
     "successCastsCnt": 2
