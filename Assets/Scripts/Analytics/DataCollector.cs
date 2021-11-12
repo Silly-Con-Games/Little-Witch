@@ -8,20 +8,33 @@ namespace Assets.Scripts.Analytics
 {
     public class DataCollector : MonoBehaviour
     {
-        TimedEventHandler<MeleeAbilityEvent, MeleeData> meleeEventHandler = new TimedEventHandler<MeleeAbilityEvent, MeleeData>();
-        // Start is called before the first frame update
+        static TimedEventHandler<MeleeAbilityEvent, MeleeData> meleeEventHandler = new TimedEventHandler<MeleeAbilityEvent, MeleeData>();
+
         void Start()
         {
             GameEventQueue.AddListener(meleeEventHandler.GetEventType(), meleeEventHandler.HandleEvent);
         }
 
-        string zipPath = Application.streamingAssetsPath + Path.DirectorySeparatorChar + "ZippedFiles" + Path.DirectorySeparatorChar;
-        string path = Application.streamingAssetsPath + Path.DirectorySeparatorChar + "Test" + Path.DirectorySeparatorChar;
-        string zipname = "test.zip";
+        private void OnDestroy()
+        {
 
-        string zipDest => zipPath + zipname;
+            GameEventQueue.RemoveListener(meleeEventHandler.GetEventType(), meleeEventHandler.HandleEvent);
+        }
 
-        public void FlushToFiles()
+        static string zipPath = Application.streamingAssetsPath + Path.DirectorySeparatorChar + "ZippedFiles" + Path.DirectorySeparatorChar;
+        static string path = Application.streamingAssetsPath + Path.DirectorySeparatorChar + "Test" + Path.DirectorySeparatorChar;
+        static string zipname = "test.zip";
+
+        static string zipDest => zipPath + zipname;
+
+        public static void Finalize()
+        {
+            FlushToFiles();
+            ZipFolder();
+            UploadZippedFile();
+        }
+
+        public static void FlushToFiles()
         {
             if (!Directory.Exists(path))
                 Directory.CreateDirectory(path);
@@ -29,7 +42,7 @@ namespace Assets.Scripts.Analytics
             meleeEventHandler.WriteToFile(path);
         }
 
-        public void ZipFolder()
+        public static void ZipFolder()
         {
             if (!Directory.Exists(zipPath))
                 Directory.CreateDirectory(zipPath);
@@ -44,16 +57,9 @@ namespace Assets.Scripts.Analytics
             }
         }
 
-        public void UploadZippedFile()
+        public static void UploadZippedFile()
         {
             SimpleHttpClient.UploadFile(zipDest, zipname, "application/zip");
-        }
-
-        private void OnDestroy()
-        {
-            FlushToFiles();
-            ZipFolder();
-            GameEventQueue.RemoveListener(meleeEventHandler.GetEventType(), meleeEventHandler.HandleEvent);
         }
     }
 }
