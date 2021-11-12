@@ -4,6 +4,8 @@ using UnityEngine;
 
 public class PopupMenu : MonoBehaviour
 {
+    [SerializeField] private GameObject underlay;
+
 	[SerializeField] private GameObject[] pages;
 	private int currentPage = 0;
 
@@ -38,5 +40,15 @@ public class PopupMenu : MonoBehaviour
     {
         int c = a % b;
         return (c < 0) ? c + b : c;
+    }
+
+    private void OnEnable()
+    {
+        underlay.SetActive(true);
+    }
+
+    private void OnDisable()
+    {
+        underlay.SetActive(false);
     }
 }

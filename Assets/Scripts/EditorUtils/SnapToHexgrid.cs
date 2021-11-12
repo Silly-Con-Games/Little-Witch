@@ -9,7 +9,9 @@ public class SnapToHexgrid : MonoBehaviour {
 	static readonly float h = radius * Mathf.Sqrt(3f);
 	static readonly Vector3 shift = new Vector3(h / 2, 0, v / 2);
 
-	void Update() {
+	void Update()
+	{
+		#if UNITY_EDITOR
 		if (transform.hasChanged) {
 			Vector3 newPos1 = Round(transform.position);
 			float error1 = (newPos1 - transform.position).sqrMagnitude;
@@ -19,6 +21,7 @@ public class SnapToHexgrid : MonoBehaviour {
 
 			transform.position = error1 < error2 ? newPos1 : newPos2;
 		}
+		#endif
 	}
 
 	private Vector3 Round(Vector3 pos) {
