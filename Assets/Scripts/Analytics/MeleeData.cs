@@ -27,5 +27,10 @@ namespace Assets.Scripts.Analytics
         }
 
         public int GetSnapshotIndex() => snapShotIndex;
+
+        public bool NoEventsProcessed()
+        {
+            return damageDealt == 0 && failedCastsCnt == 0 && successCastsCnt == 0; 
+        }
     }
 }

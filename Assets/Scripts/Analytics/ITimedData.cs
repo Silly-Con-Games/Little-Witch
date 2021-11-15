@@ -7,5 +7,7 @@ namespace Assets.Scripts.Analytics
         public void ProcessEvent(T e);
         public void Init(int snapshotIndex);
         public int GetSnapshotIndex();
+
+        public bool NoEventsProcessed();
     }
 }

@@ -16,17 +16,18 @@ namespace Assets.Scripts.Analytics
         
         // Colection of the melee ability in totat
         TData total;
+
         // Snapshots of data in time, to see if player changes/improves
         [SerializeField]
         List<TData> snapshots = new List<TData>();
         TData currentSnapshot;
 
+
         const float snapshotInterval = 5; //in sec
 
         public TimedEventHandler()
         {
-            total.Init(-1);
-            currentSnapshot.Init(-1);
+            Reset();
         }
 
         public Type GetEventType()
@@ -50,32 +51,66 @@ namespace Assets.Scripts.Analytics
             total.ProcessEvent(ev);
         }
 
-        public void WriteToFile(string path)
+        DateTime from;
+        DateTime to;
+        string fileName => $"{from.ToString(DataCollector.dateFormat)}_{to.ToString(DataCollector.dateFormat)}.json";
+        string totalFileName => $"total_{fileName}";
+        string directory => typeof(TData).Name;
+
+        public void WriteToDisk(string path)
         {
+            if (total.NoEventsProcessed())
+                return;
+
             snapshots.Add(currentSnapshot);
-            string serialized = "";
+            to = DateTime.UtcNow;
 
-            for (int i = 0; i < snapshots.Count; i++)
+            path += directory + Path.DirectorySeparatorChar;
+            if (!Directory.Exists(path))
+                Directory.CreateDirectory(path);
+
+            string filePath = path + fileName;
+            string totalFilePath = path + totalFileName;
+
+
+            Debug.Log($"Writing data to file {filePath}");
+
+            if (!File.Exists(filePath))
             {
-                serialized += JsonUtility.ToJson(snapshots[i], true) + ",\n";
-            }
+                File.Create(filePath);
+                string serialized = "";
 
-            path += typeof(TData).Name + ".json";
-            Debug.Log($"Writing data to file {path}");
-
-            if (!File.Exists(path))
-            {
-                File.Create(path);
-                File.WriteAllText(path, serialized);
+                for (int i = 0; i < snapshots.Count; i++)
+                {
+                    serialized += JsonUtility.ToJson(snapshots[i], true) + ",\n";
+                }
+                File.WriteAllText(filePath, serialized);
             }
             else
-            {
-                File.AppendAllText(path, serialized);
-            }
-                
+                Debug.LogError("File alreadt exists!, aborting write");
 
-            
-             
+            Debug.Log($"Writing total to file {totalFilePath}");
+
+            if (!File.Exists(totalFilePath))
+            {
+                File.Create(totalFilePath);
+                
+                File.WriteAllText(totalFilePath, JsonUtility.ToJson(total, true));
+            }
+            else
+                Debug.LogError("File already exists!, aborting write");
+
+            Reset();            
+        }
+
+        void Reset()
+        {
+            total = new TData();
+            currentSnapshot = new TData();
+            snapshots = new List<TData>();
+            total.Init(-1);
+            currentSnapshot.Init(-1);
+            to = from = DateTime.UtcNow;
         }
     }
 }

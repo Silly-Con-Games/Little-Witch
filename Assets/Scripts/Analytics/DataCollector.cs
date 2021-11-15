@@ -4,26 +4,46 @@ using System.Collections.Generic;
 using System.IO;
 using UnityEngine;
 using Ionic.Zip;
+using System;
+
 namespace Assets.Scripts.Analytics
 {
     public class DataCollector : MonoBehaviour
     {
         static TimedEventHandler<MeleeAbilityEvent, MeleeData> meleeEventHandler = new TimedEventHandler<MeleeAbilityEvent, MeleeData>();
 
-        void Start()
+        public static readonly string dateFormat = "yyyy-MM-ddTHH-mm-ss.f";
+        static DateTime from = DateTime.UtcNow;
+        static DateTime to = DateTime.UtcNow;
+
+        private void Awake()
         {
             GameEventQueue.AddListener(meleeEventHandler.GetEventType(), meleeEventHandler.HandleEvent);
+            GameController.onGameStateChanged.AddListener(FlushOnStateChanged);
+            Debug.Log(zipname);
+            persistantDataPath = Application.persistentDataPath;
         }
+
 
         private void OnDestroy()
         {
-
             GameEventQueue.RemoveListener(meleeEventHandler.GetEventType(), meleeEventHandler.HandleEvent);
         }
 
-        static string zipPath = Application.streamingAssetsPath + Path.DirectorySeparatorChar + "ZippedFiles" + Path.DirectorySeparatorChar;
-        static string path = Application.streamingAssetsPath + Path.DirectorySeparatorChar + "Test" + Path.DirectorySeparatorChar;
-        static string zipname = "test.zip";
+
+        private void FlushOnStateChanged(EGameState s)
+        {
+            if (s == EGameState.GameOver)
+                FlushToFiles();
+            else if (s == EGameState.GameWon)
+                FlushToFiles();
+        }
+
+        static string persistantDataPath = "";
+        static string zipPath = persistantDataPath + Path.DirectorySeparatorChar + "ZippedFiles" + Path.DirectorySeparatorChar;
+
+        static string analyticsPath = persistantDataPath + Path.DirectorySeparatorChar + "Analytics" + Path.DirectorySeparatorChar;
+        static string zipname => $"{PlayerPrefs.GetString("player_name", "default")}_{from.ToString(dateFormat)}_{to.ToString(dateFormat)}.zip";
 
         static string zipDest => zipPath + zipname;
 
@@ -36,10 +56,10 @@ namespace Assets.Scripts.Analytics
 
         public static void FlushToFiles()
         {
-            if (!Directory.Exists(path))
-                Directory.CreateDirectory(path);
+            if (!Directory.Exists(analyticsPath))
+                Directory.CreateDirectory(analyticsPath);
 
-            meleeEventHandler.WriteToFile(path);
+            meleeEventHandler.WriteToDisk(analyticsPath);
         }
 
         public static void ZipFolder()
@@ -49,11 +69,11 @@ namespace Assets.Scripts.Analytics
 
             using (ZipFile zip = new ZipFile())
             {                
-                zip.AddDirectory(path);
+                zip.AddDirectory(analyticsPath);
                 // add the report into a different directory in the archive
                 zip.Save(zipDest);
 
-                Debug.Log($"Zipped directory {path} to {zipDest}");
+                Debug.Log($"Zipped directory {analyticsPath} to {zipDest}");
             }
         }
 
