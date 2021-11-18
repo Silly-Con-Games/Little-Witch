@@ -9,24 +9,31 @@ namespace Assets.Scripts.Analytics
 {
     public struct WaterAbilityData : ITimedData<WaterAbilityEvent>
     {
+        public int snapShotIndex;
+        public int successCastsCnt;
+        public int enemiesPushedCnt;
+        public int projectilesDestroyedCnt;
+
         public int GetSnapshotIndex()
         {
-            throw new NotImplementedException();
+            return snapShotIndex;
         }
 
-        public void Init(int snapshotIndex)
+        public void Init(int index)
         {
-            throw new NotImplementedException();
+            this.snapShotIndex = index;
         }
 
         public bool NoEventsProcessed()
         {
-            throw new NotImplementedException();
+            return enemiesPushedCnt == 0 && projectilesDestroyedCnt == 0;
         }
 
         public void ProcessEvent(WaterAbilityEvent e)
         {
-            throw new NotImplementedException();
+            enemiesPushedCnt += e.pushedEnemy ? 1 : 0;
+            projectilesDestroyedCnt += e.killedProjectile? 1 : 0;
+            successCastsCnt += e.cast ? 1 : 0;
         }
     }
 }

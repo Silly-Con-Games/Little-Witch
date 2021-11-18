@@ -44,6 +44,8 @@ public class SimpleHttpClient : MonoBehaviour
         UnityWebRequest www = UnityWebRequest.Post(url, formData);
         yield return www.SendWebRequest();
 
+        Debug.Log($"Send finished");
+
         if (www.result != UnityWebRequest.Result.Success)
         {
             Debug.Log(www.error);

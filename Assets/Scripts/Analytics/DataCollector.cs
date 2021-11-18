@@ -63,9 +63,6 @@ namespace Assets.Scripts.Analytics
         // Every death, win or on application quit
         public static void FlushToFiles()
         {
-            if (!Directory.Exists(analyticsPath))
-                Directory.CreateDirectory(analyticsPath);
-
             meleeEventHandler.WriteToDisk(analyticsPath);
         }
 
@@ -101,6 +98,9 @@ namespace Assets.Scripts.Analytics
 
         public static void CreateConfig()
         {
+            if (!Directory.Exists(analyticsPath))
+                Directory.CreateDirectory(analyticsPath);
+
             StringBuilder b = new StringBuilder();
             b.AppendLine($"timeInterval={timeInterval}");
             b.AppendLine($"dateFormat={dateFormat}");

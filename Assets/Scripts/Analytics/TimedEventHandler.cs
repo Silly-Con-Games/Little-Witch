@@ -82,16 +82,17 @@ namespace Assets.Scripts.Analytics
 
             if (!File.Exists(filePath))
             {
-                string serialized = "";
+                string serialized = "[\n";
 
                 for (int i = 0; i < snapshots.Count; i++)
                 {
                     serialized += JsonUtility.ToJson(snapshots[i], true) + ",\n";
                 }
+                serialized += "]";
                 File.WriteAllText(filePath, serialized);
             }
             else
-                Debug.LogError("File alreadt exists!, aborting write");
+                Debug.LogError("File already exists!, aborting write");
 
             Debug.Log($"Writing total to file {totalFilePath}");
 

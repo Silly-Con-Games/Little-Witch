@@ -30,7 +30,7 @@ namespace Assets.Scripts.Analytics
 
         public bool NoEventsProcessed()
         {
-            return damageDealt == 0 && failedCastsCnt == 0 && successCastsCnt == 0; 
+            return damageDealt == 0 && failedCastsCnt == 0 && successCastsCnt == 0;
         }
     }
 }

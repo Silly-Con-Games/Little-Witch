@@ -3,16 +3,18 @@ using System.Collections;
 
 namespace Assets.Scripts.GameEvents
 {
-    public class WaterAbilityEvent : IGameEvent
+    public class WaterAbilityEvent : TimedEvent
     {
-        public float tStart { get; private set; }
         public bool cast { get; private set; }
+        public bool pushedEnemy { get; private set; }
+        public bool killedProjectile { get; private set; }
 
         public WaterAbilityEvent(bool cast = false, bool pushedEnemy = false, 
             bool killedProjectile = false)
         {
             this.cast = cast;
-            tStart = Time.time;
+            this.pushedEnemy = pushedEnemy;
+            this.killedProjectile = killedProjectile;
         }
     }
 }
