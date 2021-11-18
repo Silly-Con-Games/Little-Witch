@@ -1,6 +1,7 @@
 using UnityEngine;
 using Config;
 using System.Collections.Generic;
+using Assets.Scripts.GameEvents;
 
 [System.Serializable]
 public class MeadowAbility : MainAbility
@@ -20,6 +21,8 @@ public class MeadowAbility : MainAbility
     {
         base.CastAbility();
         Debug.Log("Casted meadow ability!");
+        GameEventQueue.QueueEvent(new MeadowAbilityEvent(cast: true));
+
         alreadyHit.Clear();
 
         var parent = new GameObject("MAParent").transform;
@@ -59,6 +62,8 @@ public class MeadowAbility : MainAbility
         if (dmg != null && dmg.GetObjectType() == EObjectType.Enemy && !alreadyHit.Contains(dmg))
         {
             dmg.ReceiveDamage(conf.damage);
+
+            GameEventQueue.QueueEvent(new MeadowAbilityEvent(damage: conf.damage));
 
             if (owner.transform.parent.childCount == 1)
             {

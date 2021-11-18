@@ -40,6 +40,7 @@ namespace Assets.Scripts.Analytics
         {
             handlers.Add(new TimedEventHandler<MeleeAbilityEvent, MeleeData>(timeInterval));
             handlers.Add(new TimedEventHandler<WaterAbilityEvent, WaterAbilityData>(timeInterval));
+            handlers.Add(new TimedEventHandler<MainAbilityFailEvent, MainAbilityFailData>(timeInterval));
         }
 
         private static void OnApplicationQuit_Internal()
