@@ -1,6 +1,7 @@
 using UnityEngine;
 using System;
 using Config;
+using Assets.Scripts.GameEvents;
 
 [Serializable]
 public class ForestAbility : MainAbility
@@ -21,6 +22,7 @@ public class ForestAbility : MainAbility
     public override void CastAbility()
     {
         base.CastAbility();
+        GameEventQueue.QueueEvent(new ForestAbilityEvent(cast: true));
 
         Vector3 spawnpoint = playerController.transform.position;
         spawnpoint.y = 0;
@@ -60,7 +62,10 @@ public class ForestAbility : MainAbility
     {
         IDamagable enemy = other.GetComponent<IDamagable>();
         if (enemy != null && enemy.GetObjectType() == target)
+        {
             enemy.ReceiveDamage(conf.rootPathDamage);
+            GameEventQueue.QueueEvent(new ForestAbilityEvent(damagePath: conf.rootPathDamage));
+        }
     }
 
     private void OnRootPathEnd()
@@ -75,12 +80,16 @@ public class ForestAbility : MainAbility
     {
         IDamagable dmgEnemy = other.GetComponent<IDamagable>();
         if (dmgEnemy != null && dmgEnemy.GetObjectType() == target)
-            dmgEnemy.ReceiveDamage(conf.rootPathDamage);
+        {
+            dmgEnemy.ReceiveDamage(conf.rootBurstDamage);
+            GameEventQueue.QueueEvent(new ForestAbilityEvent(damageEnd: conf.rootBurstDamage));
+        }
 
         IRootable rootEnemy = other.GetComponent<IRootable>();
         if (rootEnemy != null && rootEnemy.GetObjectType() == target)
         {
             rootEnemy.ReceiveRoot(conf.rootDuration);
+            GameEventQueue.QueueEvent(new ForestAbilityEvent(rootDuration: conf.rootDuration));
             var ind = GameObject.Instantiate(rootIndicatorPrefab);
             ind.Init(conf.rootDuration);
             ind.transform.position = other.transform.position;
