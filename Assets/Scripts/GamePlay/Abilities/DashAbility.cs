@@ -1,3 +1,4 @@
+using Assets.Scripts.GameEvents;
 using Config;
 using System.Collections;
 using System.Collections.Generic;
@@ -38,6 +39,7 @@ public class DashAbility : MainAbility
             distance = Mathf.Min(direction.magnitude, conf.maxRange * dashLengthModifier);
             direction.Normalize();
         }
+        GameEventQueue.QueueEvent(new DashAbilityEvent(distance));
 
         float actDist;
         float halfDist = distance /2;

@@ -43,6 +43,7 @@ namespace Assets.Scripts.Analytics
             handlers.Add(new TimedEventHandler<MainAbilityFailEvent, MainAbilityFailData>(timeInterval));
             handlers.Add(new TimedEventHandler<ForestAbilityEvent, ForestAbilityData>(timeInterval));
             handlers.Add(new TimedEventHandler<MeadowAbilityEvent, MeadowAbilityData>(timeInterval));
+            handlers.Add(new TimedEventHandler<DashAbilityEvent, DashData>(timeInterval));
         }
 
         private static void OnApplicationQuit_Internal()
@@ -110,7 +111,11 @@ namespace Assets.Scripts.Analytics
 
         public static void UploadZippedFile()
         {
+#if UNITY_EDITOR
+            Debug.Log("Not sending files to server inside editor, should work in standalone tho");
+#else
             SimpleHttpClient.UploadFile(zipDest, zipname, "application/zip");
+#endif
         }
 
         public static void CreateConfig()
