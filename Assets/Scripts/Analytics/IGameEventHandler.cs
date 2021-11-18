@@ -7,5 +7,6 @@ namespace Assets.Scripts.Analytics
     {
         public void HandleEvent(IGameEvent e);
         public Type GetEventType();
+        public void WriteToDisk(string path);
     }
 }

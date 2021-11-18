@@ -4,14 +4,14 @@ using UnityEngine;
 using Ionic.Zip;
 using System;
 using System.Text;
+using System.Collections.Generic;
 
 namespace Assets.Scripts.Analytics
 {
     public static class DataCollector 
     {
         static float timeInterval = 5;
-        static TimedEventHandler<MeleeAbilityEvent, MeleeData> meleeEventHandler = new TimedEventHandler<MeleeAbilityEvent, MeleeData>(timeInterval);
-
+        static List<IGameEventHandler> handlers = new List<IGameEventHandler>();
         public static readonly string dateFormat = "yyyy-MM-ddTHH-mm-ss.f";
         static DateTime from = DateTime.UtcNow;
         static DateTime to;
@@ -22,19 +22,32 @@ namespace Assets.Scripts.Analytics
         {
             if (!initialized)
             {
+                initialized = true;
                 persistantDataPath = Application.persistentDataPath;
                 Application.quitting += OnApplicationQuit_Internal;
+                CreateHandlers();
                 CreateConfig();
-                initialized = true;
-                GameEventQueue.AddListener(meleeEventHandler.GetEventType(), meleeEventHandler.HandleEvent);
+
+                foreach (var handler in handlers)
+                    GameEventQueue.AddListener(handler.GetEventType(), handler.HandleEvent);
+
                 GameController.onGameStateChanged.AddListener(FlushOnGameWonOrOver);
             }
             
         }
 
+        static void CreateHandlers()
+        {
+            handlers.Add(new TimedEventHandler<MeleeAbilityEvent, MeleeData>(timeInterval));
+            handlers.Add(new TimedEventHandler<WaterAbilityEvent, WaterAbilityData>(timeInterval));
+        }
+
         private static void OnApplicationQuit_Internal()
         {
-            GameEventQueue.RemoveListener(meleeEventHandler.GetEventType(), meleeEventHandler.HandleEvent);
+            foreach (var handler in handlers)
+                GameEventQueue.RemoveListener(handler.GetEventType(), handler.HandleEvent);
+            GameController.onGameStateChanged.RemoveListener(FlushOnGameWonOrOver);
+
             ZipAndSendData();
         }
 
@@ -63,7 +76,8 @@ namespace Assets.Scripts.Analytics
         // Every death, win or on application quit
         public static void FlushToFiles()
         {
-            meleeEventHandler.WriteToDisk(analyticsPath);
+            foreach (var handler in handlers)
+                handler.WriteToDisk(analyticsPath);
         }
 
         public static void ZipAndDeleteFolder()
@@ -104,7 +118,6 @@ namespace Assets.Scripts.Analytics
             StringBuilder b = new StringBuilder();
             b.AppendLine($"timeInterval={timeInterval}");
             b.AppendLine($"dateFormat={dateFormat}");
-            b.AppendLine($"meleeData={meleeEventHandler.directory}");
 
             Debug.Log($"Creating config at {confDest}");
 
