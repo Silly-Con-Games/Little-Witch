@@ -7,6 +7,7 @@ using UnityEngine.Events;
 using System.Runtime.Serialization.Formatters.Binary;
 using System.IO;
 using System.Collections.Generic;
+using Assets.Scripts.GameEvents;
 
 public class GameController : MonoBehaviour
 {
@@ -38,6 +39,7 @@ public class GameController : MonoBehaviour
             if(internalGS != value)
             {
                Debug.Log($"Changing gamestate from {internalGS} to {value}");
+               GameEventQueue.QueueEvent(new GameStateChangedEvent(value, internalGS));
                internalGS = value;
                onGameStateChanged.Invoke(value);
             }
