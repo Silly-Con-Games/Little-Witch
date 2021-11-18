@@ -41,6 +41,8 @@ namespace Assets.Scripts.Analytics
             handlers.Add(new TimedEventHandler<MeleeAbilityEvent, MeleeData>(timeInterval));
             handlers.Add(new TimedEventHandler<WaterAbilityEvent, WaterAbilityData>(timeInterval));
             handlers.Add(new TimedEventHandler<MainAbilityFailEvent, MainAbilityFailData>(timeInterval));
+            handlers.Add(new TimedEventHandler<ForestAbilityEvent, ForestAbilityData>(timeInterval));
+            handlers.Add(new TimedEventHandler<MeadowAbilityEvent, MeadowAbilityData>(timeInterval));
         }
 
         private static void OnApplicationQuit_Internal()

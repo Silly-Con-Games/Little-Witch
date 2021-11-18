@@ -6,7 +6,7 @@ using System.Threading.Tasks;
 
 namespace Assets.Scripts.GameEvents
 {
-    class ForestAbilityEvent : TimedEvent
+    public class ForestAbilityEvent : TimedEvent
     {
         public bool cast { get; private set; }
         public float damagePath { get; private set; }
