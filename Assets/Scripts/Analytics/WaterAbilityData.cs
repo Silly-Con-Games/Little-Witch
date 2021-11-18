@@ -19,6 +19,11 @@ namespace Assets.Scripts.Analytics
             throw new NotImplementedException();
         }
 
+        public bool NoEventsProcessed()
+        {
+            throw new NotImplementedException();
+        }
+
         public void ProcessEvent(WaterAbilityEvent e)
         {
             throw new NotImplementedException();

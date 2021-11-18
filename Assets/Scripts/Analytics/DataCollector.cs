@@ -1,59 +1,66 @@
 using Assets.Scripts.GameEvents;
-using System.Collections;
-using System.Collections.Generic;
 using System.IO;
 using UnityEngine;
 using Ionic.Zip;
 using System;
+using System.Text;
 
 namespace Assets.Scripts.Analytics
 {
-    public class DataCollector : MonoBehaviour
+    public static class DataCollector 
     {
-        static TimedEventHandler<MeleeAbilityEvent, MeleeData> meleeEventHandler = new TimedEventHandler<MeleeAbilityEvent, MeleeData>();
+        static float timeInterval = 5;
+        static TimedEventHandler<MeleeAbilityEvent, MeleeData> meleeEventHandler = new TimedEventHandler<MeleeAbilityEvent, MeleeData>(timeInterval);
 
         public static readonly string dateFormat = "yyyy-MM-ddTHH-mm-ss.f";
         static DateTime from = DateTime.UtcNow;
-        static DateTime to = DateTime.UtcNow;
+        static DateTime to;
 
-        private void Awake()
+        static bool initialized = false;
+        [RuntimeInitializeOnLoadMethod]
+        static void RunOnStart()
         {
-            GameEventQueue.AddListener(meleeEventHandler.GetEventType(), meleeEventHandler.HandleEvent);
-            GameController.onGameStateChanged.AddListener(FlushOnStateChanged);
-            Debug.Log(zipname);
-            persistantDataPath = Application.persistentDataPath;
+            if (!initialized)
+            {
+                persistantDataPath = Application.persistentDataPath;
+                Application.quitting += OnApplicationQuit_Internal;
+                CreateConfig();
+                initialized = true;
+                GameEventQueue.AddListener(meleeEventHandler.GetEventType(), meleeEventHandler.HandleEvent);
+                GameController.onGameStateChanged.AddListener(FlushOnGameWonOrOver);
+            }
+            
         }
 
-
-        private void OnDestroy()
+        private static void OnApplicationQuit_Internal()
         {
             GameEventQueue.RemoveListener(meleeEventHandler.GetEventType(), meleeEventHandler.HandleEvent);
+            ZipAndSendData();
         }
 
-
-        private void FlushOnStateChanged(EGameState s)
+        private static void FlushOnGameWonOrOver(EGameState s)
         {
-            if (s == EGameState.GameOver)
-                FlushToFiles();
-            else if (s == EGameState.GameWon)
+            if (s == EGameState.GameOver || s == EGameState.GameWon)
                 FlushToFiles();
         }
 
-        static string persistantDataPath = "";
-        static string zipPath = persistantDataPath + Path.DirectorySeparatorChar + "ZippedFiles" + Path.DirectorySeparatorChar;
-
-        static string analyticsPath = persistantDataPath + Path.DirectorySeparatorChar + "Analytics" + Path.DirectorySeparatorChar;
+        static string persistantDataPath;
+        static string zipPath => persistantDataPath + Path.DirectorySeparatorChar + "ZippedFiles" + Path.DirectorySeparatorChar;
+        static string analyticsPath => persistantDataPath + Path.DirectorySeparatorChar + "Analytics" + Path.DirectorySeparatorChar;
+        static string confDest => analyticsPath + "settings.conf";
         static string zipname => $"{PlayerPrefs.GetString("player_name", "default")}_{from.ToString(dateFormat)}_{to.ToString(dateFormat)}.zip";
-
         static string zipDest => zipPath + zipname;
 
-        public static void Finalize()
+        public static void ZipAndSendData()
         {
+            to = DateTime.UtcNow;
             FlushToFiles();
-            ZipFolder();
+            ZipAndDeleteFolder();
             UploadZippedFile();
+            from = to;
         }
 
+        // Every death, win or on application quit
         public static void FlushToFiles()
         {
             if (!Directory.Exists(analyticsPath))
@@ -62,7 +69,7 @@ namespace Assets.Scripts.Analytics
             meleeEventHandler.WriteToDisk(analyticsPath);
         }
 
-        public static void ZipFolder()
+        public static void ZipAndDeleteFolder()
         {
             if (!Directory.Exists(zipPath))
                 Directory.CreateDirectory(zipPath);
@@ -74,12 +81,34 @@ namespace Assets.Scripts.Analytics
                 zip.Save(zipDest);
 
                 Debug.Log($"Zipped directory {analyticsPath} to {zipDest}");
+
+                try
+                {
+                    Directory.Delete(analyticsPath, true);
+                    Debug.Log($"Deleting directory {analyticsPath}");
+                }
+                catch
+                {
+                    Debug.Log($"Problem witch cleanup");
+                }
             }
         }
 
         public static void UploadZippedFile()
         {
             SimpleHttpClient.UploadFile(zipDest, zipname, "application/zip");
+        }
+
+        public static void CreateConfig()
+        {
+            StringBuilder b = new StringBuilder();
+            b.AppendLine($"timeInterval={timeInterval}");
+            b.AppendLine($"dateFormat={dateFormat}");
+            b.AppendLine($"meleeData={meleeEventHandler.directory}");
+
+            Debug.Log($"Creating config at {confDest}");
+
+            File.WriteAllText(confDest, b.ToString());
         }
     }
 }

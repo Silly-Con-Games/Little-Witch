@@ -23,11 +23,16 @@ namespace Assets.Scripts.Analytics
         TData currentSnapshot;
 
 
-        const float snapshotInterval = 5; //in sec
+        float snapshotInterval = 5; //in sec
 
         public TimedEventHandler()
         {
             Reset();
+        }
+
+        public TimedEventHandler(float interval) : this()
+        {
+            snapshotInterval = interval;
         }
 
         public Type GetEventType()
@@ -55,7 +60,7 @@ namespace Assets.Scripts.Analytics
         DateTime to;
         string fileName => $"{from.ToString(DataCollector.dateFormat)}_{to.ToString(DataCollector.dateFormat)}.json";
         string totalFileName => $"total_{fileName}";
-        string directory => typeof(TData).Name;
+        public string directory => typeof(TData).Name;
 
         public void WriteToDisk(string path)
         {
@@ -77,7 +82,6 @@ namespace Assets.Scripts.Analytics
 
             if (!File.Exists(filePath))
             {
-                File.Create(filePath);
                 string serialized = "";
 
                 for (int i = 0; i < snapshots.Count; i++)
@@ -92,9 +96,7 @@ namespace Assets.Scripts.Analytics
             Debug.Log($"Writing total to file {totalFilePath}");
 
             if (!File.Exists(totalFilePath))
-            {
-                File.Create(totalFilePath);
-                
+            {                
                 File.WriteAllText(totalFilePath, JsonUtility.ToJson(total, true));
             }
             else
