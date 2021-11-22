@@ -46,7 +46,7 @@ public class GameController : MonoBehaviour
         }
     }
 
-    private static EGameState internalGS = EGameState.WaitingForNextWave;
+    private static EGameState internalGS = EGameState.GameOver;
     public static UnityEvent<EGameState> onGameStateChanged = new UnityEvent<EGameState>();
 
     private PlayerController currentWitch;
@@ -57,7 +57,7 @@ public class GameController : MonoBehaviour
     // Start is called before the first frame update
     void Start()
     {
-        internalGS = EGameState.WaitingForNextWave;
+        GameState = EGameState.WaitingForNextWave;
         GlobalConfigManager.onConfigChanged.AddListener(ApplyConfig);
         ApplyConfig();
         StartCoroutine(SpawnWithDelay(0.1f));

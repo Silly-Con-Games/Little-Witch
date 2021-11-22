@@ -53,6 +53,7 @@ public class PauseController : MonoBehaviour
 
 	public void QuitGame() {
 		UnpauseGame();
+		GameController.GameState = EGameState.GameOver;
 		SceneManager.LoadScene(0);
 	}
 }
