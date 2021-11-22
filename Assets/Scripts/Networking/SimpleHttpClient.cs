@@ -21,17 +21,17 @@ public class SimpleHttpClient : MonoBehaviour
         inst = null;
     }
 
-    public static void UploadFile(string fullPath, string fileName, string contentType)
+    public static void UploadFile(string fullPath, string fileName, string contentType, bool deleteAfterSend = false)
     {
-        inst?.SendFileInternal(upload_uri2, fullPath, fileName, contentType);
+        inst?.SendFileInternal(upload_uri2, fullPath, fileName, contentType, deleteAfterSend);
     }
 
-    void SendFileInternal(string url, string fullPath, string fileName, string contentType)
+    void SendFileInternal(string url, string fullPath, string fileName, string contentType, bool deleteAfterSend)
     {
-        StartCoroutine(PostRequestCor(url, fullPath, fileName, contentType));
+        StartCoroutine(PostRequestCor(url, fullPath, fileName, contentType, deleteAfterSend));
     }
 
-    static IEnumerator PostRequestCor(string url, string fullPath, string fileName, string contentType)
+    static IEnumerator PostRequestCor(string url, string fullPath, string fileName, string contentType, bool deleteAfterSend)
     {
         Debug.Log($"Sending {fileName} to {url}");
 
@@ -52,6 +52,8 @@ public class SimpleHttpClient : MonoBehaviour
         }
         else
         {
+            if (deleteAfterSend)
+                File.Delete(fullPath);
             Debug.Log("Upload complete!");
         }
     }
