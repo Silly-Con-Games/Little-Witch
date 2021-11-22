@@ -119,9 +119,14 @@ public class MapController : MonoBehaviour
         }
     }
 
-	public void SetPlayerPosition(Vector3 playerPosition) {
-		foreach (Tile tile in tiles) {
-			tile.SetGrassPlayerPosition(playerPosition);
+	public void SetPlayerPosition(Vector3 playerPosition) 
+	{
+		Tile playerTile = GetTileAtPosition(playerPosition);
+		playerTile.SetGrassPlayerPosition(playerPosition);
+
+		foreach (Tile ngb in playerTile.GetNeighbours()) 
+		{
+			ngb.SetGrassPlayerPosition(playerPosition);
 		}
 	}
 
@@ -157,7 +162,6 @@ public class MapController : MonoBehaviour
 
         return float.NaN;
     }
-
 
     private Tile cachedTile;
     private Vector3 lastPos = Vector3.positiveInfinity;
