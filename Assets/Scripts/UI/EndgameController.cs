@@ -20,7 +20,7 @@ public class EndgameController : MonoBehaviour
 		var enController = FindObjectOfType<EnemiesController>();
 		if (enController != null)
 		{
-			int wavecnt = enController.GetWaveCounter() - 1;
+			int wavecnt = EnemiesController.GetWaveCounter() - 1;
 			int remaining = enController.GetRemainingWaves() + 1;
 			string word = "wave";
 			if (wavecnt > 1)

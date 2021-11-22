@@ -44,6 +44,7 @@ namespace Assets.Scripts.Analytics
             handlers.Add(new TimedEventHandler<ForestAbilityEvent, ForestAbilityData>(timeInterval));
             handlers.Add(new TimedEventHandler<MeadowAbilityEvent, MeadowAbilityData>(timeInterval));
             handlers.Add(new TimedEventHandler<DashAbilityEvent, DashData>(timeInterval));
+            handlers.Add(new GameStateChangeEventHandler());
         }
 
         private static void OnApplicationQuit_Internal()

@@ -8,7 +8,7 @@ public class EnemiesController : MonoBehaviour
 {
     public List<WaveDefinition> waves;
 
-    int waveCounter = 0;
+    static int waveCounter = 0;
 
     private static EnemiesController instance;
 
@@ -16,6 +16,7 @@ public class EnemiesController : MonoBehaviour
 
     int aliveEnemiesCnt = 0;
 
+    public static int GetWaveCounter() => waveCounter;
 
     public static void IncreaseAliveCount()
     {
@@ -53,7 +54,6 @@ public class EnemiesController : MonoBehaviour
         return waveCounter == waves.Count;
     }
 
-    public int GetWaveCounter() => waveCounter;
     public int GetRemainingWaves() => waves.Count - waveCounter;
 
     public void SpawnNextWave()

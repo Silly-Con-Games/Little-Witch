@@ -110,7 +110,7 @@ public class GameController : MonoBehaviour
 
 	private void SaveGame() {
 		Save save = new Save();
-		save.wave = enemiesController.GetWaveCounter();
+		save.wave = EnemiesController.GetWaveCounter();
 		save.energy = currentWitch.energy.Energy;
 		save.health = currentWitch.health.Health;
 		save.witchPosition = new SerializableVector(currentWitch.gameObject.transform.position + Vector3.up * 0.2f);
@@ -187,7 +187,7 @@ public class GameController : MonoBehaviour
 
     private IEnumerator WaitAndStartWave(float duration)
     {
-        StartCoroutine(hud.ShowTimeTillNextWave(duration, enemiesController.GetWaveCounter()));
+        StartCoroutine(hud.ShowTimeTillNextWave(duration, EnemiesController.GetWaveCounter()));
         yield return new WaitForSeconds(duration);
         GameState = EGameState.FightingWave;
         FMODUnity.RuntimeManager.PlayOneShot("event:/game/wave_start");
