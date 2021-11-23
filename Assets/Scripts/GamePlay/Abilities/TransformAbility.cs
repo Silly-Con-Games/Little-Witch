@@ -1,3 +1,4 @@
+using Assets.Scripts.GameEvents;
 using Config;
 using System;
 using System.Collections;
@@ -64,7 +65,9 @@ public class TransformAbility
 			rimTiles.Clear();
 			
 			player.energy.UseEnergy(conf.energyCost);
+			GameEventQueue.QueueEvent(new BiomeTransformedEvent(from: tile.GetBiomeType(), to: target, conf.energyCost, true));
 		}
+		GameEventQueue.QueueEvent(new BiomeTransformationFailedEvent(invalidTile:true));
 	}
 
 	public void Revive()
@@ -73,6 +76,7 @@ public class TransformAbility
 		Tile tile = player.mapController.GetTileAtPosition(origin.position);
 		if (tile != null && tile.GetBiomeType() == BiomeType.DEAD)
 		{
+			GameEventQueue.QueueEvent(new BiomeTransformedEvent(from: BiomeType.DEAD, to: tile.wantedType, conf.energyCost, true));
 			tile.Revive();
             int cost = 1;
 			foreach(var neigh in tile.GetNeighbours())
@@ -85,6 +89,7 @@ public class TransformAbility
 			}
 			player.energy.UseEnergy(conf.energyCost);
 		}
+		GameEventQueue.QueueEvent(new BiomeTransformationFailedEvent(invalidTile: true, revive: true));
 	}
 
 	public bool IsReady() {

@@ -358,15 +358,20 @@ public class PlayerController : MonoBehaviour, IDamagable
         {
             transformAbility.Revive();
         }
+        else
+            GameEventQueue.QueueEvent(new BiomeTransformationFailedEvent(noEnergy: true, revive: true));
     }
 
 	private void Transform(BiomeType target) {
-		if (transformAbility.IsReady()) {
-			transformAbility.Transform(target);
-		}
-	}
+        if (transformAbility.IsReady())
+        {
+            transformAbility.Transform(target);
+        }
+        else
+            GameEventQueue.QueueEvent(new BiomeTransformationFailedEvent(noEnergy: true));
+    }
 
-	private void OnPause(InputValue value) {
+    private void OnPause(InputValue value) {
 		if (pauseController.IsPaused()) {
 			pauseController.ResumeGame();
 		} else {

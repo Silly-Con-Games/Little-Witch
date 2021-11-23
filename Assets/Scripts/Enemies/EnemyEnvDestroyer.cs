@@ -1,6 +1,7 @@
 using System.Collections;
 using System.Collections.Generic;
 using System.Threading.Tasks;
+using Assets.Scripts.GameEvents;
 using Config;
 using UnityEngine;
 
@@ -161,6 +162,7 @@ public class EnemyEnvDestroyer : EnemyAI
             Tile tile = hit.transform.gameObject.GetComponent<Tile>();
             if (!tile || tile.GetBiomeType() == BiomeType.DEAD)
                 return;
+            GameEventQueue.QueueEvent(new BiomeTransformedEvent(from: tile.GetBiomeType(), to: BiomeType.DEAD, enemyOrigin: true));
             FMODUnity.RuntimeManager.PlayOneShot("event:/enemies/sucking/sucking", transform.position);
             mapController.AttackTile(tile); 
         }
