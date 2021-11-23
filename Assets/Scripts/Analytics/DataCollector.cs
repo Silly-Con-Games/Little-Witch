@@ -115,7 +115,7 @@ namespace Assets.Scripts.Analytics
 #if UNITY_EDITOR
             Debug.Log("Not sending files to server inside editor, should work in standalone tho");
 #else
-            SimpleHttpClient.UploadFile(zipDest, zipname, "application/zip", true);
+            SimpleHttpClient.UploadFileBlocking(zipDest, zipname, "application/zip", true);
 #endif
         }
 

@@ -22,7 +22,7 @@ public class SimpleHttpClient : MonoBehaviour
         inst = null;
     }
 
-    public static void UploadFile(string fullPath, string fileName, string contentType, bool deleteAfterSend = false)
+    public static void UploadFileBlocking(string fullPath, string fileName, string contentType, bool deleteAfterSend = false)
     {
         inst?.SendFileInternal(upload_uri2, fullPath, fileName, contentType, deleteAfterSend);
     }
