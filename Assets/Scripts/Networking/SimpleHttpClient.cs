@@ -4,6 +4,7 @@ using System.Text;
 using UnityEngine;
 using UnityEngine.Networking;
 using System.IO;
+using System.Threading;
 
 public class SimpleHttpClient : MonoBehaviour
 {
@@ -28,10 +29,11 @@ public class SimpleHttpClient : MonoBehaviour
 
     void SendFileInternal(string url, string fullPath, string fileName, string contentType, bool deleteAfterSend)
     {
-        StartCoroutine(PostRequestCor(url, fullPath, fileName, contentType, deleteAfterSend));
+        PostRequestCor(url, fullPath, fileName, contentType, deleteAfterSend);
+        //StartCoroutine(PostRequestCor(url, fullPath, fileName, contentType, deleteAfterSend));
     }
 
-    static IEnumerator PostRequestCor(string url, string fullPath, string fileName, string contentType, bool deleteAfterSend)
+    static void PostRequestCor(string url, string fullPath, string fileName, string contentType, bool deleteAfterSend)
     {
         Debug.Log($"Sending {fileName} to {url}");
 
@@ -42,7 +44,11 @@ public class SimpleHttpClient : MonoBehaviour
         formData.Add(new MultipartFormFileSection("file", data, fileName, contentType));
 
         UnityWebRequest www = UnityWebRequest.Post(url, formData);
-        yield return www.SendWebRequest();
+        UnityWebRequestAsyncOperation op = www.SendWebRequest();
+
+        while (!op.isDone) { Thread.Sleep(100); }
+
+        //yield return op;
 
         Debug.Log($"Send finished");
 
@@ -54,7 +60,7 @@ public class SimpleHttpClient : MonoBehaviour
         {
             if (deleteAfterSend)
                 File.Delete(fullPath);
-            Debug.Log("Upload complete!");
+            Debug.Log("Upload completed!, deleting file");
         }
     }
 }
