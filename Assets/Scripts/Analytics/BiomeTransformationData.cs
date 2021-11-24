@@ -26,7 +26,7 @@ namespace Assets.Scripts.Analytics
         // Check if this data struct received ANY events
         public bool NoEventsProcessed()
         {
-            throw new System.NotImplementedException();
+            return castCnt == 0 && reviveCnt == 0 && diedToEnemyCnt == 0;
         }
 
         //Process the event here

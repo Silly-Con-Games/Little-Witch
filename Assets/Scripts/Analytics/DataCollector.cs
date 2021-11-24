@@ -47,6 +47,7 @@ namespace Assets.Scripts.Analytics
             handlers.Add(new GameStateChangeEventHandler());
             handlers.Add(new TimedEventHandler<BiomeTransformedEvent, BiomeTransformationData>(timeInterval));
             handlers.Add(new TimedEventHandler<BiomeTransformationFailedEvent, BiomeTransformationFailData>(timeInterval));
+            handlers.Add(new TimedEventHandler<ChargeAbilityEvent, ChargeAbilityData>(timeInterval));
         }
 
         private static void OnApplicationQuit_Internal()

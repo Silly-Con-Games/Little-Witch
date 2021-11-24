@@ -1,3 +1,4 @@
+using Assets.Scripts.GameEvents;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
@@ -44,6 +45,7 @@ public class ChargeAbilityProjectile : MonoBehaviour
         else if (damagable.GetObjectType() == target)
         {
             Debug.Log("Charge hit target!");
+            GameEventQueue.QueueEvent(new ChargeAbilityEvent(damage:damage));
             damagable.ReceiveDamage(damage);
             isExploding = true;
         }

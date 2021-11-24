@@ -1,6 +1,7 @@
 using System;
 using UnityEngine;
 using Config;
+using Assets.Scripts.GameEvents;
 
 [Serializable]
 public class ChargeAbility
@@ -44,6 +45,7 @@ public class ChargeAbility
             startedChargeTime = Time.time;
             parent.ScaleSpeedModifier(conf.witchSlowMSMultiplier);
             parent.energy.UseEnergy(conf.energyCost);
+            GameEventQueue.QueueEvent(new ChargeAbilityEvent(cast: true, energyCost: conf.energyCost));
 
             abilityAnimationTransform.localScale = new Vector3(conf.spawnRadiusMin, conf.spawnRadiusMin, conf.spawnRadiusMin);
         }            

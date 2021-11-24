@@ -4,7 +4,7 @@ using System;
 namespace Assets.Scripts.Analytics
 {
     [Serializable]
-    public struct BiomeTransformationFailData : ITimedData<BiomeTransformationFailedEvent>
+    public struct ChargeAbilityData : ITimedData<ChargeAbilityEvent>
     {
         // Used by timed event handler
         public int snapShotIndex;
@@ -19,20 +19,21 @@ namespace Assets.Scripts.Analytics
         // Check if this data struct received ANY events
         public bool NoEventsProcessed()
         {
-            return failCastCnt == 0;
+            return failedCastsCnt == 0 && successCastsCnt == 0;
         }
 
-        public int failCastCnt;
-        public int noCdCnt;
-        public int invalidTileCnt;
-        public int reviveFailCnt;
+        public int failedCastsCnt;
+        public int successCastsCnt;
+        public float damage;
+        public float energyCost;
+
         //Process the event here
-        public void ProcessEvent(BiomeTransformationFailedEvent e)
+        public void ProcessEvent(ChargeAbilityEvent e)
         {
-            failCastCnt++;
-            noCdCnt += e.noEnergy ? 1 : 0;
-            invalidTileCnt += e.invalidTile ? 1 : 0;
-            reviveFailCnt += e.revive ? 1 : 0;
+            failedCastsCnt += e.failCast ? 1 : 0;
+            successCastsCnt += e.cast ? 1 : 0;
+            energyCost += e.energyCost;
+            damage += e.damage;
         }
     }
 }

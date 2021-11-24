@@ -295,13 +295,18 @@ public class PlayerController : MonoBehaviour, IDamagable
     public void OnChargeAbility(InputValue value)
     {
 		if (!pauseController.IsPaused()) {
-			if (value.isPressed && chargeAbility.IsReady()) {
-				animator.SetTrigger("Cast");
+            if (value.isPressed && chargeAbility.IsReady())
+            {
+                animator.SetTrigger("Cast");
 
-				chargeAbility.StartCharge();
-			} else if (!value.isPressed && chargeAbility.IsCharging) {
-				chargeAbility.FireCharged();
-			}
+                chargeAbility.StartCharge();
+            }
+            else if (!value.isPressed && chargeAbility.IsCharging)
+            {
+                chargeAbility.FireCharged();
+            }
+            else if (!chargeAbility.IsReady())
+                GameEventQueue.QueueEvent(new ChargeAbilityEvent(failCast:true));
 		}
     }
 
