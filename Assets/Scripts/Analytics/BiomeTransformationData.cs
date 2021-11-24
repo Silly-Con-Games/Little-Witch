@@ -23,6 +23,7 @@ namespace Assets.Scripts.Analytics
         public int waterNewCnt;
         public int meadowNewCnt;
         public int deadTransformedCnt;
+
         // Check if this data struct received ANY events
         public bool NoEventsProcessed()
         {
