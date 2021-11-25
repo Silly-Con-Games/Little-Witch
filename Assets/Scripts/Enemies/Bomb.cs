@@ -11,18 +11,23 @@ public class Bomb : MonoBehaviour
     [SerializeField]
     private Animator animator;
 
-	private Collider bombCollider;
-
-	private PlayerController playerController;
+    private Collider bombCollider;
 
     private float explosionDelay;
     private float damageRange;
     private float baseDamage;
     private float disappearingDuration;
-    
+
+    private static int mask = -1;
+
     // Start is called before the first frame update
     void Start()
     {
+        if(mask == -1)
+        {
+            mask = LayerMask.GetMask("Enemy", "Character");
+        }
+
         if (!particle)
         {
             particle.GetComponentInChildren<ParticleSystem>();
@@ -56,7 +61,6 @@ public class Bomb : MonoBehaviour
 
     void OnTriggerEnter(Collider collision)
     {
-        playerController = collision.gameObject.GetComponent<PlayerController>();
         bombCollider.enabled = false;
         FMODUnity.RuntimeManager.PlayOneShot("event:/enemies/mine/trigger", transform.position);
         StartCoroutine(BombCoroutine(explosionDelay));
@@ -73,13 +77,17 @@ public class Bomb : MonoBehaviour
         FMODUnity.RuntimeManager.PlayOneShot("event:/enemies/mine/explosion", transform.position);
         particle.Play();
         animator.enabled = false;
-        if (playerController)
-        {
-            float distance = Vector3.Distance(this.transform.position, playerController.transform.position);
 
-            if (distance <= damageRange)
+        var colliders = Physics.OverlapSphere(transform.position, damageRange, mask);
+        foreach(var collider in colliders)
+        {
+            var damageble = collider.GetComponent<IDamagable>();
+            if(damageble != null)
             {
-                playerController.ReceiveDamage(baseDamage * (1f - distance / damageRange));
+                float distance = Vector3.Distance(transform.position, collider.transform.position);
+                float dmg = baseDamage * (1f - distance / damageRange);
+                if(dmg > 0)
+                    damageble.ReceiveDamage(dmg);
             }
         }
         
