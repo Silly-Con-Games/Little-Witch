@@ -18,7 +18,9 @@ public class HealthTracker
     }
 
 	public void Set(float value) {
-		Health = value;
+        if (Health == value)
+            return;
+        Health = value;
 		onChanged.Invoke(Health);
 	}
 
@@ -26,6 +28,8 @@ public class HealthTracker
 
     public void ResetHealth() 
     {
+        if (Health == MaxHealth)
+            return;
         Health = MaxHealth;
         onChanged.Invoke(Health);
     }
@@ -33,7 +37,8 @@ public class HealthTracker
     public void TakeDamage(float amount) 
     {
         Assert.IsFalse(amount < 0);
-
+        if (Health == 0)
+            return;
         Health = Mathf.Max(0, Health - amount);
         onChanged.Invoke(Health);
 
@@ -41,7 +46,8 @@ public class HealthTracker
     public void Heal(float amount) 
     {
         Assert.IsFalse(amount < 0);
-
+        if (Health == MaxHealth)
+            return;
         Health = Mathf.Min(MaxHealth, Health + amount);
         onChanged.Invoke(Health);
     }
