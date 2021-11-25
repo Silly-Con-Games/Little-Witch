@@ -16,6 +16,8 @@ public class HUDController : MonoBehaviour
     [SerializeField] private Slider energybar;
     private Slider[] energybars;
     private float oldEnergy;
+    [SerializeField] private Tweenable lowOnHealthScreen;
+    private float maxHealth;
 
     // ability icons
     [SerializeField] private Image[] icons;
@@ -55,6 +57,7 @@ public class HUDController : MonoBehaviour
             healthbars[i] = Instantiate(healthbar, healthParent.transform);
         }
         SetUpBar(startingHealth, maxHealth, ref healthbars);
+        this.maxHealth = maxHealth;
         oldHealth = startingHealth;
     }
 
@@ -89,6 +92,8 @@ public class HUDController : MonoBehaviour
     {
         SetBar(oldHealth, newHealth, ref healthbars);
         oldHealth = newHealth;
+
+        lowOnHealthScreen.TweenColorAlpha(.5f - (newHealth / maxHealth), .3f); // max aplha is .5, shows up at half health
     }
 
     public void SetEnergy(float newEnergy)
