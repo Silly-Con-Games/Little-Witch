@@ -13,6 +13,7 @@ public class MainMenu : MonoBehaviour
 	public GameObject settings;
 	public GameObject credits;
 	public GameObject beforeQuit;
+	public TutorialController controlsTutorial;
 
 	public Button continueToMainButton;
 	public Button continueButton;
@@ -61,12 +62,14 @@ public class MainMenu : MonoBehaviour
     }
 
 	public void ShowControls() {
+
 		controls.SetActive(true);
 	}
 
 	public void ShowControlsBeforeStart()
 	{
 		controlsBeforeStart.SetActive(true);
+		controlsTutorial.StartTutorial();
 	}
 
 	public void ShowSettings() {
