@@ -16,14 +16,14 @@ public class OpenDialogue : MonoBehaviour
 
     [SerializeField]
     bool openOnCollision;
-    GameObject player;
+
 
     private void OnCollisionEnter(Collision collision)
     {
-        throw  new NotImplementedException("need to convey that the collision is with the player");
-        //if(collision.collider == player)
+        
+        if(collision.collider.transform.GetComponent<IObjectType>() is PlayerController)
         {
-            // this.player = player  
+            
 
             if (openOnCollision)
             { 
