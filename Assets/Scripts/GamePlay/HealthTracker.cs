@@ -17,7 +17,12 @@ public class HealthTracker
         onChanged = new UnityEvent<float>();
     }
 
-	public void Set(float value) {
+    public void Cleanup()
+    {
+        onChanged.RemoveAllListeners();
+    }
+
+    public void Set(float value) {
         if (Health == value)
             return;
         Health = value;

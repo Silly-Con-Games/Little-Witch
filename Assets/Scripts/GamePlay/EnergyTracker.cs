@@ -19,6 +19,12 @@ public class EnergyTracker
         onNotEnough = new UnityEvent();
     }
 
+    public void Cleanup()
+    {
+        onChanged.RemoveAllListeners();
+        onNotEnough.RemoveAllListeners();
+    }
+
 	public void Set(float value) {
 		Energy = value;
 		onChanged.Invoke(Energy);

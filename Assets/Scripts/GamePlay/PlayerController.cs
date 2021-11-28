@@ -113,6 +113,12 @@ public class PlayerController : MonoBehaviour, IDamagable
 		mapController.SetPlayerPosition(transform.position);
     }
 
+    private void OnDestroy()
+    {
+        health.Cleanup();
+        energy.Cleanup();
+    }
+
     private void ApplyConfig()
     {
         var witchConfig = GlobalConfigManager.GetWitchConfig();
