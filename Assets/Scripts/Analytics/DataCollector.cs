@@ -5,6 +5,7 @@ using Ionic.Zip;
 using System;
 using System.Text;
 using System.Collections.Generic;
+using System.Threading.Tasks;
 
 namespace Assets.Scripts.Analytics
 {
@@ -62,22 +63,26 @@ namespace Assets.Scripts.Analytics
         private static void FlushOnGameWonOrOver(EGameState s)
         {
             if (s == EGameState.GameOver || s == EGameState.GameWon)
-                FlushToFiles();
+                ZipAndSendData();
         }
 
         static string persistantDataPath;
-        static string zipPath => persistantDataPath + Path.DirectorySeparatorChar + "ZippedFiles" + Path.DirectorySeparatorChar;
-        static string analyticsPath => persistantDataPath + Path.DirectorySeparatorChar + "Analytics" + Path.DirectorySeparatorChar;
-        static string confDest => analyticsPath + "settings.conf";
+        static string zipPath => persistantDataPath + Path.DirectorySeparatorChar + "ZippedFiles" ;
+        static string analyticsPath => persistantDataPath + Path.DirectorySeparatorChar + "Analytics" ;
+
+        static string analyticsPathTmp => persistantDataPath + Path.DirectorySeparatorChar + "AnalyticsTmp" + Path.DirectorySeparatorChar;
+
+
+        static string confDest => analyticsPath + +Path.DirectorySeparatorChar + "settings.conf";
         static string zipname => $"{PlayerPrefs.GetString("player_name", "default")}_{from.ToString(dateFormat)}_{to.ToString(dateFormat)}.zip";
-        static string zipDest => zipPath + zipname;
+        static string zipDest => zipPath + Path.DirectorySeparatorChar + zipname;
 
         public static void ZipAndSendData()
         {
             to = DateTime.UtcNow;
             FlushToFiles();
             ZipAndDeleteFolder();
-            UploadZippedFile();
+            UploadZippedFile(zipDest, zipname);
             from = to;
         }
 
@@ -85,26 +90,28 @@ namespace Assets.Scripts.Analytics
         public static void FlushToFiles()
         {
             foreach (var handler in handlers)
-                handler.WriteToDisk(analyticsPath);
+                handler.WriteToDisk(analyticsPath + Path.DirectorySeparatorChar);
         }
 
         public static void ZipAndDeleteFolder()
         {
+            Directory.Move(analyticsPath, analyticsPathTmp);
+
             if (!Directory.Exists(zipPath))
                 Directory.CreateDirectory(zipPath);
 
             using (ZipFile zip = new ZipFile())
             {                
-                zip.AddDirectory(analyticsPath);
+                zip.AddDirectory(analyticsPathTmp);
                 // add the report into a different directory in the archive
                 zip.Save(zipDest);
 
-                Debug.Log($"Zipped directory {analyticsPath} to {zipDest}");
+                Debug.Log($"Zipped directory {analyticsPathTmp} to {zipDest}");
 
                 try
                 {
-                    Directory.Delete(analyticsPath, true);
-                    Debug.Log($"Deleting directory {analyticsPath}");
+                    Directory.Delete(analyticsPathTmp, true);
+                    Debug.Log($"Deleting directory {analyticsPathTmp}");
                 }
                 catch
                 {
@@ -113,12 +120,18 @@ namespace Assets.Scripts.Analytics
             }
         }
 
-        public static void UploadZippedFile()
+        public static async void UploadZippedFile(string dest, string name)
+        {
+            await Task.Run(() => SimpleHttpClient.UploadFileBlocking(dest, name, "application/zip", true));
+        }
+
+        public static void UploadZippedFileCoroutine()
         {
 #if UNITY_EDITOR
-            Debug.Log("Not sending files to server inside editor, should work in standalone tho");
+            SimpleHttpClient.UploadFileCor(zipDest, zipname, "application/zip", true);
+            //Debug.Log("Not sending files to server inside editor, should work in standalone tho");
 #else
-            SimpleHttpClient.UploadFileBlocking(zipDest, zipname, "application/zip", true);
+            SimpleHttpClient.UploadFileCor(zipDest, zipname, "application/zip", true);
 #endif
         }
 
