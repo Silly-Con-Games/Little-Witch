@@ -122,17 +122,7 @@ namespace Assets.Scripts.Analytics
 
         public static async void UploadZippedFile(string dest, string name)
         {
-            await Task.Run(() => SimpleHttpClient.UploadFileBlocking(dest, name, "application/zip", true));
-        }
-
-        public static void UploadZippedFileCoroutine()
-        {
-#if UNITY_EDITOR
-            SimpleHttpClient.UploadFileCor(zipDest, zipname, "application/zip", true);
-            //Debug.Log("Not sending files to server inside editor, should work in standalone tho");
-#else
-            SimpleHttpClient.UploadFileCor(zipDest, zipname, "application/zip", true);
-#endif
+            await Task.Run(() => SimpleHttpClient.UploadFileBlocking(dest, true));
         }
 
         public static void CreateConfig()
