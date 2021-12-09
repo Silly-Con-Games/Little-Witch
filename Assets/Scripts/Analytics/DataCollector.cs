@@ -26,8 +26,8 @@ namespace Assets.Scripts.Analytics
                 initialized = true;
                 persistantDataPath = Application.persistentDataPath;
                 Application.quitting += OnApplicationQuit_Internal;
-                CreateHandlers();
-                CreateConfig();
+                //CreateHandlers();
+                //CreateConfig();
 
                 foreach (var handler in handlers)
                     GameEventQueue.AddListener(handler.GetEventType(), handler.HandleEvent);
@@ -79,6 +79,7 @@ namespace Assets.Scripts.Analytics
 
         public static void ZipAndSendData()
         {
+            return;
             to = DateTime.UtcNow;
             FlushToFiles();
             ZipAndDeleteFolder();
