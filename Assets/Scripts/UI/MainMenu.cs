@@ -13,7 +13,7 @@ public class MainMenu : MonoBehaviour
 	public GameObject settings;
 	public GameObject credits;
 	public GameObject beforeQuit;
-	public TutorialController controlsTutorial;
+	public HighlightController controlsTutorial;
 
 	public Button continueToMainButton;
 	public Button continueButton;

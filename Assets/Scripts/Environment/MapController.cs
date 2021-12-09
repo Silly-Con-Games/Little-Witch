@@ -122,11 +122,13 @@ public class MapController : MonoBehaviour
 	public void SetPlayerPosition(Vector3 playerPosition) 
 	{
 		Tile playerTile = GetTileAtPosition(playerPosition);
+        if (playerTile == null)
+            return;
 		playerTile.SetGrassPlayerPosition(playerPosition);
 
 		foreach (Tile ngb in playerTile.GetNeighbours()) 
 		{
-			ngb.SetGrassPlayerPosition(playerPosition);
+			ngb?.SetGrassPlayerPosition(playerPosition);
 		}
 	}
 

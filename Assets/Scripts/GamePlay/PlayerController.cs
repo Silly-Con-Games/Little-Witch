@@ -86,12 +86,11 @@ public class PlayerController : MonoBehaviour, IDamagable
 
         if (!hudController)
         {
-            hudController = FindObjectOfType<HUDController>();
-            hudController.playerController = this;
-            Debug.Log("setting hudcont player cont to " + this);
+            hudController = FindObjectOfType<HUDController>();            
         }
 
         hudController.playerController = this;
+        Debug.Log("setting hudcont player cont to " + this);
 
         ApplyConfig();
 
@@ -129,6 +128,7 @@ public class PlayerController : MonoBehaviour, IDamagable
         health = new HealthTracker(witchConfig.health);
         hudController.SetUpHealth(health.Health, health.MaxHealth);
         health.onChanged.AddListener(hudController.SetHealth);
+        hudController.SetHealth(health.Health);
 
         energy = new EnergyTracker(witchConfig.energyMax, witchConfig.energyInitial);
         energy.onChanged.AddListener(ChangeEnergyTankAppearance);
@@ -137,6 +137,7 @@ public class PlayerController : MonoBehaviour, IDamagable
         hudController.SetUpEnergy(energy.Energy, energy.MaxEnergy, Mathf.CeilToInt(energy.MaxEnergy/witchConfig.transformAbility.energyCost));
         energy.onChanged.AddListener(hudController.SetEnergy);
         energy.onNotEnough.AddListener(hudController.NotEnoughEnergy);
+        hudController.SetEnergy(energy.Energy);
 
         meleeAbility.conf = witchConfig.meeleeAbility;
         chargeAbility.conf = witchConfig.chargeAbility;

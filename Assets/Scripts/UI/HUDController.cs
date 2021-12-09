@@ -50,11 +50,14 @@ public class HUDController : MonoBehaviour
 
     public void SetUpHealth(float startingHealth, float maxHealth, int barCount = 5)
     {
-        healthbars = new Slider[barCount];
-        healthbars[0] = healthbar;
-        for (int i = 1; i < barCount; i++)
+        if (healthbars == null)
         {
-            healthbars[i] = Instantiate(healthbar, healthParent.transform);
+            healthbars = new Slider[barCount];
+            healthbars[0] = healthbar;
+            for (int i = 1; i < barCount; i++)
+            {
+                healthbars[i] = Instantiate(healthbar, healthParent.transform);
+            }
         }
         SetUpBar(startingHealth, maxHealth, ref healthbars);
         this.maxHealth = maxHealth;
@@ -63,11 +66,14 @@ public class HUDController : MonoBehaviour
 
     public void SetUpEnergy(float startingEnergy, float maxEnergy, int barCount = 3)
     {
-        energybars = new Slider[barCount];
-        energybars[0] = energybar;
-        for (int i = 1; i < barCount; i++)
+        if(energybars == null)
         {
-            energybars[i] = Instantiate(energybar, energyParent.transform);
+            energybars = new Slider[barCount];
+            energybars[0] = energybar;
+            for (int i = 1; i < barCount; i++)
+            {
+                energybars[i] = Instantiate(energybar, energyParent.transform);
+            }
         }
 
         SetUpBar(startingEnergy, maxEnergy, ref energybars);

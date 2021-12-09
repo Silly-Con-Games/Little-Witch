@@ -46,7 +46,7 @@ public class GameController : MonoBehaviour
         }
     }
 
-    private static EGameState internalGS = EGameState.GameOver;
+    private static EGameState internalGS = EGameState.InMenu;
     public static UnityEvent<EGameState> onGameStateChanged = new UnityEvent<EGameState>();
 
     private PlayerController currentWitch;
