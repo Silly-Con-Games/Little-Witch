@@ -10,7 +10,7 @@ public class EnemiesController : MonoBehaviour
 
     static int waveCounter = 0;
 
-    private static EnemiesController instance;
+    public static EnemiesController instance;
 
     public UnityEvent onWaveEnd;
 
@@ -38,6 +38,7 @@ public class EnemiesController : MonoBehaviour
         onWaveEnd = new UnityEvent();
         Assert.IsTrue(instance == null);
         instance = this;
+        waveCounter = 0;
     }
 
     private void OnDestroy()
@@ -66,5 +67,18 @@ public class EnemiesController : MonoBehaviour
     public float GetCurrentPreperationTime()
     {
         return waves[waveCounter].preparationTime;
+    }
+
+    public void ResetWave()
+    {
+
+    }
+
+    public void KillAll()
+    {
+        foreach(var ai in FindObjectsOfType<EnemyAI>())
+        {
+            ai.ReceiveDamage(float.MaxValue);
+        }
     }
 }

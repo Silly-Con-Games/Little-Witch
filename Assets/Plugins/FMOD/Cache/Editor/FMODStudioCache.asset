@@ -186,7 +186,7 @@ MonoBehaviour:
   Is3D: 1
   IsOneShot: 1
   Parameters:
-  - {fileID: -685807927583039195}
+  - {fileID: -4250431094480794246}
   MinDistance: 20
   MaxDistance: 65
   Length: 850
@@ -385,7 +385,7 @@ MonoBehaviour:
   Path: FMOD/LittleWitch/Build/Desktop/Master.strings.bank
   Name: Master.strings
   StudioPath: bank:/Master.strings
-  lastModified: 637723447472729890
+  lastModified: 637713704631566340
   LoadResult: 0
   FileSizes:
   - Name: Desktop
@@ -1073,6 +1073,26 @@ MonoBehaviour:
     data1: 0
     data2: 0
   Exists: 1
+--- !u!114 &-4250431094480794246
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: fecb8ef7f94ca804a8ab72049b86782e, type: 3}
+  m_Name: parameter:/shot/shot_pitch
+  m_EditorClassIdentifier: 
+  Name: shot_pitch
+  Min: -1
+  Max: 1
+  Default: 0
+  ID:
+    data1: 0
+    data2: 0
+  Exists: 1
 --- !u!114 &-4201504103543811072
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -1310,7 +1330,7 @@ MonoBehaviour:
   Path: FMOD/LittleWitch/Build/Desktop/Master.bank
   Name: Master
   StudioPath: bank:/Master
-  lastModified: 637723447472709888
+  lastModified: 637713704631307041
   LoadResult: 0
   FileSizes: []
   Exists: 1
@@ -1736,7 +1756,7 @@ MonoBehaviour:
   ID:
     data1: 0
     data2: 0
-  Exists: 1
+  Exists: 0
 --- !u!114 &-844947812983291867
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -1799,7 +1819,7 @@ MonoBehaviour:
   ID:
     data1: 0
     data2: 0
-  Exists: 1
+  Exists: 0
 --- !u!114 &-606885381657065509
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -1883,7 +1903,7 @@ MonoBehaviour:
   Is3D: 1
   IsOneShot: 1
   Parameters:
-  - {fileID: -1053576716503697060}
+  - {fileID: 6752111466668901170}
   MinDistance: 20
   MaxDistance: 60
   Length: 830
@@ -1972,7 +1992,7 @@ MonoBehaviour:
   - {fileID: -2632736120414982648}
   StringsBanks:
   - {fileID: -7008871818448349652}
-  stringsBankWriteTime: 637723447472729890
+  stringsBankWriteTime: 637713704631566340
   cacheVersion: 6
 --- !u!114 &63060824806312001
 MonoBehaviour:
@@ -3224,6 +3244,26 @@ MonoBehaviour:
   MinDistance: 20
   MaxDistance: 60
   Length: 2500
+--- !u!114 &6752111466668901170
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: fecb8ef7f94ca804a8ab72049b86782e, type: 3}
+  m_Name: parameter:/generic_hit/shot_pitch
+  m_EditorClassIdentifier: 
+  Name: shot_pitch
+  Min: -1
+  Max: 1
+  Default: 0
+  ID:
+    data1: 0
+    data2: 0
+  Exists: 1
 --- !u!114 &6780103527455374957
 MonoBehaviour:
   m_ObjectHideFlags: 0
