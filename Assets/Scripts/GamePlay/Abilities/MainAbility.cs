@@ -3,7 +3,7 @@ using System;
 using Config;
 
 [Serializable]
-public abstract class MainAbility
+public abstract class MainAbility : Ability
 {
     protected float lastUsedTime = float.NegativeInfinity;
 

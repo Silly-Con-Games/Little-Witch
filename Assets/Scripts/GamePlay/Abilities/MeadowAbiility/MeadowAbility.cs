@@ -20,6 +20,7 @@ public class MeadowAbility : MainAbility
     public override void CastAbility()  
     {
         base.CastAbility();
+        onPerformed.Invoke(AbilityType.Main);
         Debug.Log("Casted meadow ability!");
         GameEventQueue.QueueEvent(new MeadowAbilityEvent(cast: true));
 

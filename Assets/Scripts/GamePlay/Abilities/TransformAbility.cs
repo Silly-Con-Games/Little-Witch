@@ -6,7 +6,7 @@ using System.Collections.Generic;
 using UnityEngine;
 
 [Serializable]
-public class TransformAbility
+public class TransformAbility : Ability
 {
 	public Transform origin;
 	public PlayerController player;
@@ -25,6 +25,7 @@ public class TransformAbility
 	}
 
 	public void Transform(BiomeType target) {
+		onPerformed.Invoke(AbilityType.Transform);
 		lastUsedTime = Time.time;
 
 		Tile tile = player.mapController.GetTileAtPosition(origin.position);
@@ -72,6 +73,7 @@ public class TransformAbility
 
 	public void Revive()
 	{
+		onPerformed.Invoke(AbilityType.Revive);
 		lastUsedTime = Time.time;
 		Tile tile = player.mapController.GetTileAtPosition(origin.position);
 		if (tile != null && tile.GetBiomeType() == BiomeType.DEAD)

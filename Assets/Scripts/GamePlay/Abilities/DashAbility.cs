@@ -16,6 +16,7 @@ public class DashAbility : MainAbility
     public override void CastAbility()
     {
         base.CastAbility();
+        onPerformed.Invoke(AbilityType.Dash);
         playerController.StartCoroutine(PerformDash());
     }
 

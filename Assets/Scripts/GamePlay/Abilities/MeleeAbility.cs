@@ -4,7 +4,7 @@ using Config;
 using Assets.Scripts.GameEvents;
 
 [Serializable]
-public class MeleeAbility
+public class MeleeAbility : Ability
 {
     public SwordAttack swing;
     public MeleeAbilityConfig conf 
@@ -31,6 +31,7 @@ public class MeleeAbility
     {
         if (IsReady)
         {
+            onPerformed.Invoke(AbilityType.Melee);
             timeSinceLastAttack = Time.time;
             swing.Attack();
             GameEventQueue.QueueEvent(new MeleeAbilityEvent(cast : true));

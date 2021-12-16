@@ -22,6 +22,7 @@ public class ForestAbility : MainAbility
     public override void CastAbility()
     {
         base.CastAbility();
+        onPerformed.Invoke(AbilityType.Main);
         GameEventQueue.QueueEvent(new ForestAbilityEvent(cast: true));
 
         Vector3 spawnpoint = playerController.transform.position;

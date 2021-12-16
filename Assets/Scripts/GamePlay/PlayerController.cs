@@ -16,6 +16,8 @@ public class PlayerController : MonoBehaviour, IDamagable
     public HUDController hudController;
 	public PauseController pauseController;
 
+    public HintSpawner tutorialHintSpawner;
+
     public UnityEvent onDeathEvent;
 
     public ChargeAbility chargeAbility;
@@ -86,7 +88,22 @@ public class PlayerController : MonoBehaviour, IDamagable
 
         if (!hudController)
         {
-            hudController = FindObjectOfType<HUDController>();            
+            hudController = FindObjectOfType<HUDController>();
+        }
+
+        if (!tutorialHintSpawner)
+        {
+            tutorialHintSpawner = FindObjectOfType<HintSpawner>();
+            if (tutorialHintSpawner)
+            {
+                meleeAbility.onPerformed.AddListener(tutorialHintSpawner.HandleKeyPress);
+                chargeAbility.onPerformed.AddListener(tutorialHintSpawner.HandleKeyPress);
+                transformAbility.onPerformed.AddListener(tutorialHintSpawner.HandleKeyPress);
+                forestAbility.onPerformed.AddListener(tutorialHintSpawner.HandleKeyPress);
+                waterAbility.onPerformed.AddListener(tutorialHintSpawner.HandleKeyPress);
+                meadowAbility.onPerformed.AddListener(tutorialHintSpawner.HandleKeyPress);
+                dashAbility.onPerformed.AddListener(tutorialHintSpawner.HandleKeyPress);
+            }
         }
 
         hudController.playerController = this;
