@@ -4,6 +4,7 @@ using Config;
 using UnityEngine;
 using FMODUnity;
 using UnityEngine.Assertions;
+using Assets.Scripts.GameEvents;
 
 public class EnemyRanged : EnemyAI
 {
@@ -12,6 +13,7 @@ public class EnemyRanged : EnemyAI
 
     public override void InitEnemy()
     {
+        type = EnemyType.Ranged;
         base.InitEnemy();
         attackCooldownDelta = -1f;
     }

@@ -36,7 +36,9 @@ public class EnemyEnvDestroyer : EnemyAI
 
     public override void InitEnemy()
     {
+        type = EnemyType.EnvDestroyer;
         base.InitEnemy();
+
         if (!mapController)
             mapController = FindObjectOfType<MapController>();
         coroutineRunning = false;
