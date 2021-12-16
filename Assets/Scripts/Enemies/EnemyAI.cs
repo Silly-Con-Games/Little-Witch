@@ -362,9 +362,10 @@ public abstract class EnemyAI : MonoBehaviour, IDamagable, IRootable, IStunnable
     {
         this.roamPosition = transform;
     }
-
+    public bool IsDead { get; internal set; }
     protected void Die()
     {
+        IsDead = true;
         GameEventQueue.QueueEvent(new EnemyDiedEvent(type));
         GameObject energy = Instantiate(energyPrefab);
         energy.transform.position = new Vector3(transform.position.x, 0.5f, transform.position.z);

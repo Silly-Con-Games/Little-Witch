@@ -413,7 +413,7 @@ public class PlayerController : MonoBehaviour, IDamagable
 
 		GlobalConfigManager.onConfigChanged.RemoveListener(ApplyConfig);
 		onDeathEvent.Invoke();
-
+        GameEventQueue.QueueEvent(new PlayerDeathEvent());
 		this.enabled = false;
         GetComponent<PlayerInput>().enabled = false;
     }
