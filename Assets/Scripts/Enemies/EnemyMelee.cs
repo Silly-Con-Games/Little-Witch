@@ -1,5 +1,6 @@
 using System.Collections;
 using System.Collections.Generic;
+using Assets.Scripts.GameEvents;
 using Config;
 using UnityEngine;
 using UnityEngine.Assertions;
@@ -44,6 +45,7 @@ public class EnemyMelee : EnemyAI
     }
     public override void InitEnemy()
     {
+        type = EnemyType.Melee;
         base.InitEnemy();
         attacking = false;
     }

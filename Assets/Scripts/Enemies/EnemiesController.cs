@@ -1,3 +1,4 @@
+using Assets.Scripts.GameEvents;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
@@ -14,16 +15,17 @@ public class EnemiesController : MonoBehaviour
 
     public UnityEvent onWaveEnd;
 
+
     int aliveEnemiesCnt = 0;
 
     public static int GetWaveCounter() => waveCounter;
 
-    public static void IncreaseAliveCount()
+    static void IncreaseAliveCount()
     {
         instance.aliveEnemiesCnt++;
     }
 
-    public static void DecreaseAliveCount()
+    static void DecreaseAliveCount()
     {
         instance.aliveEnemiesCnt--;
 
@@ -38,15 +40,29 @@ public class EnemiesController : MonoBehaviour
         onWaveEnd = new UnityEvent();
         Assert.IsTrue(instance == null);
         instance = this;
+        GameEventQueue.AddListener(typeof(EnemySpawnedEvent), OnEnemySpawned);
+        GameEventQueue.AddListener(typeof(EnemyDiedEvent), OnEnemyDied);
         waveCounter = 0;
     }
 
     private void OnDestroy()
     {
         instance = null;
+        GameEventQueue.RemoveListener(typeof(EnemySpawnedEvent), OnEnemySpawned);
+        GameEventQueue.RemoveListener(typeof(EnemyDiedEvent), OnEnemyDied);
     }
 
-	public void SetWave(int wave) {
+    void OnEnemySpawned(IGameEvent ev)
+    {
+        IncreaseAliveCount();
+    }
+
+    void OnEnemyDied(IGameEvent ev)
+    {
+        DecreaseAliveCount();
+    }
+
+    public void SetWave(int wave) {
 		waveCounter = wave;
 	}
 
@@ -67,18 +83,5 @@ public class EnemiesController : MonoBehaviour
     public float GetCurrentPreperationTime()
     {
         return waves[waveCounter].preparationTime;
-    }
-
-    public void ResetWave()
-    {
-
-    }
-
-    public void KillAll()
-    {
-        foreach(var ai in FindObjectsOfType<EnemyAI>())
-        {
-            ai.ReceiveDamage(float.MaxValue);
-        }
     }
 }

@@ -1,35 +1,55 @@
-using System.Collections;
-using System.Collections.Generic;
+using Assets.Scripts.Enemies;
+using Assets.Scripts.GameEvents;
 using UnityEngine;
-using UnityEngine.Assertions;
 
 namespace Assets.Scripts.Tutorial
 {
-    public class FirstTest
+    public class FirstTest : MonoBehaviour
     {
-        public void Start()
+        public EnemiesGroupController group;
+        public OnTriggerEnterEvent ev;
+        public TileBridge entryBridge;
+        public TileBridge exitBridge;
+
+        private void Awake()
         {
-            var enContr = EnemiesController.instance;
-            Assert.IsNotNull(enContr, "missing enemies controller");
-
-            enContr.SetWave(0);
-            enContr.SpawnNextWave();
-            enContr.onWaveEnd.AddListener(Completed);
-
+            ev.ontriggerenter.AddListener(PlayerEntered);
+            group.groupDied.AddListener(Completed);
         }
 
-        public void Reset()
+        private void PlayerEntered(Collider other)
         {
-            var enContr = EnemiesController.instance;
-            Assert.IsNotNull(enContr, "missing enemies controller");
-            enContr.onWaveEnd.RemoveListener(Completed);
-            enContr.KillAll();
-            Start();
+            var ot = other.GetComponent<IObjectType>();
+            if (ot != null && ot.GetObjectType() == EObjectType.Player) 
+            {
+                StartTest();
+                ev.gameObject.SetActive(false);
+            }
+        }
+
+        void OnPlayerRes(IGameEvent e)
+        {
+            ResetTest();
+        }
+
+        public void StartTest()
+        {
+            GameEventQueue.AddListener(typeof(PlayerRespawnedEvent), OnPlayerRes);
+            group.SpawnAll();
+        }
+
+        public void ResetTest()
+        {
+            group.ResetEnemies();
         }
 
         public void Completed()
         {
-            EnemiesController.instance.onWaveEnd.RemoveListener(Completed);
+            group.KillAll();
+            GameEventQueue.RemoveListener(typeof(PlayerRespawnedEvent), OnPlayerRes);
+            entryBridge.Descent();
+            exitBridge.Ascent();
+            Debug.Log("First test completed");
         }
     }
 }

@@ -5,7 +5,7 @@ using UnityEngine.Assertions;
 
 namespace Assets.Scripts.Tutorial
 {
-    public class SpawnPoint : MonoBehaviour
+    public class PlayerSpawnPoint : MonoBehaviour
     {
 
         public Material active;
@@ -13,6 +13,7 @@ namespace Assets.Scripts.Tutorial
         public MeshRenderer mesh;
         public Collider coll;
         private static TutorialController controller;
+
         private void Awake()
         {
             if (controller == null)

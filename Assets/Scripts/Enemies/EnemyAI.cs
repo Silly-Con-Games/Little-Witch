@@ -1,4 +1,5 @@
 using System.Collections;
+using Assets.Scripts.GameEvents;
 using Config;
 using UnityEngine;
 using UnityEngine.AI;
@@ -89,10 +90,12 @@ public abstract class EnemyAI : MonoBehaviour, IDamagable, IRootable, IStunnable
 
     protected bool falling = false;
     protected Rigidbody rigid;
+
+    protected EnemyType type = EnemyType.Undefined;
     public virtual void InitEnemy()
     {
-        EnemiesController.IncreaseAliveCount();
         GlobalConfigManager.onConfigChanged.AddListener(ApplyConfig);
+        GameEventQueue.QueueEvent(new EnemySpawnedEvent(type));
         if (!playerController)
         {
             playerController = FindObjectOfType<PlayerController>();
@@ -359,12 +362,13 @@ public abstract class EnemyAI : MonoBehaviour, IDamagable, IRootable, IStunnable
     {
         this.roamPosition = transform;
     }
-
+    public bool IsDead { get; internal set; }
     protected void Die()
     {
+        IsDead = true;
+        GameEventQueue.QueueEvent(new EnemyDiedEvent(type));
         GameObject energy = Instantiate(energyPrefab);
         energy.transform.position = new Vector3(transform.position.x, 0.5f, transform.position.z);
-		EnemiesController.DecreaseAliveCount();
 		GlobalConfigManager.onConfigChanged.RemoveListener(ApplyConfig);
         Destroy(indicator);
 

@@ -4,32 +4,22 @@ using Config;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.Events;
 
 namespace Assets.Scripts.Tutorial
 {
     public class TutorialController : MonoBehaviour
     {
         public PlayerController witchPrefab;
-        public SpawnPoint spawnPoint;
+        public PlayerSpawnPoint spawnPoint;
         public CinemachineVirtualCamera cmCamera;
         public HUDController hud;
         public PauseController pauseController;
 
         public MapController mapController;
 
-        private FirstTest firstTest;
-
         private PlayerController currentWitch;
         private GlobalConfig conf;
-
-        private enum EPhase
-        {
-            Start,
-            FirstTest
-        }
-
-        private EPhase phase = EPhase.Start;
-
 
         // Start is called before the first frame update
         void Start()
@@ -48,18 +38,13 @@ namespace Assets.Scripts.Tutorial
         public void OnWitchDeath()
         {
             Destroy(currentWitch.gameObject);
-
             StartCoroutine(SpawnWithDelay(2));
-
-            if (phase == EPhase.FirstTest)
-            {
-                firstTest.Reset();
-            }
         }
 
         private IEnumerator SpawnWithDelay(float delay)
         {
             yield return new WaitForSeconds(delay);
+            GameEventQueue.QueueEvent(new PlayerRespawnedEvent());
             currentWitch = Instantiate(witchPrefab, spawnPoint.transform.position, spawnPoint.transform.rotation);
             currentWitch.onDeathEvent.AddListener(OnWitchDeath);
             currentWitch.mapController = mapController;
