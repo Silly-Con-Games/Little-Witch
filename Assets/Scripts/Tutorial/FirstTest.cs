@@ -8,6 +8,8 @@ namespace Assets.Scripts.Tutorial
     {
         public EnemiesGroupController group;
         public OnTriggerEnterEvent ev;
+        public TileBridge entryBridge;
+        public TileBridge exitBridge;
 
         private void Awake()
         {
@@ -45,6 +47,8 @@ namespace Assets.Scripts.Tutorial
         {
             group.KillAll();
             GameEventQueue.RemoveListener(typeof(PlayerRespawnedEvent), OnPlayerRes);
+            entryBridge.Descent();
+            exitBridge.Ascent();
             Debug.Log("First test completed");
         }
     }
