@@ -17,7 +17,6 @@ public class WaterAbility : MainAbility
     public override void CastAbility()
     {
         base.CastAbility();
-        onPerformed.Invoke(AbilityType.Main);
         GameEventQueue.QueueEvent(new WaterAbilityEvent(cast: true));
 
         Debug.Log("Casted water ability!");

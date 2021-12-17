@@ -4,7 +4,7 @@ using Config;
 using Assets.Scripts.GameEvents;
 
 [Serializable]
-public class ChargeAbility : Ability
+public class ChargeAbility
 {
 
     public Transform abilityAnimationTransform;
@@ -41,7 +41,6 @@ public class ChargeAbility : Ability
     {
         if (IsReady())
         {
-            onPerformed.Invoke(AbilityType.Charge);
             IsCharging = true;
             startedChargeTime = Time.time;
             parent.ScaleSpeedModifier(conf.witchSlowMSMultiplier);

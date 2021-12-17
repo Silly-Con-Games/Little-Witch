@@ -6,7 +6,7 @@ using System.Collections.Generic;
 using UnityEngine;
 
 [Serializable]
-public class TransformAbility : Ability
+public class TransformAbility
 {
 	public Transform origin;
 	public PlayerController player;
@@ -25,7 +25,6 @@ public class TransformAbility : Ability
 	}
 
 	public void Transform(BiomeType target) {
-		onPerformed.Invoke(AbilityType.Transform);
 		lastUsedTime = Time.time;
 
 		Tile tile = player.mapController.GetTileAtPosition(origin.position);
@@ -73,12 +72,11 @@ public class TransformAbility : Ability
 
 	public void Revive()
 	{
-		onPerformed.Invoke(AbilityType.Revive);
 		lastUsedTime = Time.time;
 		Tile tile = player.mapController.GetTileAtPosition(origin.position);
 		if (tile != null && tile.GetBiomeType() == BiomeType.DEAD)
 		{
-			GameEventQueue.QueueEvent(new BiomeTransformedEvent(from: BiomeType.DEAD, to: tile.wantedType, conf.energyCost, true));
+			GameEventQueue.QueueEvent(new BiomeTransformedEvent(from: BiomeType.DEAD, to: tile.wantedType, conf.energyCost, true, revive: true));
 			tile.Revive();
             int cost = 1;
 			foreach(var neigh in tile.GetNeighbours())
