@@ -48,6 +48,8 @@ public class PlayerController : MonoBehaviour, IDamagable
     private bool moveStopInternal;
     public float stepLengthSqr = 1.78f;
 
+    private Vector2 inputRotation;
+
     private Vector3 lastPos;
 
     float speed = 3;
@@ -58,7 +60,11 @@ public class PlayerController : MonoBehaviour, IDamagable
 
     private bool isDead;
 
-    public  Vector3 mouseWorldPosition { get; internal set; }
+    private float rotationSpeed = 1000f;
+
+    private bool gamepadActive = false;
+
+    public Vector3 mouseWorldPosition { get; internal set; }
 
     public void Initialize()
     {
@@ -148,21 +154,36 @@ public class PlayerController : MonoBehaviour, IDamagable
         waterAbility.conf = witchConfig.waterAbility;
         meadowAbility.conf = witchConfig.meadowAbility;
         dashAbility.conf = witchConfig.dashAbility;
+
+        OnControlsChanged(GetComponent<PlayerInput>());
     }
 
     void MoveUpdate()
     {
         // Direction
-        Ray ray = mainCamera.ScreenPointToRay(Pointer.current.position.ReadValue());
-
-        if (Physics.Raycast(ray, out RaycastHit hit, 1000, tileMask))
+        if (gamepadActive)
         {
-            mouseWorldPosition = hit.point;
+            Vector3 lookDir = inputRotation == Vector2.zero ?
+                new Vector3(inputVelocity.x, 0, inputVelocity.y).normalized :
+                new Vector3(inputRotation.x, 0, inputRotation.y).normalized;
+            mouseWorldPosition = lookDir;
+            Quaternion targetRot = Quaternion.LookRotation(lookDir, Vector3.up);
+            transform.rotation = Quaternion.RotateTowards(transform.rotation, targetRot, Time.deltaTime * rotationSpeed);
+        }
+        else
+        {
+            Vector2 mousePos = Mouse.current.position.ReadValue();
+            float camDist = Vector3.Distance(transform.position, mainCamera.transform.position);
+            Vector3 lookDir = mainCamera.ScreenToWorldPoint(new Vector3(mousePos.x, mousePos.y, camDist));
+            mouseWorldPosition = lookDir;
+            lookDir.y = transform.position.y;
+            transform.LookAt(lookDir);
         }
 
         if (moveStop)
             return;
 
+        // Movement sound
         Vector3 diff = transform.position - lastPos;
         if (diff.sqrMagnitude > stepLengthSqr)
         {
@@ -170,10 +191,6 @@ public class PlayerController : MonoBehaviour, IDamagable
 
             FMODUnity.RuntimeManager.PlayOneShot("event:/test/step");
         }
-
-        var targetPosition = mouseWorldPosition;
-        targetPosition.y = transform.position.y;
-        transform.LookAt(targetPosition);
 
         // Movement
         Vector3 forwardV = cameraTrans.forward;
@@ -393,7 +410,8 @@ public class PlayerController : MonoBehaviour, IDamagable
 
     private void OnLook(InputValue value)
     {
-
+        // only used with controller input
+        inputRotation = value.Get<Vector2>();
     }
 
 	public void ReceiveDamage(float amount)
@@ -430,4 +448,11 @@ public class PlayerController : MonoBehaviour, IDamagable
         Debug.Log("changing energy tank appearance");
         animator.SetBool("EnoughEnergy", curEnergy >= transformAbility.conf.energyCost);
     }
+
+    public void OnControlsChanged(PlayerInput pi)
+    {
+        Debug.Log("controls changed");
+        gamepadActive = pi.currentControlScheme.Equals("Gamepad");
+    }
+
 }

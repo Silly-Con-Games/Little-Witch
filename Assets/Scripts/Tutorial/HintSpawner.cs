@@ -8,7 +8,7 @@ using UnityEngine;
 [Serializable]
 public class Hint
 {
-    public AbilityType abilityType;
+    public EAbilityType abilityType;
     public string hintText;
     public string buttonToPress;
     [HideInInspector] public HintController instance = null;
@@ -52,47 +52,47 @@ public class HintSpawner : MonoBehaviour
             case BiomeTransformedEvent e:
                 if (!e.enemyOrigin)
                     if (e.revive)
-                        HandleKeyPress(AbilityType.Revive);
+                        HandleKeyPress(EAbilityType.Revive);
                     else
-                        HandleKeyPress(AbilityType.Transform);
+                        HandleKeyPress(EAbilityType.Transform);
                 break;
             case DashAbilityEvent _:
-                HandleKeyPress(AbilityType.Dash);
+                HandleKeyPress(EAbilityType.Dash);
                 break;
             case ChargeAbilityEvent e:
                 if (e.cast)
                 {
-                    HandleKeyPress(AbilityType.Charge);
+                    HandleKeyPress(EAbilityType.Charge);
                 }
                 break;
             case MeleeAbilityEvent e:
                 if (e.cast)
                 {
-                    HandleKeyPress(AbilityType.Melee);
+                    HandleKeyPress(EAbilityType.Melee);
                 }
                 break;
             case WaterAbilityEvent e:
                 if (e.cast)
                 {
-                    HandleKeyPress(AbilityType.Main);
+                    HandleKeyPress(EAbilityType.Main);
                 }
                 break;
             case ForestAbilityEvent e:
                 if (e.cast)
                 {
-                    HandleKeyPress(AbilityType.Main);
+                    HandleKeyPress(EAbilityType.Main);
                 }
                 break;
             case MeadowAbilityEvent e:
                 if (e.cast)
                 {
-                    HandleKeyPress(AbilityType.Main);
+                    HandleKeyPress(EAbilityType.Main);
                 }
                 break;
         }
     }
 
-    public void SpawnHint(AbilityType abilityType)
+    public void SpawnHint(EAbilityType abilityType)
     {
         Debug.Log("spawning hint " + abilityType);
 
@@ -112,7 +112,7 @@ public class HintSpawner : MonoBehaviour
         activeHint = h;
     }
 
-    public void HandleKeyPress(AbilityType abilityType)
+    public void HandleKeyPress(EAbilityType abilityType)
     {
         Debug.Log("handling key press of ability of type " + abilityType);
         Hint h = hints.Find(x => x.abilityType == abilityType);
@@ -128,7 +128,7 @@ public class HintSpawner : MonoBehaviour
     // debug
     public void SpawnTestHint()
     {
-        SpawnHint((AbilityType)UnityEngine.Random.Range(0, (int)AbilityType.Count));
+        SpawnHint((EAbilityType)UnityEngine.Random.Range(0, (int)EAbilityType.Count));
         //SpawnHint(AbilityType.Revive);
     }
 
