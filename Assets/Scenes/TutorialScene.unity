@@ -7640,9 +7640,9 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   enemiesToSpawn:
-  - prefab: {fileID: 5384379442950274122, guid: 58384ed62a1f90d499b5af62efeed90c, type: 3}
+  - prefab: {fileID: 2193665319773142858, guid: 1c71f465bdbbe6449932b67422dcae06, type: 3}
     trans: {fileID: 1679156171}
-  - prefab: {fileID: 5384379442950274122, guid: 58384ed62a1f90d499b5af62efeed90c, type: 3}
+  - prefab: {fileID: 2193665319773142858, guid: 1c71f465bdbbe6449932b67422dcae06, type: 3}
     trans: {fileID: 1901374040}
   groupDied:
     m_PersistentCalls:

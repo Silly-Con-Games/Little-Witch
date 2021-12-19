@@ -375,13 +375,15 @@ public abstract class EnemyAI : MonoBehaviour, IDamagable, IRootable, IStunnable
     {
         IsDead = true;
         GameEventQueue.QueueEvent(new EnemyDiedEvent(type));
-        GameObject energy = Instantiate(energyPrefab);
-        energy.transform.position = new Vector3(transform.position.x, 0.5f, transform.position.z);
+        if(energyPrefab != null)
+            Instantiate(energyPrefab, new Vector3(transform.position.x, 0.5f, transform.position.z), transform.rotation);
+
 		GlobalConfigManager.onConfigChanged.RemoveListener(ApplyConfig);
         Destroy(indicator);
 
         agent.enabled = false;
-        GetComponent<Collider>().enabled = false;
+        foreach(var col in GetComponents<Collider>())
+            col.enabled = false;
 
         gameObject.layer = 0;
         foreach (Transform trans in gameObject.GetComponentsInChildren<Transform>())
@@ -417,17 +419,10 @@ public abstract class EnemyAI : MonoBehaviour, IDamagable, IRootable, IStunnable
     IEnumerator PushCoroutine(Vector3 force, float duration)
     {
         TurnOnPhysicsMovement();
-        //force.z = 0;
-        //force.x = 0;
-        Debug.Log($"AI being pushed by {force} impulse");
+
         rigid.AddForce(force, ForceMode.Impulse);
-        float start = Time.time;
-        while (Time.time - start <= duration)
-        {
-            //rigid.velocity = force;
-            yield return null;
-        }
-        if(!falling)
+        yield return new WaitForSeconds(duration);
+        if(!falling && enabled)
             TurnOffPhysicsMovement();
     }
 
