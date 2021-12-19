@@ -30,7 +30,7 @@ public class Tweenable : MonoBehaviour
 
     public void TweenColorAlpha(float targetValue, float targetTime)
     {
-       Debug.Log("tweening img alpha to " + targetValue);
+        //Debug.Log("tweening img alpha to " + targetValue);
 
         startValue = img.color.a;
         this.targetValue = targetValue;

@@ -75,7 +75,9 @@ public class WAWave : MonoBehaviour
             hashSet.Add(pushable);
             GameEventQueue.QueueEvent(new WaterAbilityEvent(pushedEnemy: true));
             Vector3 force = (collider.transform.position - transform.position).normalized * speed;
-            pushable.ReceivePush(force, 0.9f - (Time.time - start));
+            force.y = 10;
+            Debug.Log($"Wave force multiplied by {(1 - (Time.time - start) / (waveDuration*2)) }");
+            pushable.ReceivePush(force * (1 - (Time.time - start)/ (waveDuration * 2)), (1 - (Time.time - start)));
         }
 
         IObjectType objectType = collider.gameObject.GetComponent<IObjectType>();

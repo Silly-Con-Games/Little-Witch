@@ -205,9 +205,8 @@ public abstract class EnemyAI : MonoBehaviour, IDamagable, IRootable, IStunnable
             if (!falling)
             {
                 falling = true;
-                rigid.isKinematic = false;
+                TurnOnPhysicsMovement();
                 rigid.velocity = new Vector3(0, -5, 0);
-                agent.enabled = false;
                 return true;
             }
         }
@@ -215,8 +214,7 @@ public abstract class EnemyAI : MonoBehaviour, IDamagable, IRootable, IStunnable
         if (falling && rigid.velocity.sqrMagnitude <= 0.000001)
         {
             falling = false;
-            rigid.isKinematic = true;
-            agent.enabled = true;
+            TurnOffPhysicsMovement();
         }
 
         if (falling)
@@ -418,12 +416,31 @@ public abstract class EnemyAI : MonoBehaviour, IDamagable, IRootable, IStunnable
 
     IEnumerator PushCoroutine(Vector3 force, float duration)
     {
+        TurnOnPhysicsMovement();
+        //force.z = 0;
+        //force.x = 0;
+        Debug.Log($"AI being pushed by {force} impulse");
+        rigid.AddForce(force, ForceMode.Impulse);
         float start = Time.time;
         while (Time.time - start <= duration)
         {
-            agent.velocity = force;
+            //rigid.velocity = force;
             yield return null;
         }
-        agent.velocity = Vector3.zero;
+        if(!falling)
+            TurnOffPhysicsMovement();
     }
+
+    void TurnOnPhysicsMovement()
+    {
+        rigid.isKinematic = false;
+        agent.enabled = false;
+    }
+
+    void TurnOffPhysicsMovement()
+    {
+        rigid.isKinematic = true;
+        agent.enabled = true;
+    }
+
 }

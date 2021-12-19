@@ -80,6 +80,8 @@ public class SwordAttack : MonoBehaviour
         if (pushable?.GetObjectType() == target)
         {
             Vector3 force = (other.transform.position - hitOrigin.position).normalized * pushForce;
+            force += Vector3.up * 3.25f;
+
             pushable.ReceivePush(force, pushDuration);
         }
     }
