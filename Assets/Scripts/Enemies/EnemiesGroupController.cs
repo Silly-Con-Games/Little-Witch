@@ -32,10 +32,7 @@ namespace Assets.Scripts.Enemies
         {
             foreach(var t in enemiesToSpawn)
             {
-                EnemyAI e = Instantiate(t.prefab);
-                e.transform.position = t.trans.position;
-                e.transform.rotation = t.trans.rotation;
-                e.InitEnemy();
+                EnemyAI e = Instantiate(t.prefab, t.trans.position, t.trans.rotation);
                 alive.Add(e);
             }
             GameEventQueue.AddListener(typeof(EnemyDiedEvent), OnEnemyDied);

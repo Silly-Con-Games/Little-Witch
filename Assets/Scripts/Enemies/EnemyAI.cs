@@ -25,6 +25,11 @@ public abstract class EnemyAI : MonoBehaviour, IDamagable, IRootable, IStunnable
     public State state { get; set; }
     public SecondaryState secondaryState { get; set; }
 
+    private void Start()
+    {
+        InitEnemy();
+    }
+
     //[SerializeField]
     //private float stunTime;
 
@@ -161,7 +166,12 @@ public abstract class EnemyAI : MonoBehaviour, IDamagable, IRootable, IStunnable
 
         if (CheckIsFalling())
             return;
-        
+
+        if (!playerController)
+        {
+            playerController = FindObjectOfType<PlayerController>();
+        }
+
         if (secondaryState == SecondaryState.Stun)
         {
             return;
