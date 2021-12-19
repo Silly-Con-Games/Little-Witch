@@ -127,10 +127,11 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: fa1f0e76b2128fb4fbdfa7950ba6e173, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  active: {fileID: 2100000, guid: 6093344e5f5fdc440ace1cb59f44a259, type: 2}
-  inactive: {fileID: 2100000, guid: 74803b28999cb864a854e249461bb0ea, type: 2}
+  activeMat: {fileID: 2100000, guid: 6093344e5f5fdc440ace1cb59f44a259, type: 2}
+  inactiveMat: {fileID: 2100000, guid: 74803b28999cb864a854e249461bb0ea, type: 2}
   mesh: {fileID: 8988586560751388429}
   coll: {fileID: 6996756275705105740}
+  isActive: 0
 --- !u!135 &6996756275705105740
 SphereCollider:
   m_ObjectHideFlags: 0

@@ -4,7 +4,7 @@ using UnityEngine;
 
 namespace Assets.Scripts.Tutorial
 {
-    public class FirstTest : MonoBehaviour
+    public class CombatTest : MonoBehaviour
     {
         public EnemiesGroupController group;
         public OnTriggerEnterEvent ev;
@@ -35,6 +35,7 @@ namespace Assets.Scripts.Tutorial
         public void StartTest()
         {
             GameEventQueue.AddListener(typeof(PlayerRespawnedEvent), OnPlayerRes);
+            Debug.Log($"Starting combat test {gameObject.name}", gameObject);
             group.SpawnAll();
         }
 
@@ -47,9 +48,11 @@ namespace Assets.Scripts.Tutorial
         {
             group.KillAll();
             GameEventQueue.RemoveListener(typeof(PlayerRespawnedEvent), OnPlayerRes);
-            entryBridge.Descent();
-            exitBridge.Ascent();
-            Debug.Log("First test completed");
+            if(entryBridge != null)
+                entryBridge.Descent();
+            if(exitBridge != null)
+                exitBridge.Ascent();
+            Debug.Log($"Combat {gameObject.name} completed");
         }
     }
 }

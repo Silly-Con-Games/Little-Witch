@@ -19,20 +19,12 @@ namespace Assets.Scripts.Tutorial
         public MapController mapController;
 
         private PlayerController currentWitch;
-        private GlobalConfig conf;
 
         // Start is called before the first frame update
         void Start()
         {
             GameController.GameState = EGameState.TutorialStart;
-            GlobalConfigManager.onConfigChanged.AddListener(ApplyConfig);
-            ApplyConfig();
             StartCoroutine(SpawnWithDelay(0.1f));
-        }
-
-        void ApplyConfig()
-        {
-            conf = GlobalConfigManager.GetGlobalConfig();
         }
 
         public void OnWitchDeath()
