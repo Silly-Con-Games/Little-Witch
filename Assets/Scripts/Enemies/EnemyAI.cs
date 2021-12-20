@@ -421,6 +421,9 @@ public abstract class EnemyAI : MonoBehaviour, IDamagable, IRootable, IStunnable
         TurnOnPhysicsMovement();
 
         rigid.AddForce(force, ForceMode.Impulse);
+        force.y = 0;
+        force.Normalize();
+
         yield return new WaitForSeconds(duration);
         if(!falling && enabled)
             TurnOffPhysicsMovement();

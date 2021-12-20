@@ -16,10 +16,13 @@ public class Bullet : MonoBehaviour , IObjectType
             Destroy(gameObject);
     }
     
-    private void OnTriggerEnter(Collider collision)
+    private void OnTriggerEnter(Collider coll)
     {
-        var other = collision.gameObject;
-        var damagable = other.GetComponent<IDamagable>();
+        var type = coll.GetComponent<IObjectType>();
+        if (type.GetObjectType() == EObjectType.Projectile)
+            return;
+
+        var damagable = coll.GetComponent<IDamagable>();
         if(damagable == null)
         {
             Destroy(gameObject);

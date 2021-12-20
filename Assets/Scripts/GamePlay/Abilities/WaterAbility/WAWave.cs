@@ -69,7 +69,7 @@ public class WAWave : MonoBehaviour
 
     private void OnHit(Collider collider)
     {
-        IPushable pushable = collider.gameObject.GetComponent<IPushable>();
+        IPushable pushable = collider.GetComponent<IPushable>();
         if(pushable != null && !hashSet.Contains(pushable))
         {
             hashSet.Add(pushable);
@@ -80,11 +80,22 @@ public class WAWave : MonoBehaviour
             pushable.ReceivePush(force * (1 - (Time.time - start)/ (waveDuration * 2)), (1 - (Time.time - start)));
         }
 
-        IObjectType objectType = collider.gameObject.GetComponent<IObjectType>();
+        IObjectType objectType = collider.GetComponent<IObjectType>();
         if(objectType?.GetObjectType() == EObjectType.Projectile)
         {
             GameEventQueue.QueueEvent(new WaterAbilityEvent(killedProjectile: true));
-            Destroy(collider.gameObject);
+
+            var bull = collider.GetComponent<Bullet>();
+            if(bull != null)
+            {
+                if(bull.target == EObjectType.Player)
+                {
+                    bull.transform.rotation = Quaternion.LookRotation(-bull.transform.forward);
+                    bull.target = EObjectType.Enemy;
+                }
+            }
+            else
+                Destroy(collider.gameObject);
         }
     }
 }

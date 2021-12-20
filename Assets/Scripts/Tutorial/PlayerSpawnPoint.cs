@@ -61,7 +61,7 @@ namespace Assets.Scripts.Tutorial
                 Activate();
             else
                 Deactivate();
-            Undo.RecordObject(prev.gameObject, "Spawn deactivated");
+            Undo.RecordObject(prev?.gameObject, "Spawn deactivated");
             Undo.RecordObject(gameObject, "Spawn activated");
             Undo.RecordObject(controller.gameObject, "Red to active spawn updated");
         }
