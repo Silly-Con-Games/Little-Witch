@@ -56,7 +56,7 @@ namespace Assets.Scripts.Tutorial
                 return;
             if (controller == null)
                 controller = FindObjectOfType<TutorialController>();
-            var prev = controller.spawnPoint;
+            var prev = controller?.spawnPoint;
             if (isActive)
                 Activate();
             else
