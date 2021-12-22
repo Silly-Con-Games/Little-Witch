@@ -25,10 +25,9 @@ public class TransformAbility
 	}
 
 	public void Transform(BiomeType target) {
-		lastUsedTime = Time.time;
-
 		Tile tile = player.mapController.GetTileAtPosition(origin.position);
-		if (tile != null) {
+		if (tile != null && tile.GetBiomeType() != BiomeType.NOTTRANSFORMABLE) {
+			lastUsedTime = Time.time;
 			// transform circle and find rim tiles			
 			rimTiles.Enqueue(tile);
 			visitedTiles.Add(tile);
@@ -72,10 +71,10 @@ public class TransformAbility
 
 	public void Revive()
 	{
-		lastUsedTime = Time.time;
 		Tile tile = player.mapController.GetTileAtPosition(origin.position);
-		if (tile != null && tile.GetBiomeType() == BiomeType.DEAD)
+		if (tile != null && tile.GetBiomeType() == BiomeType.DEAD && tile.GetBiomeType() != BiomeType.NOTTRANSFORMABLE)
 		{
+			lastUsedTime = Time.time;
 			GameEventQueue.QueueEvent(new BiomeTransformedEvent(from: BiomeType.DEAD, to: tile.wantedType, conf.energyCost, true, revive: true));
 			tile.Revive();
             int cost = 1;
@@ -89,7 +88,10 @@ public class TransformAbility
 			}
 			player.energy.UseEnergy(conf.energyCost);
 		}
-		GameEventQueue.QueueEvent(new BiomeTransformationFailedEvent(invalidTile: true, revive: true));
+        else
+        {
+			GameEventQueue.QueueEvent(new BiomeTransformationFailedEvent(invalidTile: true, revive: true));
+		}
 	}
 
 	public bool IsReady() {

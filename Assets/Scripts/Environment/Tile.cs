@@ -113,7 +113,8 @@ public class Tile : MonoBehaviour {
 	}
 
 	public void Morph(BiomeType target, bool immediate) {
-
+		if (type == BiomeType.NOTTRANSFORMABLE && !immediate)
+			return;
 		if (type == target) {
 			Debug.LogWarning("Tile already has this type!", this);
 			return;
@@ -162,12 +163,17 @@ public class Tile : MonoBehaviour {
 			if (target == BiomeType.WATER) {
 				SetWater(mesh, 1f);
 				SetHeight(-waterDepression);
-				SetGrassHeightModifier(grass, 0f);
+				grass.enabled = false;
 			} else {
 				SetWater(mesh, 0f);
 				SetHeight(0f);
+				grass.enabled = true;
 				SetGrassHeightModifier(grass, 1f);
 			}
+
+			if (target == BiomeType.NOTTRANSFORMABLE)
+				grass.enabled = false;
+
 			Color newColor = GetColor(target);
 			ColorUtils.SetSaturation(mesh, 1f);
 			ColorUtils.SetColor(mesh, newColor);
@@ -224,6 +230,8 @@ public class Tile : MonoBehaviour {
 				return colors.forest.Evaluate(Random.value);
 			case BiomeType.MEADOW:
 				return colors.plain.Evaluate(Random.value);
+			case BiomeType.NOTTRANSFORMABLE:
+				return colors.notTransformable.Evaluate(Random.value);
 			case BiomeType.WATER:
 				return colors.water;
 			default:
