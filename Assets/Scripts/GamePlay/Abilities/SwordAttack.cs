@@ -67,6 +67,8 @@ public class SwordAttack : MonoBehaviour
         if (hitObjects.Contains(other))
             return;
         hitObjects.Add(other);
+
+        Debug.Log("Melee hit " + other.name);
         var damagable = other.GetComponent<IDamagable>();
 
         if (damagable?.GetObjectType() == target)
