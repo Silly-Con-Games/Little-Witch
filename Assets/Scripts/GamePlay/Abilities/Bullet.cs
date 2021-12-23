@@ -19,7 +19,7 @@ public class Bullet : MonoBehaviour , IObjectType
     private void OnTriggerEnter(Collider coll)
     {
         var type = coll.GetComponent<IObjectType>();
-        if (type.GetObjectType() == EObjectType.Projectile)
+        if (type != null && type.GetObjectType() == EObjectType.Projectile)
             return;
 
         var damagable = coll.GetComponent<IDamagable>();

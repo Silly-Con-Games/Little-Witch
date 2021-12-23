@@ -85,17 +85,7 @@ public class WAWave : MonoBehaviour
         {
             GameEventQueue.QueueEvent(new WaterAbilityEvent(killedProjectile: true));
 
-            var bull = collider.GetComponent<Bullet>();
-            if(bull != null)
-            {
-                if(bull.target == EObjectType.Player)
-                {
-                    bull.transform.rotation = Quaternion.LookRotation(-bull.transform.forward);
-                    bull.target = EObjectType.Enemy;
-                }
-            }
-            else
-                Destroy(collider.gameObject);
+            Destroy(collider.gameObject);
         }
     }
 }

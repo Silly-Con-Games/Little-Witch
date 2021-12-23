@@ -206,7 +206,7 @@ MonoBehaviour:
   Is3D: 1
   IsOneShot: 1
   Parameters:
-  - {fileID: -7941061315889715963}
+  - {fileID: 9115034238366783677}
   MinDistance: 20
   MaxDistance: 65
   Length: 850
@@ -405,7 +405,7 @@ MonoBehaviour:
   Path: FMOD/LittleWitch/Build/Desktop/Master.strings.bank
   Name: Master.strings
   StudioPath: bank:/Master.strings
-  lastModified: 637713704631566340
+  lastModified: 637755518046018898
   LoadResult: 0
   FileSizes:
   - Name: Desktop
@@ -937,6 +937,26 @@ MonoBehaviour:
   MinDistance: 20
   MaxDistance: 60
   Length: 2000
+--- !u!114 &-5494985422710528038
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: fecb8ef7f94ca804a8ab72049b86782e, type: 3}
+  m_Name: parameter:/generic_hit/shot_pitch
+  m_EditorClassIdentifier: 
+  Name: shot_pitch
+  Min: -1
+  Max: 1
+  Default: 0
+  ID:
+    data1: 0
+    data2: 0
+  Exists: 1
 --- !u!114 &-5409907534382063476
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -1410,7 +1430,7 @@ MonoBehaviour:
   Path: FMOD/LittleWitch/Build/Desktop/Master.bank
   Name: Master
   StudioPath: bank:/Master
-  lastModified: 637713704631307041
+  lastModified: 637755518045998901
   LoadResult: 0
   FileSizes: []
   Exists: 1
@@ -2023,7 +2043,7 @@ MonoBehaviour:
   Is3D: 1
   IsOneShot: 1
   Parameters:
-  - {fileID: -1426749519403011921}
+  - {fileID: -5494985422710528038}
   MinDistance: 20
   MaxDistance: 60
   Length: 830
@@ -2112,7 +2132,7 @@ MonoBehaviour:
   - {fileID: -2632736120414982648}
   StringsBanks:
   - {fileID: -7008871818448349652}
-  stringsBankWriteTime: 637713704631566340
+  stringsBankWriteTime: 637755518046018898
   cacheVersion: 6
 --- !u!114 &63060824806312001
 MonoBehaviour:
@@ -3803,6 +3823,26 @@ MonoBehaviour:
     data1: 0
     data2: 0
   Exists: 0
+--- !u!114 &9115034238366783677
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: fecb8ef7f94ca804a8ab72049b86782e, type: 3}
+  m_Name: parameter:/shot/shot_pitch
+  m_EditorClassIdentifier: 
+  Name: shot_pitch
+  Min: -1
+  Max: 1
+  Default: 0
+  ID:
+    data1: 0
+    data2: 0
+  Exists: 1
 --- !u!114 &9168397989811960005
 MonoBehaviour:
   m_ObjectHideFlags: 0
