@@ -19,6 +19,10 @@ Material:
   m_SavedProperties:
     serializedVersion: 3
     m_TexEnvs:
+    - Displacement:
+        m_Texture: {fileID: 2800000, guid: 2beba8615e115134082c29cf5579752c, type: 3}
+        m_Scale: {x: 1, y: 1}
+        m_Offset: {x: 0, y: 0}
     - NormalMap:
         m_Texture: {fileID: 2800000, guid: 7bc68563435f25d4c9576c00e85289e0, type: 3}
         m_Scale: {x: 1, y: 1}
@@ -82,8 +86,12 @@ Material:
     m_Ints: []
     m_Floats:
     - Depth_Distance: 1
-    - Depth_Strength: 0.5
-    - RefractStrength: 0.05
+    - Depth_Strength: 0.7
+    - Displacement_Strength: 0.0025
+    - Normal_Strength: 1
+    - Normal_Tiling: 6
+    - Pan_Speed: 0.05
+    - RefractStrength: 1
     - _AlphaClip: 0
     - _Blend: 0
     - _BumpScale: 1
@@ -111,6 +119,8 @@ Material:
     - _WorkflowMode: 1
     - _ZWrite: 1
     m_Colors:
+    - Color_A: {r: 0.8156863, g: 0.9843137, b: 1, a: 0}
+    - Color_B: {r: 0.92941177, g: 1, b: 0.973814, a: 1}
     - _BaseColor: {r: 1, g: 1, b: 1, a: 1}
     - _Color: {r: 1, g: 1, b: 1, a: 1}
     - _EmissionColor: {r: 0, g: 0, b: 0, a: 1}
