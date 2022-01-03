@@ -80,7 +80,7 @@ public class TransformAbility
             int cost = 1;
 			foreach(var neigh in tile.GetNeighbours())
             {
-				if (neigh.GetBiomeType() == BiomeType.DEAD)
+				if (neigh != null && neigh.GetBiomeType() == BiomeType.DEAD)
                 {
 					neigh.Revive();
 					cost++;

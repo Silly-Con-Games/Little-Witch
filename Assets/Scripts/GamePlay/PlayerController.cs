@@ -445,7 +445,7 @@ public class PlayerController : MonoBehaviour, IDamagable
 
     public void ChangeEnergyTankAppearance(float curEnergy)
     {
-        Debug.Log("changing energy tank appearance");
+        //Debug.Log("changing energy tank appearance");
         animator.SetBool("EnoughEnergy", curEnergy >= transformAbility.conf.energyCost);
     }
 

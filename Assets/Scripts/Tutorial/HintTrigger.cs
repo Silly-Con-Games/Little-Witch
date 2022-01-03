@@ -1,36 +1,26 @@
 using System.Collections;
-using System.Collections.Generic;
 using UnityEngine;
 
-public class HintTrigger : MonoBehaviour
+namespace Assets.Scripts.Tutorial
 {
-    public float hintDelay = 0;
-    public EAbilityType hintToDisplay = EAbilityType.None;
-
-    private HintSpawner hintSpawner;
-
-    private void Awake()
+    public class HintTrigger : MonoBehaviour
     {
-        hintSpawner = FindObjectOfType<HintSpawner>();
-        if (hintSpawner == null)
-            Debug.LogError("HintSpawner not found in the scene");
-    }
+        public float hintDelay = 0;
+        public EAbilityType hintToDisplay = EAbilityType.None;
 
-    private void OnTriggerEnter(Collider other)
-    {
-        var ot = other.GetComponent<IObjectType>();
-        if (ot != null && ot.GetObjectType() == EObjectType.Player)
+        private void OnTriggerEnter(Collider other)
         {
-            StartCoroutine(TryDisplayHintCor());
+            var ot = other.GetComponent<IObjectType>();
+            if (ot != null && ot.GetObjectType() == EObjectType.Player)
+            {
+                StartCoroutine(TryDisplayHintCor());
+            }
         }
-    }
 
-    IEnumerator TryDisplayHintCor()
-    {
-        if (hintToDisplay != EAbilityType.None && hintSpawner != null)
+        IEnumerator TryDisplayHintCor()
         {
             yield return new WaitForSeconds(hintDelay);
-            hintSpawner.SpawnHint(hintToDisplay);
+            HintSpawner.SpawnHint(hintToDisplay);
         }
     }
 }

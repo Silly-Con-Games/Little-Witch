@@ -14,16 +14,11 @@ namespace Assets.Scripts.Tutorial
         public EAbilityType startHint = EAbilityType.None;
         public EAbilityType failureHint = EAbilityType.None;
 
-        private HintSpawner hintSpawner;
 
         private void Awake()
         {
             ev.ontriggerenter.AddListener(PlayerEntered);
             group.groupDied.AddListener(Completed);
-
-            hintSpawner = FindObjectOfType<HintSpawner>();
-            if (hintSpawner == null)
-                Debug.LogError("HintSpawner not found in the scene");
         }
 
         private void PlayerEntered(Collider other)
@@ -45,22 +40,13 @@ namespace Assets.Scripts.Tutorial
         {
             GameEventQueue.AddListener(typeof(PlayerRespawnedEvent), OnPlayerRes);
             Debug.Log($"Starting combat test {gameObject.name}", gameObject);
-            TrySpawnHint(startHint);
+            HintSpawner.SpawnHint(startHint);
             group.SpawnAll();
-        }
-
-        private void TrySpawnHint(EAbilityType type)
-        {
-            if (type != EAbilityType.None && hintSpawner != null)
-            {
-                hintSpawner.SpawnHint(type);
-                return;
-            }
         }
 
         public void ResetTest()
         {
-            TrySpawnHint(failureHint);
+            HintSpawner.SpawnHint(failureHint);
             group.ResetEnemies();
         }
 

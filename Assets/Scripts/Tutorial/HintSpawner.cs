@@ -22,9 +22,11 @@ public class HintSpawner : MonoBehaviour
     [SerializeField] private HintController hintPrefab;
 
     private Hint activeHint = null;
+    private static HintSpawner inst;
 
     private void Awake()
     {
+        inst = this;
         GameEventQueue.AddListener(typeof(BiomeTransformedEvent), OnAbilityCast);
         GameEventQueue.AddListener(typeof(ChargeAbilityEvent), OnAbilityCast);
         GameEventQueue.AddListener(typeof(DashAbilityEvent), OnAbilityCast);
@@ -36,6 +38,7 @@ public class HintSpawner : MonoBehaviour
 
     private void OnDestroy()
     {
+        inst = null;
         GameEventQueue.RemoveListener(typeof(BiomeTransformedEvent), OnAbilityCast);
         GameEventQueue.RemoveListener(typeof(ChargeAbilityEvent), OnAbilityCast);
         GameEventQueue.RemoveListener(typeof(DashAbilityEvent), OnAbilityCast);
@@ -92,8 +95,19 @@ public class HintSpawner : MonoBehaviour
         }
     }
 
-    public void SpawnHint(EAbilityType abilityType)
+    public static void SpawnHint(EAbilityType abilityType)
     {
+        if (inst != null)
+            inst.SpawnHintInternal(abilityType);
+        else
+            Debug.LogError("No Hinst spawner in the scene");
+    }
+
+    void SpawnHintInternal(EAbilityType abilityType)
+    {
+        if (abilityType == EAbilityType.None)
+            return;
+
         Debug.Log("spawning hint " + abilityType);
 
         Hint h = hints.Find(x => x.abilityType == abilityType);
