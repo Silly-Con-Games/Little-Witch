@@ -6,5 +6,6 @@ public enum EAbilityType
     Melee,
     Revive,
     Transform,
-    Count
+    Count,
+    None,
 }

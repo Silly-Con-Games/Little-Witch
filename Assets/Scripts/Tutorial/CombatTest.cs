@@ -11,16 +11,25 @@ namespace Assets.Scripts.Tutorial
         public TileBridge entryBridge;
         public TileBridge exitBridge;
 
+        public EAbilityType startHint = EAbilityType.None;
+        public EAbilityType failureHint = EAbilityType.None;
+
+        private HintSpawner hintSpawner;
+
         private void Awake()
         {
             ev.ontriggerenter.AddListener(PlayerEntered);
             group.groupDied.AddListener(Completed);
+
+            hintSpawner = FindObjectOfType<HintSpawner>();
+            if (hintSpawner == null)
+                Debug.LogError("HintSpawner not found in the scene");
         }
 
         private void PlayerEntered(Collider other)
         {
             var ot = other.GetComponent<IObjectType>();
-            if (ot != null && ot.GetObjectType() == EObjectType.Player) 
+            if (ot != null && ot.GetObjectType() == EObjectType.Player)
             {
                 StartTest();
                 ev.gameObject.SetActive(false);
@@ -36,11 +45,22 @@ namespace Assets.Scripts.Tutorial
         {
             GameEventQueue.AddListener(typeof(PlayerRespawnedEvent), OnPlayerRes);
             Debug.Log($"Starting combat test {gameObject.name}", gameObject);
+            TrySpawnHint(startHint);
             group.SpawnAll();
+        }
+
+        private void TrySpawnHint(EAbilityType type)
+        {
+            if (type != EAbilityType.None && hintSpawner != null)
+            {
+                hintSpawner.SpawnHint(type);
+                return;
+            }
         }
 
         public void ResetTest()
         {
+            TrySpawnHint(failureHint);
             group.ResetEnemies();
         }
 
