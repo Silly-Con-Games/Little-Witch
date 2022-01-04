@@ -1,3 +1,4 @@
+using Assets.Scripts.Enemies;
 using Assets.Scripts.GameEvents;
 using System;
 using System.Collections;
@@ -8,6 +9,7 @@ namespace Assets.Scripts.Tutorial
 {
     public class TransformationTest : MonoBehaviour
     {
+        public EnemiesGroupController group;
         public OnTriggerEnterEvent ev;
         public EAbilityType startHint = EAbilityType.None;
         public List<GameObject> energySpawners;
@@ -55,6 +57,8 @@ namespace Assets.Scripts.Tutorial
             GameEventQueue.AddListener(typeof(PlayerRespawnedEvent), OnPlayerRes);
             foreach (var o in energySpawners)
                 o.SetActive(false);
+            group.groupDied.AddListener(Completed);
+            group.SpawnAll();
         }
 
         void OnPlayerRes(IGameEvent e)
@@ -64,7 +68,7 @@ namespace Assets.Scripts.Tutorial
 
         private void ResetCombatPartTest()
         {
-            throw new NotImplementedException();
+            group.ResetEnemies();
         }
 
         private void OnPlayerTransform(IGameEvent ev)
@@ -82,6 +86,11 @@ namespace Assets.Scripts.Tutorial
                 GameEventQueue.RemoveListener(typeof(BiomeTransformedEvent), OnPlayerTransform);
                 StartCombatPart();
             }
+        }
+
+        private void Completed()
+        {
+            Debug.Log($"Combat part of {gameObject.name} completed");
         }
     }
 }
