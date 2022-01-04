@@ -23,7 +23,7 @@ Material:
   m_Name: Energy
   m_Shader: {fileID: -6465566751694194690, guid: 91d66abfd30bc2a438317490c0850c62, type: 3}
   m_ShaderKeywords: _EMISSION _SPECULAR_SETUP
-  m_LightmapFlags: 2
+  m_LightmapFlags: 4
   m_EnableInstancingVariants: 0
   m_DoubleSidedGI: 0
   m_CustomRenderQueue: -1
@@ -89,8 +89,13 @@ Material:
         m_Texture: {fileID: 0}
         m_Scale: {x: 1, y: 1}
         m_Offset: {x: 0, y: 0}
+    m_Ints: []
     m_Floats:
-    - Vector1_ecb65a00bae14d7e9c4d17c3007549ef: 0.7
+    - AlphaMultiplier: 0.8
+    - Base_Transparency: -0.08
+    - Fresnel_Power_2: 0.15
+    - Fresnel_power: 4.62
+    - Vector1_ecb65a00bae14d7e9c4d17c3007549ef: 1
     - _AlphaClip: 0
     - _Blend: 0
     - _BumpScale: 1
@@ -107,6 +112,7 @@ Material:
     - _GlossyReflections: 0
     - _Metallic: 0
     - _OcclusionStrength: 1
+    - _Offset: 0.51
     - _Parallax: 0.005
     - _QueueOffset: 0
     - _ReceiveShadows: 1
@@ -118,8 +124,8 @@ Material:
     - _WorkflowMode: 0
     - _ZWrite: 0
     m_Colors:
-    - Color_1e1621a168094286bbe9cc8559c6b529: {r: 0, g: 0.03729183, b: 0.26415092, a: 0}
-    - Color_f17ccbe8e5ab44648d6e68d2748f5cd5: {r: 0, g: 10.136125, b: 15.999998, a: 0}
+    - Color_1e1621a168094286bbe9cc8559c6b529: {r: 0, g: 2.1333334, b: 5.992157, a: 1}
+    - Color_f17ccbe8e5ab44648d6e68d2748f5cd5: {r: 0, g: 0.59137636, b: 0.8429319, a: 0.34901962}
     - _BaseColor: {r: 0.19339615, g: 0.9835283, b: 1, a: 0.7529412}
     - _Color: {r: 1, g: 1, b: 1, a: 1}
     - _EmissionColor: {r: 0, g: 1.1349044, b: 2.8151524, a: 1}
