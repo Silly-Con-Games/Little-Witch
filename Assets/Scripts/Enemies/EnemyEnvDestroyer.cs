@@ -4,6 +4,7 @@ using System.Threading.Tasks;
 using Assets.Scripts.GameEvents;
 using Config;
 using UnityEngine;
+using UnityEngine.AI;
 
 public class EnemyEnvDestroyer : EnemyAI
 {
@@ -120,15 +121,26 @@ public class EnemyEnvDestroyer : EnemyAI
     
     async void FindTileToDestroyCoroutine()
     {
-        for (int i = 0; i < mapController.tiles.Count; i++)
+        NavMeshPath path = null;
+        for (int i = 0; i < mapController.morphableTiles.Count; i++)
         {
-            if (mapController.tiles[i].GetBiomeType() == BiomeType.DEAD || mapController.tiles[i].wantedType == BiomeType.DEAD || mapController.tiles[i].chosen)
+            if (
+                    mapController.morphableTiles[i].IsDead ||
+                    !mapController.morphableTiles[i].CanBeMorphed() ||
+                    mapController.morphableTiles[i].wantedType == BiomeType.DEAD ||
+                    mapController.morphableTiles[i].chosen
+               )
                 continue;
-            distanceTmp = Vector3.Distance(transform.position, mapController.tiles[i].transform.position);
+            
+
+            distanceTmp = Vector3.Distance(transform.position, mapController.morphableTiles[i].transform.position);
             if (distanceTmp < minDistance)
-            { 
+            {
+                if (!agent.CalculatePath(mapController.morphableTiles[i].transform.position, path))
+                    continue;
+                
                 minDistance = distanceTmp;
-                tileTmp = mapController.tiles[i];
+                tileTmp = mapController.morphableTiles[i];
             }
         }
 
@@ -160,11 +172,11 @@ public class EnemyEnvDestroyer : EnemyAI
         if (Physics.Raycast(transform.position, Vector3.down, out hit, 2f, LayerMask.GetMask("Tile")))
         {
             Tile tile = hit.transform.gameObject.GetComponent<Tile>();
-            if (!tile || tile.GetBiomeType() == BiomeType.DEAD)
+            if (!tile || tile.IsDead)
                 return;
             GameEventQueue.QueueEvent(new BiomeTransformedEvent(from: tile.GetBiomeType(), to: BiomeType.DEAD, enemyOrigin: true));
             FMODUnity.RuntimeManager.PlayOneShot("event:/enemies/sucking/sucking", transform.position);
-            mapController.AttackTile(tile); 
+            tile.Morph(BiomeType.DEAD, false);
         }
     }
 

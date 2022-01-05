@@ -13,13 +13,12 @@ public class PropAndProbability
 
 public class MapController : MonoBehaviour
 {
-    private Tile initTile;
 
     public PropAndProbability meadowProp;
     public PropAndProbability forestProp;
     public PropAndProbability waterProp;
 
-    public List<Tile> tiles { get; set; }
+    public List<Tile> morphableTiles { get; set; }
 
     public int aliveTilesCnt { get; set; }
 
@@ -40,31 +39,18 @@ public class MapController : MonoBehaviour
 	private void Initialize() {
 		tileMask = LayerMask.GetMask("Tile");
 
-		initTile = FindObjectOfType<Tile>();
-
+		var allActiveTiles = new List<Tile>(FindObjectsOfType<Tile>());
+        morphableTiles = new List<Tile>();
 		aliveTilesCnt = 0;
-		Queue<Tile> tilesQueue = new Queue<Tile>();
-		tilesQueue.Enqueue(initTile);
-		initTile.mapInfo.visited = true;
-		Tile tile;
-		tiles = new List<Tile>();
-
-		while (tilesQueue.Count > 0) {
-			tile = tilesQueue.Dequeue();
-			tile.mapInfo.index = tiles.Count;
-			tiles.Add(tile);
-			if (tile.GetBiomeType() != BiomeType.DEAD) {
-				aliveTilesCnt++;
-			}
-
-			foreach (Tile ngb in tile.GetNeighbours()) {
-				if (ngb && !(ngb.mapInfo.visited)) {
-					ngb.mapInfo.visited = true;
-					tilesQueue.Enqueue(ngb);
-				}
-			}
-		}
-
+        foreach(var tile in allActiveTiles)
+        {
+            if (!tile.CanBeMorphed())
+                return;
+            morphableTiles.Add(tile);
+            if (!tile.IsDead)
+                aliveTilesCnt++;
+        }
+		
 		initialized = true;
 	}
 
@@ -73,18 +59,18 @@ public class MapController : MonoBehaviour
 			Initialize();
 		}
 
-		for (int i = 0; i < tiles.Count; i++) {
-			if (tiles[i].GetBiomeType() != savedTiles[i].type) {
-				tiles[i].Morph(savedTiles[i].type, true);
-				tiles[i].SetupPropOnLoad(savedTiles[i].hasProp);
+		for (int i = 0; i < morphableTiles.Count; i++) {
+			if (morphableTiles[i].GetBiomeType() != savedTiles[i].type) {
+				morphableTiles[i].Morph(savedTiles[i].type, true);
+				morphableTiles[i].SetupPropOnLoad(savedTiles[i].hasProp);
             }
 		}
 
         // restoring alive tiles count
         int cnt = 0;
-        for (int i = 0; i < tiles.Count; i++)
+        for (int i = 0; i < morphableTiles.Count; i++)
         {
-            if (!(tiles[i].GetBiomeType() == BiomeType.DEAD))
+            if (!(morphableTiles[i].GetBiomeType() == BiomeType.DEAD))
             {
                 cnt++;
             }
@@ -94,10 +80,10 @@ public class MapController : MonoBehaviour
 
 	public List<TileSaveInfo> GetTiles() {
 		List<TileSaveInfo> tilesInfo = new List<TileSaveInfo>();
-		for (int i = 0; i < tiles.Count; i++) {
+		for (int i = 0; i < morphableTiles.Count; i++) {
 			TileSaveInfo info = new TileSaveInfo();
-			info.type = tiles[i].GetBiomeType();
-			info.hasProp = tiles[i].HasProp();
+			info.type = morphableTiles[i].GetBiomeType();
+			info.hasProp = morphableTiles[i].HasProp();
 			tilesInfo.Add(info);
 		}
 
@@ -128,20 +114,19 @@ public class MapController : MonoBehaviour
 
 		foreach (Tile ngb in playerTile.GetNeighbours()) 
 		{
-			ngb?.SetGrassPlayerPosition(playerPosition);
+			ngb.SetGrassPlayerPosition(playerPosition);
 		}
 	}
-
-    public void AttackTile(Tile tile)
-    {
-        aliveTilesCnt--;
-        tile.Morph(BiomeType.DEAD, false);
-    }
 
 	public void ReviveTile() 
 	{ 
 		aliveTilesCnt++;
 	}
+
+    public void KillTile()
+    {
+        aliveTilesCnt--;
+    }
 
     public BiomeType BiomeTypeInPosition(Vector3 position)
     {

@@ -22,9 +22,8 @@ public class Tile : MonoBehaviour {
 
 	private IProp prop = null;
 
-	public Tile[] neighbours;
+	public List<Tile> neighbours;
 
-	public MapInfo mapInfo { get; set; }
 
 	private float morphSpeed = 2;
 
@@ -39,18 +38,16 @@ public class Tile : MonoBehaviour {
 		directions[4] = new Vector3(-1, 0, 0);
 		directions[5] = new Vector3(-1, 0, -2);
 
-		neighbours = new Tile[6];
+		neighbours = new List<Tile>();
 		RaycastHit hit;
 		for (int i = 0; i < directions.Length; i++) {
-			if (Physics.Raycast(transform.position + Vector3.down, directions[i], out hit, 2f, LayerMask.GetMask("Tile"))) {
+			if (Physics.Raycast(transform.position + Vector3.down, directions[i], out hit, 1f, LayerMask.GetMask("Tile"))) {
 				Tile tile = hit.transform.gameObject.GetComponent<Tile>();
                 if (tile) {
-				    neighbours[i] = hit.transform.gameObject.GetComponent<Tile>();
+				    neighbours.Add(tile);
 				}
 			}
 		}
-
-		mapInfo = new MapInfo();
 
 		if(mapController == null)
 			mapController = FindObjectOfType<MapController>();
@@ -99,6 +96,12 @@ public class Tile : MonoBehaviour {
 		Morph(typeBeforeDeath, false);
 	}
 
+	public bool CanBeMorphed()
+    {
+		return type != BiomeType.NOTTRANSFORMABLE;
+    }
+
+	public bool IsDead => type == BiomeType.DEAD;
 
 	public bool WantsToBeSet() {
 		return wantedType != type;
@@ -119,6 +122,17 @@ public class Tile : MonoBehaviour {
 			Debug.LogWarning("Tile already has this type!", this);
 			return;
 		}
+
+		if (IsDead)
+		{
+			mapController.ReviveTile();
+		}
+
+		if (target == BiomeType.DEAD && !IsDead)
+		{
+			mapController.KillTile();
+		}
+
 		prop = GetComponentInChildren<IProp>();
 		wantedType = target;
 		// die
@@ -134,10 +148,6 @@ public class Tile : MonoBehaviour {
 			StartCoroutine(DieCoroutine());
 			return;
 		}
-        else
-        {
-			mapController.ReviveTile();
-        }
 
 		bool propRevived = false;
 		if (prop != null)
@@ -188,12 +198,8 @@ public class Tile : MonoBehaviour {
 		StartCoroutine(MorphCoroutine(target, propRevived));
 	}
 
-	public Tile[] GetNeighbours() {
+	public List<Tile> GetNeighbours() {
 		return neighbours;
-	}
-
-	public Tile GetNeighbour(int index) {
-		return neighbours[index];
 	}
 
 	private void TrySpawnProp(bool immediate, BiomeType biomeType)

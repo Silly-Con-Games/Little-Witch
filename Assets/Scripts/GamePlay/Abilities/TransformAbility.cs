@@ -26,35 +26,50 @@ public class TransformAbility
 
 	public void Transform(BiomeType target) {
 		Tile tile = player.mapController.GetTileAtPosition(origin.position);
+
 		if (tile != null && tile.GetBiomeType() != BiomeType.NOTTRANSFORMABLE) {
 			lastUsedTime = Time.time;
 			// transform circle and find rim tiles			
 			rimTiles.Enqueue(tile);
 			visitedTiles.Add(tile);
-
+			bool noEnergy = false;
+			float totalCost = 0;
 			for (int depth = 0; depth < conf.radius; depth++) {
 				int rimCount = rimTiles.Count;
 				for (int i = 0; i < rimCount; i++) {
 					Tile next = rimTiles.Dequeue();
-					MorphTile(next, target);
+					if (!TryMorphTile(next, target, ref totalCost)) 
+					{
+						noEnergy = true;
+						break;
+					}
+
 					foreach (Tile ngb in next.GetNeighbours()) {
-						if (ngb && !visitedTiles.Contains(ngb)) {
+						if (!visitedTiles.Contains(ngb)) {
 							rimTiles.Enqueue(ngb);
 							visitedTiles.Add(ngb);
 						}
 					}
 				}
+				if (noEnergy)
+					break;
 			}
 			visitedTiles.Clear();
 
 			// deal with rim
 			List<Tile> biome = new List<Tile>();
 			foreach (Tile rimTile in rimTiles) {
+				if (noEnergy)
+					break;
 				if (rimTile.GetBiomeType() != target) {
 					RecursivelySearchBiome(rimTile, biome);
 					if (biome.Count <= conf.minBiomeSize) {
 						foreach (Tile biomeTile in biome) {
-							MorphTile(biomeTile, target);
+							if (!TryMorphTile(biomeTile, target, ref totalCost))
+							{
+								noEnergy = true;
+								break;
+							}
 						}
 					}
 
@@ -63,8 +78,7 @@ public class TransformAbility
 			}
 			rimTiles.Clear();
 			
-			player.energy.UseEnergy(conf.energyCost);
-			GameEventQueue.QueueEvent(new BiomeTransformedEvent(from: tile.GetBiomeType(), to: target, conf.energyCost, true));
+			GameEventQueue.QueueEvent(new BiomeTransformedEvent(from: tile.GetBiomeType(), to: target, totalCost, true));
 		}
 		GameEventQueue.QueueEvent(new BiomeTransformationFailedEvent(invalidTile:true));
 	}
@@ -75,20 +89,21 @@ public class TransformAbility
 		if (tile != null && tile.GetBiomeType() == BiomeType.DEAD && tile.GetBiomeType() != BiomeType.NOTTRANSFORMABLE)
 		{
 			lastUsedTime = Time.time;
-			GameEventQueue.QueueEvent(new BiomeTransformedEvent(from: BiomeType.DEAD, to: tile.wantedType, conf.energyCost, true, revive: true));
 			tile.Revive();
-            int cost = 1;
-			foreach(var neigh in tile.GetNeighbours())
+			player.energy.UseEnergy(conf.energyCost);
+			float cost = conf.energyCost;
+			foreach (var neigh in tile.GetNeighbours())
             {
-				if (neigh != null && neigh.GetBiomeType() == BiomeType.DEAD)
+				if (neigh.IsDead && player.energy.HasEnough(conf.energyCost))
                 {
 					neigh.Revive();
-					cost++;
+					player.energy.UseEnergy(conf.energyCost);
+					cost += conf.energyCost;
 				}
 			}
-			player.energy.UseEnergy(conf.energyCost);
+			GameEventQueue.QueueEvent(new BiomeTransformedEvent(from: BiomeType.DEAD, to: tile.wantedType, cost, true, revive: true));
 		}
-        else
+		else
         {
 			GameEventQueue.QueueEvent(new BiomeTransformationFailedEvent(invalidTile: true, revive: true));
 		}
@@ -109,16 +124,25 @@ public class TransformAbility
 		}
 
 		foreach (Tile ngb in tile.GetNeighbours()) {
-			if (ngb && ngb.GetBiomeType() == tile.GetBiomeType() && !biome.Contains(ngb)) {
+			if (ngb.GetBiomeType() == tile.GetBiomeType() && !biome.Contains(ngb)) {
 				RecursivelySearchBiome(ngb, biome);
 			}
 		}
 	}
 
-	private void MorphTile(Tile tile, BiomeType target) {
-		tile.Morph(target, false);
-		if (target != BiomeType.DEAD) {
-			tile.mapController.ReviveTile();
+	private bool TryMorphTile(Tile tile, BiomeType target, ref float totalCost) {
+		if (tile.GetBiomeType() == target || !tile.CanBeMorphed())
+			return true;
+		float cost = conf.energyCost;
+		if (!tile.IsDead)
+			cost *= conf.aliveEnergyCostMultiplier;
+        if (player.energy.HasEnough(cost))
+        {
+			tile.Morph(target, false);
+			totalCost += cost;
+			player.energy.UseEnergy(cost);
+			return true;
 		}
+		return false;
 	}
 }
