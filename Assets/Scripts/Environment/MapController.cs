@@ -2,6 +2,7 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using System;
+using Unity.AI.Navigation;
 
 [Serializable]
 public class PropAndProbability
@@ -19,6 +20,8 @@ public class MapController : MonoBehaviour
     public PropAndProbability waterProp;
 
     public List<Tile> morphableTiles { get; set; }
+
+    public NavMeshSurface navMeshSurface;
 
     public int aliveTilesCnt { get; set; }
 
@@ -169,5 +172,10 @@ public class MapController : MonoBehaviour
         }
 
         return cachedTile;
+    }
+
+    public void MapChanged()
+    {
+        navMeshSurface.UpdateNavMesh(navMeshSurface.navMeshData);
     }
 }

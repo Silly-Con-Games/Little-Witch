@@ -170,6 +170,7 @@ public class Tile : MonoBehaviour {
 
 		// morph - revive
 		if (immediate) {
+			float initHeight = transform.position.y;
 			if (target == BiomeType.WATER) {
 				SetWater(mesh, 1f);
 				SetHeight(-waterDepression);
@@ -180,6 +181,9 @@ public class Tile : MonoBehaviour {
 				grass.enabled = true;
 				SetGrassHeightModifier(grass, 1f);
 			}
+
+			if (!Mathf.Approximately(initHeight, transform.position.y))
+				mapController.MapChanged();
 
 			if (target == BiomeType.NOTTRANSFORMABLE)
 				grass.enabled = false;
@@ -267,7 +271,7 @@ public class Tile : MonoBehaviour {
 
 		bool toWater = target == BiomeType.WATER;
 		float initWater = mesh.sharedMaterials[1].GetFloat("_IsWater");
-		float initHieght = transform.position.y;
+		float initHeight = transform.position.y;
 
 		Color from = mesh.sharedMaterials[0].color;
 		Color to = GetColor(target);
@@ -279,11 +283,11 @@ public class Tile : MonoBehaviour {
 		for (float progress = 0f; progress <= 1f; progress += morphSpeed * Time.deltaTime) {
 			if (toWater) {
 				SetWater(mesh, Mathf.Lerp(initWater, 1f, progress));
-				SetHeight(Mathf.Lerp(initHieght, -waterDepression, progress));
+				SetHeight(Mathf.Lerp(initHeight, -waterDepression, progress));
 				SetGrassHeightModifier(grass, 1 - progress);
 			} else {
 				SetWater(mesh, Mathf.Lerp(initWater, 0f, progress));
-				SetHeight(Mathf.Lerp(initHieght, 0f, progress));
+				SetHeight(Mathf.Lerp(initHeight, 0f, progress));
 				SetGrassHeightModifier(grass, progress);
 			}
 			ColorUtils.SetColor(mesh, Color.Lerp(from, to, progress));
@@ -308,18 +312,22 @@ public class Tile : MonoBehaviour {
 		float maxProgress = 1.0f;
 		if (toWater)
 		{
-			SetWater(mesh, Mathf.Lerp(initWater, 1f, maxProgress));
-			SetHeight(Mathf.Lerp(initHieght, -waterDepression, maxProgress));
+			SetWater(mesh, 1f);
+			SetHeight(-waterDepression);
 			SetGrassHeightModifier(grass, 0f);
 		}
 		else
 		{
-			SetWater(mesh, Mathf.Lerp(initWater, 0f, maxProgress));
-			SetHeight(Mathf.Lerp(initHieght, 0f, maxProgress));
+			SetWater(mesh, 0f);
+			SetHeight(0f);
 			SetGrassHeightModifier(grass, maxProgress);
 		}
-		ColorUtils.SetColor(mesh, Color.Lerp(from, to, maxProgress));
-		SetGrassColor(grass, Color.Lerp(grassFromTop, grassToTop, maxProgress), Color.Lerp(from, to, maxProgress));
+
+		if(!Mathf.Approximately(initHeight, transform.position.y))
+			mapController.MapChanged();
+
+		ColorUtils.SetColor(mesh, to);
+		SetGrassColor(grass, grassToTop, to);
 
 		if (alsoSaturate)
 		{

@@ -121,26 +121,26 @@ public class EnemyEnvDestroyer : EnemyAI
     
     async void FindTileToDestroyCoroutine()
     {
-        NavMeshPath path = null;
-        for (int i = 0; i < mapController.morphableTiles.Count; i++)
+        NavMeshPath path = new NavMeshPath();
+        foreach (var tile in mapController.morphableTiles)
         {
             if (
-                    mapController.morphableTiles[i].IsDead ||
-                    !mapController.morphableTiles[i].CanBeMorphed() ||
-                    mapController.morphableTiles[i].wantedType == BiomeType.DEAD ||
-                    mapController.morphableTiles[i].chosen
+                    tile.IsDead ||
+                    ! tile.CanBeMorphed() ||
+                    tile.wantedType == BiomeType.DEAD ||
+                    tile.chosen
                )
                 continue;
             
 
-            distanceTmp = Vector3.Distance(transform.position, mapController.morphableTiles[i].transform.position);
+            distanceTmp = Vector3.Distance(transform.position, tile.transform.position);
             if (distanceTmp < minDistance)
             {
-                if (!agent.CalculatePath(mapController.morphableTiles[i].transform.position, path))
+                if (!agent.CalculatePath(tile.transform.position, path))
                     continue;
                 
                 minDistance = distanceTmp;
-                tileTmp = mapController.morphableTiles[i];
+                tileTmp = tile;
             }
         }
 
