@@ -18,11 +18,13 @@ public class TransformMenu : MonoBehaviour
 
     public void OpenMenu()
     {
+        SlowGame();
         contents.SetActive(true);
     }
 
     public void CloseMenu()
     {
+        ResumeGame();
         if (selected != BiomeType.UNKNOWN && playerController)
         {
             playerController.Transform(selected);
@@ -33,5 +35,26 @@ public class TransformMenu : MonoBehaviour
     public void Select(BiomeType biome)
     {
         selected = biome;
+    }
+
+    private void SlowGame()
+    {
+        Time.timeScale = .1f;
+        StartCoroutine(SpeedUp());
+    }
+
+    private void ResumeGame()
+    {
+        Time.timeScale = 1f;
+    }
+
+    private IEnumerator SpeedUp()
+    {
+        while (Time.timeScale < 1)
+        {
+            Time.timeScale += .05f;
+            yield return new WaitForSeconds(.1f);
+        }
+        ResumeGame();
     }
 }
