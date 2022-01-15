@@ -108,6 +108,14 @@
                     "expectedControlType": "Button",
                     "processors": "",
                     "interactions": ""
+                },
+                {
+                    "name": "TransformMenu",
+                    "type": "Button",
+                    "id": "dcf5996f-ea7c-4620-b9fb-442b3b498d0b",
+                    "expectedControlType": "Button",
+                    "processors": "",
+                    "interactions": ""
                 }
             ],
             "bindings": [
@@ -465,17 +473,6 @@
                 },
                 {
                     "name": "",
-                    "id": "14e46398-0718-4fc0-a29f-27bf87b0dcfb",
-                    "path": "<Keyboard>/q",
-                    "interactions": "",
-                    "processors": "",
-                    "groups": "Keyboard&Mouse",
-                    "action": "Revive",
-                    "isComposite": false,
-                    "isPartOfComposite": false
-                },
-                {
-                    "name": "",
                     "id": "519f6265-5f15-4210-add4-6c4b3e88ecdb",
                     "path": "<Gamepad>/leftShoulder",
                     "interactions": "",
@@ -493,6 +490,28 @@
                     "processors": "",
                     "groups": "Gamepad",
                     "action": "Revive",
+                    "isComposite": false,
+                    "isPartOfComposite": false
+                },
+                {
+                    "name": "",
+                    "id": "aecbb2a5-4b91-4dc6-89c8-bd2ab25bf50d",
+                    "path": "<Mouse>/middleButton",
+                    "interactions": "",
+                    "processors": "",
+                    "groups": "Keyboard&Mouse",
+                    "action": "TransformMenu",
+                    "isComposite": false,
+                    "isPartOfComposite": false
+                },
+                {
+                    "name": "",
+                    "id": "3176e847-4c15-403c-b4e1-6d8a11ad3384",
+                    "path": "<Keyboard>/q",
+                    "interactions": "",
+                    "processors": "",
+                    "groups": "Keyboard&Mouse",
+                    "action": "TransformMenu",
                     "isComposite": false,
                     "isPartOfComposite": false
                 }
