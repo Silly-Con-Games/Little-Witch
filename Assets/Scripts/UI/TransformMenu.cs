@@ -16,6 +16,7 @@ public class TransformMenu : MonoBehaviour
         CloseMenu();
     }
 
+    // forbid this if player doesn't have energy to transform !
     public void OpenMenu()
     {
         SlowGame();

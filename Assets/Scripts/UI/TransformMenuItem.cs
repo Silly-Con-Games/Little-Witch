@@ -8,13 +8,18 @@ public class TransformMenuItem : MonoBehaviour, IPointerEnterHandler, IPointerEx
 {
     [SerializeField] private BiomeType biome;
 
-    private Image bg;
-    private TransformMenu tm;
+    [SerializeField] private Image bg;
+
+    [SerializeField] private GameObject active;
+    [SerializeField] private Image inactive;
+
+    private TransformMenu transformMenu;
 
     void Start()
     {
-        bg = GetComponent<Image>();
-        tm = GetComponentInParent<TransformMenu>();
+        inactive.alphaHitTestMinimumThreshold = 0.3f;
+        transformMenu = GetComponentInParent<TransformMenu>();
+        Deselect();
     }
 
     //Detect if the Cursor starts to pass over the GameObject
@@ -31,14 +36,18 @@ public class TransformMenuItem : MonoBehaviour, IPointerEnterHandler, IPointerEx
 
     private void Select()
     {
-        bg.enabled = true;
-        tm.Select(biome);
+        inactive.enabled = false;
+        active.SetActive(true);
+        //bg.enabled = true;
+        transformMenu.Select(biome);
     }
 
     private void Deselect()
     {
-        bg.enabled = false;
-        tm.Select(BiomeType.UNKNOWN);
+        inactive.enabled = true;
+        active.SetActive(false);
+        //bg.enabled = false;
+        transformMenu.Select(BiomeType.UNKNOWN);
     }
 
     private void OnDisable()

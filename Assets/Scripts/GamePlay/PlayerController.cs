@@ -66,6 +66,7 @@ public class PlayerController : MonoBehaviour, IDamagable
         // delete after transform menu finished
 /*        PlayerInput pi = GetComponent<PlayerInput>();
         transformMenu = FindObjectOfType<TransformMenu>();
+        transformMenu.playerController = this;
         pi.actions["TransformMenu"].performed += _ => transformMenu.OpenMenu();
         pi.actions["TransformMenu"].canceled += _ => transformMenu.CloseMenu();*/
     }
