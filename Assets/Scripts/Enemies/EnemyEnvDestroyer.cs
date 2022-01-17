@@ -136,16 +136,17 @@ public class EnemyEnvDestroyer : EnemyAI
             distanceTmp = Vector3.Distance(transform.position, tile.transform.position);
             if (distanceTmp < minDistance)
             {
-                if (!agent.CalculatePath(tile.transform.position, path))
-                    continue;
-                
-                minDistance = distanceTmp;
-                tileTmp = tile;
+                if (agent.CalculatePath(tile.transform.position, path))
+                {
+                    minDistance = distanceTmp;
+                    tileTmp = tile;
+                }
             }
         }
 
         if (tileTmp)
         {
+            Debug.Log("Tile found", tileTmp);
             tileTmp.chosen = true;
         }
         else

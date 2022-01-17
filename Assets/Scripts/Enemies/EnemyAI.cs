@@ -100,6 +100,7 @@ public abstract class EnemyAI : MonoBehaviour, IDamagable, IRootable, IStunnable
     public virtual void InitEnemy()
     {
         GlobalConfigManager.onConfigChanged.AddListener(ApplyConfig);
+        
         GameEventQueue.QueueEvent(new EnemySpawnedEvent(type));
         if (!playerController)
         {

@@ -47,12 +47,16 @@ public class MapController : MonoBehaviour
 		aliveTilesCnt = 0;
         foreach(var tile in allActiveTiles)
         {
-            if (!tile.CanBeMorphed())
-                return;
-            morphableTiles.Add(tile);
-            if (!tile.IsDead)
-                aliveTilesCnt++;
+            if (tile.CanBeMorphed())
+            {
+                morphableTiles.Add(tile);
+                if (!tile.IsDead)
+                    aliveTilesCnt++;
+            }
         }
+
+        if (navMeshSurface != null)
+            navMeshSurface.BuildNavMesh();
 		
 		initialized = true;
 	}
