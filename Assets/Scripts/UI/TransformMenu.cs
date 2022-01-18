@@ -21,10 +21,13 @@ public class TransformMenu : MonoBehaviour
     {
         SlowGame();
         contents.SetActive(true);
+        playerController.canBeControlled = false;
     }
 
     public void CloseMenu()
     {
+        if (playerController) playerController.canBeControlled = true;
+
         ResumeGame();
         if (selected != BiomeType.UNKNOWN && playerController)
         {
@@ -38,6 +41,7 @@ public class TransformMenu : MonoBehaviour
         selected = biome;
     }
 
+    // u should also forbid movement, dash, use of other abilities etc.
     private void SlowGame()
     {
         Time.timeScale = .1f;

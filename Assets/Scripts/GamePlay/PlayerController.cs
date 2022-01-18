@@ -59,6 +59,8 @@ public class PlayerController : MonoBehaviour, IDamagable
 
     private bool isDead;
 
+    public bool canBeControlled = true;
+
     public  Vector3 mouseWorldPosition { get; internal set; }
 
     private void Start()
@@ -171,6 +173,8 @@ public class PlayerController : MonoBehaviour, IDamagable
 
     void MoveUpdate()
     {
+        if (!canBeControlled) return;
+
         // Direction
         Ray ray = mainCamera.ScreenPointToRay(Pointer.current.position.ReadValue());
 
@@ -282,6 +286,8 @@ public class PlayerController : MonoBehaviour, IDamagable
 
     public void OnDash(InputValue value)
     {
+        if (!canBeControlled) return;
+
         if (value.isPressed && dashAbility.IsReady)
         {
             FMODUnity.RuntimeManager.PlayOneShot("event:/witch/dash/dash");
@@ -300,7 +306,9 @@ public class PlayerController : MonoBehaviour, IDamagable
 
     public void OnMeleeAbility(InputValue value)
     {
-		if (!pauseController.IsPaused() && meleeAbility.IsReady)
+        if (!canBeControlled) return;
+
+        if (!pauseController.IsPaused() && meleeAbility.IsReady)
         {
             meleeAbility.Attack();
             ScaleSpeedModifier(meleeAbility.conf.attackSlow);
@@ -320,7 +328,9 @@ public class PlayerController : MonoBehaviour, IDamagable
 
     public void OnChargeAbility(InputValue value)
     {
-		if (!pauseController.IsPaused()) {
+        if (!canBeControlled) return;
+
+        if (!pauseController.IsPaused()) {
             if (value.isPressed && chargeAbility.IsReady())
             {
                 animator.SetTrigger("Cast");
@@ -338,7 +348,9 @@ public class PlayerController : MonoBehaviour, IDamagable
 
     public void OnMainAbility(InputValue value)
     {
-        if(currentMainAbility != null && currentMainAbility.IsReady)
+        if (!canBeControlled) return;
+
+        if (currentMainAbility != null && currentMainAbility.IsReady)
         {
             animator.SetTrigger("Cast");
 
@@ -385,6 +397,8 @@ public class PlayerController : MonoBehaviour, IDamagable
 
     public void OnRevive(InputValue value)
     {
+        if (!canBeControlled) return;
+
         if (transformAbility.IsReady())
         {
             transformAbility.Revive();
@@ -394,6 +408,8 @@ public class PlayerController : MonoBehaviour, IDamagable
     }
 
 	public void Transform(BiomeType target) {
+        if (!canBeControlled) return;
+
         if (transformAbility.IsReady())
         {
             transformAbility.Transform(target);
@@ -438,7 +454,7 @@ public class PlayerController : MonoBehaviour, IDamagable
 		GlobalConfigManager.onConfigChanged.RemoveListener(ApplyConfig);
 		onDeathEvent.Invoke();
 
-		this.enabled = false;
+		enabled = false;
         GetComponent<PlayerInput>().enabled = false;
     }
 
@@ -454,4 +470,5 @@ public class PlayerController : MonoBehaviour, IDamagable
         Debug.Log("changing energy tank appearance");
         animator.SetBool("EnoughEnergy", curEnergy >= transformAbility.conf.energyCost);
     }
+
 }
