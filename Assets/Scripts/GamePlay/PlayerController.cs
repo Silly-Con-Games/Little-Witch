@@ -1,11 +1,10 @@
-using UnityEngine;
-using Config;
-using UnityEngine.InputSystem;
-using UnityEngine.Events;
-using System;
-using System.Collections.Generic;
-using System.Collections;
 using Assets.Scripts.GameEvents;
+using Config;
+using System.Collections;
+using System.Collections.Generic;
+using UnityEngine;
+using UnityEngine.Events;
+using UnityEngine.InputSystem;
 
 public class PlayerController : MonoBehaviour, IDamagable
 {
@@ -69,15 +68,7 @@ public class PlayerController : MonoBehaviour, IDamagable
 
     public  Vector3 mouseWorldPosition { get; internal set; }
 
-    private void Start()
-    {
-        // delete after transform menu finished
-/*        PlayerInput pi = GetComponent<PlayerInput>();
-        transformMenu = FindObjectOfType<TransformMenu>();
-        transformMenu.playerController = this;
-        pi.actions["TransformMenu"].performed += _ => transformMenu.OpenMenu();
-        pi.actions["TransformMenu"].canceled += _ => transformMenu.CloseMenu();*/
-    }
+    [SerializeField] private AimingGfxController aimGfx;
 
     public void Initialize()
     {
@@ -113,6 +104,8 @@ public class PlayerController : MonoBehaviour, IDamagable
 
         hudController.playerController = this;
 
+        //aimGfx.playerController = this;
+
         ApplyConfig();
 
         isDead = false;
@@ -130,8 +123,8 @@ public class PlayerController : MonoBehaviour, IDamagable
             pi.actions["TransformMenu"].canceled += _ => transformMenu.CloseMenu();
         }
 
-        //pi.actions["MainAbility"].performed += _ => transformMenu.OpenMenu(transformAbility.IsReady());
-        //pi.actions["MainAbility"].canceled += _ => transformMenu.CloseMenu();
+        pi.actions["MainAbility"].performed += _ => AimMainAbility();
+        pi.actions["MainAbility"].canceled += _ => CastMainAbility();
 
     }
 
@@ -148,6 +141,12 @@ public class PlayerController : MonoBehaviour, IDamagable
             passive();
 
 		mapController.SetPlayerPosition(transform.position);
+
+        if (aimGfx.isOn)
+        {
+            if (currentMainAbility == null) aimGfx.SetReady(false);
+            else aimGfx.SetReady(currentMainAbility.IsReady);
+        }
 
     }
 
@@ -377,12 +376,28 @@ public class PlayerController : MonoBehaviour, IDamagable
 
     public void AimMainAbility()
     {
+        if (!canBeControlled) return;
 
+        if (currentMainAbility != null)
+        {
+            aimGfx.Show(ready: currentMainAbility.IsReady);
+            if (!currentMainAbility.IsReady)
+            {
+                hudController.AbilityNotReady(currentMainAbility);
+                GameEventQueue.QueueEvent(new MainAbilityFailEvent(notOnCd: true));
+            }
+        }
+        else
+        {
+            GameEventQueue.QueueEvent(new MainAbilityFailEvent(deadBiome: true));
+        }
     }
 
-    public void OnMainAbility()
+    public void CastMainAbility()
     {
         if (!canBeControlled) return;
+
+        aimGfx.Hide();
 
         if (currentMainAbility != null && currentMainAbility.IsReady)
         {
@@ -395,7 +410,7 @@ public class PlayerController : MonoBehaviour, IDamagable
             }
             hudController.CastAbility(currentMainAbility);
         }
-        else if (currentMainAbility != null)
+/*        else if (currentMainAbility != null)
         {
             hudController.AbilityNotReady(currentMainAbility);
             GameEventQueue.QueueEvent(new MainAbilityFailEvent(notOnCd: true));
@@ -403,7 +418,7 @@ public class PlayerController : MonoBehaviour, IDamagable
         else
         {
             GameEventQueue.QueueEvent(new MainAbilityFailEvent(deadBiome: true));
-        }
+        }*/
 
     }
 

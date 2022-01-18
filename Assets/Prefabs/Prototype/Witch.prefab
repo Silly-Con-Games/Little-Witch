@@ -328,13 +328,14 @@ GameObject:
   m_Component:
   - component: {fileID: 1500041183493341201}
   - component: {fileID: 4936500039024377463}
+  - component: {fileID: 8372648330017499927}
   m_Layer: 1
   m_Name: AbilityAimingGfx
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 0
+  m_IsActive: 1
 --- !u!4 &1500041183493341201
 Transform:
   m_ObjectHideFlags: 0
@@ -343,7 +344,7 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 3618242380169172953}
   m_LocalRotation: {x: 0.7071068, y: 0, z: 0, w: 0.7071068}
-  m_LocalPosition: {x: 0, y: -1.106, z: 1.282}
+  m_LocalPosition: {x: 0, y: -1.106, z: 0.875}
   m_LocalScale: {x: 0.43586, y: 0.43586, z: 0.43586}
   m_Children: []
   m_Father: {fileID: 6295430965828045206}
@@ -369,7 +370,7 @@ SpriteRenderer:
   m_RenderingLayerMask: 1
   m_RendererPriority: 0
   m_Materials:
-  - {fileID: 10754, guid: 0000000000000000f000000000000000, type: 0}
+  - {fileID: 2100000, guid: ce8847114a7a2cb4da542182f3888bca, type: 2}
   m_StaticBatchInfo:
     firstSubMesh: 0
     subMeshCount: 0
@@ -390,8 +391,8 @@ SpriteRenderer:
   m_SortingLayerID: 0
   m_SortingLayer: 0
   m_SortingOrder: 0
-  m_Sprite: {fileID: 21300000, guid: 85262524544c29546b3cdf65ba5b6972, type: 3}
-  m_Color: {r: 0.9392398, g: 0.9529412, b: 0.4627451, a: 1}
+  m_Sprite: {fileID: 21300000, guid: 028e8bcc06fe3364b814d3d4acf199f4, type: 3}
+  m_Color: {r: 0.98018867, g: 1, b: 0.1745283, a: 1}
   m_FlipX: 0
   m_FlipY: 0
   m_DrawMode: 0
@@ -401,6 +402,23 @@ SpriteRenderer:
   m_WasSpriteAssigned: 1
   m_MaskInteraction: 0
   m_SpriteSortPoint: 0
+--- !u!114 &8372648330017499927
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 3618242380169172953}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: fc899f6c26ac3aa4c8ad48dbbc22e2b1, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  isOn: 0
+  minMaxZ: {x: 0.875, y: 0}
+  minMaxScale: {x: 0.25, y: 0.8}
+  notReadyColor: {r: 1, g: 0, b: 0.022346497, a: 1}
+  playerController: {fileID: 0}
 --- !u!1 &4017310202567453612
 GameObject:
   m_ObjectHideFlags: 0
@@ -882,6 +900,7 @@ MonoBehaviour:
   inputVelocity: {x: 0, y: 0}
   stepLengthSqr: 1.78
   canBeControlled: 1
+  aimGfx: {fileID: 8372648330017499927}
 --- !u!143 &811825519810356235
 CharacterController:
   m_ObjectHideFlags: 0
@@ -1731,6 +1750,11 @@ Transform:
   m_CorrespondingSourceObject: {fileID: 6734931530170869177, guid: 0cd445c24f9478144b50471a01df4dc2, type: 3}
   m_PrefabInstance: {fileID: 9115397538415442167}
   m_PrefabAsset: {fileID: 0}
+--- !u!4 &8722026317513858844 stripped
+Transform:
+  m_CorrespondingSourceObject: {fileID: -8679921383154817045, guid: 0cd445c24f9478144b50471a01df4dc2, type: 3}
+  m_PrefabInstance: {fileID: 9115397538415442167}
+  m_PrefabAsset: {fileID: 0}
 --- !u!4 &4798572037367162769 stripped
 Transform:
   m_CorrespondingSourceObject: {fileID: 4330094614076497766, guid: 0cd445c24f9478144b50471a01df4dc2, type: 3}
@@ -1744,10 +1768,5 @@ Transform:
 --- !u!95 &3452836419510748518 stripped
 Animator:
   m_CorrespondingSourceObject: {fileID: 5866666021909216657, guid: 0cd445c24f9478144b50471a01df4dc2, type: 3}
-  m_PrefabInstance: {fileID: 9115397538415442167}
-  m_PrefabAsset: {fileID: 0}
---- !u!4 &8722026317513858844 stripped
-Transform:
-  m_CorrespondingSourceObject: {fileID: -8679921383154817045, guid: 0cd445c24f9478144b50471a01df4dc2, type: 3}
   m_PrefabInstance: {fileID: 9115397538415442167}
   m_PrefabAsset: {fileID: 0}
