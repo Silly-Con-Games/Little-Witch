@@ -10,6 +10,7 @@ GameObject:
   m_Component:
   - component: {fileID: 2915904505656455433}
   - component: {fileID: 2915904505656455438}
+  - component: {fileID: 3228296382838383238}
   m_Layer: 0
   m_Name: MapController
   m_TagString: Untagged
@@ -52,3 +53,34 @@ MonoBehaviour:
   waterProp:
     prop: {fileID: 3028385164208695558, guid: 5675160e28dc3a24c9385ff9f42345fc, type: 3}
     chance: 0.2
+  navMeshSurface: {fileID: 3228296382838383238}
+--- !u!114 &3228296382838383238
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 2915904505656455439}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 7a5ac11cc976e418e8d13136b07e1f52, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  m_AgentTypeID: 0
+  m_CollectObjects: 0
+  m_Size: {x: 10, y: 10, z: 10}
+  m_Center: {x: 0, y: 2, z: 0}
+  m_LayerMask:
+    serializedVersion: 2
+    m_Bits: 128
+  m_UseGeometry: 1
+  m_DefaultArea: 0
+  m_IgnoreNavMeshAgent: 1
+  m_IgnoreNavMeshObstacle: 1
+  m_OverrideTileSize: 1
+  m_TileSize: 100
+  m_OverrideVoxelSize: 1
+  m_VoxelSize: 0.1
+  m_MinRegionArea: 2
+  m_NavMeshData: {fileID: 23800000, guid: 28b5961e4c1f1a24387db2193a834be3, type: 2}
+  m_BuildHeightMesh: 0
