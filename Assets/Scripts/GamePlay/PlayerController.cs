@@ -14,7 +14,8 @@ public class PlayerController : MonoBehaviour, IDamagable
     public CharacterController characterController;
     public MapController mapController;
     public HUDController hudController;
-	public PauseController pauseController;
+    public TransformMenu transformMenu;
+    public PauseController pauseController;
 
     public UnityEvent onDeathEvent;
 
@@ -64,7 +65,19 @@ public class PlayerController : MonoBehaviour, IDamagable
 
     private bool gamepadActive = false;
 
-    public Vector3 mouseWorldPosition { get; internal set; }
+    public bool canBeControlled = true;
+
+    public  Vector3 mouseWorldPosition { get; internal set; }
+
+    private void Start()
+    {
+        // delete after transform menu finished
+/*        PlayerInput pi = GetComponent<PlayerInput>();
+        transformMenu = FindObjectOfType<TransformMenu>();
+        transformMenu.playerController = this;
+        pi.actions["TransformMenu"].performed += _ => transformMenu.OpenMenu();
+        pi.actions["TransformMenu"].canceled += _ => transformMenu.CloseMenu();*/
+    }
 
     public void Initialize()
     {
@@ -93,6 +106,16 @@ public class PlayerController : MonoBehaviour, IDamagable
         if (!hudController)
         {
             hudController = FindObjectOfType<HUDController>();
+            hudController.playerController = this;
+        }
+
+        if (!transformMenu)
+        {
+            PlayerInput pi = GetComponent<PlayerInput>();
+            transformMenu = FindObjectOfType<TransformMenu>();
+            transformMenu.playerController = this;
+            pi.actions["TransformMenu"].performed += _ => transformMenu.OpenMenu();
+            pi.actions["TransformMenu"].canceled += _ => transformMenu.CloseMenu();
         }
 
         hudController.playerController = this;
@@ -116,6 +139,7 @@ public class PlayerController : MonoBehaviour, IDamagable
             passive();
 
 		mapController.SetPlayerPosition(transform.position);
+
     }
 
     private void OnDestroy()
@@ -160,6 +184,8 @@ public class PlayerController : MonoBehaviour, IDamagable
 
     void MoveUpdate()
     {
+        if (!canBeControlled) return;
+
         // Direction
         if (gamepadActive)
         {
@@ -280,6 +306,8 @@ public class PlayerController : MonoBehaviour, IDamagable
 
     public void OnDash(InputValue value)
     {
+        if (!canBeControlled) return;
+
         if (value.isPressed && dashAbility.IsReady)
         {
             FMODUnity.RuntimeManager.PlayOneShot("event:/witch/dash/dash");
@@ -298,7 +326,9 @@ public class PlayerController : MonoBehaviour, IDamagable
 
     public void OnMeleeAbility(InputValue value)
     {
-		if (!pauseController.IsPaused() && meleeAbility.IsReady)
+        if (!canBeControlled) return;
+
+        if (!pauseController.IsPaused() && meleeAbility.IsReady)
         {
             meleeAbility.Attack();
             ScaleSpeedModifier(meleeAbility.conf.attackSlow);
@@ -318,7 +348,9 @@ public class PlayerController : MonoBehaviour, IDamagable
 
     public void OnChargeAbility(InputValue value)
     {
-		if (!pauseController.IsPaused()) {
+        if (!canBeControlled) return;
+
+        if (!pauseController.IsPaused()) {
             if (value.isPressed && chargeAbility.IsReady())
             {
                 animator.SetTrigger("Cast");
@@ -336,7 +368,9 @@ public class PlayerController : MonoBehaviour, IDamagable
 
     public void OnMainAbility(InputValue value)
     {
-        if(currentMainAbility != null && currentMainAbility.IsReady)
+        if (!canBeControlled) return;
+
+        if (currentMainAbility != null && currentMainAbility.IsReady)
         {
             animator.SetTrigger("Cast");
 
@@ -383,6 +417,8 @@ public class PlayerController : MonoBehaviour, IDamagable
 
     public void OnRevive(InputValue value)
     {
+        if (!canBeControlled) return;
+
         if (transformAbility.IsReady())
         {
             transformAbility.Revive();
@@ -391,7 +427,9 @@ public class PlayerController : MonoBehaviour, IDamagable
             GameEventQueue.QueueEvent(new BiomeTransformationFailedEvent(noEnergy: true, revive: true));
     }
 
-	private void Transform(BiomeType target) {
+	public void Transform(BiomeType target) {
+        if (!canBeControlled) return;
+
         if (transformAbility.IsReady())
         {
             transformAbility.Transform(target);
@@ -414,7 +452,12 @@ public class PlayerController : MonoBehaviour, IDamagable
         inputRotation = value.Get<Vector2>();
     }
 
-	public void ReceiveDamage(float amount)
+    private void OnTransformMenu(InputValue value)
+    {
+
+    }
+
+    public void ReceiveDamage(float amount)
     {
         if (isDead) return;
         FMODUnity.RuntimeManager.PlayOneShot("event:/witch/hit/witch_hit");
