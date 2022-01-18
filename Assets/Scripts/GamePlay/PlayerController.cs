@@ -109,21 +109,30 @@ public class PlayerController : MonoBehaviour, IDamagable
             hudController.playerController = this;
         }
 
-        if (!transformMenu)
-        {
-            PlayerInput pi = GetComponent<PlayerInput>();
-            transformMenu = FindObjectOfType<TransformMenu>();
-            transformMenu.playerController = this;
-            pi.actions["TransformMenu"].performed += _ => transformMenu.OpenMenu();
-            pi.actions["TransformMenu"].canceled += _ => transformMenu.CloseMenu();
-        }
+        SetUpInput();
 
         hudController.playerController = this;
-        Debug.Log("setting hudcont player cont to " + this);
 
         ApplyConfig();
 
         isDead = false;
+    }
+
+    private void SetUpInput()
+    {
+        PlayerInput pi = GetComponent<PlayerInput>();
+
+        if (!transformMenu)
+        {
+            transformMenu = FindObjectOfType<TransformMenu>();
+            transformMenu.playerController = this;
+            pi.actions["TransformMenu"].performed += _ => transformMenu.OpenMenu(transformAbility.IsReady());
+            pi.actions["TransformMenu"].canceled += _ => transformMenu.CloseMenu();
+        }
+
+        //pi.actions["MainAbility"].performed += _ => transformMenu.OpenMenu(transformAbility.IsReady());
+        //pi.actions["MainAbility"].canceled += _ => transformMenu.CloseMenu();
+
     }
 
     void Update()
@@ -366,7 +375,12 @@ public class PlayerController : MonoBehaviour, IDamagable
 		}
     }
 
-    public void OnMainAbility(InputValue value)
+    public void AimMainAbility()
+    {
+
+    }
+
+    public void OnMainAbility()
     {
         if (!canBeControlled) return;
 

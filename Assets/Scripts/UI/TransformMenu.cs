@@ -17,8 +17,10 @@ public class TransformMenu : MonoBehaviour
     }
 
     // forbid this if player doesn't have energy to transform !
-    public void OpenMenu()
+    public void OpenMenu(bool canOpen)
     {
+        if (!canOpen) return;
+
         SlowGame();
         contents.SetActive(true);
         playerController.canBeControlled = false;

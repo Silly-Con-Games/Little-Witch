@@ -81,12 +81,12 @@ MonoBehaviour:
     isActive: 0
   - abilityType: 4
     hintText: revive
-    buttonToPress: E or Q
+    buttonToPress: E
     instance: {fileID: 0}
     isActive: 0
   - abilityType: 5
     hintText: transform
-    buttonToPress: 1, 2, 3
+    buttonToPress: 1, 2, 3 or Q
     instance: {fileID: 0}
     isActive: 0
   hintPrefab: {fileID: 1277216190223676070, guid: 2899795176891614d83a6f6f95a59b8e, type: 3}
@@ -108,7 +108,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 1
+  m_IsActive: 0
 --- !u!224 &3350358103739751808
 RectTransform:
   m_ObjectHideFlags: 0
