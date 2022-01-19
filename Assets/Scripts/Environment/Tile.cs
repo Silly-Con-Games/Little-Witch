@@ -270,6 +270,8 @@ public class Tile : MonoBehaviour {
 		bool alsoSaturate = type == BiomeType.DEAD;
 
 		bool toWater = target == BiomeType.WATER;
+		if(!toWater)
+			grass.enabled = true;
 		float initWater = mesh.sharedMaterials[1].GetFloat("_IsWater");
 		float initHeight = transform.position.y;
 
@@ -313,6 +315,7 @@ public class Tile : MonoBehaviour {
 		if (toWater)
 		{
 			SetWater(mesh, 1f);
+			grass.enabled = false;
 			SetHeight(-waterDepression);
 			SetGrassHeightModifier(grass, 0f);
 		}
