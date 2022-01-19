@@ -4,7 +4,6 @@ using UnityEngine;
 using UnityEngine.UI;
 using TMPro;
 using System;
-using UnityEngine.InputSystem;
 
 public class HUDController : MonoBehaviour
 {
@@ -22,7 +21,6 @@ public class HUDController : MonoBehaviour
 
     // ability icons
     [SerializeField] private Image[] icons;
-    [SerializeField] private TextMeshProUGUI[] iconText;
     private Image[] iconsInner;
     private Color[] iconColors;
 
@@ -45,7 +43,6 @@ public class HUDController : MonoBehaviour
         {
             iconsInner[i] = icons[i].GetComponentsInChildren<Image>()[1];
             iconColors[i] = iconsInner[i].color;
-            //iconText[i] = GetComponentInChildren<TextMeshProUGUI>();
         }
     }
 
@@ -233,15 +230,6 @@ public class HUDController : MonoBehaviour
                 icons[2].GetComponent<Animator>().SetTrigger("NotReady");
                 break;
         }
-    }
-
-    // TODO change this from hardcoded to read the binded buttons from player input
-    public void SwitchControlScheme(PlayerInput pi)
-    {
-        bool gamepad = pi.currentControlScheme.Equals("Gamepad"); 
-        iconText[0].text = gamepad ? "X" : "1";
-        iconText[1].text = gamepad ? "A" : "2";
-        iconText[2].text = gamepad ? "B" : "3";
     }
 
     #endregion

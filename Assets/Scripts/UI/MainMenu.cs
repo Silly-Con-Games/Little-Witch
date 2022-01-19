@@ -2,7 +2,6 @@ using UnityEngine;
 using UnityEngine.SceneManagement;
 using System.IO;
 using UnityEngine.UI;
-using UnityEngine.InputSystem;
 
 public class MainMenu : MonoBehaviour
 {
@@ -20,11 +19,6 @@ public class MainMenu : MonoBehaviour
 	public Button continueButton;
 
 	public TMPro.TextMeshProUGUI playerNameText;
-
-	[SerializeField] private GameObject[] allPopUpMenus;
-	private GameObject currentOpenMenu = null;
-
-	private bool gamepadActive = false;
 
 	void Start() {
 		if (!File.Exists(Application.persistentDataPath + "/gamesave.save")) {
@@ -56,11 +50,7 @@ public class MainMenu : MonoBehaviour
 	public void ShowMainMenu()
 	{
 		mainMenu.SetActive(true);
-		if (gamepadActive) SelectFirstButton(mainMenu);
-        foreach (var menu in allPopUpMenus)
-		{
-			menu.SetActive(false);
-		}
+		enterName.SetActive(false);
 	}
 
 	public void EnableContinueToMain(TMPro.TMP_InputField playerName)
@@ -76,10 +66,9 @@ public class MainMenu : MonoBehaviour
 		continueToMainButton.interactable = true;
     }
 
-	public void ShowControls()
-	{
+	public void ShowControls() {
+
 		controls.SetActive(true);
-		if (gamepadActive) SelectFirstButton(controls);
 	}
 
 	public void ShowControlsBeforeStart()
@@ -88,15 +77,12 @@ public class MainMenu : MonoBehaviour
 		controlsTutorial.StartTutorial();
 	}
 
-	public void ShowSettings()
-	{
+	public void ShowSettings() {
 		settings.SetActive(true);
-		if (gamepadActive) SelectFirstButton(settings);
 	}
 
 	public void ShowCredits() {
 		credits.SetActive(true);
-		if (gamepadActive) SelectFirstButton(credits);
 	}
 
 	public void ShowBeforeQuit()
@@ -117,22 +103,5 @@ public class MainMenu : MonoBehaviour
 #else
 		Application.Quit();
 #endif
-	}
-
-	private void OnCancel(InputValue inputValue)
-	{
-		ShowMainMenu();
-	}
-
-	private void SelectFirstButton(GameObject menu)
-    {
-		menu.GetComponentInChildren<Button>().Select();
-	}
-
-	public void OnControlsChanged(PlayerInput pi)
-	{
-		Debug.Log("controls changed");
-		gamepadActive = pi.currentControlScheme.Equals("Gamepad");
-		if (gamepadActive) SelectFirstButton(mainMenu);
 	}
 }

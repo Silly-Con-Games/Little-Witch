@@ -3,13 +3,11 @@ using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.InputSystem;
 using UnityEngine.SceneManagement;
-using UnityEngine.UI;
 
 public class PauseController : MonoBehaviour
 {
 	public GameObject menu;
 	public GameObject controls;
-	public Button resumeButton;
 
 	private bool paused = false;
 	private bool pauseLocked = false;
@@ -33,7 +31,6 @@ public class PauseController : MonoBehaviour
 	public void PauseGame() {
 		Time.timeScale = 0f;
 		menu.SetActive(true);
-		resumeButton.Select();
 		paused = true;
 	}
 
