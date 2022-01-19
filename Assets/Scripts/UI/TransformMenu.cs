@@ -11,8 +11,11 @@ public class TransformMenu : MonoBehaviour
 
     public PlayerController playerController;
 
+    //private SelectableTransformMenuItem firstItem;
+
     public void Start()
     {
+        //firstItem = GetComponentInChildren<SelectableTransformMenuItem>();
         CloseMenu();
     }
 
@@ -24,6 +27,7 @@ public class TransformMenu : MonoBehaviour
         SlowGame();
         contents.SetActive(true);
         playerController.canBeControlled = false;
+        //if (playerController.gamepadActive) firstItem.Select();
     }
 
     public void CloseMenu()

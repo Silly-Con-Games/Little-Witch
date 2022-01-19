@@ -8,51 +8,31 @@ public class SelectableTransformMenuItem : Selectable
 {
     [SerializeField] private BiomeType biome;
 
-    [SerializeField] private Image bg;
-
-    [SerializeField] private GameObject active;
-    [SerializeField] private Image inactive;
-
     private TransformMenu transformMenu;
 
-    void Start()
+    new void Start()
     {
-        inactive.alphaHitTestMinimumThreshold = 0.3f;
+        //Debug.Log("in start of selectable " + name);
+        GetComponent<Image>().alphaHitTestMinimumThreshold = 0.3f;
         transformMenu = GetComponentInParent<TransformMenu>();
-        DeselectThis();
+        //DeselectThis();
     }
 
-    //Detect if the Cursor starts to pass over the GameObject
-    public override void OnPointerEnter(PointerEventData pointerEventData)
+/*    new void OnSelect(BaseEventData data)
     {
-        SelectThis();
-    }
-
-    //Detect when Cursor leaves the GameObject
-    public override void OnPointerExit(PointerEventData pointerEventData)
-    {
-        DeselectThis();
-    }
-
-    private void SelectThis()
-    {
-        inactive.enabled = false;
-        active.SetActive(true);
-        //bg.enabled = true;
+        Debug.Log("Selecting " + name);
         transformMenu.Select(biome);
     }
 
-    private void DeselectThis()
+    new void OnDeselect(BaseEventData data)
     {
-        inactive.enabled = true;
-        active.SetActive(false);
-        //bg.enabled = false;
+        Debug.Log("Deselecting " + name);
         transformMenu.Select(BiomeType.UNKNOWN);
-    }
+    }*/
 
-    protected override void OnDisable()
+    protected new void OnDisable()
     {
-        DeselectThis();
+        //DeselectThis();
     }
 
 

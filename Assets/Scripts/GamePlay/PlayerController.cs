@@ -5,6 +5,7 @@ using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.Events;
 using UnityEngine.InputSystem;
+using UnityEngine.InputSystem.UI;
 
 public class PlayerController : MonoBehaviour, IDamagable
 {
@@ -62,7 +63,7 @@ public class PlayerController : MonoBehaviour, IDamagable
 
     private float rotationSpeed = 1000f;
 
-    private bool gamepadActive = false;
+    public bool gamepadActive = false;
 
     public bool canBeControlled = true;
 
@@ -126,6 +127,7 @@ public class PlayerController : MonoBehaviour, IDamagable
         pi.actions["MainAbility"].performed += _ => AimMainAbility();
         pi.actions["MainAbility"].canceled += _ => CastMainAbility();
 
+        if (pi.uiInputModule == null) pi.uiInputModule = FindObjectOfType<InputSystemUIInputModule>();
     }
 
     void Update()
@@ -201,6 +203,7 @@ public class PlayerController : MonoBehaviour, IDamagable
                 new Vector3(inputVelocity.x, 0, inputVelocity.y).normalized :
                 new Vector3(inputRotation.x, 0, inputRotation.y).normalized;
             mouseWorldPosition = transform.position + lookDir * forestAbility.conf.maxRange;  // used for abilities' direction computation
+            if (lookDir == Vector3.zero) lookDir = Vector3.forward;
             Quaternion targetRot = Quaternion.LookRotation(lookDir, Vector3.up);
             transform.rotation = Quaternion.RotateTowards(transform.rotation, targetRot, Time.deltaTime * rotationSpeed);
         }
@@ -490,6 +493,7 @@ public class PlayerController : MonoBehaviour, IDamagable
     {
         if (isDead) return;
         FMODUnity.RuntimeManager.PlayOneShot("event:/witch/hit/witch_hit");
+        FMODUnity.RuntimeManager.PlayOneShot("event:/witch/hit/witch_ouch");
         animator.SetTrigger("GetHit");
 
         health.TakeDamage(amount);
@@ -525,6 +529,7 @@ public class PlayerController : MonoBehaviour, IDamagable
     {
         Debug.Log("controls changed");
         gamepadActive = pi.currentControlScheme.Equals("Gamepad");
+        hudController.SwitchControlScheme(pi);
     }
 
 }
