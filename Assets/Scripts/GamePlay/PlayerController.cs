@@ -200,7 +200,7 @@ public class PlayerController : MonoBehaviour, IDamagable
             Vector3 lookDir = inputRotation == Vector2.zero ?
                 new Vector3(inputVelocity.x, 0, inputVelocity.y).normalized :
                 new Vector3(inputRotation.x, 0, inputRotation.y).normalized;
-            mouseWorldPosition = lookDir;
+            mouseWorldPosition = transform.position + lookDir * forestAbility.conf.maxRange;  // used for abilities' direction computation
             Quaternion targetRot = Quaternion.LookRotation(lookDir, Vector3.up);
             transform.rotation = Quaternion.RotateTowards(transform.rotation, targetRot, Time.deltaTime * rotationSpeed);
         }
