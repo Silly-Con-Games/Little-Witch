@@ -490,6 +490,7 @@ public class PlayerController : MonoBehaviour, IDamagable
     {
         if (isDead) return;
         FMODUnity.RuntimeManager.PlayOneShot("event:/witch/hit/witch_hit");
+        FMODUnity.RuntimeManager.PlayOneShot("event:/witch/hit/witch_ouch");
         animator.SetTrigger("GetHit");
 
         health.TakeDamage(amount);
