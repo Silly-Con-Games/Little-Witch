@@ -1,7 +1,4 @@
-using System.Collections;
-using System.Collections.Generic;
 using UnityEditor;
-using UnityEditor.SceneManagement;
 using UnityEngine;
 using UnityEngine.Assertions;
 
@@ -50,6 +47,7 @@ namespace Assets.Scripts.Tutorial
             mesh.material = inactiveMat;
         }
 
+#if UNITY_EDITOR
         private void OnValidate()
         {
             if (Application.isPlaying)
@@ -66,5 +64,6 @@ namespace Assets.Scripts.Tutorial
             Undo.RecordObject(gameObject, "Spawn activated");
             Undo.RecordObject(controller.gameObject, "Red to active spawn updated");
         }
+#endif
     }
 }
