@@ -207,7 +207,9 @@ public class PlayerController : MonoBehaviour, IDamagable
         else
         {
             Vector2 mousePos = Mouse.current.position.ReadValue();
-            float camDist = Vector3.Distance(transform.position, mainCamera.transform.position);
+            Vector3 pos = transform.position;
+            pos.y -= 1.2f;
+            float camDist = Vector3.Distance(pos, mainCamera.transform.position);
             Vector3 lookDir = mainCamera.ScreenToWorldPoint(new Vector3(mousePos.x, mousePos.y, camDist));
             mouseWorldPosition = lookDir;
             lookDir.y = transform.position.y;
@@ -260,8 +262,7 @@ public class PlayerController : MonoBehaviour, IDamagable
 
         animator.SetFloat("VelocityX", velocityX, .1f, Time.deltaTime);
         animator.SetFloat("VelocityZ", velocityZ, .1f, Time.deltaTime);
-        if (velocity.magnitude > 0)
-            characterController.Move(velocity * delta);
+        characterController.Move(velocity * delta);
     }
 
     void CheckCurrentBiome()
