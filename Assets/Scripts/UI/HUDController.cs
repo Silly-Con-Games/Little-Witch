@@ -264,6 +264,12 @@ public class HUDController : MonoBehaviour
         waveInfo.SetTrigger("WaveDefeated");
     }
 
+    public void ShowHintText(string str)
+    {
+        waveInfoText.text = str;
+        waveInfo.SetTrigger("WaveDefeated");
+    }
+
     #endregion
 
     #region Game goal

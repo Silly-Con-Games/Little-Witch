@@ -47,7 +47,7 @@ namespace Assets.Scripts.Tutorial
         public void ResetTest()
         {
             HintSpawner.SpawnHint(failureHint);
-            group.ResetEnemies();
+            group.ResetEnemies(1);
         }
 
         public void Completed()

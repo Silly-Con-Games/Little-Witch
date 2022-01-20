@@ -20,11 +20,12 @@ namespace Assets.Scripts.Tutorial
         public UnityEvent onCompleted;
 
         private List<Tile> tiles;
-
+        private BiomeType[] backUp;
+        private HUDController hud;
         private void Start()
         {
             ev.ontriggerenter.AddListener(PlayerEntered);
-
+            hud = FindObjectOfType<HUDController>();
             tiles = new List<Tile>();
             for (int i = 0; i < tilesParent.childCount; i++)
             {
@@ -35,6 +36,7 @@ namespace Assets.Scripts.Tutorial
                     tiles.Add(t);
                 }
             }
+            backUp = new BiomeType[tiles.Count];
         }
 
         private void PlayerEntered(Collider other)
@@ -50,12 +52,14 @@ namespace Assets.Scripts.Tutorial
         public void StartTransformPart()
         {
             Debug.Log($"Starting transform part of test {gameObject.name}", gameObject);
+            hud.ShowHintText($"Transform {transformationThreshold*100}% of the tiles");
             GameEventQueue.AddListener(typeof(BiomeTransformedEvent), OnPlayerTransform);
             HintSpawner.SpawnHint(startHint);
         }
 
         public void StartCombatPart()
         {
+            hud.ShowHintText("Prepare to fight!");
             Debug.Log($"Starting combat part of test {gameObject.name}", gameObject);
             GameEventQueue.AddListener(typeof(PlayerRespawnedEvent), OnPlayerRes);
             foreach (var o in energySpawners)
@@ -71,7 +75,10 @@ namespace Assets.Scripts.Tutorial
 
         private void ResetCombatPartTest()
         {
-            group.ResetEnemies();
+            hud.ShowHintText("Prepare to fight!");
+            for (int i = 0; i < backUp.Length; i++)
+                tiles[i].Morph(backUp[i], true);
+            group.ResetEnemies(3);
         }
 
         private void OnPlayerTransform(IGameEvent ev)
@@ -87,6 +94,8 @@ namespace Assets.Scripts.Tutorial
             if ((float)aliveCnt / tiles.Count > transformationThreshold)
             {
                 GameEventQueue.RemoveListener(typeof(BiomeTransformedEvent), OnPlayerTransform);
+                for (int i = 0; i < backUp.Length; i++)
+                    backUp[i] = tiles[i].GetBiomeType();
                 StartCombatPart();
             }
         }

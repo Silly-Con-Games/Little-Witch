@@ -22,10 +22,10 @@ namespace Assets.Scripts.Enemies
 
         List<EnemyAI> alive = new List<EnemyAI>();
         public UnityEvent groupDied;
-        public void ResetEnemies()
+        public void ResetEnemies(float spawnDelay = 0)
         {
             KillAll();
-            SpawnAll();
+            StartCoroutine(CoroutineUtils.CallWithDelay(SpawnAll, spawnDelay));
         }
 
         public void SpawnAll()
