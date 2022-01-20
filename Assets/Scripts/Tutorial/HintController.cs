@@ -20,6 +20,7 @@ public class HintController : MonoBehaviour
 
         playerController = FindObjectOfType<PlayerController>();
         playerController.controlSchemeChanged.AddListener(SwitchText);
+        SwitchText(playerController.gamepadActive);
     }
 
     private void SwitchText(bool gamepad)
