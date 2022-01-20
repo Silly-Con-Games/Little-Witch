@@ -1,10 +1,8 @@
 using Assets.Scripts.GameEvents;
 using Cinemachine;
-using Config;
 using System.Collections;
-using System.Collections.Generic;
 using UnityEngine;
-using UnityEngine.Events;
+using UnityEngine.SceneManagement;
 
 namespace Assets.Scripts.Tutorial
 {
@@ -49,5 +47,10 @@ namespace Assets.Scripts.Tutorial
             cmCamera.Follow = currentWitch.transform;
         }
 
+        public void LastTestFinished()
+        {
+            SceneManager.LoadScene("mainMenu");
+
+        }
     }
 }

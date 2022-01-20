@@ -4,6 +4,7 @@ using System;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.Events;
 
 namespace Assets.Scripts.Tutorial
 {
@@ -15,6 +16,8 @@ namespace Assets.Scripts.Tutorial
         public List<GameObject> energySpawners;
         public Transform tilesParent;
         public float transformationThreshold = 0.7f;
+
+        public UnityEvent onCompleted;
 
         private List<Tile> tiles;
 
@@ -91,6 +94,7 @@ namespace Assets.Scripts.Tutorial
         private void Completed()
         {
             Debug.Log($"Combat part of {gameObject.name} completed");
+            onCompleted.Invoke();
         }
     }
 }
