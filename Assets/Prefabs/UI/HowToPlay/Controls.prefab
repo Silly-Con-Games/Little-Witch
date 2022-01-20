@@ -245,6 +245,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 13c6bf23c8c4b1c4cabff1e76ede524c, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  underlay: {fileID: 0}
   pages:
   - {fileID: 5836456167642302784}
   - {fileID: 1687117365152422992}
@@ -521,6 +522,10 @@ PrefabInstance:
     - target: {fileID: 8113398635045158133, guid: 9718ea0311d59ef4f8f28438705d374e, type: 3}
       propertyPath: m_Name
       value: Next
+      objectReference: {fileID: 0}
+    - target: {fileID: 8762100763079386477, guid: 9718ea0311d59ef4f8f28438705d374e, type: 3}
+      propertyPath: m_Navigation.m_Mode
+      value: 3
       objectReference: {fileID: 0}
     - target: {fileID: 8762100763079386477, guid: 9718ea0311d59ef4f8f28438705d374e, type: 3}
       propertyPath: m_Colors.m_SelectedColor.b
@@ -1079,6 +1084,10 @@ PrefabInstance:
       value: Close
       objectReference: {fileID: 0}
     - target: {fileID: 8762100763079386477, guid: 9718ea0311d59ef4f8f28438705d374e, type: 3}
+      propertyPath: m_Navigation.m_Mode
+      value: 3
+      objectReference: {fileID: 0}
+    - target: {fileID: 8762100763079386477, guid: 9718ea0311d59ef4f8f28438705d374e, type: 3}
       propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.size
       value: 2
       objectReference: {fileID: 0}
@@ -1282,6 +1291,10 @@ PrefabInstance:
     - target: {fileID: 8113398635045158133, guid: 9718ea0311d59ef4f8f28438705d374e, type: 3}
       propertyPath: m_Name
       value: Previous
+      objectReference: {fileID: 0}
+    - target: {fileID: 8762100763079386477, guid: 9718ea0311d59ef4f8f28438705d374e, type: 3}
+      propertyPath: m_Navigation.m_Mode
+      value: 3
       objectReference: {fileID: 0}
     - target: {fileID: 8762100763079386477, guid: 9718ea0311d59ef4f8f28438705d374e, type: 3}
       propertyPath: m_Colors.m_SelectedColor.b

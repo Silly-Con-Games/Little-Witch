@@ -2,10 +2,8 @@ using UnityEngine;
 using UnityEngine.UI;
 using FMODUnity;
 
-public class SettingsMenu : MonoBehaviour
+public class SettingsMenu : PopupMenu
 {
-	[SerializeField] private GameObject underlay;
-
 	public Slider musicSlider;
 	public Slider soundsSlider;
 	
@@ -16,9 +14,9 @@ public class SettingsMenu : MonoBehaviour
 		soundsSlider.value = PlayerPrefs.GetFloat("sounds_volume", 1f) * 10f;
 	}
 
-	public void Close() {
+	public new void Close() {
 		PlayerPrefs.Save();
-		gameObject.SetActive(false);
+		base.Close();
 	}
 
 	public void OnMusicChange() {
@@ -30,14 +28,5 @@ public class SettingsMenu : MonoBehaviour
 		PlayerPrefs.SetFloat("sounds_volume", soundsSlider.value / 10f);
 		controller.SetSoundsVolume(soundsSlider.value / 10f);
 		RuntimeManager.PlayOneShot("event:/menu_click");
-	}
-	private void OnEnable()
-	{
-		underlay.SetActive(true);
-	}
-
-	private void OnDisable()
-	{
-		underlay.SetActive(false);
 	}
 }

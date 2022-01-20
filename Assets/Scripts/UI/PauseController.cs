@@ -9,10 +9,10 @@ using UnityEngine.UI;
 public class PauseController : MonoBehaviour
 {
 	public GameObject menu;
-	public GameObject controls;
+	public PopupMenu controls;
 
 	public Button firstButton;
-	private Button lastSelectedButton;
+	private GameObject lastSelected;
 
 	[HideInInspector] public PlayerController playerController;
 
@@ -33,7 +33,6 @@ public class PauseController : MonoBehaviour
 
 	public void UnlockPause() {
 		pauseLocked = false;
-		if (playerController.gamepadActive) lastSelectedButton.Select();
 	}
  
 	public void PauseGame() {
@@ -59,8 +58,7 @@ public class PauseController : MonoBehaviour
 
 	public void ShowControls() {
 		LockPause();
-		lastSelectedButton = EventSystem.current.currentSelectedGameObject.GetComponent<Button>();
-		controls.SetActive(true);
+		controls.Open(EventSystem.current.currentSelectedGameObject);
 	}
 
 	public void QuitGame() {
