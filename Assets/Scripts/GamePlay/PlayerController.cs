@@ -70,6 +70,8 @@ public class PlayerController : MonoBehaviour, IDamagable
 
     [SerializeField] private AimingGfxController aimGfx;
 
+    private PlayerInput playerInput;
+
     public void Initialize()
     {
         lastPos = transform.position;
@@ -113,23 +115,27 @@ public class PlayerController : MonoBehaviour, IDamagable
 
     private void SetUpInput()
     {
-        PlayerInput pi = GetComponent<PlayerInput>();
+        if (playerInput == null)
+        {
+            playerInput = GetComponent<PlayerInput>();
+        }
 
         if (!transformMenu)
         {
             transformMenu = FindObjectOfType<TransformMenu>();
             transformMenu.playerController = this;
-            pi.actions["TransformMenu"].performed += _ => transformMenu.OpenMenu(transformAbility.IsReady());
-            pi.actions["TransformMenu"].canceled += _ => transformMenu.CloseMenu();
+            playerInput.actions["TransformMenu"].performed += _ => transformMenu.OpenMenu(transformAbility.IsReady());
+            playerInput.actions["TransformMenu"].canceled += _ => transformMenu.CloseMenu();
         }
 
-        pi.actions["MainAbility"].performed += _ => AimMainAbility();
-        pi.actions["MainAbility"].canceled += _ => CastMainAbility();
-
+        playerInput.actions["MainAbility"].performed += _ => AimMainAbility();
+        playerInput.actions["MainAbility"].canceled += _ => CastMainAbility();
     }
 
     void Update()
     {
+        gamepadActive = playerInput.currentControlScheme.Equals("Gamepad");
+
         MoveUpdate();
 
         CheckCurrentBiome();
@@ -186,8 +192,6 @@ public class PlayerController : MonoBehaviour, IDamagable
         waterAbility.conf = witchConfig.waterAbility;
         meadowAbility.conf = witchConfig.meadowAbility;
         dashAbility.conf = witchConfig.dashAbility;
-
-        OnControlsChanged(GetComponent<PlayerInput>());
     }
 
     void MoveUpdate()
@@ -200,6 +204,7 @@ public class PlayerController : MonoBehaviour, IDamagable
             Vector3 lookDir = inputRotation == Vector2.zero ?
                 new Vector3(inputVelocity.x, 0, inputVelocity.y).normalized :
                 new Vector3(inputRotation.x, 0, inputRotation.y).normalized;
+            lookDir = lookDir == Vector3.zero ? transform.forward : lookDir;
             mouseWorldPosition = transform.position + lookDir * forestAbility.conf.maxRange;  // used for abilities' direction computation
             Quaternion targetRot = Quaternion.LookRotation(lookDir, Vector3.up);
             transform.rotation = Quaternion.RotateTowards(transform.rotation, targetRot, Time.deltaTime * rotationSpeed);
@@ -525,8 +530,8 @@ public class PlayerController : MonoBehaviour, IDamagable
 
     public void OnControlsChanged(PlayerInput pi)
     {
-        Debug.Log("controls changed");
-        gamepadActive = pi.currentControlScheme.Equals("Gamepad");
+        //Debug.Log("controls changed");
+        //gamepadActive = pi.currentControlScheme.Equals("Gamepad");
     }
 
 }

@@ -536,17 +536,6 @@
                     "action": "TransformMenu",
                     "isComposite": false,
                     "isPartOfComposite": false
-                },
-                {
-                    "name": "",
-                    "id": "276a7cbf-99be-4479-b703-6cdd13024fa8",
-                    "path": "<Gamepad>/rightStickPress",
-                    "interactions": "",
-                    "processors": "",
-                    "groups": "Gamepad",
-                    "action": "TransformMenu",
-                    "isComposite": false,
-                    "isPartOfComposite": false
                 }
             ]
         },
