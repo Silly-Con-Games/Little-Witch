@@ -21,6 +21,7 @@ public class HUDController : MonoBehaviour
 
     // ability icons
     [SerializeField] private Image[] icons;
+    private TextMeshProUGUI[] iconsText;
     private Image[] iconsInner;
     private Color[] iconColors;
 
@@ -37,13 +38,21 @@ public class HUDController : MonoBehaviour
     private void Start()
     {
         // ability icons
+        iconsText = new TextMeshProUGUI[icons.Length];
         iconsInner = new Image[icons.Length];
         iconColors = new Color[icons.Length];
         for (int i = 0; i < icons.Length; i++)
         {
+            iconsText[i] = icons[i].GetComponentsInChildren<TextMeshProUGUI>()[0];
             iconsInner[i] = icons[i].GetComponentsInChildren<Image>()[1];
             iconColors[i] = iconsInner[i].color;
         }
+    }
+
+    public void Init(PlayerController playerController)
+    {
+        this.playerController = playerController;
+        playerController.controlSchemeChanged.AddListener(SwitchText);
     }
 
     #region Health and Energy
@@ -230,6 +239,14 @@ public class HUDController : MonoBehaviour
                 icons[2].GetComponent<Animator>().SetTrigger("NotReady");
                 break;
         }
+    }
+
+    // change this to read from input actions
+    public void SwitchText(bool gamepad)
+    {
+        iconsText[0].text = gamepad ? "X" : "1";
+        iconsText[1].text = gamepad ? "A" : "2";
+        iconsText[2].text = gamepad ? "B" : "3";
     }
 
     #endregion

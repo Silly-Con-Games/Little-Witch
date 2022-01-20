@@ -63,6 +63,7 @@ public class PlayerController : MonoBehaviour, IDamagable
     private float rotationSpeed = 1000f;
 
     public bool gamepadActive = false;
+    public UnityEvent<bool> controlSchemeChanged;
 
     public bool canBeControlled = true;
 
@@ -99,12 +100,11 @@ public class PlayerController : MonoBehaviour, IDamagable
         if (!hudController)
         {
             hudController = FindObjectOfType<HUDController>();
-            hudController.playerController = this;
         }
 
         SetUpInput();
 
-        hudController.playerController = this;
+        hudController.Init(this);
         pauseController.playerController = this;
 
         //aimGfx.playerController = this;
@@ -135,7 +135,9 @@ public class PlayerController : MonoBehaviour, IDamagable
 
     void Update()
     {
+        bool prevGP = gamepadActive;
         gamepadActive = playerInput.currentControlScheme.Equals("Gamepad");
+        if (prevGP != gamepadActive) controlSchemeChanged.Invoke(gamepadActive);
 
         MoveUpdate();
 
@@ -509,6 +511,7 @@ public class PlayerController : MonoBehaviour, IDamagable
         isDead = true;
         animator.SetTrigger("Die");
 
+        controlSchemeChanged.RemoveAllListeners();
 		GlobalConfigManager.onConfigChanged.RemoveListener(ApplyConfig);
 		onDeathEvent.Invoke();
         GameEventQueue.QueueEvent(new PlayerDeathEvent());

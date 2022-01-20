@@ -11,6 +11,7 @@ public class Hint
     public EAbilityType abilityType;
     public string hintText;
     public string buttonToPress;
+    public string buttonToPressGamepad;
     [HideInInspector] public HintController instance = null;
     [HideInInspector] public bool isActive = false;
 }
@@ -23,6 +24,8 @@ public class HintSpawner : MonoBehaviour
 
     private Hint activeHint = null;
     private static HintSpawner inst;
+
+    private PlayerController playerController = null;
 
     private void Awake()
     {
@@ -108,6 +111,8 @@ public class HintSpawner : MonoBehaviour
         if (abilityType == EAbilityType.None)
             return;
 
+        if (playerController == null) playerController = FindObjectOfType<PlayerController>();
+
         Debug.Log("spawning hint " + abilityType);
 
         Hint h = hints.Find(x => x.abilityType == abilityType);
@@ -122,7 +127,7 @@ public class HintSpawner : MonoBehaviour
 
         h.isActive = true;
         h.instance = Instantiate(hintPrefab, transform);
-        h.instance.SetHintText(h.hintText, h.buttonToPress);
+        h.instance.SetHintText(h.hintText, h.buttonToPress, h.buttonToPressGamepad);
         activeHint = h;
     }
 
