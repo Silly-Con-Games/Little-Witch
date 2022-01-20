@@ -141,6 +141,9 @@ public class PlayerController : MonoBehaviour, IDamagable
 
         MoveUpdate();
 
+        //chargeAbility.abilityAnimationTransform.localScale = new Vector3(10,10,10);
+        //chargeAbility.abilityAnimationTransform.position = mouseWorldPosition;
+
         CheckCurrentBiome();
 
         if (chargeAbility.IsCharging)
@@ -217,11 +220,17 @@ public class PlayerController : MonoBehaviour, IDamagable
             Vector2 mousePos = Mouse.current.position.ReadValue();
             Vector3 pos = transform.position;
             pos.y -= 1.2f;
-            float camDist = Vector3.Distance(pos, mainCamera.transform.position);
-            Vector3 lookDir = mainCamera.ScreenToWorldPoint(new Vector3(mousePos.x, mousePos.y, camDist));
-            mouseWorldPosition = lookDir;
-            lookDir.y = transform.position.y;
-            transform.LookAt(lookDir);
+            Ray cameraRay = mainCamera.ScreenPointToRay(mousePos);
+
+            Plane p = new Plane(Vector3.up, pos);
+
+            if(p.Raycast(cameraRay, out float enter))
+            {
+                Vector3 mwp = cameraRay.GetPoint(enter);
+                mwp.y = transform.position.y;
+                mouseWorldPosition = mwp;
+                transform.LookAt(mwp);
+            }
         }
 
         if (moveStop)
