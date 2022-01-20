@@ -8,6 +8,9 @@ public class DrainEnergyVolume : MonoBehaviour
     {
         var player = other.GetComponent<PlayerController>();
         if (player != null)
+        {
             player.energy.Set(0);
+            FMODUnity.RuntimeManager.PlayOneShot("event:/energy/drain");
+        }
     }
 }
