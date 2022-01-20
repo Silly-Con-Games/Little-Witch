@@ -62,7 +62,7 @@ public class PlayerController : MonoBehaviour, IDamagable
 
     private float rotationSpeed = 1000f;
 
-    private bool gamepadActive = false;
+    public bool gamepadActive = false;
 
     public bool canBeControlled = true;
 
@@ -105,6 +105,7 @@ public class PlayerController : MonoBehaviour, IDamagable
         SetUpInput();
 
         hudController.playerController = this;
+        pauseController.playerController = this;
 
         //aimGfx.playerController = this;
 

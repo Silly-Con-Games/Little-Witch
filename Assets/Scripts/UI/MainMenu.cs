@@ -2,6 +2,8 @@ using UnityEngine;
 using UnityEngine.SceneManagement;
 using System.IO;
 using UnityEngine.UI;
+using UnityEngine.EventSystems;
+using UnityEngine.InputSystem;
 
 public class MainMenu : MonoBehaviour
 {
@@ -15,8 +17,10 @@ public class MainMenu : MonoBehaviour
 	public GameObject beforeQuit;
 	public HighlightController controlsTutorial;
 
+	public Button firstButton;
 	public Button continueToMainButton;
 	public Button continueButton;
+	private Button lastSelectedButton;
 
 	public TMPro.TextMeshProUGUI playerNameText;
 
@@ -51,6 +55,8 @@ public class MainMenu : MonoBehaviour
 	{
 		mainMenu.SetActive(true);
 		enterName.SetActive(false);
+
+		if (Gamepad.current != null) firstButton.Select();
 	}
 
 	public void EnableContinueToMain(TMPro.TMP_InputField playerName)
@@ -67,8 +73,8 @@ public class MainMenu : MonoBehaviour
     }
 
 	public void ShowControls() {
-
 		controls.SetActive(true);
+		lastSelectedButton = EventSystem.current.currentSelectedGameObject.GetComponent<Button>();
 	}
 
 	public void ShowControlsBeforeStart()
@@ -79,14 +85,21 @@ public class MainMenu : MonoBehaviour
 
 	public void ShowSettings() {
 		settings.SetActive(true);
+		lastSelectedButton = EventSystem.current.currentSelectedGameObject.GetComponent<Button>();
 	}
 
 	public void ShowCredits() {
 		credits.SetActive(true);
+		lastSelectedButton = EventSystem.current.currentSelectedGameObject.GetComponent<Button>();
 	}
 
+	// for questionnaire purposes
 	public void ShowBeforeQuit()
 	{
+		QuitGame();
+
+		return;
+
 		if (!PlayerPrefs.HasKey("player_name"))
 		{
 			// this should never happen
