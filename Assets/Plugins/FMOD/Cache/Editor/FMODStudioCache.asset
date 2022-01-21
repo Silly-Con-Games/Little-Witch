@@ -206,7 +206,7 @@ MonoBehaviour:
   Is3D: 1
   IsOneShot: 1
   Parameters:
-  - {fileID: 2338145820402939729}
+  - {fileID: -5062943695119816386}
   MinDistance: 20
   MaxDistance: 65
   Length: 850
@@ -405,11 +405,11 @@ MonoBehaviour:
   Path: FMOD/LittleWitch/Build/Desktop/Master.strings.bank
   Name: Master.strings
   StudioPath: bank:/Master.strings
-  lastModified: 637713704631566340
+  lastModified: 637783576898622109
   LoadResult: 0
   FileSizes:
   - Name: Desktop
-    Value: 1902
+    Value: 1998
   Exists: 1
 --- !u!114 &-6976951380422352614
 MonoBehaviour:
@@ -914,6 +914,29 @@ MonoBehaviour:
   MinDistance: 0
   MaxDistance: 0
   Length: 800
+--- !u!114 &-5542574091189891889
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: ceb653cd98e289a4e8697a1af55201f2, type: 3}
+  m_Name: event:/energy/drain
+  m_EditorClassIdentifier: 
+  Path: event:/energy/drain
+  guid: 08217c9858c73449aa5246b4536b36ab
+  Banks:
+  - {fileID: -2632736120414982648}
+  IsStream: 0
+  Is3D: 1
+  IsOneShot: 1
+  Parameters: []
+  MinDistance: 20
+  MaxDistance: 60
+  Length: 110
 --- !u!114 &-5495616350905259095
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -980,6 +1003,26 @@ MonoBehaviour:
   MinDistance: 0
   MaxDistance: 0
   Length: 9400
+--- !u!114 &-5062943695119816386
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: fecb8ef7f94ca804a8ab72049b86782e, type: 3}
+  m_Name: parameter:/shot/shot_pitch
+  m_EditorClassIdentifier: 
+  Name: shot_pitch
+  Min: -1
+  Max: 1
+  Default: 0
+  ID:
+    data1: 0
+    data2: 0
+  Exists: 1
 --- !u!114 &-4861724467064263555
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -1308,6 +1351,26 @@ MonoBehaviour:
   MinDistance: 20
   MaxDistance: 60
   Length: 3000
+--- !u!114 &-3074778637582252322
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: fecb8ef7f94ca804a8ab72049b86782e, type: 3}
+  m_Name: parameter:/generic_hit/shot_pitch
+  m_EditorClassIdentifier: 
+  Name: shot_pitch
+  Min: -1
+  Max: 1
+  Default: 0
+  ID:
+    data1: 0
+    data2: 0
+  Exists: 1
 --- !u!114 &-3068407333624880905
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -1430,7 +1493,7 @@ MonoBehaviour:
   Path: FMOD/LittleWitch/Build/Desktop/Master.bank
   Name: Master
   StudioPath: bank:/Master
-  lastModified: 637713704631307041
+  lastModified: 637783576898585844
   LoadResult: 0
   FileSizes: []
   Exists: 1
@@ -2043,7 +2106,7 @@ MonoBehaviour:
   Is3D: 1
   IsOneShot: 1
   Parameters:
-  - {fileID: 1944321561418976916}
+  - {fileID: -3074778637582252322}
   MinDistance: 20
   MaxDistance: 60
   Length: 830
@@ -2127,12 +2190,14 @@ MonoBehaviour:
   - {fileID: 5240621967272643680}
   - {fileID: -3931659395122786078}
   - {fileID: 7517694276591758114}
+  - {fileID: -5542574091189891889}
+  - {fileID: 5403332232937270476}
   EditorParameters: []
   MasterBanks:
   - {fileID: -2632736120414982648}
   StringsBanks:
   - {fileID: -7008871818448349652}
-  stringsBankWriteTime: 637713704631566340
+  stringsBankWriteTime: 637783576898622109
   cacheVersion: 6
 --- !u!114 &63060824806312001
 MonoBehaviour:
@@ -2490,7 +2555,7 @@ MonoBehaviour:
   ID:
     data1: 0
     data2: 0
-  Exists: 1
+  Exists: 0
 --- !u!114 &1998181927587920804
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -2613,7 +2678,7 @@ MonoBehaviour:
   ID:
     data1: 0
     data2: 0
-  Exists: 1
+  Exists: 0
 --- !u!114 &2383227143507474853
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -3166,6 +3231,29 @@ MonoBehaviour:
     data1: 0
     data2: 0
   Exists: 0
+--- !u!114 &5403332232937270476
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: ceb653cd98e289a4e8697a1af55201f2, type: 3}
+  m_Name: event:/witch/hit/witch_ouch
+  m_EditorClassIdentifier: 
+  Path: event:/witch/hit/witch_ouch
+  guid: f31e2f687cd23947b7f64c74042490cf
+  Banks:
+  - {fileID: -2632736120414982648}
+  IsStream: 0
+  Is3D: 0
+  IsOneShot: 1
+  Parameters: []
+  MinDistance: 0
+  MaxDistance: 0
+  Length: 700
 --- !u!114 &5477300325459070126
 MonoBehaviour:
   m_ObjectHideFlags: 0
