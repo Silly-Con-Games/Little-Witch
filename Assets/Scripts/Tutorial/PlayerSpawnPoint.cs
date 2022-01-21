@@ -14,7 +14,7 @@ namespace Assets.Scripts.Tutorial
         public bool isActive = false;
         private static TutorialController controller;
 
-        private void Awake()
+        private void Start()
         {
             if (controller == null)
                 controller = FindObjectOfType<TutorialController>();
