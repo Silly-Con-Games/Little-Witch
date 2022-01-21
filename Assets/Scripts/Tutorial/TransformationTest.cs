@@ -65,7 +65,7 @@ namespace Assets.Scripts.Tutorial
             foreach (var o in energySpawners)
                 o.SetActive(false);
             group.groupDied.AddListener(Completed);
-            group.SpawnAll();
+            StartCoroutine(CoroutineUtils.CallWithDelay(group.SpawnAll, 4));
         }
 
         void OnPlayerRes(IGameEvent e)
@@ -76,6 +76,7 @@ namespace Assets.Scripts.Tutorial
         private void ResetCombatPartTest()
         {
             hud.ShowHintText("Prepare to fight!");
+            FindObjectOfType<PlayerController>().energy.AddEnergy(1000);
             for (int i = 0; i < backUp.Length; i++)
                 tiles[i].Morph(backUp[i], true);
             group.ResetEnemies(3);

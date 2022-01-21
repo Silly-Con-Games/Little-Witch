@@ -22,7 +22,7 @@ namespace Assets.Scripts.Tutorial
         void Start()
         {
             GameController.GameState = EGameState.TutorialStart;
-            StartCoroutine(SpawnWithDelay(0.1f));
+            StartCoroutine(SpawnWithDelay(0));
         }
 
         public void OnWitchDeath()
@@ -49,8 +49,8 @@ namespace Assets.Scripts.Tutorial
 
         public void LastTestFinished()
         {
-            SceneManager.LoadScene("mainMenu");
-
+            hud.ShowHintText("Tutorial finished");
+            StartCoroutine(CoroutineUtils.CallWithDelay(SceneManager.LoadScene, 4, "mainMenu"));
         }
     }
 }

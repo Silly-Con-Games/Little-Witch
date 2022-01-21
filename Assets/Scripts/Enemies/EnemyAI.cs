@@ -372,7 +372,7 @@ public abstract class EnemyAI : MonoBehaviour, IDamagable, IRootable, IStunnable
         this.roamPosition = transform;
     }
     public bool IsDead { get; internal set; }
-    protected void Die()
+    public void Die()
     {
         IsDead = true;
         GameEventQueue.QueueEvent(new EnemyDiedEvent(type));

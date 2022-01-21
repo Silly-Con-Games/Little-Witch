@@ -60,7 +60,7 @@ namespace Assets.Scripts.Enemies
             foreach (var enemy in alive)
             {
                 if (enemy != null && !enemy.IsDead)
-                    enemy.ReceiveDamage(float.MaxValue);
+                    enemy.Die();
             }
             alive = new List<EnemyAI>();
         }

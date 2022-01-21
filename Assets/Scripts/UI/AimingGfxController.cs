@@ -43,18 +43,21 @@ public class AimingGfxController : Tweenable
     public void Show(bool ready)
     {
         isOn = true;
-        gfx.enabled = true;        // change this to tweenning later
+        if(gfx)
+            gfx.enabled = true;        // change this to tweenning later
         SetReady(ready);
     }
     public void Hide()
     {
         isOn = false;
-        gfx.enabled = false;       // change this to tweenning later
+        if(gfx)
+            gfx.enabled = false;       // change this to tweenning later
     }
 
     public void SetReady(bool ready)
     {
-        gfx.color = ready ? defaultColor : notReadyColor;  // change this to tweenning later
+        if(gfx)
+            gfx.color = ready ? defaultColor : notReadyColor;  // change this to tweenning later
     }
 
 
