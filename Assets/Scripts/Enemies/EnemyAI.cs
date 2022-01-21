@@ -1,4 +1,5 @@
 using System.Collections;
+using Assets.Scripts.GameEvents;
 using Config;
 using UnityEngine;
 using UnityEngine.AI;
@@ -23,6 +24,11 @@ public abstract class EnemyAI : MonoBehaviour, IDamagable, IRootable, IStunnable
 
     public State state { get; set; }
     public SecondaryState secondaryState { get; set; }
+
+    private void Start()
+    {
+        InitEnemy();
+    }
 
     //[SerializeField]
     //private float stunTime;
@@ -89,10 +95,13 @@ public abstract class EnemyAI : MonoBehaviour, IDamagable, IRootable, IStunnable
 
     protected bool falling = false;
     protected Rigidbody rigid;
+
+    protected EnemyType type = EnemyType.Undefined;
     public virtual void InitEnemy()
     {
-        EnemiesController.IncreaseAliveCount();
         GlobalConfigManager.onConfigChanged.AddListener(ApplyConfig);
+        
+        GameEventQueue.QueueEvent(new EnemySpawnedEvent(type));
         if (!playerController)
         {
             playerController = FindObjectOfType<PlayerController>();
@@ -158,7 +167,12 @@ public abstract class EnemyAI : MonoBehaviour, IDamagable, IRootable, IStunnable
 
         if (CheckIsFalling())
             return;
-        
+
+        if (!playerController)
+        {
+            playerController = FindObjectOfType<PlayerController>();
+        }
+
         if (secondaryState == SecondaryState.Stun)
         {
             return;
@@ -192,9 +206,8 @@ public abstract class EnemyAI : MonoBehaviour, IDamagable, IRootable, IStunnable
             if (!falling)
             {
                 falling = true;
-                rigid.isKinematic = false;
+                TurnOnPhysicsMovement();
                 rigid.velocity = new Vector3(0, -5, 0);
-                agent.enabled = false;
                 return true;
             }
         }
@@ -202,8 +215,7 @@ public abstract class EnemyAI : MonoBehaviour, IDamagable, IRootable, IStunnable
         if (falling && rigid.velocity.sqrMagnitude <= 0.000001)
         {
             falling = false;
-            rigid.isKinematic = true;
-            agent.enabled = true;
+            TurnOffPhysicsMovement();
         }
 
         if (falling)
@@ -359,17 +371,20 @@ public abstract class EnemyAI : MonoBehaviour, IDamagable, IRootable, IStunnable
     {
         this.roamPosition = transform;
     }
-
-    protected void Die()
+    public bool IsDead { get; internal set; }
+    public void Die()
     {
-        GameObject energy = Instantiate(energyPrefab);
-        energy.transform.position = new Vector3(transform.position.x, 0.5f, transform.position.z);
-		EnemiesController.DecreaseAliveCount();
+        IsDead = true;
+        GameEventQueue.QueueEvent(new EnemyDiedEvent(type));
+        if(energyPrefab != null)
+            Instantiate(energyPrefab, new Vector3(transform.position.x, 0.5f, transform.position.z), transform.rotation);
+
 		GlobalConfigManager.onConfigChanged.RemoveListener(ApplyConfig);
         Destroy(indicator);
 
         agent.enabled = false;
-        GetComponent<Collider>().enabled = false;
+        foreach(var col in GetComponents<Collider>())
+            col.enabled = false;
 
         gameObject.layer = 0;
         foreach (Transform trans in gameObject.GetComponentsInChildren<Transform>())
@@ -404,12 +419,27 @@ public abstract class EnemyAI : MonoBehaviour, IDamagable, IRootable, IStunnable
 
     IEnumerator PushCoroutine(Vector3 force, float duration)
     {
-        float start = Time.time;
-        while (Time.time - start <= duration)
-        {
-            agent.velocity = force;
-            yield return null;
-        }
-        agent.velocity = Vector3.zero;
+        TurnOnPhysicsMovement();
+
+        rigid.AddForce(force, ForceMode.Impulse);
+        force.y = 0;
+        force.Normalize();
+
+        yield return new WaitForSeconds(duration);
+        if(!falling && enabled)
+            TurnOffPhysicsMovement();
     }
+
+    void TurnOnPhysicsMovement()
+    {
+        rigid.isKinematic = false;
+        agent.enabled = false;
+    }
+
+    void TurnOffPhysicsMovement()
+    {
+        rigid.isKinematic = true;
+        agent.enabled = true;
+    }
+
 }

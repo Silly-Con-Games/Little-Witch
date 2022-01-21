@@ -32,7 +32,8 @@
         },
         "transformAbility": {
             "cooldown": 1.0,
-            "energyCost": 3.0,
+            "energyCost": 1.0,
+            "aliveEnergyCostMultiplier": 0.5,
             "radius": 2,
             "minBiomeSize": 2
         },

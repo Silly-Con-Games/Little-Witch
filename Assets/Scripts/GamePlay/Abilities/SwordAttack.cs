@@ -67,6 +67,8 @@ public class SwordAttack : MonoBehaviour
         if (hitObjects.Contains(other))
             return;
         hitObjects.Add(other);
+
+        Debug.Log("Melee hit " + other.name);
         var damagable = other.GetComponent<IDamagable>();
 
         if (damagable?.GetObjectType() == target)
@@ -80,6 +82,8 @@ public class SwordAttack : MonoBehaviour
         if (pushable?.GetObjectType() == target)
         {
             Vector3 force = (other.transform.position - hitOrigin.position).normalized * pushForce;
+            force += Vector3.up * 3.25f;
+
             pushable.ReceivePush(force, pushDuration);
         }
     }

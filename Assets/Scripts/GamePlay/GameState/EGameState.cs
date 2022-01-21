@@ -5,5 +5,8 @@ public enum EGameState
     WaitingForNextWave,
     FightingWave,
     GameWon,
-    GameOver
+    GameOver,
+    Unknown,
+    TutorialStart,
+    InMenu
 }

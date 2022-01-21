@@ -222,7 +222,7 @@ GameObject:
   - component: {fileID: 2471801298174793052}
   - component: {fileID: 7438490994757225342}
   m_Layer: 5
-  m_Name: ItemFin
+  m_Name: MenuItemNew
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0

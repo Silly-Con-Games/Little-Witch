@@ -36,7 +36,7 @@ public class DashAbility : MainAbility
             if (end.y < 0.35f)
                 end.y = playerHeight;
             direction = (end - start);
-            distance = Mathf.Min(direction.magnitude, conf.maxRange * dashLengthModifier);
+            distance = conf.maxRange * dashLengthModifier;
             direction.Normalize();
         }
         GameEventQueue.QueueEvent(new DashAbilityEvent(distance));
@@ -57,24 +57,28 @@ public class DashAbility : MainAbility
             }
 
             Vector3 pos = playerTrans.position + direction * conf.speed * Time.deltaTime;
-            float tileHeight = mapController.TileHeightInPosition(playerTrans.position) + playerHeight;
-            if (float.IsNaN(tileHeight))
-                break;
-            pos.y = tileHeight;
+            pos.y = playerHeight;
+            float tileHeight = mapController.TileHeightInPosition(playerTrans.position);
+            if (!float.IsNaN(tileHeight))
+                pos.y += tileHeight;
+
             playerTrans.position = pos;
             yield return null;
         }
         playerTrans.localScale = Vector3.one;
 
         Vector3 posAf = start + direction * distance;
-        float tileHeightAf = mapController.TileHeightInPosition(playerTrans.position) + playerHeight;
+        posAf.y = playerHeight;
+
+        float tileHeightAf = mapController.TileHeightInPosition(posAf);
         if (!float.IsNaN(tileHeightAf))
         {
-            posAf.y = mapController.TileHeightInPosition(playerTrans.position) + playerHeight;
-            playerTrans.position = posAf;
-        }        
+            posAf.y += tileHeightAf;
+        }
+        playerTrans.position = posAf;
 
         playerController.moveStop = false;
+        playerController.characterController.Move(Vector3.zero); // Hack, character controller needs to move to update "isGrounded" (if not updated character can get stuck in the air)
         dashEffect.emitting = false;
     }
 }

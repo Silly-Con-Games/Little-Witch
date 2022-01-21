@@ -6,8 +6,8 @@ using UnityEditor;
 /// </summary>
 public class SetBiomeTypes
 {    
-    [MenuItem("Utils/Set Biomes to tiles")]
-    private static void SetMaterials()
+    [MenuItem("Utils/Set Biomes to all tiles")]
+    private static void SetAllMaterials()
     {
         Tile[] allTiles = Object.FindObjectsOfType<Tile>();
 
@@ -16,6 +16,41 @@ public class SetBiomeTypes
 			if (tile.WantsToBeSet()) { 
 				tile.Setup();
 			}
+        }
+    }
+
+    [MenuItem("Utils/Set Biomes to tiles")]
+    private static void SetMaterials()
+    {
+        foreach (var tile in Selection.gameObjects)
+        {
+            var t = tile.GetComponent<Tile>();
+            if (t!= null && t.WantsToBeSet())
+            {
+                t.Setup();
+            }
+        }
+    }
+
+    [MenuItem("Utils/Revive all tiles")]
+    private static void ReviveAllTiles()
+    {
+        Tile[] allTiles = Object.FindObjectsOfType<Tile>();
+
+        foreach (var tile in allTiles)
+        {
+            tile.ReviveInEditor();
+        }
+    }
+
+    [MenuItem("Utils/Kill all tiles")]
+    private static void KillAllTiles()
+    {
+        Tile[] allTiles = Object.FindObjectsOfType<Tile>();
+
+        foreach (var tile in allTiles)
+        {
+            tile.Kill();
         }
     }
 

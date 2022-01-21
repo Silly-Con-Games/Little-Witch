@@ -2,21 +2,25 @@ using UnityEngine;
 using UnityEngine.SceneManagement;
 using System.IO;
 using UnityEngine.UI;
+using UnityEngine.EventSystems;
+using UnityEngine.InputSystem;
 
 public class MainMenu : MonoBehaviour
 {
 	public GameObject mainMenu;
 
-	public GameObject enterName;
-	public GameObject controls;
-	public GameObject controlsBeforeStart;
-	public GameObject settings;
-	public GameObject credits;
-	public GameObject beforeQuit;
-	public TutorialController controlsTutorial;
+	public PopupMenu enterName;
+	public PopupMenu controls;
+	public PopupMenu controlsBeforeStart;
+	public PopupMenu settings;
+	public PopupMenu credits;
+	public PopupMenu beforeQuit;
+	public HighlightController controlsTutorial;
 
+	public Button firstButton;
 	public Button continueToMainButton;
 	public Button continueButton;
+	private Button lastSelectedButton;
 
 	public TMPro.TextMeshProUGUI playerNameText;
 
@@ -42,10 +46,17 @@ public class MainMenu : MonoBehaviour
 		SceneManager.LoadScene(1);
 	}
 
+	public void TutorialScene()
+    {
+		SceneManager.LoadScene("TutorialScene");
+    }
+
 	public void ShowMainMenu()
 	{
 		mainMenu.SetActive(true);
-		enterName.SetActive(false);
+		enterName.gameObject.SetActive(false);
+
+		if (Gamepad.current != null) firstButton.Select();
 	}
 
 	public void EnableContinueToMain(TMPro.TMP_InputField playerName)
@@ -62,26 +73,30 @@ public class MainMenu : MonoBehaviour
     }
 
 	public void ShowControls() {
-
-		controls.SetActive(true);
+		controls.Open(EventSystem.current.currentSelectedGameObject);
 	}
 
 	public void ShowControlsBeforeStart()
 	{
-		controlsBeforeStart.SetActive(true);
+		controlsBeforeStart.Open(EventSystem.current.currentSelectedGameObject);
 		controlsTutorial.StartTutorial();
 	}
 
 	public void ShowSettings() {
-		settings.SetActive(true);
+		settings.Open(EventSystem.current.currentSelectedGameObject);
 	}
 
 	public void ShowCredits() {
-		credits.SetActive(true);
+		credits.Open(EventSystem.current.currentSelectedGameObject);
 	}
 
+	// for questionnaire purposes
 	public void ShowBeforeQuit()
 	{
+		QuitGame();
+
+		return;
+
 		if (!PlayerPrefs.HasKey("player_name"))
 		{
 			// this should never happen
@@ -89,7 +104,7 @@ public class MainMenu : MonoBehaviour
 		}
 		playerNameText.text = PlayerPrefs.GetString("player_name");
 		mainMenu.SetActive(false);
-		beforeQuit.SetActive(true);
+		beforeQuit.Open(EventSystem.current.currentSelectedGameObject);
 	}
 
 	public void QuitGame() {

@@ -8,7 +8,7 @@ Material:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_Name: EnergyTank
-  m_Shader: {fileID: -6465566751694194690, guid: 91d66abfd30bc2a438317490c0850c62, type: 3}
+  m_Shader: {fileID: -6465566751694194690, guid: 65884f36d91ed0741aa0bf5a1631de0a, type: 3}
   m_ShaderKeywords: 
   m_LightmapFlags: 4
   m_EnableInstancingVariants: 0
@@ -75,7 +75,12 @@ Material:
         m_Texture: {fileID: 0}
         m_Scale: {x: 1, y: 1}
         m_Offset: {x: 0, y: 0}
+    m_Ints: []
     m_Floats:
+    - AlphaMultiplier: 1
+    - Base_Transparency: 0.1
+    - Fresnel_Power_2: 0.1
+    - Fresnel_power: 5
     - Vector1_ecb65a00bae14d7e9c4d17c3007549ef: 0.7
     - _AlphaClip: 0
     - _Blend: 0
@@ -93,6 +98,7 @@ Material:
     - _GlossyReflections: 0
     - _Metallic: 0
     - _OcclusionStrength: 1
+    - _Offset: 0.6
     - _Parallax: 0.005
     - _QueueOffset: 0
     - _ReceiveShadows: 1
@@ -104,7 +110,7 @@ Material:
     - _WorkflowMode: 1
     - _ZWrite: 1
     m_Colors:
-    - Color_1e1621a168094286bbe9cc8559c6b529: {r: 0, g: 0.13965386, b: 1, a: 0}
+    - Color_1e1621a168094286bbe9cc8559c6b529: {r: 0, g: 1.035265, b: 0.9906065, a: 0}
     - Color_f17ccbe8e5ab44648d6e68d2748f5cd5: {r: 0, g: 1.0666667, b: 1.6862745, a: 0}
     - _BaseColor: {r: 1, g: 1, b: 1, a: 1}
     - _Color: {r: 1, g: 1, b: 1, a: 1}

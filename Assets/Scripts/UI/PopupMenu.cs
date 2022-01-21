@@ -1,6 +1,8 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.InputSystem;
+using UnityEngine.UI;
 
 public class PopupMenu : MonoBehaviour
 {
@@ -8,6 +10,8 @@ public class PopupMenu : MonoBehaviour
 
 	[SerializeField] private GameObject[] pages;
 	private int currentPage = 0;
+
+    private GameObject lastSelected;
 
     private void Start()
     {
@@ -18,9 +22,16 @@ public class PopupMenu : MonoBehaviour
         }
     }
 
+    public void Open(GameObject lastSelected)
+    {
+        gameObject.SetActive(true);
+        this.lastSelected = lastSelected;
+    }
+
     public void Close() {
 		gameObject.SetActive(false);
-	}
+        if (Gamepad.current != null) lastSelected.GetComponent<Selectable>().Select();
+    }
 
     // forward = true -> next page, forward = false -> previous page
     public void NextPage(bool forward)

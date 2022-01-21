@@ -4,6 +4,7 @@ using System.Threading.Tasks;
 using Assets.Scripts.GameEvents;
 using Config;
 using UnityEngine;
+using UnityEngine.AI;
 
 public class EnemyEnvDestroyer : EnemyAI
 {
@@ -36,7 +37,9 @@ public class EnemyEnvDestroyer : EnemyAI
 
     public override void InitEnemy()
     {
+        type = EnemyType.EnvDestroyer;
         base.InitEnemy();
+
         if (!mapController)
             mapController = FindObjectOfType<MapController>();
         coroutineRunning = false;
@@ -51,7 +54,6 @@ public class EnemyEnvDestroyer : EnemyAI
             enemy = Instantiate(meleePrefab);
             enemy.transform.position = EnemiesUtils.GetRoamPosition(transform.position, moveRangeMin, moveRangeMax);
             enemiesMelee.Add(enemy.GetComponent<EnemyMelee>());
-            enemiesMelee[i].InitEnemy(transform);
             enemiesMelee[i].state = State.Roam;
         }
 
@@ -61,7 +63,6 @@ public class EnemyEnvDestroyer : EnemyAI
             enemy = Instantiate(rangedPrefab);
             enemy.transform.position = EnemiesUtils.GetRoamPosition(transform.position, moveRangeMin, moveRangeMax);
             enemiesRanged.Add(enemy.GetComponent<EnemyRanged>());
-            enemiesRanged[i].InitEnemy(transform);
             enemiesRanged[i].state = State.Roam;
         }
         state = State.Idle;
@@ -120,20 +121,32 @@ public class EnemyEnvDestroyer : EnemyAI
     
     async void FindTileToDestroyCoroutine()
     {
-        for (int i = 0; i < mapController.tiles.Count; i++)
+        NavMeshPath path = new NavMeshPath();
+        foreach (var tile in mapController.morphableTiles)
         {
-            if (mapController.tiles[i].GetBiomeType() == BiomeType.DEAD || mapController.tiles[i].wantedType == BiomeType.DEAD || mapController.tiles[i].chosen)
+            if (
+                    tile.IsDead ||
+                    ! tile.CanBeMorphed() ||
+                    tile.wantedType == BiomeType.DEAD ||
+                    tile.chosen
+               )
                 continue;
-            distanceTmp = Vector3.Distance(transform.position, mapController.tiles[i].transform.position);
+            
+
+            distanceTmp = Vector3.Distance(transform.position, tile.transform.position);
             if (distanceTmp < minDistance)
-            { 
-                minDistance = distanceTmp;
-                tileTmp = mapController.tiles[i];
+            {
+                if (agent.CalculatePath(tile.transform.position, path))
+                {
+                    minDistance = distanceTmp;
+                    tileTmp = tile;
+                }
             }
         }
 
         if (tileTmp)
         {
+            Debug.Log("Tile found", tileTmp);
             tileTmp.chosen = true;
         }
         else
@@ -160,11 +173,11 @@ public class EnemyEnvDestroyer : EnemyAI
         if (Physics.Raycast(transform.position, Vector3.down, out hit, 2f, LayerMask.GetMask("Tile")))
         {
             Tile tile = hit.transform.gameObject.GetComponent<Tile>();
-            if (!tile || tile.GetBiomeType() == BiomeType.DEAD)
+            if (!tile || tile.IsDead)
                 return;
             GameEventQueue.QueueEvent(new BiomeTransformedEvent(from: tile.GetBiomeType(), to: BiomeType.DEAD, enemyOrigin: true));
             FMODUnity.RuntimeManager.PlayOneShot("event:/enemies/sucking/sucking", transform.position);
-            mapController.AttackTile(tile); 
+            tile.Morph(BiomeType.DEAD, false);
         }
     }
 

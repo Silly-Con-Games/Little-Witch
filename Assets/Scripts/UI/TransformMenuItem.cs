@@ -4,6 +4,7 @@ using UnityEngine;
 using UnityEngine.EventSystems;
 using UnityEngine.UI;
 
+// add controller support - make items Selectable ?
 public class TransformMenuItem : MonoBehaviour, IPointerEnterHandler, IPointerExitHandler
 {
     [SerializeField] private BiomeType biome;
@@ -36,6 +37,7 @@ public class TransformMenuItem : MonoBehaviour, IPointerEnterHandler, IPointerEx
 
     private void Select()
     {
+        FMODUnity.RuntimeManager.PlayOneShot("event:/menu_click");
         inactive.enabled = false;
         active.SetActive(true);
         //bg.enabled = true;

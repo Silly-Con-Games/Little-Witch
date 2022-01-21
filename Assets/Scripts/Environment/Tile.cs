@@ -22,9 +22,8 @@ public class Tile : MonoBehaviour {
 
 	private IProp prop = null;
 
-	public Tile[] neighbours;
+	public List<Tile> neighbours;
 
-	public MapInfo mapInfo { get; set; }
 
 	private float morphSpeed = 2;
 
@@ -39,18 +38,16 @@ public class Tile : MonoBehaviour {
 		directions[4] = new Vector3(-1, 0, 0);
 		directions[5] = new Vector3(-1, 0, -2);
 
-		neighbours = new Tile[6];
+		neighbours = new List<Tile>();
 		RaycastHit hit;
 		for (int i = 0; i < directions.Length; i++) {
-			if (Physics.Raycast(transform.position + Vector3.down, directions[i], out hit, 2f, LayerMask.GetMask("Tile"))) {
+			if (Physics.Raycast(transform.position + Vector3.down, directions[i], out hit, 1f, LayerMask.GetMask("Tile"))) {
 				Tile tile = hit.transform.gameObject.GetComponent<Tile>();
                 if (tile) {
-				    neighbours[i] = hit.transform.gameObject.GetComponent<Tile>();
+				    neighbours.Add(tile);
 				}
 			}
 		}
-
-		mapInfo = new MapInfo();
 
 		if(mapController == null)
 			mapController = FindObjectOfType<MapController>();
@@ -99,6 +96,12 @@ public class Tile : MonoBehaviour {
 		Morph(typeBeforeDeath, false);
 	}
 
+	public bool CanBeMorphed()
+    {
+		return type != BiomeType.NOTTRANSFORMABLE;
+    }
+
+	public bool IsDead => type == BiomeType.DEAD;
 
 	public bool WantsToBeSet() {
 		return wantedType != type;
@@ -113,11 +116,23 @@ public class Tile : MonoBehaviour {
 	}
 
 	public void Morph(BiomeType target, bool immediate) {
-
+		if (type == BiomeType.NOTTRANSFORMABLE && !immediate)
+			return;
 		if (type == target) {
 			Debug.LogWarning("Tile already has this type!", this);
 			return;
 		}
+
+		if (IsDead)
+		{
+			mapController.ReviveTile();
+		}
+
+		if (target == BiomeType.DEAD && !IsDead)
+		{
+			mapController.KillTile();
+		}
+
 		prop = GetComponentInChildren<IProp>();
 		wantedType = target;
 		// die
@@ -133,10 +148,6 @@ public class Tile : MonoBehaviour {
 			StartCoroutine(DieCoroutine());
 			return;
 		}
-        else
-        {
-			mapController.ReviveTile();
-        }
 
 		bool propRevived = false;
 		if (prop != null)
@@ -159,15 +170,24 @@ public class Tile : MonoBehaviour {
 
 		// morph - revive
 		if (immediate) {
+			float initHeight = transform.position.y;
 			if (target == BiomeType.WATER) {
 				SetWater(mesh, 1f);
 				SetHeight(-waterDepression);
-				SetGrassHeightModifier(grass, 0f);
+				grass.enabled = false;
 			} else {
 				SetWater(mesh, 0f);
 				SetHeight(0f);
+				grass.enabled = true;
 				SetGrassHeightModifier(grass, 1f);
 			}
+
+			if (!Mathf.Approximately(initHeight, transform.position.y))
+				mapController.MapChanged();
+
+			if (target == BiomeType.NOTTRANSFORMABLE)
+				grass.enabled = false;
+
 			Color newColor = GetColor(target);
 			ColorUtils.SetSaturation(mesh, 1f);
 			ColorUtils.SetColor(mesh, newColor);
@@ -182,12 +202,8 @@ public class Tile : MonoBehaviour {
 		StartCoroutine(MorphCoroutine(target, propRevived));
 	}
 
-	public Tile[] GetNeighbours() {
+	public List<Tile> GetNeighbours() {
 		return neighbours;
-	}
-
-	public Tile GetNeighbour(int index) {
-		return neighbours[index];
 	}
 
 	private void TrySpawnProp(bool immediate, BiomeType biomeType)
@@ -224,6 +240,8 @@ public class Tile : MonoBehaviour {
 				return colors.forest.Evaluate(Random.value);
 			case BiomeType.MEADOW:
 				return colors.plain.Evaluate(Random.value);
+			case BiomeType.NOTTRANSFORMABLE:
+				return colors.notTransformable.Evaluate(Random.value);
 			case BiomeType.WATER:
 				return colors.water;
 			default:
@@ -252,8 +270,10 @@ public class Tile : MonoBehaviour {
 		bool alsoSaturate = type == BiomeType.DEAD;
 
 		bool toWater = target == BiomeType.WATER;
+		if(!toWater)
+			grass.enabled = true;
 		float initWater = mesh.sharedMaterials[1].GetFloat("_IsWater");
-		float initHieght = transform.position.y;
+		float initHeight = transform.position.y;
 
 		Color from = mesh.sharedMaterials[0].color;
 		Color to = GetColor(target);
@@ -265,11 +285,11 @@ public class Tile : MonoBehaviour {
 		for (float progress = 0f; progress <= 1f; progress += morphSpeed * Time.deltaTime) {
 			if (toWater) {
 				SetWater(mesh, Mathf.Lerp(initWater, 1f, progress));
-				SetHeight(Mathf.Lerp(initHieght, -waterDepression, progress));
+				SetHeight(Mathf.Lerp(initHeight, -waterDepression, progress));
 				SetGrassHeightModifier(grass, 1 - progress);
 			} else {
 				SetWater(mesh, Mathf.Lerp(initWater, 0f, progress));
-				SetHeight(Mathf.Lerp(initHieght, 0f, progress));
+				SetHeight(Mathf.Lerp(initHeight, 0f, progress));
 				SetGrassHeightModifier(grass, progress);
 			}
 			ColorUtils.SetColor(mesh, Color.Lerp(from, to, progress));
@@ -294,18 +314,23 @@ public class Tile : MonoBehaviour {
 		float maxProgress = 1.0f;
 		if (toWater)
 		{
-			SetWater(mesh, Mathf.Lerp(initWater, 1f, maxProgress));
-			SetHeight(Mathf.Lerp(initHieght, -waterDepression, maxProgress));
+			SetWater(mesh, 1f);
+			grass.enabled = false;
+			SetHeight(-waterDepression);
 			SetGrassHeightModifier(grass, 0f);
 		}
 		else
 		{
-			SetWater(mesh, Mathf.Lerp(initWater, 0f, maxProgress));
-			SetHeight(Mathf.Lerp(initHieght, 0f, maxProgress));
+			SetWater(mesh, 0f);
+			SetHeight(0f);
 			SetGrassHeightModifier(grass, maxProgress);
 		}
-		ColorUtils.SetColor(mesh, Color.Lerp(from, to, maxProgress));
-		SetGrassColor(grass, Color.Lerp(grassFromTop, grassToTop, maxProgress), Color.Lerp(from, to, maxProgress));
+
+		if(!Mathf.Approximately(initHeight, transform.position.y))
+			mapController.MapChanged();
+
+		ColorUtils.SetColor(mesh, to);
+		SetGrassColor(grass, grassToTop, to);
 
 		if (alsoSaturate)
 		{

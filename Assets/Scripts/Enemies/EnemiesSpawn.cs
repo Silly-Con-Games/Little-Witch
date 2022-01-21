@@ -64,7 +64,6 @@ public class EnemiesSpawn : MonoBehaviour
                     EnemiesUtils.GetRoamPosition(transform.position, 0f, spawnRange),
                     transform.rotation
                 );
-                enemy.GetComponent<EnemyRanged>().InitEnemy();
                 break;
             case EnemyType.Melee:
                 enemy = Instantiate(
@@ -72,7 +71,6 @@ public class EnemiesSpawn : MonoBehaviour
                     EnemiesUtils.GetRoamPosition(transform.position, 0f, spawnRange),
                     transform.rotation
                 );
-                enemy.GetComponent<EnemyMelee>().InitEnemy();
                 break;
             case EnemyType.Bomber:
                 enemy = Instantiate(
@@ -80,7 +78,6 @@ public class EnemiesSpawn : MonoBehaviour
                     EnemiesUtils.GetRoamPosition(transform.position, 0f, spawnRange),
                     transform.rotation
                 );
-                enemy.GetComponent<EnemyBomber>().InitEnemy();
                 break;
             case EnemyType.EnvDestroyer:
                 enemy = Instantiate(
@@ -88,7 +85,6 @@ public class EnemiesSpawn : MonoBehaviour
                     EnemiesUtils.GetRoamPosition(transform.position, 0f, spawnRange),
                     transform.rotation
                 );
-                enemy.GetComponent<EnemyEnvDestroyer>().InitEnemy();
                 break;
             case EnemyType.MeleeMiniboss:
                 enemy = Instantiate(
@@ -96,7 +92,6 @@ public class EnemiesSpawn : MonoBehaviour
                     EnemiesUtils.GetRoamPosition(transform.position, 0f, spawnRange),
                     transform.rotation
                 );
-                enemy.GetComponent<EnemyMelee>().InitEnemy();
                 break;
             case EnemyType.RangedMiniboss:
                 enemy = Instantiate(
@@ -104,7 +99,6 @@ public class EnemiesSpawn : MonoBehaviour
                     EnemiesUtils.GetRoamPosition(transform.position, 0f, spawnRange),
                     transform.rotation
                 );
-                enemy.GetComponent<EnemyRanged>().InitEnemy();
                 break;
         }
 

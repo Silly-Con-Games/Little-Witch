@@ -10,7 +10,6 @@ GameObject:
   m_Component:
   - component: {fileID: 3340536913199051137}
   - component: {fileID: 2335887447700045184}
-  - component: {fileID: 2521663439683310249}
   - component: {fileID: 8091875503299631164}
   - component: {fileID: 182741234298061443}
   - component: {fileID: 52922247533378179}
@@ -60,18 +59,6 @@ MonoBehaviour:
   input1: 
   input2: 
   input3: 
---- !u!114 &2521663439683310249
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 2670678779562519355}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 04628eeaa0500604d9ed265c28589751, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
 --- !u!33 &8091875503299631164
 MeshFilter:
   m_ObjectHideFlags: 0
@@ -91,6 +78,7 @@ MeshRenderer:
   m_CastShadows: 1
   m_ReceiveShadows: 1
   m_DynamicOccludee: 1
+  m_StaticShadowCaster: 0
   m_MotionVectors: 1
   m_LightProbeUsage: 1
   m_ReflectionProbeUsage: 1
@@ -187,6 +175,7 @@ MeshRenderer:
   m_CastShadows: 1
   m_ReceiveShadows: 1
   m_DynamicOccludee: 1
+  m_StaticShadowCaster: 0
   m_MotionVectors: 1
   m_LightProbeUsage: 1
   m_ReflectionProbeUsage: 1

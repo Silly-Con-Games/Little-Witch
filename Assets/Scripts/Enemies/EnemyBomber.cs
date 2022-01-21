@@ -1,5 +1,6 @@
 using System.Collections;
 using System.Collections.Generic;
+using Assets.Scripts.GameEvents;
 using Config;
 using UnityEngine;
 
@@ -12,7 +13,9 @@ public class EnemyBomber : EnemyAI
 
     public override void InitEnemy()
     {
+        type = EnemyType.Bomber;
         base.InitEnemy();
+
         if (playerController)
             roamPosition = playerController.transform;
         else

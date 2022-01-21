@@ -11,6 +11,12 @@ public class Bomb : MonoBehaviour
     [SerializeField]
     private Animator animator;
 
+    [SerializeField]
+    private MeshRenderer radiusMesh;
+
+    [SerializeField]
+    private Material bombActivatedMat;
+
     private Collider bombCollider;
 
     private float explosionDelay;
@@ -62,12 +68,13 @@ public class Bomb : MonoBehaviour
     void OnTriggerEnter(Collider collision)
     {
         bombCollider.enabled = false;
-        FMODUnity.RuntimeManager.PlayOneShot("event:/enemies/mine/trigger", transform.position);
         StartCoroutine(BombCoroutine(explosionDelay));
     }
 
     public IEnumerator BombCoroutine(float duration)
     {
+        FMODUnity.RuntimeManager.PlayOneShot("event:/enemies/mine/trigger", transform.position);
+        radiusMesh.material = bombActivatedMat;
         animator.enabled = true;
         while (duration >= 0f)
         {

@@ -166,6 +166,26 @@ MonoBehaviour:
   MinDistance: 20
   MaxDistance: 60
   Length: 1000
+--- !u!114 &-7941061315889715963
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: fecb8ef7f94ca804a8ab72049b86782e, type: 3}
+  m_Name: parameter:/shot/shot_pitch
+  m_EditorClassIdentifier: 
+  Name: shot_pitch
+  Min: -1
+  Max: 1
+  Default: 0
+  ID:
+    data1: 0
+    data2: 0
+  Exists: 1
 --- !u!114 &-7910260715425307716
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -186,7 +206,7 @@ MonoBehaviour:
   Is3D: 1
   IsOneShot: 1
   Parameters:
-  - {fileID: -685807927583039195}
+  - {fileID: 2338145820402939729}
   MinDistance: 20
   MaxDistance: 65
   Length: 850
@@ -385,7 +405,7 @@ MonoBehaviour:
   Path: FMOD/LittleWitch/Build/Desktop/Master.strings.bank
   Name: Master.strings
   StudioPath: bank:/Master.strings
-  lastModified: 637723447472729890
+  lastModified: 637713704631566340
   LoadResult: 0
   FileSizes:
   - Name: Desktop
@@ -917,6 +937,26 @@ MonoBehaviour:
   MinDistance: 20
   MaxDistance: 60
   Length: 2000
+--- !u!114 &-5494985422710528038
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: fecb8ef7f94ca804a8ab72049b86782e, type: 3}
+  m_Name: parameter:/generic_hit/shot_pitch
+  m_EditorClassIdentifier: 
+  Name: shot_pitch
+  Min: -1
+  Max: 1
+  Default: 0
+  ID:
+    data1: 0
+    data2: 0
+  Exists: 0
 --- !u!114 &-5409907534382063476
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -1073,6 +1113,26 @@ MonoBehaviour:
     data1: 0
     data2: 0
   Exists: 1
+--- !u!114 &-4250431094480794246
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: fecb8ef7f94ca804a8ab72049b86782e, type: 3}
+  m_Name: parameter:/shot/shot_pitch
+  m_EditorClassIdentifier: 
+  Name: shot_pitch
+  Min: -1
+  Max: 1
+  Default: 0
+  ID:
+    data1: 0
+    data2: 0
+  Exists: 1
 --- !u!114 &-4201504103543811072
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -1142,6 +1202,26 @@ MonoBehaviour:
   MinDistance: 20
   MaxDistance: 60
   Length: 600
+--- !u!114 &-3958776164719229320
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: fecb8ef7f94ca804a8ab72049b86782e, type: 3}
+  m_Name: parameter:/generic_hit/shot_pitch
+  m_EditorClassIdentifier: 
+  Name: shot_pitch
+  Min: -1
+  Max: 1
+  Default: 0
+  ID:
+    data1: 0
+    data2: 0
+  Exists: 1
 --- !u!114 &-3931659395122786078
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -1176,6 +1256,26 @@ MonoBehaviour:
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: fecb8ef7f94ca804a8ab72049b86782e, type: 3}
   m_Name: parameter:/generic_hit/shot_pitch
+  m_EditorClassIdentifier: 
+  Name: shot_pitch
+  Min: -1
+  Max: 1
+  Default: 0
+  ID:
+    data1: 0
+    data2: 0
+  Exists: 0
+--- !u!114 &-3530293206354442242
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: fecb8ef7f94ca804a8ab72049b86782e, type: 3}
+  m_Name: parameter:/shot/shot_pitch
   m_EditorClassIdentifier: 
   Name: shot_pitch
   Min: -1
@@ -1272,6 +1372,26 @@ MonoBehaviour:
     data1: 0
     data2: 0
   Exists: 0
+--- !u!114 &-2878751040028597592
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: fecb8ef7f94ca804a8ab72049b86782e, type: 3}
+  m_Name: parameter:/shot/shot_pitch
+  m_EditorClassIdentifier: 
+  Name: shot_pitch
+  Min: -1
+  Max: 1
+  Default: 0
+  ID:
+    data1: 0
+    data2: 0
+  Exists: 1
 --- !u!114 &-2678778063989108596
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -1310,7 +1430,7 @@ MonoBehaviour:
   Path: FMOD/LittleWitch/Build/Desktop/Master.bank
   Name: Master
   StudioPath: bank:/Master
-  lastModified: 637723447472709888
+  lastModified: 637713704631307041
   LoadResult: 0
   FileSizes: []
   Exists: 1
@@ -1651,6 +1771,26 @@ MonoBehaviour:
   MinDistance: 20
   MaxDistance: 60
   Length: 160
+--- !u!114 &-1426749519403011921
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: fecb8ef7f94ca804a8ab72049b86782e, type: 3}
+  m_Name: parameter:/generic_hit/shot_pitch
+  m_EditorClassIdentifier: 
+  Name: shot_pitch
+  Min: -1
+  Max: 1
+  Default: 0
+  ID:
+    data1: 0
+    data2: 0
+  Exists: 1
 --- !u!114 &-1425519081879879427
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -1736,7 +1876,7 @@ MonoBehaviour:
   ID:
     data1: 0
     data2: 0
-  Exists: 1
+  Exists: 0
 --- !u!114 &-844947812983291867
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -1799,7 +1939,27 @@ MonoBehaviour:
   ID:
     data1: 0
     data2: 0
-  Exists: 1
+  Exists: 0
+--- !u!114 &-681329951218611595
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: fecb8ef7f94ca804a8ab72049b86782e, type: 3}
+  m_Name: parameter:/generic_hit/shot_pitch
+  m_EditorClassIdentifier: 
+  Name: shot_pitch
+  Min: -1
+  Max: 1
+  Default: 0
+  ID:
+    data1: 0
+    data2: 0
+  Exists: 0
 --- !u!114 &-606885381657065509
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -1883,7 +2043,7 @@ MonoBehaviour:
   Is3D: 1
   IsOneShot: 1
   Parameters:
-  - {fileID: -1053576716503697060}
+  - {fileID: 1944321561418976916}
   MinDistance: 20
   MaxDistance: 60
   Length: 830
@@ -1972,7 +2132,7 @@ MonoBehaviour:
   - {fileID: -2632736120414982648}
   StringsBanks:
   - {fileID: -7008871818448349652}
-  stringsBankWriteTime: 637723447472729890
+  stringsBankWriteTime: 637713704631566340
   cacheVersion: 6
 --- !u!114 &63060824806312001
 MonoBehaviour:
@@ -2311,6 +2471,26 @@ MonoBehaviour:
   MinDistance: 20
   MaxDistance: 60
   Length: 1000
+--- !u!114 &1944321561418976916
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: fecb8ef7f94ca804a8ab72049b86782e, type: 3}
+  m_Name: parameter:/generic_hit/shot_pitch
+  m_EditorClassIdentifier: 
+  Name: shot_pitch
+  Min: -1
+  Max: 1
+  Default: 0
+  ID:
+    data1: 0
+    data2: 0
+  Exists: 1
 --- !u!114 &1998181927587920804
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -2414,6 +2594,26 @@ MonoBehaviour:
   MinDistance: 0
   MaxDistance: 0
   Length: 320
+--- !u!114 &2338145820402939729
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: fecb8ef7f94ca804a8ab72049b86782e, type: 3}
+  m_Name: parameter:/shot/shot_pitch
+  m_EditorClassIdentifier: 
+  Name: shot_pitch
+  Min: -1
+  Max: 1
+  Default: 0
+  ID:
+    data1: 0
+    data2: 0
+  Exists: 1
 --- !u!114 &2383227143507474853
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -3224,6 +3424,26 @@ MonoBehaviour:
   MinDistance: 20
   MaxDistance: 60
   Length: 2500
+--- !u!114 &6752111466668901170
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: fecb8ef7f94ca804a8ab72049b86782e, type: 3}
+  m_Name: parameter:/generic_hit/shot_pitch
+  m_EditorClassIdentifier: 
+  Name: shot_pitch
+  Min: -1
+  Max: 1
+  Default: 0
+  ID:
+    data1: 0
+    data2: 0
+  Exists: 1
 --- !u!114 &6780103527455374957
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -3392,6 +3612,26 @@ MonoBehaviour:
     data1: 0
     data2: 0
   Exists: 0
+--- !u!114 &7638868898972715361
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: fecb8ef7f94ca804a8ab72049b86782e, type: 3}
+  m_Name: parameter:/generic_hit/shot_pitch
+  m_EditorClassIdentifier: 
+  Name: shot_pitch
+  Min: -1
+  Max: 1
+  Default: 0
+  ID:
+    data1: 0
+    data2: 0
+  Exists: 1
 --- !u!114 &7659455392402762195
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -3623,3 +3863,43 @@ MonoBehaviour:
     data1: 0
     data2: 0
   Exists: 0
+--- !u!114 &9115034238366783677
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: fecb8ef7f94ca804a8ab72049b86782e, type: 3}
+  m_Name: parameter:/shot/shot_pitch
+  m_EditorClassIdentifier: 
+  Name: shot_pitch
+  Min: -1
+  Max: 1
+  Default: 0
+  ID:
+    data1: 0
+    data2: 0
+  Exists: 0
+--- !u!114 &9168397989811960005
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: fecb8ef7f94ca804a8ab72049b86782e, type: 3}
+  m_Name: parameter:/shot/shot_pitch
+  m_EditorClassIdentifier: 
+  Name: shot_pitch
+  Min: -1
+  Max: 1
+  Default: 0
+  ID:
+    data1: 0
+    data2: 0
+  Exists: 1

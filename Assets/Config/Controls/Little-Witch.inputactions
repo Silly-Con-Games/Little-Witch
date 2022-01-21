@@ -112,24 +112,13 @@
                 {
                     "name": "TransformMenu",
                     "type": "Button",
-                    "id": "dcf5996f-ea7c-4620-b9fb-442b3b498d0b",
+                    "id": "bfe00b1b-21db-415a-9ec4-bc369e9eecad",
                     "expectedControlType": "Button",
                     "processors": "",
                     "interactions": ""
                 }
             ],
             "bindings": [
-                {
-                    "name": "",
-                    "id": "978bfe49-cc26-4a3d-ab7b-7d7a29327403",
-                    "path": "<Gamepad>/leftStick",
-                    "interactions": "",
-                    "processors": "",
-                    "groups": ";Gamepad",
-                    "action": "Move",
-                    "isComposite": false,
-                    "isPartOfComposite": false
-                },
                 {
                     "name": "WASD",
                     "id": "00ca640b-d935-4593-8157-c05846ea39b3",
@@ -231,22 +220,22 @@
                 },
                 {
                     "name": "",
-                    "id": "1635d3fe-58b6-4ba9-a4e2-f4b964f6b5c8",
-                    "path": "<XRController>/{Primary2DAxis}",
+                    "id": "978bfe49-cc26-4a3d-ab7b-7d7a29327403",
+                    "path": "<Gamepad>/leftStick",
                     "interactions": "",
                     "processors": "",
-                    "groups": "XR",
+                    "groups": ";Gamepad",
                     "action": "Move",
                     "isComposite": false,
                     "isPartOfComposite": false
                 },
                 {
                     "name": "",
-                    "id": "3ea4d645-4504-4529-b061-ab81934c3752",
-                    "path": "<Joystick>/stick",
+                    "id": "1635d3fe-58b6-4ba9-a4e2-f4b964f6b5c8",
+                    "path": "<XRController>/{Primary2DAxis}",
                     "interactions": "",
                     "processors": "",
-                    "groups": "Joystick",
+                    "groups": "XR",
                     "action": "Move",
                     "isComposite": false,
                     "isPartOfComposite": false
@@ -265,7 +254,7 @@
                 {
                     "name": "",
                     "id": "b17c47eb-59c7-4e72-b008-c96d277e7cf7",
-                    "path": "<Gamepad>/leftStick",
+                    "path": "<Gamepad>/rightStick",
                     "interactions": "",
                     "processors": "",
                     "groups": "Gamepad",
@@ -309,7 +298,7 @@
                 {
                     "name": "",
                     "id": "0159ed2b-0ceb-448b-b16a-ce6203bab6df",
-                    "path": "<Gamepad>/buttonNorth",
+                    "path": "<Gamepad>/rightTrigger",
                     "interactions": "",
                     "processors": "",
                     "groups": "Gamepad",
@@ -331,7 +320,7 @@
                 {
                     "name": "",
                     "id": "10378714-de60-43c6-aeb2-9528422a184e",
-                    "path": "<Gamepad>/buttonEast",
+                    "path": "<Gamepad>/rightShoulder",
                     "interactions": "",
                     "processors": "",
                     "groups": "Gamepad",
@@ -353,7 +342,7 @@
                 {
                     "name": "",
                     "id": "8e7180ad-4e7b-43a9-a003-339dc90d71a6",
-                    "path": "<Gamepad>/buttonWest",
+                    "path": "<Gamepad>/rightTrigger",
                     "interactions": "",
                     "processors": "",
                     "groups": "Gamepad",
@@ -374,11 +363,33 @@
                 },
                 {
                     "name": "",
+                    "id": "3eb27ded-44e5-4666-893a-119a3d7a71a4",
+                    "path": "<Gamepad>/leftShoulder",
+                    "interactions": "",
+                    "processors": "",
+                    "groups": "Gamepad",
+                    "action": "Jump",
+                    "isComposite": false,
+                    "isPartOfComposite": false
+                },
+                {
+                    "name": "",
                     "id": "e816ab4f-094c-45d7-8c88-06837fbab630",
                     "path": "<Keyboard>/1",
                     "interactions": "",
                     "processors": "",
                     "groups": "Keyboard&Mouse",
+                    "action": "TransformForest",
+                    "isComposite": false,
+                    "isPartOfComposite": false
+                },
+                {
+                    "name": "",
+                    "id": "f48fa8ba-b86e-496c-970d-a2d9a0705670",
+                    "path": "<Gamepad>/buttonWest",
+                    "interactions": "",
+                    "processors": "",
+                    "groups": "Gamepad",
                     "action": "TransformForest",
                     "isComposite": false,
                     "isPartOfComposite": false
@@ -396,11 +407,33 @@
                 },
                 {
                     "name": "",
+                    "id": "803d32e7-4d70-46a9-87c9-d58728ecc34e",
+                    "path": "<Gamepad>/buttonSouth",
+                    "interactions": "",
+                    "processors": "",
+                    "groups": "Gamepad",
+                    "action": "TransformMeadow",
+                    "isComposite": false,
+                    "isPartOfComposite": false
+                },
+                {
+                    "name": "",
                     "id": "5be042f1-4388-49b8-98e7-0dd837e71d36",
                     "path": "<Keyboard>/3",
                     "interactions": "",
                     "processors": "",
                     "groups": "Keyboard&Mouse",
+                    "action": "TransformWater",
+                    "isComposite": false,
+                    "isPartOfComposite": false
+                },
+                {
+                    "name": "",
+                    "id": "2e21c028-eaf4-4ab6-835e-672bc0ce11f1",
+                    "path": "<Gamepad>/buttonEast",
+                    "interactions": "",
+                    "processors": "",
+                    "groups": "Gamepad",
                     "action": "TransformWater",
                     "isComposite": false,
                     "isPartOfComposite": false
@@ -452,7 +485,7 @@
                 {
                     "name": "",
                     "id": "039f2b4f-b54d-4156-bbb5-147538303aeb",
-                    "path": "<Gamepad>/buttonSouth",
+                    "path": "<Gamepad>/leftTrigger",
                     "interactions": "",
                     "processors": "",
                     "groups": "Gamepad",
@@ -474,7 +507,7 @@
                 {
                     "name": "",
                     "id": "519f6265-5f15-4210-add4-6c4b3e88ecdb",
-                    "path": "<Gamepad>/leftShoulder",
+                    "path": "<Gamepad>/buttonNorth",
                     "interactions": "",
                     "processors": "",
                     "groups": "Gamepad",
@@ -484,18 +517,7 @@
                 },
                 {
                     "name": "",
-                    "id": "f0e8b756-2a36-4c46-82e9-d3c9b0a0c360",
-                    "path": "<Gamepad>/rightShoulder",
-                    "interactions": "",
-                    "processors": "",
-                    "groups": "Gamepad",
-                    "action": "Revive",
-                    "isComposite": false,
-                    "isPartOfComposite": false
-                },
-                {
-                    "name": "",
-                    "id": "aecbb2a5-4b91-4dc6-89c8-bd2ab25bf50d",
+                    "id": "dfe5cbf6-72fb-47a6-a82e-9a376a274a44",
                     "path": "<Mouse>/middleButton",
                     "interactions": "",
                     "processors": "",
@@ -506,7 +528,7 @@
                 },
                 {
                     "name": "",
-                    "id": "3176e847-4c15-403c-b4e1-6d8a11ad3384",
+                    "id": "f761c534-ae24-4363-a11c-a61968e73623",
                     "path": "<Keyboard>/q",
                     "interactions": "",
                     "processors": "",

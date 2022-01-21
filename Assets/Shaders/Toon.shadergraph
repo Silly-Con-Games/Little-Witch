@@ -232,20 +232,6 @@
         {
             "m_OutputSlot": {
                 "m_Node": {
-                    "m_Id": "30298a37d5204a88922f0800c73a635c"
-                },
-                "m_SlotId": 3
-            },
-            "m_InputSlot": {
-                "m_Node": {
-                    "m_Id": "d6330ea700d14e5381007d64e376152c"
-                },
-                "m_SlotId": 0
-            }
-        },
-        {
-            "m_OutputSlot": {
-                "m_Node": {
                     "m_Id": "5da93849c81c41aa9ae83ccf5f8b6228"
                 },
                 "m_SlotId": 0
@@ -979,6 +965,8 @@
         "m_GuidSerialized": "9e3c649a-d3fc-4d38-9b60-14d720d43e51"
     },
     "m_Name": "LightRamp",
+    "m_DefaultRefNameVersion": 0,
+    "m_RefNameGeneratedByDisplayName": "",
     "m_DefaultReferenceName": "Gradient_1de530b0423545d7a767a8b974ca5cb6",
     "m_OverrideReferenceName": "",
     "m_GeneratePropertyBlock": false,
@@ -1101,6 +1089,8 @@
         "m_GuidSerialized": "3877d482-1413-4806-95c1-d4ef58af8bf4"
     },
     "m_Name": "SpecularSmoothness",
+    "m_DefaultRefNameVersion": 0,
+    "m_RefNameGeneratedByDisplayName": "",
     "m_DefaultReferenceName": "Vector1_20b349ad06aa40d08226274187966796",
     "m_OverrideReferenceName": "",
     "m_GeneratePropertyBlock": true,
@@ -1211,6 +1201,8 @@
         "m_GuidSerialized": "06e06197-df5e-4db3-8e96-f7f6d082ab8b"
     },
     "m_Name": "ExtraLightsRamp",
+    "m_DefaultRefNameVersion": 0,
+    "m_RefNameGeneratedByDisplayName": "",
     "m_DefaultReferenceName": "Gradient_2d595d98bde14bf1bd13a4ea36ecd346",
     "m_OverrideReferenceName": "",
     "m_GeneratePropertyBlock": false,
@@ -1476,16 +1468,18 @@
 }
 
 {
-    "m_SGVersion": 0,
+    "m_SGVersion": 1,
     "m_Type": "UnityEditor.ShaderGraph.ShaderKeyword",
     "m_ObjectId": "3a4ffb3226f9499da017a9d5428c3733",
     "m_Guid": {
         "m_GuidSerialized": "6ed5f5f5-c290-420a-b9ce-046701150424"
     },
     "m_Name": "Soft Shadows",
+    "m_DefaultRefNameVersion": 0,
+    "m_RefNameGeneratedByDisplayName": "",
     "m_DefaultReferenceName": "",
     "m_OverrideReferenceName": "_SHADOWS_SOFT",
-    "m_GeneratePropertyBlock": true,
+    "m_GeneratePropertyBlock": false,
     "m_KeywordType": 0,
     "m_KeywordDefinition": 1,
     "m_KeywordScope": 1,
@@ -1843,6 +1837,8 @@
         "m_GuidSerialized": "23343795-f94d-4e62-9fab-219377091238"
     },
     "m_Name": "Saturation",
+    "m_DefaultRefNameVersion": 0,
+    "m_RefNameGeneratedByDisplayName": "",
     "m_DefaultReferenceName": "Vector1_51ed2f3be6174206972fa0bb5d7c0df9",
     "m_OverrideReferenceName": "_Saturation",
     "m_GeneratePropertyBlock": true,
@@ -2009,16 +2005,18 @@
 }
 
 {
-    "m_SGVersion": 0,
+    "m_SGVersion": 1,
     "m_Type": "UnityEditor.ShaderGraph.ShaderKeyword",
     "m_ObjectId": "5e89f5549c1c40528c5d5a0eb881bbc4",
     "m_Guid": {
         "m_GuidSerialized": "7ed65d5e-8c15-407b-9d88-7a81226fa7d0"
     },
     "m_Name": "Shadows Cascade",
+    "m_DefaultRefNameVersion": 0,
+    "m_RefNameGeneratedByDisplayName": "",
     "m_DefaultReferenceName": "",
     "m_OverrideReferenceName": "_MAIN_LIGHT_SHADOWS_CASCADE",
-    "m_GeneratePropertyBlock": true,
+    "m_GeneratePropertyBlock": false,
     "m_KeywordType": 0,
     "m_KeywordDefinition": 0,
     "m_KeywordScope": 1,
@@ -2149,6 +2147,8 @@
         "m_GuidSerialized": "a4b59e71-eeea-468a-9382-a8c08564eebc"
     },
     "m_Name": "SpecularColor",
+    "m_DefaultRefNameVersion": 0,
+    "m_RefNameGeneratedByDisplayName": "",
     "m_DefaultReferenceName": "Color_6213b2a62945441991d47497badb0e5d",
     "m_OverrideReferenceName": "_SpecularColor",
     "m_GeneratePropertyBlock": true,
@@ -2218,6 +2218,8 @@
         "m_GuidSerialized": "8711342b-5945-4729-8fad-adfdafb0a3cb"
     },
     "m_Name": "Color",
+    "m_DefaultRefNameVersion": 0,
+    "m_RefNameGeneratedByDisplayName": "",
     "m_DefaultReferenceName": "Color_7060eabfe14e4de3852778f0b94dc983",
     "m_OverrideReferenceName": "_Color",
     "m_GeneratePropertyBlock": true,
@@ -2593,16 +2595,18 @@
 }
 
 {
-    "m_SGVersion": 0,
+    "m_SGVersion": 1,
     "m_Type": "UnityEditor.ShaderGraph.ShaderKeyword",
     "m_ObjectId": "8acad0b3360e4fb3ad85755786e1b8e7",
     "m_Guid": {
         "m_GuidSerialized": "8b040608-0167-45f4-9463-6f4928583957"
     },
     "m_Name": "Shadows",
+    "m_DefaultRefNameVersion": 0,
+    "m_RefNameGeneratedByDisplayName": "",
     "m_DefaultReferenceName": "",
     "m_OverrideReferenceName": "MAIN_LIGHT_CALCULATE_SHADOWS",
-    "m_GeneratePropertyBlock": true,
+    "m_GeneratePropertyBlock": false,
     "m_KeywordType": 0,
     "m_KeywordDefinition": 1,
     "m_KeywordScope": 0,
@@ -2876,6 +2880,8 @@
         "m_GuidSerialized": "ac932071-1ea0-4f8b-abe0-c7f8c5cd90af"
     },
     "m_Name": "DiffuseTexture",
+    "m_DefaultRefNameVersion": 0,
+    "m_RefNameGeneratedByDisplayName": "",
     "m_DefaultReferenceName": "Texture2D_a79b476bdc0f428990ee6c5d896bf698",
     "m_OverrideReferenceName": "",
     "m_GeneratePropertyBlock": true,
@@ -3218,6 +3224,8 @@
         "m_GuidSerialized": "9d1a2758-7f85-4c8d-9339-636be2923c5d"
     },
     "m_Name": "RippleSpeed",
+    "m_DefaultRefNameVersion": 0,
+    "m_RefNameGeneratedByDisplayName": "",
     "m_DefaultReferenceName": "",
     "m_OverrideReferenceName": "Vector1_4172bdaef1b940c891e223c87bebbecd",
     "m_GeneratePropertyBlock": true,
@@ -3300,6 +3308,8 @@
         "m_GuidSerialized": "2fed33dc-db39-4cab-92df-15595393666c"
     },
     "m_Name": "WaterToonRange",
+    "m_DefaultRefNameVersion": 0,
+    "m_RefNameGeneratedByDisplayName": "",
     "m_DefaultReferenceName": "",
     "m_OverrideReferenceName": "Gradient_cc40633803c44b29907818f0f2540aef",
     "m_GeneratePropertyBlock": false,
@@ -3510,6 +3520,8 @@
         "m_GuidSerialized": "08d58004-1cfb-4ef7-9d23-393cb0a21f56"
     },
     "m_Name": "RippleColor",
+    "m_DefaultRefNameVersion": 0,
+    "m_RefNameGeneratedByDisplayName": "",
     "m_DefaultReferenceName": "",
     "m_OverrideReferenceName": "Color_7e2a5e6da403449a9ce39c601ac3c193",
     "m_GeneratePropertyBlock": true,
@@ -3725,6 +3737,8 @@
         "m_GuidSerialized": "80e48be1-64ab-4ffd-9f03-1bdc0d353900"
     },
     "m_Name": "RippleDensity",
+    "m_DefaultRefNameVersion": 0,
+    "m_RefNameGeneratedByDisplayName": "",
     "m_DefaultReferenceName": "",
     "m_OverrideReferenceName": "Vector1_aacc35676c434811bb0dd783154902fe",
     "m_GeneratePropertyBlock": true,
@@ -3906,6 +3920,8 @@
         "m_GuidSerialized": "5839392d-5686-4706-8874-ced655533a2c"
     },
     "m_Name": "IsWater",
+    "m_DefaultRefNameVersion": 0,
+    "m_RefNameGeneratedByDisplayName": "",
     "m_DefaultReferenceName": "Vector1_e43cdd1054dd4e84a1a21906b9b89411",
     "m_OverrideReferenceName": "_IsWater",
     "m_GeneratePropertyBlock": true,
@@ -4003,6 +4019,8 @@
         "m_GuidSerialized": "9b1ef3d8-d8b7-4810-b300-62c004cc78ef"
     },
     "m_Name": "WaterDarkener",
+    "m_DefaultRefNameVersion": 0,
+    "m_RefNameGeneratedByDisplayName": "",
     "m_DefaultReferenceName": "Color_f1213717fa834b239702b23af6a2cc99",
     "m_OverrideReferenceName": "",
     "m_GeneratePropertyBlock": true,

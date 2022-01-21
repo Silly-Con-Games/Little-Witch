@@ -5,7 +5,7 @@ using UnityEngine;
 using UnityEngine.Events;
 using UnityEngine.UI;
 
-public class TutorialController : MonoBehaviour
+public class HighlightController : MonoBehaviour
 {
     [Tooltip("Persistent objects, like next button, grayBackground")]
     public List<GameObject> persistentActivate;

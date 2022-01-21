@@ -4,7 +4,7 @@ using Config;
 using Assets.Scripts.GameEvents;
 
 [Serializable]
-public class MeleeAbility
+public class MeleeAbility 
 {
     public SwordAttack swing;
     public MeleeAbilityConfig conf 

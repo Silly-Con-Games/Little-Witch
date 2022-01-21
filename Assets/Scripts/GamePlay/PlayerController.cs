@@ -1,11 +1,10 @@
-using UnityEngine;
-using Config;
-using UnityEngine.InputSystem;
-using UnityEngine.Events;
-using System;
-using System.Collections.Generic;
-using System.Collections;
 using Assets.Scripts.GameEvents;
+using Config;
+using System.Collections;
+using System.Collections.Generic;
+using UnityEngine;
+using UnityEngine.Events;
+using UnityEngine.InputSystem;
 
 public class PlayerController : MonoBehaviour, IDamagable
 {
@@ -49,6 +48,8 @@ public class PlayerController : MonoBehaviour, IDamagable
     private bool moveStopInternal;
     public float stepLengthSqr = 1.78f;
 
+    private Vector2 inputRotation;
+
     private Vector3 lastPos;
 
     float speed = 3;
@@ -59,19 +60,18 @@ public class PlayerController : MonoBehaviour, IDamagable
 
     private bool isDead;
 
+    private float rotationSpeed = 1000f;
+
+    public bool gamepadActive = false;
+    public UnityEvent<bool> controlSchemeChanged;
+
     public bool canBeControlled = true;
 
     public  Vector3 mouseWorldPosition { get; internal set; }
 
-    private void Start()
-    {
-        // delete after transform menu finished
-/*        PlayerInput pi = GetComponent<PlayerInput>();
-        transformMenu = FindObjectOfType<TransformMenu>();
-        transformMenu.playerController = this;
-        pi.actions["TransformMenu"].performed += _ => transformMenu.OpenMenu();
-        pi.actions["TransformMenu"].canceled += _ => transformMenu.CloseMenu();*/
-    }
+    [SerializeField] private AimingGfxController aimGfx;
+
+    private PlayerInput playerInput;
 
     public void Initialize()
     {
@@ -100,28 +100,49 @@ public class PlayerController : MonoBehaviour, IDamagable
         if (!hudController)
         {
             hudController = FindObjectOfType<HUDController>();
-            hudController.playerController = this;
         }
 
-        if (!transformMenu)
-        {
-            PlayerInput pi = GetComponent<PlayerInput>();
-            transformMenu = FindObjectOfType<TransformMenu>();
-            transformMenu.playerController = this;
-            pi.actions["TransformMenu"].performed += _ => transformMenu.OpenMenu();
-            pi.actions["TransformMenu"].canceled += _ => transformMenu.CloseMenu();
-        }
+        SetUpInput();
 
-        hudController.playerController = this;
+        hudController.Init(this);
+        pauseController.playerController = this;
+
+        //aimGfx.playerController = this;
 
         ApplyConfig();
 
         isDead = false;
     }
 
+    private void SetUpInput()
+    {
+        if (playerInput == null)
+        {
+            playerInput = GetComponent<PlayerInput>();
+        }
+
+        if (!transformMenu)
+        {
+            transformMenu = FindObjectOfType<TransformMenu>();
+            transformMenu.playerController = this;
+            playerInput.actions["TransformMenu"].performed += _ => transformMenu.OpenMenu(transformAbility.IsReady());
+            playerInput.actions["TransformMenu"].canceled += _ => transformMenu.CloseMenu();
+        }
+
+        playerInput.actions["MainAbility"].performed += _ => AimMainAbility();
+        playerInput.actions["MainAbility"].canceled += _ => CastMainAbility();
+    }
+
     void Update()
     {
+        bool prevGP = gamepadActive;
+        gamepadActive = playerInput.currentControlScheme.Equals("Gamepad");
+        if (prevGP != gamepadActive) controlSchemeChanged.Invoke(gamepadActive);
+
         MoveUpdate();
+
+        //chargeAbility.abilityAnimationTransform.localScale = new Vector3(10,10,10);
+        //chargeAbility.abilityAnimationTransform.position = mouseWorldPosition;
 
         CheckCurrentBiome();
 
@@ -132,6 +153,12 @@ public class PlayerController : MonoBehaviour, IDamagable
             passive();
 
 		mapController.SetPlayerPosition(transform.position);
+
+        if (aimGfx.isOn)
+        {
+            if (currentMainAbility == null) aimGfx.SetReady(false);
+            else aimGfx.SetReady(currentMainAbility.IsReady);
+        }
 
     }
 
@@ -151,14 +178,16 @@ public class PlayerController : MonoBehaviour, IDamagable
         health = new HealthTracker(witchConfig.health);
         hudController.SetUpHealth(health.Health, health.MaxHealth);
         health.onChanged.AddListener(hudController.SetHealth);
+        hudController.SetHealth(health.Health);
 
         energy = new EnergyTracker(witchConfig.energyMax, witchConfig.energyInitial);
         energy.onChanged.AddListener(ChangeEnergyTankAppearance);
         ChangeEnergyTankAppearance(energy.Energy);
 
-        hudController.SetUpEnergy(energy.Energy, energy.MaxEnergy, Mathf.CeilToInt(energy.MaxEnergy/witchConfig.transformAbility.energyCost));
+        hudController.SetUpEnergy(energy.Energy, energy.MaxEnergy, 1);//Mathf.CeilToInt(energy.MaxEnergy/witchConfig.transformAbility.energyCost));
         energy.onChanged.AddListener(hudController.SetEnergy);
         energy.onNotEnough.AddListener(hudController.NotEnoughEnergy);
+        hudController.SetEnergy(energy.Energy);
 
         meleeAbility.conf = witchConfig.meeleeAbility;
         chargeAbility.conf = witchConfig.chargeAbility;
@@ -176,16 +205,38 @@ public class PlayerController : MonoBehaviour, IDamagable
         if (!canBeControlled) return;
 
         // Direction
-        Ray ray = mainCamera.ScreenPointToRay(Pointer.current.position.ReadValue());
-
-        if (Physics.Raycast(ray, out RaycastHit hit, 1000, tileMask))
+        if (gamepadActive)
         {
-            mouseWorldPosition = hit.point;
+            Vector3 lookDir = inputRotation == Vector2.zero ?
+                new Vector3(inputVelocity.x, 0, inputVelocity.y).normalized :
+                new Vector3(inputRotation.x, 0, inputRotation.y).normalized;
+            lookDir = lookDir == Vector3.zero ? transform.forward : lookDir;
+            mouseWorldPosition = transform.position + lookDir * forestAbility.conf.maxRange;  // used for abilities' direction computation
+            Quaternion targetRot = Quaternion.LookRotation(lookDir, Vector3.up);
+            transform.rotation = Quaternion.RotateTowards(transform.rotation, targetRot, Time.deltaTime * rotationSpeed);
+        }
+        else
+        {
+            Vector2 mousePos = Mouse.current.position.ReadValue();
+            Vector3 pos = transform.position;
+            pos.y -= 1.2f;
+            Ray cameraRay = mainCamera.ScreenPointToRay(mousePos);
+
+            Plane p = new Plane(Vector3.up, pos);
+
+            if(p.Raycast(cameraRay, out float enter))
+            {
+                Vector3 mwp = cameraRay.GetPoint(enter);
+                mwp.y = transform.position.y;
+                mouseWorldPosition = mwp;
+                transform.LookAt(mwp);
+            }
         }
 
         if (moveStop)
             return;
 
+        // Movement sound
         Vector3 diff = transform.position - lastPos;
         if (diff.sqrMagnitude > stepLengthSqr)
         {
@@ -193,10 +244,6 @@ public class PlayerController : MonoBehaviour, IDamagable
 
             FMODUnity.RuntimeManager.PlayOneShot("event:/test/step");
         }
-
-        var targetPosition = mouseWorldPosition;
-        targetPosition.y = transform.position.y;
-        transform.LookAt(targetPosition);
 
         // Movement
         Vector3 forwardV = cameraTrans.forward;
@@ -232,8 +279,7 @@ public class PlayerController : MonoBehaviour, IDamagable
 
         animator.SetFloat("VelocityX", velocityX, .1f, Time.deltaTime);
         animator.SetFloat("VelocityZ", velocityZ, .1f, Time.deltaTime);
-        if (velocity.magnitude > 0)
-            characterController.Move(velocity * delta);
+        characterController.Move(velocity * delta);
     }
 
     void CheckCurrentBiome()
@@ -346,9 +392,30 @@ public class PlayerController : MonoBehaviour, IDamagable
 		}
     }
 
-    public void OnMainAbility(InputValue value)
+    public void AimMainAbility()
     {
         if (!canBeControlled) return;
+
+        if (currentMainAbility != null)
+        {
+            aimGfx.Show(ready: currentMainAbility.IsReady);
+            if (!currentMainAbility.IsReady)
+            {
+                hudController.AbilityNotReady(currentMainAbility);
+                GameEventQueue.QueueEvent(new MainAbilityFailEvent(notOnCd: true));
+            }
+        }
+        else
+        {
+            GameEventQueue.QueueEvent(new MainAbilityFailEvent(deadBiome: true));
+        }
+    }
+
+    public void CastMainAbility()
+    {
+        if (!canBeControlled) return;
+
+        aimGfx.Hide();
 
         if (currentMainAbility != null && currentMainAbility.IsReady)
         {
@@ -361,7 +428,7 @@ public class PlayerController : MonoBehaviour, IDamagable
             }
             hudController.CastAbility(currentMainAbility);
         }
-        else if (currentMainAbility != null)
+/*        else if (currentMainAbility != null)
         {
             hudController.AbilityNotReady(currentMainAbility);
             GameEventQueue.QueueEvent(new MainAbilityFailEvent(notOnCd: true));
@@ -369,7 +436,7 @@ public class PlayerController : MonoBehaviour, IDamagable
         else
         {
             GameEventQueue.QueueEvent(new MainAbilityFailEvent(deadBiome: true));
-        }
+        }*/
 
     }
 
@@ -428,7 +495,8 @@ public class PlayerController : MonoBehaviour, IDamagable
 
     private void OnLook(InputValue value)
     {
-
+        // only used with controller input
+        inputRotation = value.Get<Vector2>();
     }
 
     private void OnTransformMenu(InputValue value)
@@ -440,6 +508,7 @@ public class PlayerController : MonoBehaviour, IDamagable
     {
         if (isDead) return;
         FMODUnity.RuntimeManager.PlayOneShot("event:/witch/hit/witch_hit");
+        FMODUnity.RuntimeManager.PlayOneShot("event:/witch/hit/witch_ouch");
         animator.SetTrigger("GetHit");
 
         health.TakeDamage(amount);
@@ -451,10 +520,11 @@ public class PlayerController : MonoBehaviour, IDamagable
         isDead = true;
         animator.SetTrigger("Die");
 
+        controlSchemeChanged.RemoveAllListeners();
 		GlobalConfigManager.onConfigChanged.RemoveListener(ApplyConfig);
 		onDeathEvent.Invoke();
-
-		enabled = false;
+        GameEventQueue.QueueEvent(new PlayerDeathEvent());
+		this.enabled = false;
         GetComponent<PlayerInput>().enabled = false;
     }
 
@@ -467,8 +537,14 @@ public class PlayerController : MonoBehaviour, IDamagable
 
     public void ChangeEnergyTankAppearance(float curEnergy)
     {
-        Debug.Log("changing energy tank appearance");
+        //Debug.Log("changing energy tank appearance");
         animator.SetBool("EnoughEnergy", curEnergy >= transformAbility.conf.energyCost);
+    }
+
+    public void OnControlsChanged(PlayerInput pi)
+    {
+        //Debug.Log("controls changed");
+        //gamepadActive = pi.currentControlScheme.Equals("Gamepad");
     }
 
 }

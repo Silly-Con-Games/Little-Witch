@@ -1504,6 +1504,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: bd38d3658c35ed94282533f1a72a678d, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  underlay: {fileID: 0}
+  pages: []
   musicSlider: {fileID: 7949246482867000201}
   soundsSlider: {fileID: 8535518310539659518}
   controller: {fileID: 0}

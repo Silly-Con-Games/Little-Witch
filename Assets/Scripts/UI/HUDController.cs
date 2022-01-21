@@ -21,6 +21,7 @@ public class HUDController : MonoBehaviour
 
     // ability icons
     [SerializeField] private Image[] icons;
+    private TextMeshProUGUI[] iconsText;
     private Image[] iconsInner;
     private Color[] iconColors;
 
@@ -37,24 +38,35 @@ public class HUDController : MonoBehaviour
     private void Start()
     {
         // ability icons
+        iconsText = new TextMeshProUGUI[icons.Length];
         iconsInner = new Image[icons.Length];
         iconColors = new Color[icons.Length];
         for (int i = 0; i < icons.Length; i++)
         {
+            iconsText[i] = icons[i].GetComponentsInChildren<TextMeshProUGUI>()[0];
             iconsInner[i] = icons[i].GetComponentsInChildren<Image>()[1];
             iconColors[i] = iconsInner[i].color;
         }
+    }
+
+    public void Init(PlayerController playerController)
+    {
+        this.playerController = playerController;
+        playerController.controlSchemeChanged.AddListener(SwitchText);
     }
 
     #region Health and Energy
 
     public void SetUpHealth(float startingHealth, float maxHealth, int barCount = 5)
     {
-        healthbars = new Slider[barCount];
-        healthbars[0] = healthbar;
-        for (int i = 1; i < barCount; i++)
+        if (healthbars == null)
         {
-            healthbars[i] = Instantiate(healthbar, healthParent.transform);
+            healthbars = new Slider[barCount];
+            healthbars[0] = healthbar;
+            for (int i = 1; i < barCount; i++)
+            {
+                healthbars[i] = Instantiate(healthbar, healthParent.transform);
+            }
         }
         SetUpBar(startingHealth, maxHealth, ref healthbars);
         this.maxHealth = maxHealth;
@@ -63,11 +75,14 @@ public class HUDController : MonoBehaviour
 
     public void SetUpEnergy(float startingEnergy, float maxEnergy, int barCount = 3)
     {
-        energybars = new Slider[barCount];
-        energybars[0] = energybar;
-        for (int i = 1; i < barCount; i++)
+        if(energybars == null)
         {
-            energybars[i] = Instantiate(energybar, energyParent.transform);
+            energybars = new Slider[barCount];
+            energybars[0] = energybar;
+            for (int i = 1; i < barCount; i++)
+            {
+                energybars[i] = Instantiate(energybar, energyParent.transform);
+            }
         }
 
         SetUpBar(startingEnergy, maxEnergy, ref energybars);
@@ -226,6 +241,14 @@ public class HUDController : MonoBehaviour
         }
     }
 
+    // change this to read from input actions
+    public void SwitchText(bool gamepad)
+    {
+        iconsText[0].text = gamepad ? "X" : "1";
+        iconsText[1].text = gamepad ? "A" : "2";
+        iconsText[2].text = gamepad ? "B" : "3";
+    }
+
     #endregion
 
     #region Wave Info
@@ -255,6 +278,12 @@ public class HUDController : MonoBehaviour
     private void ShowWaveStart(int waveNumber)
     {
         waveInfoText.text = "Wave " + (waveNumber+1);
+        waveInfo.SetTrigger("WaveDefeated");
+    }
+
+    public void ShowHintText(string str)
+    {
+        waveInfoText.text = str;
         waveInfo.SetTrigger("WaveDefeated");
     }
 

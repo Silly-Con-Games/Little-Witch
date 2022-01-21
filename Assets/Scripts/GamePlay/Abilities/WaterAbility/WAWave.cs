@@ -69,19 +69,22 @@ public class WAWave : MonoBehaviour
 
     private void OnHit(Collider collider)
     {
-        IPushable pushable = collider.gameObject.GetComponent<IPushable>();
+        IPushable pushable = collider.GetComponent<IPushable>();
         if(pushable != null && !hashSet.Contains(pushable))
         {
             hashSet.Add(pushable);
             GameEventQueue.QueueEvent(new WaterAbilityEvent(pushedEnemy: true));
             Vector3 force = (collider.transform.position - transform.position).normalized * speed;
-            pushable.ReceivePush(force, 0.9f - (Time.time - start));
+            force.y = 10;
+            Debug.Log($"Wave force multiplied by {(1 - (Time.time - start) / (waveDuration*2)) }");
+            pushable.ReceivePush(force * (1 - (Time.time - start)/ (waveDuration * 2)), (1 - (Time.time - start)));
         }
 
-        IObjectType objectType = collider.gameObject.GetComponent<IObjectType>();
+        IObjectType objectType = collider.GetComponent<IObjectType>();
         if(objectType?.GetObjectType() == EObjectType.Projectile)
         {
             GameEventQueue.QueueEvent(new WaterAbilityEvent(killedProjectile: true));
+
             Destroy(collider.gameObject);
         }
     }
