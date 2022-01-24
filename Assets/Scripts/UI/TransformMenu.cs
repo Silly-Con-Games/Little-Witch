@@ -31,7 +31,7 @@ public class TransformMenu : MonoBehaviour
         ResumeGame();
         if (playerController)
         {
-            playerController.transformAbility.StopTelegraphTransform();
+            playerController.transformAbility.StopHighlightTransform();
             playerController.canBeControlled = true;
             if (selected != BiomeType.UNKNOWN)
             {
@@ -48,10 +48,10 @@ public class TransformMenu : MonoBehaviour
         selected = biome;
         if (playerController)
         {
-            playerController.transformAbility.StopTelegraphTransform();
+            playerController.transformAbility.StopHighlightTransform();
 
-            // Telegraphing needs to be updated if 1. player gets energy during slowmo 2. moves to different tile 3. enemy kills a tile
-            playerController.transformAbility.TelegraphTransform(biome);
+            // Highighting needs to be updated if 1. player gets energy during slowmo 2. moves to different tile 3. enemy kills a tile
+            playerController.transformAbility.HighlightTransform(biome);
         }
         
     }

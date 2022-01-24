@@ -53,6 +53,19 @@ MonoBehaviour:
   waterProp:
     prop: {fileID: 3028385164208695558, guid: 5675160e28dc3a24c9385ff9f42345fc, type: 3}
     chance: 0.2
+  biomesList:
+  - type: 1
+    highlightColor: {r: 0.5217612, g: 0.9528302, b: 0.4000089, a: 1}
+  - type: 2
+    highlightColor: {r: 0.7821141, g: 1, b: 0.2028302, a: 1}
+  - type: 3
+    highlightColor: {r: 0.36320752, g: 0.73661083, b: 1, a: 1}
+  - type: 4
+    highlightColor: {r: 0.509434, g: 0.509434, b: 0.509434, a: 1}
+  - type: 0
+    highlightColor: {r: 1, g: 0, b: 0.844852, a: 1}
+  - type: 5
+    highlightColor: {r: 0.9528302, g: 0.56209606, b: 0.36405307, a: 1}
   navMeshSurface: {fileID: 3228296382838383238}
 --- !u!114 &3228296382838383238
 MonoBehaviour:

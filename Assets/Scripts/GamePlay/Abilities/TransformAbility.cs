@@ -11,16 +11,17 @@ public class TransformAbility
 
 	public TransformConfig conf;
 
-	public GameObject highlightTilePrefab;
+	public TileHighlighter highlightTilePrefab;
+
 
 	private float lastUsedTime = float.NegativeInfinity;
 
 	private MapController mapController;
 	private EnergyTracker playerEnergy;
-	private IObjectPool<GameObject> highlightPool;
-	private List<GameObject> highlights = new List<GameObject>();
+	private IObjectPool<TileHighlighter> highlightPool;
+	private List<TileHighlighter> highlights = new List<TileHighlighter>();
 	public void Init(PlayerController player) {
-		highlightPool = new ObjectPool<GameObject>(() => GameObject.Instantiate(highlightTilePrefab), g => g.SetActive(true), g => g.SetActive(false));
+		highlightPool = new ObjectPool<TileHighlighter>(() => GameObject.Instantiate(highlightTilePrefab), g => g.gameObject.SetActive(true), g => g.gameObject.SetActive(false));
 		mapController = player.mapController;
 		playerEnergy = player.energy;
 	}
@@ -38,14 +39,27 @@ public class TransformAbility
 			GameEventQueue.QueueEvent(new BiomeTransformationFailedEvent(invalidTile: true));
 	}
 
-	public void TelegraphTransform(BiomeType target)
+	public void HighlightTransform(BiomeType target)
 	{
-		GetTilesToTransform(target, out float _)?.ForEach(HighlightTile);
+		var tiles = GetTilesToTransform(target, out float _);
+		if (tiles == null)
+			return;
+		Color hc = mapController.GetBiomeMetadata(target).highlightColor;
+		foreach (var t in tiles)
+		{
+            TileHighlighter h = highlightPool.Get();
+			h.transform.position = t.transform.position;
+			h.SetHighlightColor(hc);
+			highlights.Add(h);
+		};
 	}
 
 	private List<Tile> GetTilesToTransform(BiomeType target, out float cost)
     {
-		cost = 0; 
+		cost = 0;
+		if (target == BiomeType.UNKNOWN)
+			return null;
+		
 		Tile tile = mapController.GetTileAtPosition(origin.position);
 
 		if (tile == null || !tile.CanBeMorphed())
@@ -70,18 +84,12 @@ public class TransformAbility
 		return tilesToTransform;
 	}
 
-	public void StopTelegraphTransform()
+	public void StopHighlightTransform()
 	{
 		highlights.ForEach(highlightPool.Release);
 		highlights.Clear();
 	}
 
-	public void HighlightTile(Tile tile)
-    {
-		var o = highlightPool.Get();
-		o.transform.position = tile.transform.position;
-		highlights.Add(o);
-	}
 
 	public bool IsReady() {
 		if (Time.time - lastUsedTime < conf.cooldown) // CD test

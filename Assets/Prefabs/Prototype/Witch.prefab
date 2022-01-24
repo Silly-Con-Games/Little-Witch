@@ -879,7 +879,7 @@ MonoBehaviour:
       aliveEnergyCostMultiplier: 0
       radius: 0
       minBiomeSize: 0
-    highlightTilePrefab: {fileID: 2887050559126619852, guid: e06eac9969d6e42478ed18151994cd66, type: 3}
+    highlightTilePrefab: {fileID: 30402861512655812, guid: e06eac9969d6e42478ed18151994cd66, type: 3}
   forestAbility:
     rootPathPrefab: {fileID: 1010815318834259687, guid: db235b2c73331114fa8de52306785352, type: 3}
     rootCirclePrefab: {fileID: 5760741254045953524, guid: 7c7d4c30b18d4f8429101e84fb74ef6f, type: 3}
