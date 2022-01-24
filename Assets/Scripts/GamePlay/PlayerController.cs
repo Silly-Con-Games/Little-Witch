@@ -195,9 +195,11 @@ public class PlayerController : MonoBehaviour, IDamagable
         energy.onChanged.AddListener(ChangeEnergyTankAppearance);
         ChangeEnergyTankAppearance(energy.Energy);
 
-        hudController.SetUpEnergy(energy.Energy, energy.MaxEnergy, 1);//Mathf.CeilToInt(energy.MaxEnergy/witchConfig.transformAbility.energyCost));
+        hudController.SetUpEnergy(energy.Energy, energy.MaxEnergy);//Mathf.CeilToInt(energy.MaxEnergy/witchConfig.transformAbility.energyCost));
         energy.onChanged.AddListener(hudController.SetEnergy);
         energy.onNotEnough.AddListener(hudController.NotEnoughEnergy);
+        energy.highlightEnergyCost.AddListener(hudController.ShowEnergyCost);
+        energy.stopHighlightEnergyCost.AddListener(hudController.StopShowEnergyCost);
         hudController.SetEnergy(energy.Energy);
 
         meleeAbility.conf = witchConfig.meeleeAbility;

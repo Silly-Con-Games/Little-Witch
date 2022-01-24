@@ -9,6 +9,8 @@ public class EnergyTracker
     public float Energy { get; internal set; }
 
     public UnityEvent<float> onChanged;
+    public UnityEvent<float> highlightEnergyCost;
+    public UnityEvent stopHighlightEnergyCost;
     public UnityEvent onNotEnough;
 
     public EnergyTracker(float maxEnergy, float initialEnergy = 0) 
@@ -17,6 +19,8 @@ public class EnergyTracker
         MaxEnergy = maxEnergy;
         onChanged = new UnityEvent<float>();
         onNotEnough = new UnityEvent();
+        stopHighlightEnergyCost = new UnityEvent();
+        highlightEnergyCost = new UnityEvent<float>();
     }
 
     public void Cleanup()
@@ -60,6 +64,16 @@ public class EnergyTracker
         Energy = Mathf.Min(MaxEnergy, Energy + amount);
 
         onChanged.Invoke(Energy);
+    }
+
+    public void HighlightCost(float cost)
+    {
+        highlightEnergyCost.Invoke(cost);
+    }
+
+    public void StopHighlightCost()
+    {
+        stopHighlightEnergyCost.Invoke();
     }
 
 }

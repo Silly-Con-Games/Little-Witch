@@ -41,9 +41,10 @@ public class TransformAbility
 
 	public void HighlightTransform(BiomeType target)
 	{
-		var tiles = GetTilesToTransform(target, out float _);
+		var tiles = GetTilesToTransform(target, out float cost);
 		if (tiles == null)
 			return;
+		playerEnergy.HighlightCost(cost);
 		Color hc = mapController.GetBiomeMetadata(target).highlightColor;
 		foreach (var t in tiles)
 		{
@@ -86,6 +87,8 @@ public class TransformAbility
 
 	public void StopHighlightTransform()
 	{
+		playerEnergy.StopHighlightCost();
+
 		highlights.ForEach(highlightPool.Release);
 		highlights.Clear();
 	}
