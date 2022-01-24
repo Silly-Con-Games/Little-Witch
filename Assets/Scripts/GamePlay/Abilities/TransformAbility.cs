@@ -1,146 +1,117 @@
 using Assets.Scripts.GameEvents;
 using Config;
 using System;
-using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
-
+using UnityEngine.Pool;
 [Serializable]
 public class TransformAbility
 {
 	public Transform origin;
-	public PlayerController player;
 
 	public TransformConfig conf;
 
+	public GameObject highlightTilePrefab;
+
 	private float lastUsedTime = float.NegativeInfinity;
 
-	private List<Tile> visitedTiles;
-	private Queue<Tile> rimTiles;
-
+	private MapController mapController;
+	private EnergyTracker playerEnergy;
+	private IObjectPool<GameObject> highlightPool;
+	private List<GameObject> highlights = new List<GameObject>();
 	public void Init(PlayerController player) {
-		this.player = player;
-		visitedTiles = new List<Tile>();
-		rimTiles = new Queue<Tile>();
+		highlightPool = new ObjectPool<GameObject>(() => GameObject.Instantiate(highlightTilePrefab), g => g.SetActive(true), g => g.SetActive(false));
+		mapController = player.mapController;
+		playerEnergy = player.energy;
 	}
 
 	public void Transform(BiomeType target) {
-		Tile tile = player.mapController.GetTileAtPosition(origin.position);
-
-		if (tile != null && tile.GetBiomeType() != BiomeType.NOTTRANSFORMABLE) {
+		var tiles = GetTilesToTransform(target, out float cost);
+		if(tiles != null)
+        {
 			lastUsedTime = Time.time;
-			// transform circle and find rim tiles			
-			rimTiles.Enqueue(tile);
-			visitedTiles.Add(tile);
-			bool noEnergy = false;
-			float totalCost = 0;
-			for (int depth = 0; depth < conf.radius; depth++) {
-				int rimCount = rimTiles.Count;
-				for (int i = 0; i < rimCount; i++) {
-					Tile next = rimTiles.Dequeue();
-					if (!TryMorphTile(next, target, ref totalCost)) 
-					{
-						noEnergy = true;
-						break;
-					}
-
-					foreach (Tile ngb in next.GetNeighbours()) {
-						if (!visitedTiles.Contains(ngb)) {
-							rimTiles.Enqueue(ngb);
-							visitedTiles.Add(ngb);
-						}
-					}
-				}
-				if (noEnergy)
-					break;
-			}
-			visitedTiles.Clear();
-
-			// deal with rim
-			List<Tile> biome = new List<Tile>();
-			foreach (Tile rimTile in rimTiles) {
-				if (noEnergy)
-					break;
-				if (rimTile.GetBiomeType() != target) {
-					RecursivelySearchBiome(rimTile, biome);
-					if (biome.Count <= conf.minBiomeSize) {
-						foreach (Tile biomeTile in biome) {
-							if (!TryMorphTile(biomeTile, target, ref totalCost))
-							{
-								noEnergy = true;
-								break;
-							}
-						}
-					}
-
-					biome.Clear();
-				}
-			}
-			rimTiles.Clear();
-			
-			GameEventQueue.QueueEvent(new BiomeTransformedEvent(from: tile.GetBiomeType(), to: target, totalCost, true));
-		}
-		GameEventQueue.QueueEvent(new BiomeTransformationFailedEvent(invalidTile:true));
-	}
-
-	public void Revive()
-	{
-		Tile tile = player.mapController.GetTileAtPosition(origin.position);
-		if (tile != null && tile.GetBiomeType() == BiomeType.DEAD && tile.GetBiomeType() != BiomeType.NOTTRANSFORMABLE)
-		{
-			lastUsedTime = Time.time;
-			tile.Revive();
-			player.energy.UseEnergy(conf.energyCost);
-			float cost = conf.energyCost;
-			foreach (var neigh in tile.GetNeighbours())
-            {
-				if (neigh.IsDead && player.energy.HasEnough(conf.energyCost))
-                {
-					neigh.Revive();
-					player.energy.UseEnergy(conf.energyCost);
-					cost += conf.energyCost;
-				}
-			}
-			GameEventQueue.QueueEvent(new BiomeTransformedEvent(from: BiomeType.DEAD, to: tile.wantedType, cost, true, revive: true));
+			tiles.ForEach(t => t.Morph(target, false));
+			playerEnergy.UseEnergy(cost);
+			GameEventQueue.QueueEvent(new BiomeTransformedEvent(to: target, energyCost: cost, playerOrigin: true));
 		}
 		else
-        {
-			GameEventQueue.QueueEvent(new BiomeTransformationFailedEvent(invalidTile: true, revive: true));
+			GameEventQueue.QueueEvent(new BiomeTransformationFailedEvent(invalidTile: true));
+	}
+
+	public void TelegraphTransform(BiomeType target)
+	{
+		GetTilesToTransform(target, out float _)?.ForEach(HighlightTile);
+	}
+
+	private List<Tile> GetTilesToTransform(BiomeType target, out float cost)
+    {
+		cost = 0; 
+		Tile tile = mapController.GetTileAtPosition(origin.position);
+
+		if (tile == null || !tile.CanBeMorphed())
+			return null;
+
+		List<Tile> tilesToTransform = new List<Tile>();
+
+		Queue<Tile> candidates = new Queue<Tile>();
+		candidates.Enqueue(tile);
+		tile.GetNeighbours().ForEach(candidates.Enqueue);
+
+		float totalCost = 0;
+		while (candidates.Count > 0)
+		{
+			Tile next = candidates.Dequeue();
+			if (WillTileMorph(next, target, ref totalCost))
+			{
+				tilesToTransform.Add(next);
+			}
 		}
+		cost = totalCost;
+		return tilesToTransform;
+	}
+
+	public void StopTelegraphTransform()
+	{
+		highlights.ForEach(highlightPool.Release);
+		highlights.Clear();
+	}
+
+	public void HighlightTile(Tile tile)
+    {
+		var o = highlightPool.Get();
+		o.transform.position = tile.transform.position;
+		highlights.Add(o);
 	}
 
 	public bool IsReady() {
-		if (!player.energy.HasEnough(conf.energyCost))
+		if (Time.time - lastUsedTime < conf.cooldown) // CD test
 			return false;
-		else
-			return Time.time - lastUsedTime > conf.cooldown;
+		Tile tile = mapController.GetTileAtPosition(origin.position);
+		if (tile == null || !tile.CanBeMorphed()) // valid and morphable test
+			return false;
+
+		float cost = conf.energyCost;
+		if (!tile.IsDead) 
+			cost *= conf.aliveEnergyCostMultiplier;
+
+		if (!playerEnergy.HasEnough(cost)) // enough energy test
+			return false;
+
+		return true;
 	}
 
-	private void RecursivelySearchBiome(Tile tile, List<Tile> biome) {
-		biome.Add(tile);
-
-		if (biome.Count > conf.minBiomeSize) {
-			return;
-		}
-
-		foreach (Tile ngb in tile.GetNeighbours()) {
-			if (ngb.GetBiomeType() == tile.GetBiomeType() && !biome.Contains(ngb)) {
-				RecursivelySearchBiome(ngb, biome);
-			}
-		}
-	}
-
-	private bool TryMorphTile(Tile tile, BiomeType target, ref float totalCost) {
+	private bool WillTileMorph(Tile tile, BiomeType target, ref float totalCost) {
 		if (tile.GetBiomeType() == target || !tile.CanBeMorphed())
-			return true;
+			return false;
 		float cost = conf.energyCost;
 		if (!tile.IsDead)
 			cost *= conf.aliveEnergyCostMultiplier;
-        if (player.energy.HasEnough(cost))
+
+		float tmpTotalCost = totalCost + cost;
+
+        if (playerEnergy.HasEnough(tmpTotalCost))
         {
-			tile.Morph(target, false);
-			totalCost += cost;
-			player.energy.UseEnergy(cost);
+			totalCost = tmpTotalCost;
 			return true;
 		}
 		return false;

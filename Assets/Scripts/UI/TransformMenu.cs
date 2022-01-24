@@ -28,19 +28,32 @@ public class TransformMenu : MonoBehaviour
 
     public void CloseMenu()
     {
-        if (playerController) playerController.canBeControlled = true;
-
         ResumeGame();
-        if (selected != BiomeType.UNKNOWN && playerController)
+        if (playerController)
         {
-            playerController.Transform(selected);
+            playerController.transformAbility.StopTelegraphTransform();
+            playerController.canBeControlled = true;
+            if (selected != BiomeType.UNKNOWN)
+            {
+                playerController.Transform(selected);
+            }
+            
         }
         contents.SetActive(false);
+
     }
 
     public void Select(BiomeType biome)
     {
         selected = biome;
+        if (playerController)
+        {
+            playerController.transformAbility.StopTelegraphTransform();
+
+            // Telegraphing needs to be updated if 1. player gets energy during slowmo 2. moves to different tile 3. enemy kills a tile
+            playerController.transformAbility.TelegraphTransform(biome);
+        }
+        
     }
 
     // u should also forbid movement, dash, use of other abilities etc.
