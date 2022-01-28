@@ -88,12 +88,6 @@ public class PlayerController : MonoBehaviour, IDamagable
 
 		transformAbility.Init(this);
 
-        meleeAbility.player = this;        
-        forestAbility.Init(this);
-        meadowAbility.Init(this);
-        waterAbility.Init(this);
-        dashAbility.Init(this);
-
         if (!mapController)
             mapController = FindObjectOfType<MapController>();
 
@@ -104,12 +98,21 @@ public class PlayerController : MonoBehaviour, IDamagable
 
         SetUpInput();
 
-        hudController.Init(this);
         pauseController.playerController = this;
+        meleeAbility.player = this;
 
         //aimGfx.playerController = this;
 
+
         ApplyConfig();
+
+        transformAbility.Init(this);
+        forestAbility.Init(this);
+        meadowAbility.Init(this);
+        waterAbility.Init(this);
+        dashAbility.Init(this);
+        hudController.Init(this);
+
 
         isDead = false;
     }
@@ -166,7 +169,15 @@ public class PlayerController : MonoBehaviour, IDamagable
     {
         health.Cleanup();
         energy.Cleanup();
+
+        playerInput.actions["TransformMenu"].performed -= _ => transformMenu.OpenMenu(transformAbility.IsReady());
+        playerInput.actions["TransformMenu"].canceled -= _ => transformMenu.CloseMenu();
+
+        playerInput.actions["MainAbility"].performed -= _ => AimMainAbility();
+        playerInput.actions["MainAbility"].canceled -= _ => CastMainAbility();
     }
+
+
 
     private void ApplyConfig()
     {
@@ -184,9 +195,11 @@ public class PlayerController : MonoBehaviour, IDamagable
         energy.onChanged.AddListener(ChangeEnergyTankAppearance);
         ChangeEnergyTankAppearance(energy.Energy);
 
-        hudController.SetUpEnergy(energy.Energy, energy.MaxEnergy, 1);//Mathf.CeilToInt(energy.MaxEnergy/witchConfig.transformAbility.energyCost));
+        hudController.SetUpEnergy(energy.Energy, energy.MaxEnergy);//Mathf.CeilToInt(energy.MaxEnergy/witchConfig.transformAbility.energyCost));
         energy.onChanged.AddListener(hudController.SetEnergy);
         energy.onNotEnough.AddListener(hudController.NotEnoughEnergy);
+        energy.highlightEnergyCost.AddListener(hudController.ShowEnergyCost);
+        energy.stopHighlightEnergyCost.AddListener(hudController.StopShowEnergyCost);
         hudController.SetEnergy(energy.Energy);
 
         meleeAbility.conf = witchConfig.meeleeAbility;
@@ -464,14 +477,6 @@ public class PlayerController : MonoBehaviour, IDamagable
 
     public void OnRevive(InputValue value)
     {
-        if (!canBeControlled) return;
-
-        if (transformAbility.IsReady())
-        {
-            transformAbility.Revive();
-        }
-        else
-            GameEventQueue.QueueEvent(new BiomeTransformationFailedEvent(noEnergy: true, revive: true));
     }
 
 	public void Transform(BiomeType target) {

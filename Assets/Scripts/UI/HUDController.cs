@@ -13,8 +13,8 @@ public class HUDController : MonoBehaviour
     private Slider[] healthbars;
     private float oldHealth;
     [SerializeField] private GameObject energyParent;
-    [SerializeField] private Slider energybar;
-    private Slider[] energybars;
+    [SerializeField] private Slider energyActual;
+    [SerializeField] private Slider energyToBe;
     private float oldEnergy;
     [SerializeField] private Tweenable lowOnHealthScreen;
     private float maxHealth;
@@ -73,19 +73,17 @@ public class HUDController : MonoBehaviour
         oldHealth = startingHealth;
     }
 
-    public void SetUpEnergy(float startingEnergy, float maxEnergy, int barCount = 3)
+    public void SetUpEnergy(float startingEnergy, float maxEnergy)
     {
-        if(energybars == null)
-        {
-            energybars = new Slider[barCount];
-            energybars[0] = energybar;
-            for (int i = 1; i < barCount; i++)
-            {
-                energybars[i] = Instantiate(energybar, energyParent.transform);
-            }
-        }
+        energyActual.minValue = 0;
+        energyActual.maxValue = maxEnergy;
+        energyActual.value = startingEnergy;
+        energyActual.GetComponent<Animator>().SetBool("Full", startingEnergy == maxEnergy);
 
-        SetUpBar(startingEnergy, maxEnergy, ref energybars);
+        energyToBe.minValue = 0;
+        energyToBe.maxValue = maxEnergy;
+        energyToBe.value = startingEnergy;
+
         oldEnergy = startingEnergy;
     }
 
@@ -113,8 +111,22 @@ public class HUDController : MonoBehaviour
 
     public void SetEnergy(float newEnergy)
     {
-        SetBar(oldEnergy, newEnergy, ref energybars);
+        energyActual.value = newEnergy;
+        energyActual.GetComponent<Animator>().SetBool("Full", newEnergy == energyActual.maxValue);
+
+        energyToBe.value = newEnergy;
+
         oldEnergy = newEnergy;
+    }
+
+    public void ShowEnergyCost(float cost)
+    {
+        energyToBe.value = energyActual.value - cost;
+    }
+
+    public void StopShowEnergyCost()
+    {
+        energyToBe.value = energyActual.value;
     }
 
     private void SetBar(float oldVal, float newVal, ref Slider[] bar)
@@ -147,10 +159,7 @@ public class HUDController : MonoBehaviour
 
     public void NotEnoughEnergy()
     {
-        for (int i = 0; i < energybars.Length; i++)
-        {
-            energybars[i].GetComponent<Animator>().SetTrigger("NotEnoughEnergy");
-        }
+        energyActual.GetComponent<Animator>().SetTrigger("NotEnoughEnergy");
     }
 
     #endregion

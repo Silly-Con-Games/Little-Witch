@@ -12,12 +12,22 @@ public class PropAndProbability
     public float chance;
 }
 
+[Serializable]
+public class BiomeMetadata
+{
+    public BiomeType type;
+    public Color highlightColor;
+}
+
 public class MapController : MonoBehaviour
 {
 
     public PropAndProbability meadowProp;
     public PropAndProbability forestProp;
     public PropAndProbability waterProp;
+
+    public List<BiomeMetadata> biomesList;
+    private Dictionary<BiomeType,BiomeMetadata> biomes = new Dictionary<BiomeType, BiomeMetadata>();
 
     public List<Tile> morphableTiles { get; set; }
 
@@ -41,7 +51,7 @@ public class MapController : MonoBehaviour
 
 	private void Initialize() {
 		tileMask = LayerMask.GetMask("Tile");
-
+        biomesList.ForEach(x => biomes.Add(x.type, x));
 		var allActiveTiles = new List<Tile>(FindObjectsOfType<Tile>());
         morphableTiles = new List<Tile>();
 		aliveTilesCnt = 0;
@@ -181,5 +191,10 @@ public class MapController : MonoBehaviour
     public void MapChanged()
     {
         navMeshSurface.UpdateNavMesh(navMeshSurface.navMeshData);
+    }
+
+    public BiomeMetadata GetBiomeMetadata(BiomeType type)
+    {
+        return biomes[type];
     }
 }
